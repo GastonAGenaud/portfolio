@@ -1,26 +1,21 @@
 import React from "react";
+import NavLink from "./NavLink";
 import Link from "next/link";
-const NavLink = React.lazy(() => import('./NavLink'));
-// import { Suspense } from "react";
-
-const navLinks = [
+const navLink = [
     {
+        href: "#about",
         title: "About",
-        path: "#about",
     },
     {
+        href: "#contact",
+        title: "Contact",
+    },
+    {
+        href: "#projects",
         title: "Projects",
-        path: "#projects",
-    },
-    {
-        title: "Contact",
-        path: "#contact",
-    },
-    {
-        title: "Contact",
-        path: "#contact",
     }
 ]
+
 const Navbar = () => {
     return (
         <div>
@@ -30,18 +25,13 @@ const Navbar = () => {
                         Portfolio
                     </Link>
                     <div className="menu block md:w-auto" id="navbar">
-                        <ul>
+                        <ul className="flex">
                             {
-                                navLinks.map((link, index) => (
-
-                                    <li key={index}>
-                                        {/* <Suspense fallback={<div>Loading...</div>}> */}
-                                            <NavLink href={link.path} title={link.title} />
-                                        {/* </Suspense> */}
-
+                                navLink.map((link) => (
+                                    <li key={link.href} className="mr-4">
+                                        <NavLink href={link.href} title={link.title} />
                                     </li>
-                                ))
-                            }
+                                ))}
                         </ul>
                     </div>
                 </div>
