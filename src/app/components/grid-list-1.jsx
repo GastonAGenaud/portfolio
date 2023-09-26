@@ -1,3 +1,4 @@
+import React from 'react';
 import { format, subHours, subMinutes, subSeconds } from 'date-fns';
 import {
   Avatar,
@@ -129,7 +130,10 @@ export const GridList1 = () => (
               <Link
                 color="text.primary"
                 variant="h6"
-                href={post.redirect} target="_blank" rel="noopener noreferrer" color="text.primary" underline="hover"
+                href={post.redirect}
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="hover"
               >
                 {post.title}
               </Link>
