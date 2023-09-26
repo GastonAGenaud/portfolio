@@ -3,16 +3,12 @@ import NavLink from "./NavLink";
 import Link from "next/link";
 const navLink = [
     {
-        href: "#about",
+        href: "/about",
         title: "About",
     },
     {
-        href: "#contact",
+        href: "/contact",
         title: "Contact",
-    },
-    {
-        href: "#projects",
-        title: "Projects",
     }
 ]
 
