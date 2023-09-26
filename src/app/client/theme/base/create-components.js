@@ -1,5 +1,6 @@
-import { createTheme, inputLabelClasses, tableCellClasses } from '@mui/material';
-
+import { createTheme } from '@mui/material/styles';
+import inputLabelClasses from '@mui/material/InputLabel/inputLabelClasses';
+import tableCellClasses from '@mui/material/TableCell/tableCellClasses';
 // Used only to create transitions
 const muiTheme = createTheme();
 

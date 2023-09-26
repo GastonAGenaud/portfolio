@@ -1,4 +1,5 @@
 "use client"
+import React from 'react';
 import HeroSection from "./components/HeroSection"
 import Navbar from "./components/Navbar"
 import { GridList1 } from "./components/grid-list-1"
@@ -9,7 +10,6 @@ const components = [
     element: <GridList1 />,
     title: 'Grid list 1'
   }]
-
 
 export default function Home() {
   return (
@@ -41,3 +41,4 @@ export default function Home() {
     </main>
   )
 }
+

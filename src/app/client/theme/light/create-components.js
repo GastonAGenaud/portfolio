@@ -1,10 +1,8 @@
-import {
-  backdropClasses,
-  filledInputClasses,
-  outlinedInputClasses,
-  paperClasses,
-  tableCellClasses
-} from '@mui/material';
+import backdropClasses from '@mui/material/Backdrop/backdropClasses';
+import filledInputClasses from '@mui/material/FilledInput/filledInputClasses';
+import outlinedInputClasses from '@mui/material/OutlinedInput/outlinedInputClasses';
+import paperClasses from '@mui/material/Paper/paperClasses';
+import tableCellClasses from '@mui/material/TableCell/tableCellClasses';
 import { common } from '@mui/material/colors';
 import { alpha } from '@mui/material/styles';
 
