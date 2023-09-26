@@ -15,6 +15,5 @@ export const useUpdateEffect = (effect, dependencies = []) => {
         return effect();
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     dependencies);
 };

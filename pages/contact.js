@@ -7,5 +7,5 @@ export default function Contact() {
       <span>gastongenaudar@gmail.com</span>
     </div>
   );
-};
+}
 

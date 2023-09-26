@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { authApi } from 'src/api/auth';
 import { Issuer } from 'src/utils/auth';
-
+import React from 'react';
 const STORAGE_KEY = 'accessToken';
 
 var ActionType;
@@ -109,7 +109,6 @@ export const AuthProvider = (props) => {
   useEffect(() => {
       initialize();
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []);
 
   const signIn = useCallback(async (email, password) => {
