@@ -10,7 +10,7 @@ const withAlphas = (color) => {
     alpha50: alpha(color.main, 0.50)
   };
 };
-
+//color section
 export const neutral = {
   50: '#F8F9FA',
   100: '#F3F4F6',
@@ -21,7 +21,7 @@ export const neutral = {
   600: '#4D5761',
   700: '#2F3746',
   800: '#1C2536',
-  900: '#111927'
+  900: '#FFFFFF'
 };
 
 export const blue = withAlphas({

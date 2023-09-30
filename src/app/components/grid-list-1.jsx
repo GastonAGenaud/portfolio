@@ -40,7 +40,7 @@ const posts = [
     readTime: '6 min',
     shortDescription: '',
     title: 'Automation Project with Cypress and Cucumber',
-    redirect: 'https://www.google.com'
+    redirect: 'https://github.com/GastonAGenaud/cypress-cucumber'
   },
   {
     id: '44df90cbf89963b8aa625c7d',
@@ -54,7 +54,21 @@ const posts = [
     readTime: '3 min',
     shortDescription: 'This web page.',
     title: 'Nextjs Project with TypeScript, Next, Material-UI, TailwindCSS',
-    redirect: 'https://www.google.com'
+    redirect: 'https://github.com/GastonAGenaud/portfolio'
+  },
+  {
+    id: '44df90cbf8996fb8aa625c7d',
+    author: {
+      avatar: '/images/github.png',
+      name: 'GastonAGenaud/automation-selenium-java'
+    },
+    category: 'Automation Testing',
+    cover: '/images/selenium.png',
+    publishedAt: subHours(subMinutes(subSeconds(now, 6), 46), 16).getTime(),
+    readTime: '13 min',
+    shortDescription: 'Selenium Project with Java, TestNG, Maven, Cucumber',
+    title: 'Selenium Automation Project',
+    redirect: 'https://github.com/GastonAGenaud/automation-selenium-java'
   }
 ];
 

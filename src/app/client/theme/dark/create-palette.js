@@ -18,6 +18,7 @@ export const createPalette = (config) => {
       default: contrast === 'high' ? '#0B0F19' : '#0E1320',
       paper: neutral[900]
     },
+    //color of the text
     divider: '#2D3748',
     error,
     info,
@@ -26,8 +27,8 @@ export const createPalette = (config) => {
     primary: getPrimary(colorPreset),
     success,
     text: {
-      primary: '#EDF2F7',
-      secondary: '#A0AEC0',
+      primary: '#000000',
+      secondary: '#210808',
       disabled: 'rgba(255, 255, 255, 0.48)'
     },
     warning
