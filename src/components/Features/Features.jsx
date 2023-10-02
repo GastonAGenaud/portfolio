@@ -62,7 +62,7 @@ export const HomeFeatures = () => {
         backgroundColor: 'neutral.800',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'top center',
-        backgroundImage: 'url("/assets/gradient-bg.svg")',
+        //backgroundImage: 'url("/assets/gradient-bg.svg")',
         color: 'common.white',
         py: '120px'
       }}

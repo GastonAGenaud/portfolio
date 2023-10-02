@@ -6,7 +6,6 @@ import { GridList1 } from '@/components/Shared/GridList/grid-list-1';
 import { Box, Container, Stack } from '@mui/material';
 import { Previewer } from '@/components/Shared/Previewer/previewer';
 import { HomeFeatures } from '@/components/Features/Features';
-import Head from 'next/head';
 const components = [
   {
     element: <GridList1 />,
@@ -16,9 +15,6 @@ const components = [
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-[#121212]">
-      <Head>
-      <link rel="icon" href="favicon.ico" sizes="any" />
-      </Head>
       <Navbar />
       <div className="container mx-auto px-12 py-4">
         <HeroSection />
