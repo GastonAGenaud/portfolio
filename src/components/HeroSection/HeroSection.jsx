@@ -12,7 +12,7 @@ const HeroSection = () => {
                     <h1 className="text-white mb-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">Hello, I&apos;m{" "}</span>
                         <br />
-                        <div className=" md:h-auto h-[3.5em] overflow-hidden">
+                        <div className=" md:h-auto h-[3.5em] lg:h-[2.5em] overflow-hidden">
                             <TypeAnimation
                                 sequence={[
                                     "Gaston A. Genaud",

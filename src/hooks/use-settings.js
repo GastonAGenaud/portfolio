@@ -1,4 +1,3 @@
 import { useContext } from 'react';
-import { SettingsContext } from '../app/client/theme/contexts/settings-context';
-
+import { SettingsContext } from '@/context/settings-context';
 export const useSettings = () => useContext(SettingsContext);

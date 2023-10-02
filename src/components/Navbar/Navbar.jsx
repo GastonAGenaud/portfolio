@@ -1,5 +1,5 @@
 import React from "react";
-import NavLink from "./NavLink";
+import NavLink from "../Shared/NavLink/NavLink";
 import Link from "next/link";
 const navLink = [
     {
