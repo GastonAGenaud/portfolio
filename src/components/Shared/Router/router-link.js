@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { forwardRef } from 'react';
 import Link from 'next/link';
 
@@ -6,6 +7,7 @@ import Link from 'next/link';
  * We use this to help us maintain consistency between CRA and Next.js
  */
 export const RouterLink = forwardRef((props, ref) => (
+  // eslint-disable-next-line react/react-in-jsx-scope
   <Link
     ref={ref}
     {...props} />
