@@ -10,41 +10,37 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import React, { useCallback, useState, useRef } from 'react';
-import axios from 'axios';
+import useForm from '@/hooks/use-form';
+import useContactForm from '@/hooks/use-contactForm';
+
 export const ContactForm = () => {
-  const [selectValue, setSelectValue] = useState(20000); // Estado inicial del Select
-  const handleSelectChange = useCallback((event) => {
-    setSelectValue(event.target.value); // Actualizar el valor del Select
+  const [subject, setSubject] = useState("Job offer"); // Estado inicial del Select
+
+  const handleSubjectChange = useCallback((event) => {
+    setSubject(event.target.value); // Actualizar el valor del Select
   }, []);
+
   const formRef = useRef(null);
 
-  const handleSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const { values: formValues, updateValue, resetValues } = useForm({
+    name: "",
+    company: "",
+    email: "",
+    message: "",
+  });
 
-    const data = {
-      name: event.target.name.value,
-      company: event.target.company.value,
-      email: event.target.email.value,
-      subject: selectValue, // <-- Cambio aquí
-      message: event.target.message.value,
-    };
+  const values = { ...formValues, subject }; // Agregando el subject al objeto values
 
-    try {
-      await axios.post('https://s8ykg8u5q2.execute-api.us-east-2.amazonaws.com/prod/contact', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      alert('Email sent successfully!');
-    } catch (error) {
-      console.error('Error sending email:', error);
-      alert('Error sending email!');
-    }
-}, [selectValue]);
+  const { name, company, email, message } = values;
+  const { loading, outputMessage, submitContactForm } = useContactForm({
+    values,
+    resetValues,
+  });
+
 
 
   return (
-<form onSubmit={handleSubmit} ref={formRef}>
+<form onSubmit={submitContactForm} ref={formRef}>
       <Grid
         container
         spacing={3}
@@ -65,6 +61,8 @@ export const ContactForm = () => {
             <OutlinedInput
               name="name"
               required
+              onChange={updateValue}
+              value={name}
             />
           </FormControl>
         </Grid>
@@ -84,6 +82,8 @@ export const ContactForm = () => {
             <OutlinedInput
               name="company"
               required
+              onChange={updateValue}
+              value={company}
             />
           </FormControl>
         </Grid>
@@ -104,37 +104,39 @@ export const ContactForm = () => {
               name="email"
               type="email"
               required
+              onChange={updateValue}
+              value={email}
             />
           </FormControl>
         </Grid>
         <Grid xs={12}>
-          <FormControl fullWidth>
-            <FormLabel
-              sx={{
-                color: 'text.primary',
-                mb: 1
-              }}
-            >
-              Subject
-            </FormLabel>
-            <Select
-              fullWidth
-              required
-              value={selectValue}
-              onChange={handleSelectChange}
-            >
-              <MenuItem value={20000}>
-                Job offer
-              </MenuItem>
-              <MenuItem value={30000}>
-                Interview
-              </MenuItem>
-              <MenuItem value={40000}>
-                Other
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+        <FormControl fullWidth>
+          <FormLabel
+            sx={{
+              color: 'text.primary',
+              mb: 1
+            }}
+          >
+            Subject
+          </FormLabel>
+          <Select
+            fullWidth
+            required
+            value={subject}
+            onChange={handleSubjectChange}
+          >
+            <MenuItem value={"Job offer"}>
+              Job offer
+            </MenuItem>
+            <MenuItem value={"Interview"}>
+              Interview
+            </MenuItem>
+            <MenuItem value={"Other"}>
+              Other
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
         <Grid xs={12}>
           <FormControl fullWidth>
             <FormLabel
@@ -151,6 +153,8 @@ export const ContactForm = () => {
               required
               multiline
               rows={6}
+              onChange={updateValue}
+              value={message}
             />
           </FormControl>
         </Grid>
@@ -169,7 +173,8 @@ export const ContactForm = () => {
           className='text-white hover:text-white bg-gradient-to-r from-orange-400 to-red-600  hover:from-red-400 hover:to-red-600'
           type="submit"
         >
-          Let&apos;s Talk
+          {loading ? "Sending.." : "Let\\' s Talk"}
+
         </Button>
       </Box>
       <Typography
@@ -179,6 +184,14 @@ export const ContactForm = () => {
       >
         I appreciate your interest and am looking forward to hearing from you soon!
       </Typography>
+      <p
+        className={`text-md lg:text-base mt-6 ${
+          !outputMessage ? "animate-pulse" : ""
+        }`}
+      >
+        {outputMessage || "Awaiting Submission..."}
+      </p>
     </form>
+
   );
 };
