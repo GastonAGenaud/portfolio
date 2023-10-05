@@ -23,6 +23,7 @@ const Page = () => {
       <Seo title="Contact" />
       <Box
         component="main"
+
         sx={{
           display: 'grid',
           gridTemplateColumns: {
@@ -32,7 +33,8 @@ const Page = () => {
           flexGrow: 1
         }}
       >
-        <Box
+        <Box id= 'here'
+        className = 'bg-[#121212]'
           sx={{
             backgroundColor: (theme) => theme.palette.mode === 'dark'
               ? 'neutral.800'
@@ -59,7 +61,7 @@ const Page = () => {
                   <SvgIcon sx={{ mr: 1, backgroundColor: '#f97316' }}>
                     <ArrowLeftIcon />
                   </SvgIcon>
-                  <Typography variant="subtitle2" className='text-orange-500' >
+                  <Typography variant="subtitle2" className='text-orange-500 font-extrabold' >
                     Home
                   </Typography>
                 </Link>
@@ -105,7 +107,7 @@ const Page = () => {
               Thank you for considering me for potential opportunities. I am excited to connect with you and discuss how I can contribute to your team or project. Please feel free to get in touch to schedule an interview or to send me a job proposal.
             </Typography>
             <Typography
-              color="primary"
+              color="body2"
               sx={{ mb: 3 }}
               variant="h6"
             >
