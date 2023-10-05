@@ -10,7 +10,7 @@ import React, {useState, useEffect} from 'react';
 import { Modal } from '@/components/Modals/modal';
 const Page = () => {
   usePageView();
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
   };
