@@ -6,13 +6,20 @@ import { RouterLink } from '@/components/Shared/Router/router-link';
 import { Seo } from '@/components/Shared/seo';
 import {usePageView} from '../../../hooks/use-page-view';
 import { ContactForm } from '../../../components/Contact/contact-form';
-import React from 'react';
-
+import React, {useState, useEffect} from 'react';
+import { Modal } from '@/components/Modals/modal';
 const Page = () => {
   usePageView();
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  useEffect(() => {
+  }, [isModalOpen]);
 
   return (
     <>
+                      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
       <Seo title="Contact" />
       <Box
         component="main"
@@ -141,7 +148,7 @@ const Page = () => {
             >
               Fill the form below
             </Typography>
-            <ContactForm />
+            <ContactForm onSuccessfulSubmit={openModal} />
           </Container>
         </Box>
       </Box>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Button,
@@ -11,16 +12,16 @@ import {
 } from '@mui/material';
 import React, { useCallback, useState, useRef } from 'react';
 import useForm from '@/hooks/use-form';
-import useContactForm from '@/hooks/use-contactForm';
 
-export const ContactForm = () => {
-  const [subject, setSubject] = useState("Job offer"); // Estado inicial del Select
+export const ContactForm = ({ onSuccessfulSubmit }) => {
+
+  const [subject, setSubject] = useState("Job offer");
+  const [loading, setLoading] = useState(false);
+  const [outputMessage, setOutputMessage] = useState(null);
 
   const handleSubjectChange = useCallback((event) => {
-    setSubject(event.target.value); // Actualizar el valor del Select
+    setSubject(event.target.value);
   }, []);
-
-  const formRef = useRef(null);
 
   const { values: formValues, updateValue, resetValues } = useForm({
     name: "",
@@ -29,18 +30,49 @@ export const ContactForm = () => {
     message: "",
   });
 
-  const values = { ...formValues, subject }; // Agregando el subject al objeto values
-
+  const values = { ...formValues, subject };
   const { name, company, email, message } = values;
-  const { loading, outputMessage, submitContactForm } = useContactForm({
-    values,
-    resetValues,
-  });
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/contactForm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      });
+
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+
+      if (response.status === 200) {
+        setOutputMessage(responseData.message);
+        resetValues();
+        onSuccessfulSubmit();
+      } else {
+        setOutputMessage(responseData.message);
+        console.log("ELSEE");
+
+      }
+    } catch (error) {
+      setOutputMessage("There was an error sending the message. Please try again later.");
+      console.log("CATCH");
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
+
+  const formRef = useRef(null);
 
   return (
-<form onSubmit={submitContactForm} ref={formRef}>
+<form onSubmit={handleSubmit} ref={formRef}>
       <Grid
         container
         spacing={3}
@@ -173,7 +205,7 @@ export const ContactForm = () => {
           className='text-white hover:text-white bg-gradient-to-r from-orange-400 to-red-600  hover:from-red-400 hover:to-red-600'
           type="submit"
         >
-          {loading ? "Sending.." : "Let\\' s Talk"}
+          {loading ? "Sending.." : `Let's Talk`}
 
         </Button>
       </Box>

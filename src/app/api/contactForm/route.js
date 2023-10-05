@@ -2,60 +2,58 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(req) {
-    let parsedBody = {};
-
     try {
-        if (req.body instanceof ReadableStream) {
-            const rawData = await req.body.getReader().read();
-            parsedBody = JSON.parse(new TextDecoder().decode(rawData.value));
-        } else {
-            parsedBody = req.body;
-        }
+        const parsedBody = await parseRequestBody(req);
+        verifyRequiredFields(parsedBody, ["name", "company", "email", "subject", "message"]);
 
-        const requiredFields = ["name", "company", "email", "subject", "message"];
-        for (const field of requiredFields) {
-            if (!parsedBody[field]) {
-                return new NextResponse(400).json({
-                    message: `Oops! You are missing the ${field} field, please fill it in and retry.`,
-                });
-            }
-        }
+        const { CONTACT_FORM_ENDPOINT, CONTACT_FORM_API_KEY } = process.env;
+        verifyEnvironmentVariables(CONTACT_FORM_ENDPOINT, CONTACT_FORM_API_KEY);
 
-        const endpoint = process.env.CONTACT_FORM_ENDPOINT;
-        const apiKey = process.env.CONTACT_FORM_API_KEY;
-
-        if (!endpoint || !apiKey) {
-            console.log("Error de configuración del servidor.");
-            return new NextResponse(500).json({
-                message: "Server configuration error.",
-            });
-        }
-
-        const response = await fetch(endpoint, {
-            method: "POST",
-            body: JSON.stringify(parsedBody),
-            headers: {
-                "Content-Type": "application/json",
-                "x-api-key": apiKey,
-                charset: "utf-8",
-            },
-        });
-
-        if (!response.ok) {
-            console.log("Error al procesar la solicitud.");
-            return new NextResponse(500).json({
-                message: "There was an error processing your request. Please try again later.",
-            });
-        }
+        await makeExternalRequest(CONTACT_FORM_ENDPOINT, CONTACT_FORM_API_KEY, parsedBody);
 
         console.log("Mensaje enviado con éxito.");
-        return new NextResponse(200).json({
-            message: "Success! Thank you for your message!",
-        });
+        return new NextResponse(JSON.stringify({ message: "Success! Thank you for your message!" }), { status: 200 });
+
     } catch (err) {
-        console.log("Error en el bloque try-catch:", err);
-        return new NextResponse(500).json({
-            message: "There was an unexpected error processing your request. Please try again later.",
-        });
+        console.error("Error:", err.message);
+        return new NextResponse(err.message || "There was an unexpected error processing your request. Please try again later.", { status: 500 });
+    }
+}
+
+async function parseRequestBody(req) {
+    if (req.body instanceof ReadableStream) {
+        const rawData = await req.body.getReader().read();
+        return JSON.parse(new TextDecoder().decode(rawData.value));
+    }
+    return req.body;
+}
+
+function verifyRequiredFields(parsedBody, requiredFields) {
+    for (const field of requiredFields) {
+        if (!parsedBody[field]) {
+            throw new Error(`Oops! You are missing the ${field} field, please fill it in and retry.`);
+        }
+    }
+}
+
+function verifyEnvironmentVariables(endpoint, apiKey) {
+    if (!endpoint || !apiKey) {
+        throw new Error("Server configuration error.");
+    }
+}
+
+async function makeExternalRequest(endpoint, apiKey, parsedBody) {
+    const response = await fetch(endpoint, {
+        method: "POST",
+        body: JSON.stringify(parsedBody),
+        headers: {
+            "Content-Type": "application/json",
+            "x-api-key": apiKey,
+            charset: "utf-8",
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al procesar la solicitud.");
     }
 }
