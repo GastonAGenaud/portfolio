@@ -20,10 +20,10 @@ export const author = {
 export const seoData = {
   title: 'Gaston Genaud | SDET & DevOps Engineer',
   description:
-    'Gaston Genaud is a front-end developer who specializes in building (and occasionally designing) exceptional visual interfaces.',
+    'Gaston Genaud is a SDET who specializes in building and designing exceptional automation projects.',
   author: author.name,
   image:
-    'https://fmontes.com/_next/image?url=%2Fimages%2Fblog%2Fdifference-between-reactjs-and-nextjs%2Freact-vs-next.jpg&w=1200&q=75',
+    'https://media.licdn.com/dms/image/C4D03AQFDpEm9W82qrg/profile-displayphoto-shrink_800_800/0/1631735599927?e=1707955200&v=beta&t=u9cROMqiOSH9PrhEKgpaZk8edrEsIiePgkcRUz92EU8',
   url: 'https://gastongenaud.com/',
   keywords: [
     'Gaston',

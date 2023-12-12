@@ -28,6 +28,11 @@ module.exports = {
         hostname: 'fmontes.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'media.licdn.com',
+        pathname: '/**',
+      },
     ],
   },
 };
