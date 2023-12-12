@@ -11,7 +11,7 @@ import {
   Unstable_Grid2 as Grid
 } from '@mui/material';
 import React, { useCallback, useState, useRef } from 'react';
-import useForm from '@/hooks/use-form';
+import useForm from '@/lib/hooks/use-form';
 
 export const ContactForm = ({ onSuccessfulSubmit }) => {
 
