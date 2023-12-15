@@ -67,6 +67,11 @@ export interface ContactSectionType extends Section {
   paragraphs: string[];
   link: string;
 }
+export interface CoursesSectionType extends Section {
+  subtitle?: string;
+  paragraphs: string[];
+  link: string;
+}
 
 export interface SocialSectionType {
   socialLinks: SocialLinkType[];
