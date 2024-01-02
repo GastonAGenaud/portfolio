@@ -67,7 +67,7 @@ const ChristmasPopup = ({ isVisible, onClose }) => {
       <div style={popupStyle}>
         <ShowLottie path="/lotties/Christmas.json" className="mx-auto" />
         <h2 style={{ fontSize: '2rem', textAlign: 'center' }}>
-          Merry Christmas!
+          Happy New Year!
         </h2>
         <p style={paragraphStyle}>
           Thank you for visiting my portfolio, have a happy holiday season.
