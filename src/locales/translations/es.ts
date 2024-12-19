@@ -2,6 +2,7 @@ import { tokens } from '../tokens';
 
 export const es = {
   [tokens.common.languageChanged]: 'Idioma cambiado',
+  [tokens.common.resumeFileName]: 'resume_es.pdf',
 
   // Header
   [tokens.header.about]: 'sobre mí',
@@ -15,57 +16,64 @@ export const es = {
   [tokens.heroSectionType.subtitle]: 'Hola, soy',
   [tokens.heroSectionType.title]: 'Gaston Genaud.',
   [tokens.heroSectionType.tagline]:
-    'DevOps y Testing: Una Combinación Perfecta para la Innovación en Software.',
+    'DevOps y Testing: Una fusión perfecta para la innovación en software.',
   [tokens.heroSectionType.description]:
-    'Como un experimentado Ingeniero Senior de Desarrollo de Software en Pruebas y DevOps, me especializo en crear soluciones de software robustas, escalables y eficientes. Mi experiencia radica en AWS para una infraestructura en la nube confiable, junto con JavaScript, TypeScript y Python para la automatización y el desarrollo backend. Con un fuerte enfoque en la calidad y la innovación, entrego resultados excepcionales tanto en pruebas automatizadas como en prácticas de DevOps.',
+    'Como SR QA Automation Engineer y DevOps Engineer, me dedico a crear soluciones de software sólidas, escalables y eficientes. Mi experiencia abarca AWS para una infraestructura confiable, además de lenguajes como JavaScript, TypeScript y Python para optimizar la automatización y el desarrollo backend. Con un profundo enfoque en la calidad y la innovación, contribuyo a que cada proyecto alcance estándares de excelencia, tanto en pruebas automatizadas como en prácticas DevOps.',
   [tokens.heroSectionType.specialText]:
-    'Ansioso por explorar nuevas oportunidades y desafíos en el desarrollo de software en pruebas y DevOps.',
+    'Estoy listo para asumir nuevos retos y oportunidades que me permitan seguir creciendo en el ámbito de la automatización de pruebas e infraestructura.',
   [tokens.heroSectionType.ctaTitle]: 'Ver Mi Currículum',
 
   // About Section
-  [tokens.aboutSectionType.title]: 'Sobre Mi',
-  [tokens.aboutSectionType.list.title]: 'Mi Experiencia',
-  [tokens.aboutSectionType.list.items.item1]: 'NextJs',
-  [tokens.aboutSectionType.list.items.item2]: 'Cypress',
-  [tokens.aboutSectionType.list.items.item3]: 'AWS',
-  [tokens.aboutSectionType.list.items.item4]: 'CircleCI',
-  [tokens.aboutSectionType.list.items.item5]: 'Xray',
-  [tokens.aboutSectionType.list.items.item6]: 'Javascript',
-  [tokens.aboutSectionType.list.items.item7]: 'Python',
-  [tokens.aboutSectionType.list.items.item8]: 'Docker',
-  [tokens.aboutSectionType.list.items.item9]: 'Kubernetes',
-  [tokens.aboutSectionType.list.items.item10]: 'Selenium',
-  [tokens.aboutSectionType.list.items.item11]: 'Jenkins',
-  [tokens.aboutSectionType.list.items.item12]: 'Postman',
-  [tokens.aboutSectionType.list.items.item13]: 'JMETER',
-  [tokens.aboutSectionType.list.items.item14]: 'Appium',
+  [tokens.aboutSectionType.title]: 'Sobre Mí',
+  [tokens.aboutSectionType.list.title]: 'Mis Skills',
+  [tokens.aboutSectionType.list.items.item1]: 'Test Automation',
+  [tokens.aboutSectionType.list.items.item2]: 'Cloud Infra',
+  [tokens.aboutSectionType.list.items.item3]: 'API Testing',
+  [tokens.aboutSectionType.list.items.item4]: 'Kubernetes',
+  [tokens.aboutSectionType.list.items.item5]: 'Perf Testing',
+  [tokens.aboutSectionType.list.items.item6]: 'Infrastructure Code',
+  [tokens.aboutSectionType.list.items.item7]: 'Mobile Testing',
+  [tokens.aboutSectionType.list.items.item8]: 'CI/CD Pipelines',
+  [tokens.aboutSectionType.list.items.item9]: 'Security Tests',
+  [tokens.aboutSectionType.list.items.item10]: 'Scripting',
+  [tokens.aboutSectionType.list.items.item11]: 'CI/CD Integration',
+  [tokens.aboutSectionType.list.items.item12]: 'Config Mgmt',
+  [tokens.aboutSectionType.list.items.item13]: 'Container Tests',
+  [tokens.aboutSectionType.list.items.item14]: 'Observability',
+  [tokens.aboutSectionType.list.items.item15]: 'Test Management',
+  [tokens.aboutSectionType.list.items.item16]: 'DevSecOps',
+  [tokens.aboutSectionType.list.items.item17]: 'Agile Methods',
+  [tokens.aboutSectionType.list.items.item18]: 'Git Flow',
+  [tokens.aboutSectionType.list.items.item19]: 'Team Collaboration',
+  [tokens.aboutSectionType.list.items.item20]: 'Scalability',
+
   [tokens.aboutSectionType.intro]:
-    'Hola, mi nombre es Gaston Alejandro Genaud, un SDET y DevOps Engineer que quiere explorar cada stack tecnológico.',
+    'Hola, soy Gaston Alejandro Genaud, SDET y DevOps Engineer apasionado por explorar nuevas tecnologías y stacks para optimizar la calidad del software.',
   [tokens.aboutSectionType.history]:
-    'Con el paso del tiempo, he tenido el privilegio de trabajar en',
+    'A lo largo de mi carrera, he tenido el privilegio de colaborar con organizaciones como',
   [tokens.aboutSectionType.focus]:
-    'Mi enfoque actualmente es seguir creciendo en QA Automation y ampliar mi conocimiento en AWS.',
+    'Actualmente, me enfoco en fortalecer mis habilidades en QA Automation y en profundizar el uso de AWS, para ofrecer soluciones aún más robustas y eficientes.',
 
   // Skills Section
   [tokens.skillsSectionType.title]: 'lo que hago',
-  [tokens.skillsSectionType.skill1.title]: 'Desarrollo de Software en Pruebas',
+  [tokens.skillsSectionType.skill1.title]: 'Software Development in Testing',
   [tokens.skillsSectionType.skill1.points.point1]:
-    'Construyendo automatizaciones E2E, pruebas funcionales y configuraciones de prueba como regresión y smoke.',
+    'Implementación de automatizaciones E2E, pruebas funcionales y configuraciones de pruebas (regresión, smoke).',
   [tokens.skillsSectionType.skill1.points.point2]:
-    'Implementación de CI/CD para automatizaciones de pruebas.',
+    'Integración de CI/CD para flujos de pruebas automatizadas.',
   [tokens.skillsSectionType.skill1.points.point3]:
-    'Creación de scripts de prueba para validar y comparar respuestas de API en diferentes entornos y validación de esquemas.',
+    'Creación de scripts de prueba para validar y comparar respuestas de APIs, asegurando la integridad de datos y el cumplimiento de esquemas.',
   [tokens.skillsSectionType.skill1.points.point4]:
-    'Creación de pruebas de carga y rendimiento.',
+    'Desarrollo de pruebas de carga y rendimiento para garantizar escalabilidad.',
   [tokens.skillsSectionType.skill1.points.point5]:
-    'Seguimiento de la ruta profesional, gestión de equipos de QA.',
-  [tokens.skillsSectionType.skill2.title]: 'Ingeniero DevOps',
+    'Mentoría y liderazgo de equipos QA, impulsando el crecimiento profesional y la mejora continua.',
+  [tokens.skillsSectionType.skill2.title]: 'DevOps Engineer',
   [tokens.skillsSectionType.skill2.points.point1]:
-    'Experiencia en el diseño de interfaces con Lucidchart',
+    'Diseño de diagramas y flujos con Lucidchart para visualizaciones claras.',
   [tokens.skillsSectionType.skill2.points.point2]:
-    'Experiencia en el diseño, desarrollo e implementación de soluciones de software escalables y de alta calidad.',
+    'Diseño, desarrollo e implementación de soluciones escalables y de alta calidad, alineadas con las mejores prácticas.',
   [tokens.skillsSectionType.skill2.points.point3]:
-    'He trabajado con herramientas y tecnologías como AWS, arquitectura de software/nube, Terraform, Docker, Kubernetes, Jenkins, Git y Python.',
+    'Experiencia con AWS, arquitectura en la nube, Terraform, Docker, Kubernetes, Jenkins, Git y Python, optimizando la entrega continua y la confiabilidad.',
 
   // Experience Section
   [tokens.experienceSectionType.title]: 'donde he trabajado',
@@ -73,108 +81,111 @@ export const es = {
   // Experience 0: Darwoft
   [tokens.experienceSectionType.experiences[0].company]: 'Darwoft',
   [tokens.experienceSectionType.experiences[0].role]:
-    'Ingeniero de Desarrollo de Software en Pruebas & Tech Lead',
+    'SR QA Automation Engineer & Tech Lead',
   [tokens.experienceSectionType.experiences[0].started]: 'Agosto 2022',
   [tokens.experienceSectionType.experiences[0].upto]: 'presente',
   [tokens.experienceSectionType.experiences[0].tasks[0]]:
-    'Automatización móvil con Appium, Python, Pytest y Behave.',
+    'Automatización móvil con Appium, Python, Pytest y Behave, optimizando la cobertura de pruebas en entornos móviles.',
   [tokens.experienceSectionType.experiences[0].tasks[1]]:
-    'Integración continua con CircleCI, Implementación de pruebas en paralelo con CypressIO y CircleCI.',
+    'Integración continua con CircleCI y ejecución de pruebas en paralelo con CypressIO, mejorando la eficiencia del pipeline.',
   [tokens.experienceSectionType.experiences[0].tasks[2]]:
-    'Pruebas de carga (Artillery y JMeter)',
+    'Pruebas de carga con Artillery y JMeter, garantizando el rendimiento bajo alta demanda.',
   [tokens.experienceSectionType.experiences[0].tasks[3]]:
-    'Liderar un equipo multifuncional de desarrolladores y QA Automation.',
+    'Liderazgo de un equipo multidisciplinario, impulsando la colaboración y el crecimiento del talento interno.',
   [tokens.experienceSectionType.experiences[0].tasks[4]]:
-    'Creación de Lambda (Python), Gestión de Dynamo, RDS, configuración de CloudWatch, implementación de Taurus (Pruebas de carga en AWS).',
+    'Implementación de Lambdas (Python), gestión de DynamoDB, RDS, configuración de CloudWatch y uso de Taurus para pruebas de carga en AWS.',
 
   // Experience 1: Coderio
   [tokens.experienceSectionType.experiences[1].company]:
     'Coderio | Software Company',
   [tokens.experienceSectionType.experiences[1].role]:
-    'Ingeniero QA Automation SSr & Ingeniero DevOps',
+    'SR QA Automation Engineer & DevOps Engineer',
   [tokens.experienceSectionType.experiences[1].started]: 'Septiembre 2021',
   [tokens.experienceSectionType.experiences[1].upto]: 'Agosto 2022',
   [tokens.experienceSectionType.experiences[1].tasks[0]]:
-    'Automatización Frontend, Automatización Backend, diseño de casos de prueba.',
+    'Automatización de pruebas front-end y back-end, acompañada del diseño de casos de prueba efectivos.',
   [tokens.experienceSectionType.experiences[1].tasks[1]]:
-    'Automatización para Dynamo, RDS, S3 y pruebas de CloudWatch.',
+    'Automatización de validaciones en Dynamo, RDS, S3 y pruebas con CloudWatch, garantizando la calidad en entornos distribuidos.',
   [tokens.experienceSectionType.experiences[1].tasks[2]]:
-    'Creación de Lambdas.',
+    'Desarrollo de Lambdas para optimizar flujos y procesos internos.',
   [tokens.experienceSectionType.experiences[1].tasks[3]]:
-    'Uso de Screenplay Pattern, POM Pattern, Serenity BDD, Selenium, Cypress en Java y Javascript.',
+    'Aplicación de patrones Screenplay y POM, uso de Serenity BDD, Selenium, Cypress (Java/Javascript), promoviendo la mantenibilidad y escalabilidad de las pruebas.',
 
   // Experience 2: SearchMAS
   [tokens.experienceSectionType.experiences[2].company]: 'SearchMAS',
   [tokens.experienceSectionType.experiences[2].role]:
-    'Ingeniero QA Automation SSr & QA Lead',
+    'SR QA Automation Engineer & QA Lead',
   [tokens.experienceSectionType.experiences[2].started]: 'Septiembre 2020',
   [tokens.experienceSectionType.experiences[2].upto]: 'Marzo 2021',
   [tokens.experienceSectionType.experiences[2].tasks[0]]:
-    'Automatización Frontend, Automatización Backend (GraphQL), Diseño de Casos de Prueba (GraphQL), diseño de casos de prueba, diseño de plan de prueba, líder de equipo.',
+    'Automatización en Frontend y Backend (GraphQL), diseño de casos y planes de prueba, asumiendo un rol de liderazgo en el equipo.',
   [tokens.experienceSectionType.experiences[2].tasks[1]]:
-    'Stack: GraphQL, REST API, MongoDB, Docker, AWS (EC2, AMPLIFY), Just-API, Mongo-memory-server, Appium, Jest, Mocha, Chai, Testcafe.',
+    'Stack variado: GraphQL, REST API, MongoDB, Docker, AWS (EC2, AMPLIFY), Just-API, Mongo-memory-server, Appium, Jest, Mocha, Chai, Testcafe.',
   [tokens.experienceSectionType.experiences[2].tasks[2]]:
-    'POM Pattern, Serenity BDD, Selenium, Cucumber, TestNG, Java.',
+    'Uso de POM Pattern, Serenity BDD, Selenium, Cucumber, TestNG y Java para optimizar las pruebas automatizadas.',
   [tokens.experienceSectionType.experiences[2].tasks[3]]:
-    'Integración de frameworks de reportería: mocha-awesome, cucumber-html-reporter',
+    'Integración de reportes claros y detallados con mocha-awesome y cucumber-html-reporter, mejorando la visibilidad de resultados.',
 
   // Experience 3: Globant
   [tokens.experienceSectionType.experiences[3].company]: 'Globant',
   [tokens.experienceSectionType.experiences[3].role]:
-    'Ingeniero de Automatización de Pruebas SSr',
+    'Ssr Test Automation Engineer',
   [tokens.experienceSectionType.experiences[3].started]: 'Marzo 2020',
   [tokens.experienceSectionType.experiences[3].upto]: 'Septiembre 2020',
   [tokens.experienceSectionType.experiences[3].tasks[0]]:
-    'Automatización Frontend, Automatización Backend de microservicios bancarios (GraphQL), diseño de casos de prueba, diseño de plan de prueba, líder de equipo.',
+    'Automatización Frontend y Backend para microservicios bancarios (GraphQL), diseño de casos y planes de prueba, además de liderar el equipo.',
   [tokens.experienceSectionType.experiences[3].tasks[1]]:
-    'Stack: Yadda, Supertest, Mocha y Cucumber, microservicios (API-REST) y Axios.',
+    'Stack: Yadda, Supertest, Mocha, Cucumber, microservicios (API-REST) y Axios, garantizando flexibilidad y escalabilidad en las pruebas.',
   [tokens.experienceSectionType.experiences[3].tasks[2]]:
-    'Lenguajes: Node.js y JavaScript',
+    'Lenguajes: Node.js y JavaScript, fomentando rapidez en el desarrollo y la integración de pruebas.',
 
   // Experience 4: VATES - Software
   [tokens.experienceSectionType.experiences[4].company]: 'VATES - Software',
-  [tokens.experienceSectionType.experiences[4].role]: 'Ingeniero QA Automation',
+  [tokens.experienceSectionType.experiences[4].role]: 'QA Automation Engineer',
   [tokens.experienceSectionType.experiences[4].started]: 'Agosto 2018',
   [tokens.experienceSectionType.experiences[4].upto]: 'Marzo 2020',
   [tokens.experienceSectionType.experiences[4].tasks[0]]:
-    'Automatización Backend de la capa de servicios y diversos microservicios con frameworks como Serenity, Cucumber Rest Assured en JAVA, y uso de HPE UFT para varias automatizaciones.',
+    'Automatización Backend para servicios y microservicios con Serenity, Cucumber Rest Assured (Java) y HPE UFT, garantizando calidad en distintas capas.',
   [tokens.experienceSectionType.experiences[4].tasks[1]]:
-    'Proyecto: BANCOR - Rol: Analista de Testing JR - Tareas: Análisis de requerimientos, diseño y ejecución de casos de prueba con HP ALM y metodologías Ágiles (Scrum).',
+    'Proyecto: BANCOR - Rol: Jr Testing Analyst - Análisis de requerimientos, diseño y ejecución de casos de prueba con HP ALM bajo metodologías ágiles (Scrum).',
   [tokens.experienceSectionType.experiences[4].tasks[2]]:
-    'Proyecto: Bci Insurance - Rol: Analista de Testing JR - Tareas: Pruebas Funcionales, de Sistema y Aceptación de Usuario, Revisión y Ejecución de casos de prueba de sistema y negocio, pruebas de humo y soporte al usuario final.',
+    'Proyecto: Bci Insurance - Rol: Jr Testing Analyst - Pruebas funcionales, de sistema y aceptación de usuario, ejecución de pruebas de humo y soporte al usuario final.',
+
   // Featured Projects Section
-  [tokens.featuredProjectsSectionType.title]:
-    'proyectos en los que he trabajado',
+  [tokens.featuredProjectsSectionType.title]: 'proyectos destacados',
 
   [tokens.featuredProjectsSectionType.projects[0].name]:
     'GastonAGenaud/appium-selenium-python',
   [tokens.featuredProjectsSectionType.projects[0].description]:
     'Pruebas de Automatización Móvil con Appium, Selenium y Python',
   [tokens.featuredProjectsSectionType.projects[0].tasks]:
-    'Appium y Python son una gran combinación para la automatización móvil. Python, al ser un lenguaje interpretado y de alto nivel, ofrece un desarrollo más ágil.',
+    'Appium y Python forman una dupla sólida para automatizaciones móviles, brindando rapidez en el desarrollo y adaptabilidad a distintos entornos.',
 
   [tokens.featuredProjectsSectionType.projects[1].name]:
     'GastonAGenaud/cypress-cucumber',
   [tokens.featuredProjectsSectionType.projects[1].description]:
-    'Proyecto de Automatización con Cypress y Cucumber.',
+    'Automatización con Cypress y Cucumber',
   [tokens.featuredProjectsSectionType.projects[1].tasks]:
-    'Cypress es un framework de pruebas end-to-end basado en JavaScript que no usa Selenium. Es una herramienta de nueva generación construida para la web moderna, y es fundamentalmente diferente de Selenium.',
+    'Cypress es un framework de pruebas end-to-end moderno y eficiente, que prescinde de Selenium y ofrece una experiencia más ágil para la web actual.',
+
   // Projects Section
   [tokens.projectsSectionType.title]: 'mis proyectos',
   [tokens.projectsSectionType.projects[0].name]:
-    'Proyecto con Nextjs, TypeScript, Next, Material-UI, TailwindCSS',
+    'Proyecto con Nextjs, TypeScript, Material-UI y TailwindCSS',
   [tokens.projectsSectionType.projects[1].name]:
     'Proyecto Java con Selenium, TestNG, Maven y Allure Reports',
+
   // Contact Section
   [tokens.contactSectionType.title]: 'pongámonos en contacto',
   [tokens.contactSectionType.subtitle]: 'qué sigue',
   [tokens.contactSectionType.paragraphs[0]]:
-    'Actualmente estoy buscando un trabajo remoto u otras nuevas oportunidades.',
+    'Actualmente estoy en busca de oportunidades remotas u otros proyectos interesantes.',
   [tokens.contactSectionType.paragraphs[1]]:
-    'Ya sea que tengas un proyecto para discutir o solo quieras saludar, ¡mi bandeja de entrada está abierta para todos!',
+    'Si tienes un proyecto para discutir o simplemente deseas saludar, ¡mi bandeja de entrada está siempre abierta!',
+
   // Courses Section
   [tokens.coursesSectionType.title]: 'Cursos',
-  [tokens.coursesSectionType.subtitle]: 'Proyectos Guiados',
+  [tokens.coursesSectionType.subtitle]: 'Proyectos',
   [tokens.coursesSectionType.paragraphs[0]]:
-    'Actualmente estoy finalizando una serie de cursos sobre diseño de automatización de pruebas en diferentes lenguajes y tecnologías de código abierto junto con un generador de proyectos de automatización. Planeo terminar su desarrollo el 02/09/2025. ¡Mantente atento!',
+    'Estoy completando una serie de cursos sobre diseño de automatización de pruebas en distintos lenguajes y tecnologías open source, junto con un generador de proyectos de automatización. Planeo finalizar su desarrollo el 02/09/2025. ¡Mantente atento!',
 };

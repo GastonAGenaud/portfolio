@@ -1,11 +1,15 @@
+'use client';
 import { HeroSectionType } from '@/lib/types/sections';
-import { resumeFileName } from '@/lib/utils/config';
 
 import { tokens } from '../../../src/locales/tokens';
 import { useTranslation } from 'react-i18next';
 
 export const useHeroSection = (): HeroSectionType => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const currentLanguage = i18n.language;
+
+  const resumeFileName = 'resume_' + currentLanguage + '.pdf';
 
   const heroSection: HeroSectionType = {
     subtitle: t(tokens.heroSectionType.subtitle),

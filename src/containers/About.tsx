@@ -12,6 +12,29 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 const About = () => {
   const { title, img, list } = useAboutSection();
+  const list2 = {
+    list2: {
+      list: {
+        items: {
+          item1: 'Selenium',
+          item2: 'Terraform',
+          item3: 'Cypress',
+          item4: 'Docker',
+          item5: 'Playwright',
+          item6: 'Azure DevOps',
+          item7: 'Mocha',
+          item8: 'Jenkins',
+          item9: 'Pytest',
+          item10: 'AWS',
+          item11: 'Cucumber',
+          item12: 'Kubernetes',
+          item13: 'Appium',
+          item14: 'GitHub Actions',
+        },
+      },
+    },
+  };
+
   // To avoid hydration error
   const [domLoaded, setDomLoaded] = useState(false);
   const { t } = useTranslation();
@@ -60,6 +83,22 @@ const About = () => {
             >
               Carejourney
             </Link>
+            <br />
+            <Link
+              href="https://arcadia.io/"
+              target="_blank"
+              className="text-accent"
+            >
+              Arcadia
+            </Link>
+            <br />
+            <Link
+              href="https://www.naranjax.com/"
+              target="_blank"
+              className="text-accent"
+            >
+              Naranja X
+            </Link>
           </p>
           <p>{t(tokens.aboutSectionType.focus)}</p>
 
@@ -68,6 +107,16 @@ const About = () => {
               <p>{list.title}</p>
               <ul className="grid w-2/3 grid-cols-2 gap-1 text-sm">
                 {list.items.map((item) => (
+                  <ListItem key={getId()}>{item}</ListItem>
+                ))}
+              </ul>
+            </>
+          )}
+          {list && (
+            <>
+              <p>Frameworks</p>
+              <ul className="grid w-2/3 grid-cols-2 gap-1 text-sm">
+                {Object.values(list2.list2.list.items).map((item) => (
                   <ListItem key={getId()}>{item}</ListItem>
                 ))}
               </ul>

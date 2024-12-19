@@ -1,6 +1,7 @@
 export const tokens = {
   common: {
     languageChanged: 'common.languageChanged',
+    resumeFileName: 'common.resumeFileName',
   },
   heroSectionType: {
     subtitle: 'heroSectionType.subtitle',
@@ -37,6 +38,12 @@ export const tokens = {
         item12: 'aboutSectionType.list.items.item12',
         item13: 'aboutSectionType.list.items.item13',
         item14: 'aboutSectionType.list.items.item14',
+        item15: 'aboutSectionType.list.items.item15',
+        item16: 'aboutSectionType.list.items.item16',
+        item17: 'aboutSectionType.list.items.item17',
+        item18: 'aboutSectionType.list.items.item18',
+        item19: 'aboutSectionType.list.items.item19',
+        item20: 'aboutSectionType.list.items.item20',
       },
     },
     intro: 'aboutSectionType.intro',

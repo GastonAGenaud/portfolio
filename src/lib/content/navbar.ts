@@ -1,13 +1,16 @@
 'use client';
 import { NavbarSectionType } from '@/lib/types/sections';
-import { resumeFileName } from '@/lib/utils/config';
 
 import { tokens } from '@/locales/tokens';
 
 import { useTranslation } from 'react-i18next';
 
 export const useNavbarSection = (): NavbarSectionType => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const currentLanguage = i18n.language;
+
+  const resumeFileName = 'resume_' + currentLanguage + '.pdf';
 
   const navbarSection: NavbarSectionType = {
     navLinks: [

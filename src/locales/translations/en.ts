@@ -2,6 +2,7 @@ import { tokens } from '../tokens';
 
 export const en = {
   [tokens.common.languageChanged]: 'Language changed',
+  [tokens.common.resumeFileName]: 'resume_en.pdf',
 
   // Header
   [tokens.header.about]: 'about',
@@ -9,114 +10,121 @@ export const en = {
   [tokens.header.experience]: 'experience',
   [tokens.header.projects]: 'projects',
   [tokens.header.contact]: 'contact',
-  [tokens.header.resume]: 'Curriculum vitae',
+  [tokens.header.resume]: 'Curriculum Vitae',
 
   // Hero Section
   [tokens.heroSectionType.subtitle]: 'Hello, I am',
   [tokens.heroSectionType.title]: 'Gaston Genaud.',
   [tokens.heroSectionType.tagline]:
-    'DevOps and Testing: A Perfect Match for Software Innovation.',
+    'DevOps and Testing: The perfect blend for software innovation.',
   [tokens.heroSectionType.description]:
-    'As a seasoned Senior Software Developer Engineer in Test and DevOps Engineer, I specialize in creating robust, scalable, and efficient software solutions. My expertise lies in AWS for reliable cloud infrastructure, along with JavaScript, TypeScript, and Python for automation and backend development. With a strong focus on quality and innovation, I deliver exceptional results in both automated testing and DevOps practices.',
+    'As a Sr QA Automation Engineer and DevOps Engineer, I specialize in creating robust, scalable, and efficient software solutions. My expertise includes AWS for reliable infrastructure, as well as languages such as JavaScript, TypeScript, and Python to optimize automation and backend development. With a strong focus on quality and innovation, I help each project reach high standards of excellence, both in automated testing and DevOps practices.',
   [tokens.heroSectionType.specialText]:
-    'Eager to explore new opportunities and challenges in software development in test and DevOps.',
+    'I am ready to take on new challenges and opportunities that allow me to continue growing in test automation and infrastructure.',
   [tokens.heroSectionType.ctaTitle]: 'View My Resume',
 
-  // About Section
+  // About Section (Skills list)
   [tokens.aboutSectionType.title]: 'About Me',
-  [tokens.aboutSectionType.list.title]: 'My Experience',
-  [tokens.aboutSectionType.list.items.item1]: 'NextJs',
-  [tokens.aboutSectionType.list.items.item2]: 'Cypress',
-  [tokens.aboutSectionType.list.items.item3]: 'AWS',
-  [tokens.aboutSectionType.list.items.item4]: 'CircleCI',
-  [tokens.aboutSectionType.list.items.item5]: 'Xray',
-  [tokens.aboutSectionType.list.items.item6]: 'Javascript',
-  [tokens.aboutSectionType.list.items.item7]: 'Python',
-  [tokens.aboutSectionType.list.items.item8]: 'Docker',
-  [tokens.aboutSectionType.list.items.item9]: 'Kubernetes',
-  [tokens.aboutSectionType.list.items.item10]: 'Selenium',
-  [tokens.aboutSectionType.list.items.item11]: 'Jenkins',
-  [tokens.aboutSectionType.list.items.item12]: 'Postman',
-  [tokens.aboutSectionType.list.items.item13]: 'JMETER',
-  [tokens.aboutSectionType.list.items.item14]: 'Appium',
+  [tokens.aboutSectionType.list.title]: 'My Skills',
+  [tokens.aboutSectionType.list.items.item1]: 'Test Automation',
+  [tokens.aboutSectionType.list.items.item2]: 'Cloud Infra',
+  [tokens.aboutSectionType.list.items.item3]: 'API Testing',
+  [tokens.aboutSectionType.list.items.item4]: 'Kubernetes',
+  [tokens.aboutSectionType.list.items.item5]: 'Perf Testing',
+  [tokens.aboutSectionType.list.items.item6]: 'Infrastructure Code',
+  [tokens.aboutSectionType.list.items.item7]: 'Mobile Testing',
+  [tokens.aboutSectionType.list.items.item8]: 'CI/CD Pipelines',
+  [tokens.aboutSectionType.list.items.item9]: 'Security Tests',
+  [tokens.aboutSectionType.list.items.item10]: 'Scripting',
+  [tokens.aboutSectionType.list.items.item11]: 'CI/CD Integration',
+  [tokens.aboutSectionType.list.items.item12]: 'Config Mgmt',
+  [tokens.aboutSectionType.list.items.item13]: 'Container Tests',
+  [tokens.aboutSectionType.list.items.item14]: 'Observability',
+  [tokens.aboutSectionType.list.items.item15]: 'Test Management',
+  [tokens.aboutSectionType.list.items.item16]: 'DevSecOps',
+  [tokens.aboutSectionType.list.items.item17]: 'Agile Methods',
+  [tokens.aboutSectionType.list.items.item18]: 'Git Flow',
+  [tokens.aboutSectionType.list.items.item19]: 'Team Collaboration',
+  [tokens.aboutSectionType.list.items.item20]: 'Scalability',
+
   [tokens.aboutSectionType.intro]:
-    'Hi, my name is Gaston Alejandro Genaud, an SDET as well as DevOps Engineer who wants to explore every tech stack.',
+    'Hello, I’m Gaston Alejandro Genaud, an SDET and DevOps Engineer passionate about exploring new technologies and stacks to enhance software quality.',
   [tokens.aboutSectionType.history]:
-    'Fast-forward to today, and I’ve had the privilege of working at',
+    'Throughout my career, I’ve had the privilege to collaborate with organizations such as',
   [tokens.aboutSectionType.focus]:
-    'My focus these days is to continue to grow as QA Automation and expand my knowledge of AWS.',
+    'Currently, I’m focusing on strengthening my QA Automation skills and deepening my knowledge of AWS to provide even more robust and efficient solutions.',
 
   // Skills Section
   [tokens.skillsSectionType.title]: 'what i do',
-  [tokens.skillsSectionType.skill1.title]: 'Software Development in Test',
+  [tokens.skillsSectionType.skill1.title]: 'Software Development in Testing',
   [tokens.skillsSectionType.skill1.points.point1]:
-    'Building E2E automations, functional testing and test setup such as regression and smoke.',
+    'Implementing E2E automations, functional tests, and configurations (regression, smoke).',
   [tokens.skillsSectionType.skill1.points.point2]:
-    'CI/CD implementation of test automations.',
+    'Integrating CI/CD for automated testing workflows.',
   [tokens.skillsSectionType.skill1.points.point3]:
-    'Building test scripts to validate API compare responses between api from different environments and schema validation.',
+    'Creating test scripts to validate and compare API responses, ensuring data integrity and schema compliance.',
   [tokens.skillsSectionType.skill1.points.point4]:
-    'Building load and performance tests.',
+    'Developing load and performance tests to ensure scalability.',
   [tokens.skillsSectionType.skill1.points.point5]:
-    'Career path follow-up, QA team management.',
+    'Mentoring and leading QA teams, driving professional growth and continuous improvement.',
   [tokens.skillsSectionType.skill2.title]: 'DevOps Engineer',
   [tokens.skillsSectionType.skill2.points.point1]:
-    'Experience in designing interfaces with Lucidchart',
+    'Designing diagrams and workflows with Lucidchart for clear visualizations.',
   [tokens.skillsSectionType.skill2.points.point2]:
-    'Experience in the design, development and implementation of high quality and scalable software solutions.',
+    'Designing, developing, and implementing scalable, high-quality solutions aligned with best practices.',
   [tokens.skillsSectionType.skill2.points.point3]:
-    'I have worked with tools and technologies such as AWS, software architecture/cloud, terraform, Docker, Kubernetes, Jenkins, Git, and Python.',
+    'Experience with AWS, cloud architecture, Terraform, Docker, Kubernetes, Jenkins, Git, and Python, optimizing continuous delivery and reliability.',
 
   // Experience Section
-  [tokens.experienceSectionType.title]: "where i've worked",
+  [tokens.experienceSectionType.title]: 'where i’ve worked',
 
   // Experience 0: Darwoft
   [tokens.experienceSectionType.experiences[0].company]: 'Darwoft',
   [tokens.experienceSectionType.experiences[0].role]:
-    'Software Development in Test Engineer & Tech Lead',
+    'Sr QA Automation Engineer & Tech Lead',
   [tokens.experienceSectionType.experiences[0].started]: 'August 2022',
   [tokens.experienceSectionType.experiences[0].upto]: 'present',
   [tokens.experienceSectionType.experiences[0].tasks[0]]:
-    'Mobile automation with Appium, Python, Pytest, and Behave.',
+    'Mobile automation with Appium, Python, Pytest, and Behave, optimizing test coverage in mobile environments.',
   [tokens.experienceSectionType.experiences[0].tasks[1]]:
-    'Continuous integration with CircleCI, Implementation of parallel tests with CypressIO and CircleCI.',
+    'Continuous integration with CircleCI and parallel test execution with CypressIO, improving pipeline efficiency.',
   [tokens.experienceSectionType.experiences[0].tasks[2]]:
-    'Load testing (Artillery and JMeter)',
+    'Load testing with Artillery and JMeter, ensuring high-performance under heavy demand.',
   [tokens.experienceSectionType.experiences[0].tasks[3]]:
-    'Lead a cross-functional team of developers and QA Automation.',
+    'Leading a multidisciplinary team, fostering collaboration and internal talent growth.',
   [tokens.experienceSectionType.experiences[0].tasks[4]]:
-    'Creation of Lambda (Python), Management of Dynamo, RDS, configuration, CloudWatch configuration, Taurus implementation (AWS Load Testing).',
+    'Implementing Lambdas (Python), managing DynamoDB, RDS, configuring CloudWatch, and using Taurus for AWS load testing.',
 
   // Experience 1: Coderio
   [tokens.experienceSectionType.experiences[1].company]:
     'Coderio | Software Company',
   [tokens.experienceSectionType.experiences[1].role]:
-    'SSr QA Automation Engineer & DevOps Engineer',
+    'Sr QA Automation Engineer & DevOps Engineer',
   [tokens.experienceSectionType.experiences[1].started]: 'September 2021',
   [tokens.experienceSectionType.experiences[1].upto]: 'August 2022',
   [tokens.experienceSectionType.experiences[1].tasks[0]]:
-    'Frontend automation, Backend automation, test case design.',
+    'Frontend and backend test automation, along with effective test case design.',
   [tokens.experienceSectionType.experiences[1].tasks[1]]:
-    'Automation for Dynamo, RDS, S3 and CloudWatch tests.',
+    'Automating validations in Dynamo, RDS, S3, and CloudWatch tests, ensuring quality in distributed environments.',
   [tokens.experienceSectionType.experiences[1].tasks[2]]:
-    'Creation of Lambdas.',
+    'Developing Lambdas to streamline internal workflows and processes.',
   [tokens.experienceSectionType.experiences[1].tasks[3]]:
-    'Use of Screenplay Pattern, POM Pattern, Serenity BDD, Selenium, Cypress in Java and Javascript.',
+    'Applying Screenplay and POM patterns, using Serenity BDD, Selenium, Cypress (Java/JavaScript), promoting maintainability and scalability of tests.',
 
   // Experience 2: SearchMAS
   [tokens.experienceSectionType.experiences[2].company]: 'SearchMAS',
   [tokens.experienceSectionType.experiences[2].role]:
-    'Ssr QA Automation Engineer & QA Lead',
+    'Sr QA Automation Engineer & QA Lead',
   [tokens.experienceSectionType.experiences[2].started]: 'September 2020',
   [tokens.experienceSectionType.experiences[2].upto]: 'March 2021',
   [tokens.experienceSectionType.experiences[2].tasks[0]]:
-    'Frontend Automation, Backend Automation (GraphQL), Test Case Design (GraphQL), test case design, test plan design, team leader.',
+    'Frontend and Backend automation (GraphQL), test case and plan design, assuming a leadership role within the team.',
   [tokens.experienceSectionType.experiences[2].tasks[1]]:
-    'Stack: GraphQL, REST API, MongoDB, Docker, AWS (EC2, AMPLIFY), Just-API, Mongo-memory-server, Appium, Jest, Mocha, Chai, and Testcafe.',
+    'Diverse stack: GraphQL, REST API, MongoDB, Docker, AWS (EC2, AMPLIFY), Just-API, Mongo-memory-server, Appium, Jest, Mocha, Chai, Testcafe.',
   [tokens.experienceSectionType.experiences[2].tasks[2]]:
-    'POM Pattern, Serenity BDD, Selenium, Cucumber. TestNG, Java.',
+    'Using POM Pattern, Serenity BDD, Selenium, Cucumber, TestNG, and Java to optimize automated testing.',
   [tokens.experienceSectionType.experiences[2].tasks[3]]:
-    'Integration of reporting frameworks: mocha-awesome, cucumber-html-reporter',
+    'Integrating clear and detailed reports with mocha-awesome and cucumber-html-reporter, improving result visibility.',
 
   // Experience 3: Globant
   [tokens.experienceSectionType.experiences[3].company]: 'Globant',
@@ -125,11 +133,11 @@ export const en = {
   [tokens.experienceSectionType.experiences[3].started]: 'March 2020',
   [tokens.experienceSectionType.experiences[3].upto]: 'September 2020',
   [tokens.experienceSectionType.experiences[3].tasks[0]]:
-    'Frontend automation, Backend automation of banking microservices (GraphQL), test case design, test plan design, team leader.',
+    'Frontend and Backend automation for banking microservices (GraphQL), test case and plan design, and team leadership.',
   [tokens.experienceSectionType.experiences[3].tasks[1]]:
-    'Stack: Yadda, Supertest, Mocha and Cucumber, microservices (API-REST) and Axios.',
+    'Stack: Yadda, Supertest, Mocha, Cucumber, microservices (API-REST), and Axios, ensuring flexibility and scalability in testing.',
   [tokens.experienceSectionType.experiences[3].tasks[2]]:
-    'Language: Node.js and JavaScript',
+    'Languages: Node.js and JavaScript, enabling fast development and test integration.',
 
   // Experience 4: VATES - Software
   [tokens.experienceSectionType.experiences[4].company]: 'VATES - Software',
@@ -137,44 +145,47 @@ export const en = {
   [tokens.experienceSectionType.experiences[4].started]: 'August 2018',
   [tokens.experienceSectionType.experiences[4].upto]: 'March 2020',
   [tokens.experienceSectionType.experiences[4].tasks[0]]:
-    'Backend automation of service layer and various microservices with frameworks such as Serenity, Cucumber Rest Assured in JAVA, and using HPE UFT for various automations.',
+    'Backend automation for services and microservices with Serenity, Cucumber Rest Assured (Java), and HPE UFT, ensuring quality across multiple layers.',
   [tokens.experienceSectionType.experiences[4].tasks[1]]:
-    'Project: BANCOR - Role: JR Testing Analyst - Tasks: Requirements analysis, design and execution of test cases with HP ALM and Agile methodologies (Scrum).',
+    'Project: BANCOR - Role: Jr Testing Analyst - Requirements analysis, test case design, and execution with HP ALM under Agile (Scrum) methodologies.',
   [tokens.experienceSectionType.experiences[4].tasks[2]]:
-    'Project: Bci Insurance - Role: JR Testing Analyst - Tasks: Functional, System and User Acceptance Testing, Review and Execution of system and business test cases, smoke tests and end-user support.',
+    'Project: Bci Insurance - Role: Jr Testing Analyst - Functional, system, and user acceptance testing, smoke tests, and end-user support.',
 
   // Featured Projects Section
-  [tokens.featuredProjectsSectionType.title]: "projects i've worked on",
+  [tokens.featuredProjectsSectionType.title]: 'featured projects',
 
   [tokens.featuredProjectsSectionType.projects[0].name]:
     'GastonAGenaud/appium-selenium-python',
   [tokens.featuredProjectsSectionType.projects[0].description]:
     'Mobile Automation Testing with Appium, Selenium, and Python',
   [tokens.featuredProjectsSectionType.projects[0].tasks]:
-    'Appium and Python are a great combination for mobile automation. Python, being an interpreted, high-level programming language, proposes a quicker development cycle.',
+    'Appium and Python form a strong pairing for mobile automation, providing quick development and adaptability to different environments.',
 
   [tokens.featuredProjectsSectionType.projects[1].name]:
     'GastonAGenaud/cypress-cucumber',
   [tokens.featuredProjectsSectionType.projects[1].description]:
-    'Automation Project with Cypress and Cucumber.',
+    'Automation with Cypress and Cucumber',
   [tokens.featuredProjectsSectionType.projects[1].tasks]:
-    'Cypress is a JavaScript-based end-to-end testing framework that doesn’t use Selenium. It is a next-generation tool built for the modern web, fundamentally different from Selenium.',
+    'Cypress is a modern, efficient end-to-end testing framework that does not rely on Selenium, offering a more agile experience for the modern web.',
+
   // Projects Section
   [tokens.projectsSectionType.title]: 'my projects',
   [tokens.projectsSectionType.projects[0].name]:
-    'Nextjs Project with TypeScript, Next, Material-UI, TailwindCSS',
+    'Project with Nextjs, TypeScript, Material-UI, and TailwindCSS',
   [tokens.projectsSectionType.projects[1].name]:
     'Java Project with Selenium, TestNG, Maven, and Allure Reports',
+
   // Contact Section
-  [tokens.contactSectionType.title]: 'get in touch',
-  [tokens.contactSectionType.subtitle]: "what's next",
+  [tokens.contactSectionType.title]: 'let’s get in touch',
+  [tokens.contactSectionType.subtitle]: 'what’s next',
   [tokens.contactSectionType.paragraphs[0]]:
-    'I’m currently looking for a remote job or any new opportunities.',
+    'I am currently seeking remote opportunities or other interesting projects.',
   [tokens.contactSectionType.paragraphs[1]]:
-    'Whether you have a project to discuss or just want to say hi, my inbox is open for all!',
+    'Whether you have a project to discuss or just want to say hi, my inbox is always open!',
+
   // Courses Section
   [tokens.coursesSectionType.title]: 'Courses',
-  [tokens.coursesSectionType.subtitle]: 'Guided Projects',
+  [tokens.coursesSectionType.subtitle]: 'Projects',
   [tokens.coursesSectionType.paragraphs[0]]:
-    'I am currently finishing a series of courses on test automation design in different languages and open source technologies along with a test automation project generator. I plan to finish its development on 09/02/2025. Stay tuned!',
+    'I am completing a series of courses on test automation design in various languages and open source technologies, along with an automation project generator. I plan to finish its development by 09/02/2025. Stay tuned!',
 };
