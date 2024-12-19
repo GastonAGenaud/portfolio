@@ -1,5 +1,3 @@
-import React from 'react';
-import { format, subHours, subMinutes, subSeconds } from 'date-fns';
 import {
   Avatar,
   Box,
@@ -8,8 +6,10 @@ import {
   Chip,
   Link,
   Typography,
-  Unstable_Grid2 as Grid
+  Unstable_Grid2 as Grid,
 } from '@mui/material';
+import { format, subHours, subMinutes, subSeconds } from 'date-fns';
+import React from 'react';
 
 const now = new Date();
 
@@ -18,21 +18,22 @@ const posts = [
     id: '24b76cac9a128cd949747080',
     author: {
       avatar: '/images/github.png',
-      name: 'GastonAGenaud/appium-selenium-python'
+      name: 'GastonAGenaud/appium-selenium-python',
     },
     category: 'Automation Testing',
     cover: '/images/appium.png',
     publishedAt: subMinutes(subSeconds(now, 16), 45).getTime(),
     readTime: '5 min',
-    shortDescription: 'Appium and Python are a great combination of Mobile automation. Python existing as an Interpreted, high-level programming language proposes a quicker development time. Appium is an open-source tool you can utilize to automate mobile web, mobile native, and mobile hybrid applications on iOS and Android outlets.',
+    shortDescription:
+      'Appium and Python are a great combination of Mobile automation. Python existing as an Interpreted, high-level programming language proposes a quicker development time. Appium is an open-source tool you can utilize to automate mobile web, mobile native, and mobile hybrid applications on iOS and Android outlets.',
     title: 'Mobile Automation Testing with Appium, Selenium, and Python',
-    redirect: 'https://github.com/GastonAGenaud/appium-python-automation'
+    redirect: 'https://github.com/GastonAGenaud/appium-python-automation',
   },
   {
     id: 'a9c19d0caf2ca91020aacd1f',
     author: {
       avatar: '/images/github.png',
-      name: 'GastonAGenaud/cypress-cucumber'
+      name: 'GastonAGenaud/cypress-cucumber',
     },
     category: 'Automation Testing',
     cover: '/images/nodejs.png',
@@ -40,13 +41,13 @@ const posts = [
     readTime: '6 min',
     shortDescription: '',
     title: 'Automation Project with Cypress and Cucumber',
-    redirect: 'https://github.com/GastonAGenaud/cypress-cucumber'
+    redirect: 'https://github.com/GastonAGenaud/cypress-cucumber',
   },
   {
     id: '44df90cbf89963b8aa625c7d',
     author: {
       avatar: '/images/github.png',
-      name: 'GastonAGenaud/portfolio'
+      name: 'GastonAGenaud/portfolio',
     },
     category: 'Nextjs',
     cover: '/images/nextjs.png',
@@ -54,13 +55,13 @@ const posts = [
     readTime: '3 min',
     shortDescription: 'This web page.',
     title: 'Nextjs Project with TypeScript, Next, Material-UI, TailwindCSS',
-    redirect: 'https://github.com/GastonAGenaud/portfolio'
+    redirect: 'https://github.com/GastonAGenaud/portfolio',
   },
   {
     id: '44df90cbf8996fb8aa625c7d',
     author: {
       avatar: '/images/github.png',
-      name: 'GastonAGenaud/automation-selenium-java'
+      name: 'GastonAGenaud/automation-selenium-java',
     },
     category: 'Automation Testing',
     cover: '/images/selenium.png',
@@ -68,40 +69,32 @@ const posts = [
     readTime: '13 min',
     shortDescription: 'Selenium Project with Java, TestNG, Maven, Cucumber',
     title: 'Selenium Automation Project',
-    redirect: 'https://github.com/GastonAGenaud/automation-selenium-java'
-  }
+    redirect: 'https://github.com/GastonAGenaud/automation-selenium-java',
+  },
 ];
 
 export const GridList1 = () => (
   <Box
     sx={{
-      backgroundColor:
-        '#191919',
-        p: 4,
-        m: 0, // Asegurándote de que no haya margen.
-        border: 0, // Asegurándote de que no haya borde.
+      backgroundColor: '#191919',
+      p: 4,
+      m: 0, // Asegurándote de que no haya margen.
+      border: 0, // Asegurándote de que no haya borde.
     }}
   >
-    <Grid
-      container
-      spacing={3}
-    >
+    <Grid container spacing={3}>
       {posts.map((post) => (
-        <Grid
-          key={post.id}
-          xs={12}
-          md={4}
-        >
+        <Grid key={post.id} xs={12} md={4}>
           <Card
             sx={{
               height: '100%',
-              p: 2
+              p: 2,
             }}
           >
             <Box
               sx={{
                 pt: 'calc(100% * 4 / 4)',
-                position: 'relative'
+                position: 'relative',
               }}
             >
               <CardMedia
@@ -110,22 +103,19 @@ export const GridList1 = () => (
                   height: '100%',
                   position: 'absolute',
                   top: 0,
-                  width: '100%'
+                  width: '100%',
                 }}
               />
             </Box>
             <Box sx={{ mt: 2 }}>
               <div>
-                <Chip
-                  label={post.category}
-                  variant="outlined"
-                />
+                <Chip label={post.category} variant="outlined" />
               </div>
               <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  my: 2
+                  my: 2,
                 }}
               >
                 <Avatar src={post.author.avatar} />
@@ -133,11 +123,10 @@ export const GridList1 = () => (
                   <Typography variant="subtitle2">
                     {post.author.name}
                   </Typography>
-                  <Typography
-                    color="text.secondary"
-                    variant="caption"
-                  >
-                    {`${format(post.publishedAt, 'dd MMM')} · ${post.readTime} read`}
+                  <Typography color="text.secondary" variant="caption">
+                    {`${format(post.publishedAt, 'dd MMM')} · ${
+                      post.readTime
+                    } read`}
                   </Typography>
                 </Box>
               </Box>
@@ -159,7 +148,7 @@ export const GridList1 = () => (
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   WebkitBoxOrient: 'vertical',
-                  WebkitLineClamp: 2
+                  WebkitLineClamp: 2,
                 }}
                 variant="body1"
               >

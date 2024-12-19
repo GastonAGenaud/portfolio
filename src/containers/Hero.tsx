@@ -1,5 +1,5 @@
 'use client';
-import { heroSection } from '@/lib/content/hero';
+import { useHeroSection } from '@/lib/content/hero';
 import useWindowWidth from '@/lib/hooks/use-window-width';
 import { getBreakpointsWidth } from '@/lib/utils/helper';
 
@@ -11,7 +11,7 @@ import { motion } from 'framer-motion';
 
 const Hero = () => {
   const { cta, subtitle, title, tagline, description, specialText } =
-    heroSection;
+    useHeroSection();
 
   const windowWidth = useWindowWidth();
   const md = getBreakpointsWidth('md');

@@ -5,19 +5,15 @@ import React from 'react';
 export const Seo = (props) => {
   const { title } = props;
 
-  const fullTitle = title
-    ? title + ' | Devias Kit PRO'
-    : 'Devias Kit PRO';
+  const fullTitle = title ? title + ' | Devias Kit PRO' : 'Devias Kit PRO';
 
   return (
     <Head>
-      <title>
-        {fullTitle}
-      </title>
+      <title>{fullTitle}</title>
     </Head>
   );
 };
 
 Seo.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
 };

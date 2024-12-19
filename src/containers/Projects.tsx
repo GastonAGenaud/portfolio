@@ -1,5 +1,5 @@
 'use client';
-import { projectsSection } from '@/lib/content/projects';
+import { useProjectsSection } from '@/lib/content/projects';
 import { PROJECTS_INITIALLY } from '@/lib/utils/config';
 import { sortByYear } from '@/lib/utils/helper';
 
@@ -11,7 +11,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 const Projects = () => {
-  const { projects, title } = projectsSection;
+  const { projects, title } = useProjectsSection();
   const [showMore, setShowMore] = useState(false);
   const topProjects = projects.slice(0, PROJECTS_INITIALLY);
 

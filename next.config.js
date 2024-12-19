@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         protocol: 'https',
-        hostname: 'fmontes.com',
+        hostname: 'github.com',
         pathname: '/**',
       },
       {

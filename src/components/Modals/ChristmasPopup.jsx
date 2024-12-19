@@ -1,4 +1,4 @@
-import {ShowLottie} from '@/components';
+import { ShowLottie } from '@/components';
 
 import React from 'react';
 const ChristmasPopup = ({ isVisible, onClose }) => {
@@ -35,10 +35,9 @@ const ChristmasPopup = ({ isVisible, onClose }) => {
       width: '90%',
       height: '90%',
       fontSize: '1rem',
-    }
+    },
     // ...resto del estilo
   };
-
 
   const overlayStyle = {
     position: 'fixed',
@@ -48,7 +47,6 @@ const ChristmasPopup = ({ isVisible, onClose }) => {
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 999,
-
   };
 
   const buttonStyle = {
@@ -78,6 +76,6 @@ const ChristmasPopup = ({ isVisible, onClose }) => {
       </div>
     </div>
   );
-}
+};
 
 export default ChristmasPopup;

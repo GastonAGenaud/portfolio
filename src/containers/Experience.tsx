@@ -1,7 +1,7 @@
 'use client';
 import { TabList } from '@/components';
 
-import { experienceSection } from '../lib/content/experience';
+import { useExperienceSection } from '../lib/content/experience';
 import { getSectionAnimation } from '../styles/animations';
 import { motion } from 'framer-motion';
 
@@ -12,8 +12,8 @@ const Experience = () => {
       className="max-w-3xl py-32 mx-auto"
       {...getSectionAnimation}
     >
-      <h2 className="heading-secondary">{experienceSection.title}</h2>
-      <TabList experiences={experienceSection.experiences} />
+      <h2 className="heading-secondary">{useExperienceSection().title}</h2>
+      <TabList experiences={useExperienceSection().experiences} />
     </motion.section>
   );
 };

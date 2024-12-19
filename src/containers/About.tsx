@@ -1,18 +1,20 @@
 'use client';
-import { aboutSection } from '@/lib/content/about';
+import { useAboutSection } from '@/lib/content/about';
 import { author } from '@/lib/content/portfolio';
 import { getId } from '@/lib/utils/helper';
 
 import { AuthorImage, Link, ListItem, Wrapper } from '@/components';
 
+import { tokens } from '@/locales/tokens';
 import { getSectionAnimation } from '@/styles/animations';
 
 import { useEffect, useState } from 'react';
-
+import { useTranslation } from 'react-i18next';
 const About = () => {
-  const { title, img, list } = aboutSection;
+  const { title, img, list } = useAboutSection();
   // To avoid hydration error
   const [domLoaded, setDomLoaded] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setDomLoaded(true);
@@ -23,13 +25,10 @@ const About = () => {
       <h2 className="heading-secondary">{title}</h2>
       <main className="flex flex-col items-center gap-16 lg:items-start lg:flex-row">
         <div className="space-y-4 lg:w-3/5">
+          <p>{t(tokens.aboutSectionType.intro)}</p>
           <p>
-            Hi, my name is Gaston Alejandro Genaud, an SDET as well as DevOps Engineer who wants to explore every tech stack.
-          </p>
-          <p>
-            Fast-forward to today, and I’ve had the privilege of working at
+            {t(tokens.aboutSectionType.history)}
             <br />
-
             <Link
               href="https://www.claro.com.ar/personas"
               target="_blank"
@@ -54,7 +53,6 @@ const About = () => {
               Globant
             </Link>
             <br />
-
             <Link
               href="https://carejourney.com/"
               target="_blank"
@@ -62,12 +60,8 @@ const About = () => {
             >
               Carejourney
             </Link>
-
           </p>
-          <p>
-            My focus these days is to continue to grow as QA Automation
-            and expand my knowledge of AWS.
-          </p>
+          <p>{t(tokens.aboutSectionType.focus)}</p>
 
           {list && (
             <>

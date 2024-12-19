@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { throttle } from 'lodash';
+import { useEffect } from 'react';
 
 export const useWindowScroll = (config) => {
   useEffect(() => {

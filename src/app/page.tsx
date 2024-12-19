@@ -1,5 +1,4 @@
-"use client"
-import ChristmasPopup  from '@/components/Modals/ChristmasPopup';
+'use client';
 import {
   About,
   Contact,
@@ -12,8 +11,9 @@ import {
   Skills,
 } from '@/containers';
 
+import '../locales/i18n';
 import type { NextPage } from 'next';
-import React, { useEffect,useState } from 'react';
+import React, { useEffect } from 'react';
 
 /**
  * TODO: Create separate page for all the projects with filters (vercel | netlify | github api for automation)
@@ -22,18 +22,19 @@ import React, { useEffect,useState } from 'react';
  */
 
 const Home: NextPage = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  //const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    setShowPopup(true);
+    //setShowPopup(true);
   }, []);
 
   return (
-    <><ChristmasPopup
+    <>
+      {/*<ChristmasPopup
     isVisible={showPopup}
     onClose={() => setShowPopup(false)}
   />
-  {/* Resto del contenido de tu página */}
+   Resto del contenido de tu página */}
 
       <Layout>
         <Hero />

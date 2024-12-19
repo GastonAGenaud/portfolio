@@ -9,11 +9,10 @@ export const useUpdateEffect = (effect, dependencies = []) => {
   const isInitialMount = useRef(true);
 
   useEffect(() => {
-      if (isInitialMount.current) {
-        isInitialMount.current = false;
-      } else {
-        return effect();
-      }
-    },
-    dependencies);
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      return effect();
+    }
+  }, dependencies);
 };

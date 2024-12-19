@@ -1,11 +1,11 @@
-import { contactSection } from '@/lib/content/contact';
+import { useContactSection } from '@/lib/content/contact';
 
 import { Button, Wrapper } from '@/components';
 
 import { getSectionAnimation } from '@/styles/animations';
 
 const Contact = () => {
-  const { subtitle, title, paragraphs, link } = contactSection;
+  const { subtitle, title, paragraphs, link } = useContactSection();
   return (
     <Wrapper
       id="contact"

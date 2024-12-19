@@ -1,11 +1,11 @@
-import { coursesSection } from '@/lib/content/courses';
+import { useCoursesSection } from '@/lib/content/courses';
 
 import { Button, Wrapper } from '@/components';
 
 import { getSectionAnimation } from '@/styles/animations';
 
 const Courses = () => {
-  const { subtitle, title, paragraphs, link } = coursesSection;
+  const { subtitle, title, paragraphs, link } = useCoursesSection();
   return (
     <Wrapper
       id="courses"

@@ -1,5 +1,5 @@
 'use client';
-import { navbarSection } from '@/lib/content/navbar';
+import { useNavbarSection } from '@/lib/content/navbar';
 import { author } from '@/lib/content/portfolio';
 import useWindowWidth from '@/lib/hooks/use-window-width';
 import { getBreakpointsWidth } from '@/lib/utils/helper';
@@ -8,9 +8,13 @@ import { Button, DarkModeButton, Link as CLink, NavButton } from '@/components';
 
 import { fadeIn, slideIn } from '@/styles/animations';
 
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Hides the navbar while scrolling down
@@ -31,11 +35,11 @@ const hideNavWhileScrolling = ({
   const nav = document.getElementById(id);
   if (!nav) return;
 
-  let prevScrollPos = window.pageYOffset;
+  let prevScrollPos = window.scrollY;
 
   window.onscroll = () => {
     if (when) {
-      const curScrollPos = window.pageYOffset;
+      const curScrollPos = window.scrollY;
       if (prevScrollPos < curScrollPos) nav.style.top = `-${offset}px`;
       else nav.style.top = '0';
       prevScrollPos = curScrollPos;
@@ -72,12 +76,33 @@ const NavItem = ({ href, children, onClick, index, delay }: NavItemsProps) => {
 };
 
 const Navbar = () => {
-  const { cta, navLinks } = navbarSection;
+  const { cta, navLinks } = useNavbarSection();
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
 
   const windowWidth = useWindowWidth();
   const md = getBreakpointsWidth('md');
   const ANIMATION_DELAY = windowWidth <= md ? 0 : 0.8;
+
+  const { i18n, t } = useTranslation();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent) => {
+    setAnchorEl(event.currentTarget as HTMLElement);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleChangeLanguage = useCallback(
+    async (language: 'en' | 'es') => {
+      handleClose();
+      await i18n.changeLanguage(language);
+      toast.success(t('Language changed successfully'));
+    },
+    [i18n, t]
+  );
 
   useEffect(() => {
     hideNavWhileScrolling({ when: !navbarCollapsed });
@@ -146,6 +171,32 @@ const Navbar = () => {
                 initial="hidden"
                 animate="show"
               />
+              <div>
+                <Button
+                  aria-controls={open ? 'language-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                >
+                  {t('Language')}
+                </Button>
+                <Menu
+                  id="language-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'language-button',
+                  }}
+                >
+                  <MenuItem onClick={() => handleChangeLanguage('en')}>
+                    English
+                  </MenuItem>
+                  <MenuItem onClick={() => handleChangeLanguage('es')}>
+                    Spanish
+                  </MenuItem>
+                </Menu>
+              </div>
             </div>
           </ul>
         </nav>

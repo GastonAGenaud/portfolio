@@ -1,12 +1,23 @@
+'use client';
 import { author } from '@/lib/content/portfolio';
 import { ContactSectionType } from '@/lib/types/sections';
 
-export const contactSection: ContactSectionType = {
-    title: 'get in touch',
-    subtitle: "what's next",
+import { tokens } from '@/locales/tokens';
+
+import { useTranslation } from 'react-i18next';
+
+export const useContactSection = (): ContactSectionType => {
+  const { t } = useTranslation();
+
+  const contactSection: ContactSectionType = {
+    title: t(tokens.contactSectionType.title),
+    subtitle: t(tokens.contactSectionType.subtitle),
     paragraphs: [
-    'I’m currently looking for a remote job or any new opportunities.',
-    'Whether you have a project to discuss or just want to say hi, my inbox is open for all!',
+      t(tokens.contactSectionType.paragraphs[0]),
+      t(tokens.contactSectionType.paragraphs[1]),
     ],
-    link: `mailto:${author.email}`,
+    link: `mailto:${author.email}`, // This remains the same, as it's not translated text.
+  };
+
+  return contactSection;
 };

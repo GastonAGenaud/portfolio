@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
-import { forwardRef } from 'react';
 import Link from 'next/link';
+import { forwardRef } from 'react';
 
 /**
  * This is a wrapper over `next/link` component.
@@ -8,7 +8,5 @@ import Link from 'next/link';
  */
 export const RouterLink = forwardRef((props, ref) => (
   // eslint-disable-next-line react/react-in-jsx-scope
-  <Link
-    ref={ref}
-    {...props} />
+  <Link ref={ref} {...props} />
 ));

@@ -1,5 +1,5 @@
 'use client';
-import { skillsSection } from '@/lib/content/skills';
+import { useSkillsSection } from '@/lib/content/skills';
 import { useTheme } from '@/lib/hooks/use-theme';
 
 import { Skill, Wrapper } from '@/components';
@@ -7,7 +7,7 @@ import { Skill, Wrapper } from '@/components';
 import { getSectionAnimation } from '@/styles/animations';
 
 const Skills = () => {
-  const { title, skills } = skillsSection;
+  const { title, skills } = useSkillsSection();
   const { isDarkMode } = useTheme();
 
   return (

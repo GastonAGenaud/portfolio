@@ -1,27 +1,35 @@
-import { AboutSectionType } from '@/lib/types/sections'
+import { AboutSectionType } from '@/lib/types/sections';
 
-export const aboutSection: AboutSectionType = {
-    title: 'about me',
-    // Paragraphs need to be changed from containers/About.tsx
-    // Because it wasn't possible to insert anchor tags like this
+import { tokens } from '@/locales/tokens';
+
+import { useTranslation } from 'react-i18next';
+
+export const useAboutSection = (): AboutSectionType => {
+  const { t } = useTranslation();
+
+  const aboutSection: AboutSectionType = {
+    title: t(tokens.aboutSectionType.title),
     list: {
-    title: 'Here are a few technologies I’ve been working with recently:',
-    items: [
-        'NextJs',
-        'Cypress',
-        'AWS',
-        'CircleCI',
-        'Xray',
-        'Javascript',
-        'Python',
-        'Docker',
-        'Kubernetes',
-        'Selenium',
-        'Jenkins',
-        'Postman',
-        'JMETER',
-        'Appium',
-    ],
+      title: t(tokens.aboutSectionType.list.title),
+      items: [
+        t(tokens.aboutSectionType.list.items.item1),
+        t(tokens.aboutSectionType.list.items.item2),
+        t(tokens.aboutSectionType.list.items.item3),
+        t(tokens.aboutSectionType.list.items.item4),
+        t(tokens.aboutSectionType.list.items.item5),
+        t(tokens.aboutSectionType.list.items.item6),
+        t(tokens.aboutSectionType.list.items.item7),
+        t(tokens.aboutSectionType.list.items.item8),
+        t(tokens.aboutSectionType.list.items.item9),
+        t(tokens.aboutSectionType.list.items.item10),
+        t(tokens.aboutSectionType.list.items.item11),
+        t(tokens.aboutSectionType.list.items.item12),
+        t(tokens.aboutSectionType.list.items.item13),
+        t(tokens.aboutSectionType.list.items.item14),
+      ],
     },
     img: '/perfil.jpg',
+  };
+
+  return aboutSection;
 };
