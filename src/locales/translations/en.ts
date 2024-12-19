@@ -10,7 +10,7 @@ export const en = {
   [tokens.header.experience]: 'experience',
   [tokens.header.projects]: 'projects',
   [tokens.header.contact]: 'contact',
-  [tokens.header.resume]: 'Curriculum Vitae',
+  [tokens.header.resume]: 'Resume',
 
   // Hero Section
   [tokens.heroSectionType.subtitle]: 'Hello, I am',
