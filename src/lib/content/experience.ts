@@ -1,4 +1,4 @@
-// src/lib/content/experience.ts (o en otra ubicación similar)
+'use client'
 import { ExperienceSectionType } from '@/lib/types/sections';
 
 import { tokens } from '@/locales/tokens';
