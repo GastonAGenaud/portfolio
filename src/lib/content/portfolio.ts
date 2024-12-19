@@ -10,6 +10,7 @@ export const socialLinks: StringKeyValueType = {
   instagram: 'https://www.instagram.com/gastongenaud',
   github: 'https://github.com/GastonAGenaud/',
   linkedin: 'https://www.linkedin.com/in/gaston-genaud/',
+  lightroom: 'https://adobe.ly/49JhF7I',
 };
 
 export const author = {
