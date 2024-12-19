@@ -12,7 +12,7 @@ export const useCoursesSection = (): CoursesSectionType => {
     title: t(tokens.coursesSectionType.title),
     subtitle: t(tokens.coursesSectionType.subtitle),
     paragraphs: [t(tokens.coursesSectionType.paragraphs[0])],
-    link: `https://www.udemy.com/user/gaston-genaud/`, // Not translated
+    link: `https://academy-frontend-kappa.vercel.app/`,
   };
 
   return coursesSection;

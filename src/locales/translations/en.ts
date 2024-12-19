@@ -187,5 +187,5 @@ export const en = {
   [tokens.coursesSectionType.title]: 'Courses',
   [tokens.coursesSectionType.subtitle]: 'Projects',
   [tokens.coursesSectionType.paragraphs[0]]:
-    'I am completing a series of courses on test automation design in various languages and open source technologies, along with an automation project generator. I plan to finish its development by 09/02/2025. Stay tuned!',
+    'I am completing a series of courses on test automation design in various languages and open source technologies, along with an automation project generator. I plan to finish its development by ⬛⬛/⬛⬛/2025. Stay tuned!',
 };
