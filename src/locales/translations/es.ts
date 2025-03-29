@@ -187,5 +187,5 @@ export const es = {
   [tokens.coursesSectionType.title]: 'Cursos',
   [tokens.coursesSectionType.subtitle]: 'Proyectos',
   [tokens.coursesSectionType.paragraphs[0]]:
-    'Estoy completando una serie de cursos sobre diseño de automatización de pruebas en distintos lenguajes y tecnologías open source, junto con un generador de proyectos de automatización. Planeo finalizar su desarrollo el 02/09/2025. ¡Mantente atento!',
+    'Estoy completando una serie de cursos sobre diseño de automatización de pruebas en distintos lenguajes y tecnologías open source, junto con un generador de proyectos de automatización. Planeo finalizar su desarrollo el ⬛⬛/⬛⬛/2025. ¡Mantente atento!',
 };
