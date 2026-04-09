@@ -18,6 +18,7 @@ export const useNavbarSection = (): NavbarSectionType => {
       { name: t(tokens.header.skills), url: '/#skills' },
       { name: t(tokens.header.experience), url: '/#experience' },
       { name: t(tokens.header.projects), url: '/#projects' },
+      { name: t(tokens.header.lifeProjects), url: '/#life-projects' },
       { name: t(tokens.header.contact), url: '/contact' },
     ],
     cta: {

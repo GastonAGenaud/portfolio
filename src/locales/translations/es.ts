@@ -9,6 +9,7 @@ export const es = {
   [tokens.header.skills]: 'habilidades',
   [tokens.header.experience]: 'experiencia',
   [tokens.header.projects]: 'proyectos',
+  [tokens.header.lifeProjects]: 'otros proyectos',
   [tokens.header.contact]: 'contacto',
   [tokens.header.resume]: 'Currículum vitae',
 
@@ -174,6 +175,56 @@ export const es = {
     'Proyecto con Nextjs, TypeScript, Material-UI y TailwindCSS',
   [tokens.projectsSectionType.projects[1].name]:
     'Proyecto Java con Selenium, TestNG, Maven y Allure Reports',
+  [tokens.projectsSectionType.projects[2].name]:
+    'Testing E2E con Playwright y TypeScript',
+  [tokens.projectsSectionType.projects[3].name]:
+    'Academia Python Playwright - Curso de Automatización',
+  [tokens.projectsSectionType.projects[4].name]:
+    'Automatización de API - Petstore REST Testing',
+  [tokens.projectsSectionType.projects[5].name]:
+    'Turborepo Monorepo - Arquitectura Full Stack',
+
+  // Life Projects Section
+  [tokens.lifeProjectsSectionType.title]: 'mis otros proyectos de vida',
+
+  // Life Projects - Tab 0: Robótica y Domótica
+  [tokens.lifeProjectsSectionType.experiences[0].company]: 'Robótica y Domótica',
+  [tokens.lifeProjectsSectionType.experiences[0].role]:
+    'Maker y Entusiasta de la Automatización del Hogar',
+  [tokens.lifeProjectsSectionType.experiences[0].started]: '2020',
+  [tokens.lifeProjectsSectionType.experiences[0].upto]: 'presente',
+  [tokens.lifeProjectsSectionType.experiences[0].tasks[0]]:
+    'Construcción de sistemas de hogar inteligente con dispositivos IoT, integrando sensores, relés y microcontroladores (ESP32, Arduino) para automatizar iluminación, clima y seguridad.',
+  [tokens.lifeProjectsSectionType.experiences[0].tasks[1]]:
+    'Diseño y ensamblado de circuitos y PCBs personalizados para domótica, conectando todo a través de plataformas open-source como Home Assistant y MQTT.',
+  [tokens.lifeProjectsSectionType.experiences[0].tasks[2]]:
+    'Automatización de procesos diarios en el hogar: desde iluminación programada hasta persianas automáticas, control de temperatura y rutinas basadas en presencia.',
+
+  // Life Projects - Tab 1: Cultivo Inteligente e Irrigación
+  [tokens.lifeProjectsSectionType.experiences[1].company]: 'Cultivo Inteligente e Irrigación',
+  [tokens.lifeProjectsSectionType.experiences[1].role]:
+    'Diseñador de Sistemas Automatizados',
+  [tokens.lifeProjectsSectionType.experiences[1].started]: '2021',
+  [tokens.lifeProjectsSectionType.experiences[1].upto]: 'presente',
+  [tokens.lifeProjectsSectionType.experiences[1].tasks[0]]:
+    'Diseño de sistemas de riego por goteo automatizados utilizando sensores de humedad del suelo, bombas de agua y electroválvulas controladas por microcontroladores.',
+  [tokens.lifeProjectsSectionType.experiences[1].tasks[1]]:
+    'Construcción de dashboards de monitoreo para seguimiento en tiempo real de temperatura, humedad y niveles de luz para cultivos indoor y outdoor.',
+  [tokens.lifeProjectsSectionType.experiences[1].tasks[2]]:
+    'Automatización de ciclos de cultivo: programación de riego, fertilización e iluminación para un crecimiento óptimo con mínima intervención manual.',
+
+  // Life Projects - Tab 2: Teclados Corne
+  [tokens.lifeProjectsSectionType.experiences[2].company]: 'Teclados Corne Personalizados',
+  [tokens.lifeProjectsSectionType.experiences[2].role]:
+    'Constructor de Teclados y Desarrollador de Firmware',
+  [tokens.lifeProjectsSectionType.experiences[2].started]: '2022',
+  [tokens.lifeProjectsSectionType.experiences[2].upto]: 'presente',
+  [tokens.lifeProjectsSectionType.experiences[2].tasks[0]]:
+    'Soldadura manual de teclados split Corne (Crkbd) desde cero, incluyendo diodos, sockets hotswap, pantallas OLED y LEDs RGB.',
+  [tokens.lifeProjectsSectionType.experiences[2].tasks[1]]:
+    'Flasheo y personalización de firmware QMK/ZMK con layouts optimizados, capas y macros diseñados para flujos de trabajo de desarrollo.',
+  [tokens.lifeProjectsSectionType.experiences[2].tasks[2]]:
+    'Diseño e impresión 3D de carcasas personalizadas y soluciones de tenting para configuraciones ergonómicas de teclados split.',
 
   // Contact Section
   [tokens.contactSectionType.title]: 'pongámonos en contacto',
@@ -182,10 +233,12 @@ export const es = {
     'Actualmente estoy en busca de oportunidades remotas u otros proyectos interesantes.',
   [tokens.contactSectionType.paragraphs[1]]:
     'Si tienes un proyecto para discutir o simplemente deseas saludar, ¡mi bandeja de entrada está siempre abierta!',
+  [tokens.contactSectionType.ctaTitle]: 'Hablame!',
 
   // Courses Section
   [tokens.coursesSectionType.title]: 'Cursos',
   [tokens.coursesSectionType.subtitle]: 'Proyectos',
   [tokens.coursesSectionType.paragraphs[0]]:
-    'Estoy completando una serie de cursos sobre diseño de automatización de pruebas en distintos lenguajes y tecnologías open source, junto con un generador de proyectos de automatización. Planeo finalizar su desarrollo el ⬛⬛/⬛⬛/2025. ¡Mantente atento!',
+    'Estoy completando una serie de cursos sobre diseño de automatización de pruebas en distintos lenguajes y tecnologías open source, junto con un generador de proyectos de automatización. Planeo finalizar su desarrollo en 2027. ¡Mantente atento!',
+  [tokens.coursesSectionType.ctaTitle]: 'Próximamente',
 };

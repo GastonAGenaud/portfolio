@@ -33,6 +33,11 @@ module.exports = {
         hostname: 'media.licdn.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'opengraph.githubassets.com',
+        pathname: '/**',
+      },
     ],
   },
 };

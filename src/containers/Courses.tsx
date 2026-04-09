@@ -5,7 +5,7 @@ import { Button, Wrapper } from '@/components';
 import { getSectionAnimation } from '@/styles/animations';
 
 const Courses = () => {
-  const { subtitle, title, paragraphs, link } = useCoursesSection();
+  const { subtitle, title, paragraphs, link, ctaTitle } = useCoursesSection();
   return (
     <Wrapper
       id="courses"
@@ -22,7 +22,7 @@ const Courses = () => {
       ))}
 
       <Button type="link" size="lg" href={link} center className="mt-12">
-        Comming soon
+        {ctaTitle}
       </Button>
     </Wrapper>
   );

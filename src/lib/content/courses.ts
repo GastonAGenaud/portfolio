@@ -13,6 +13,7 @@ export const useCoursesSection = (): CoursesSectionType => {
     subtitle: t(tokens.coursesSectionType.subtitle),
     paragraphs: [t(tokens.coursesSectionType.paragraphs[0])],
     link: `https://academy-frontend-kappa.vercel.app/`,
+    ctaTitle: t(tokens.coursesSectionType.ctaTitle),
   };
 
   return coursesSection;

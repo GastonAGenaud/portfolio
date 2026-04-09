@@ -5,7 +5,7 @@ import { Button, Wrapper } from '@/components';
 import { getSectionAnimation } from '@/styles/animations';
 
 const Contact = () => {
-  const { subtitle, title, paragraphs, link } = useContactSection();
+  const { subtitle, title, paragraphs, link, ctaTitle } = useContactSection();
   return (
     <Wrapper
       id="contact"
@@ -22,7 +22,7 @@ const Contact = () => {
       ))}
 
       <Button type="link" size="lg" href={link} center className="mt-12">
-        Say Hello
+        {ctaTitle}
       </Button>
     </Wrapper>
   );

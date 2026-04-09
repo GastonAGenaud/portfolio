@@ -62,15 +62,21 @@ export interface FeaturedProjectsSectionType extends Section {
   projects: FeaturedProjectType[];
 }
 
+export interface LifeProjectsSectionType extends Section {
+  experiences: ExperienceType[];
+}
+
 export interface ContactSectionType extends Section {
   subtitle?: string;
   paragraphs: string[];
   link: string;
+  ctaTitle?: string;
 }
 export interface CoursesSectionType extends Section {
   subtitle?: string;
   paragraphs: string[];
   link: string;
+  ctaTitle?: string;
 }
 
 export interface SocialSectionType {

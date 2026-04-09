@@ -8,6 +8,7 @@ import Hero from './Hero';
 import Footer from './layout/Footer';
 import Layout from './layout/Layout';
 import Navbar from './layout/Navbar';
+import LifeProjects from './LifeProjects';
 import Projects from './Projects';
 import Skills from './Skills';
 import Social from './Social';
@@ -23,6 +24,7 @@ export {
   Footer,
   Hero,
   Layout,
+  LifeProjects,
   Navbar,
   Projects,
   Skills,

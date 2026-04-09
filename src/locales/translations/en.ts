@@ -9,6 +9,7 @@ export const en = {
   [tokens.header.skills]: 'skills',
   [tokens.header.experience]: 'experience',
   [tokens.header.projects]: 'projects',
+  [tokens.header.lifeProjects]: 'life projects',
   [tokens.header.contact]: 'contact',
   [tokens.header.resume]: 'Resume',
 
@@ -48,11 +49,11 @@ export const en = {
   [tokens.aboutSectionType.list.items.item20]: 'Scalability',
 
   [tokens.aboutSectionType.intro]:
-    'Hello, I’m Gaston Alejandro Genaud, an SDET and DevOps Engineer passionate about exploring new technologies and stacks to enhance software quality.',
+    "Hello, I'm Gaston Alejandro Genaud, an SDET and DevOps Engineer passionate about exploring new technologies and stacks to enhance software quality.",
   [tokens.aboutSectionType.history]:
-    'Throughout my career, I’ve had the privilege to collaborate with organizations such as',
+    "Throughout my career, I've had the privilege to collaborate with organizations such as",
   [tokens.aboutSectionType.focus]:
-    'Currently, I’m focusing on strengthening my QA Automation skills and deepening my knowledge of AWS to provide even more robust and efficient solutions.',
+    "Currently, I'm focusing on strengthening my QA Automation skills and deepening my knowledge of AWS to provide even more robust and efficient solutions.",
 
   // Skills Section
   [tokens.skillsSectionType.title]: 'what i do',
@@ -76,7 +77,7 @@ export const en = {
     'Experience with AWS, cloud architecture, Terraform, Docker, Kubernetes, Jenkins, Git, and Python, optimizing continuous delivery and reliability.',
 
   // Experience Section
-  [tokens.experienceSectionType.title]: 'where i’ve worked',
+  [tokens.experienceSectionType.title]: "where i've worked",
 
   // Experience 0: Darwoft
   [tokens.experienceSectionType.experiences[0].company]: 'Darwoft',
@@ -174,18 +175,70 @@ export const en = {
     'Project with Nextjs, TypeScript, Material-UI, and TailwindCSS',
   [tokens.projectsSectionType.projects[1].name]:
     'Java Project with Selenium, TestNG, Maven, and Allure Reports',
+  [tokens.projectsSectionType.projects[2].name]:
+    'E2E Testing with Playwright and TypeScript',
+  [tokens.projectsSectionType.projects[3].name]:
+    'Python Playwright Academy - Test Automation Course',
+  [tokens.projectsSectionType.projects[4].name]:
+    'API Automation - Petstore REST Testing',
+  [tokens.projectsSectionType.projects[5].name]:
+    'Turborepo Monorepo - Full Stack Architecture',
+
+  // Life Projects Section
+  [tokens.lifeProjectsSectionType.title]: 'my other life projects',
+
+  // Life Projects - Tab 0: Robotics & Home Automation
+  [tokens.lifeProjectsSectionType.experiences[0].company]: 'Robotics & Home Automation',
+  [tokens.lifeProjectsSectionType.experiences[0].role]:
+    'Maker & Home Automation Enthusiast',
+  [tokens.lifeProjectsSectionType.experiences[0].started]: '2020',
+  [tokens.lifeProjectsSectionType.experiences[0].upto]: 'present',
+  [tokens.lifeProjectsSectionType.experiences[0].tasks[0]]:
+    'Building smart home systems with IoT devices, integrating sensors, relays, and microcontrollers (ESP32, Arduino) to automate lighting, climate, and security.',
+  [tokens.lifeProjectsSectionType.experiences[0].tasks[1]]:
+    'Designing and assembling custom circuits and PCBs for home automation, connecting everything through open-source platforms like Home Assistant and MQTT.',
+  [tokens.lifeProjectsSectionType.experiences[0].tasks[2]]:
+    'Automating daily processes at home: from smart lighting schedules to automated blinds, temperature control, and presence-based routines.',
+
+  // Life Projects - Tab 1: Smart Cultivation & Irrigation
+  [tokens.lifeProjectsSectionType.experiences[1].company]: 'Smart Cultivation & Irrigation',
+  [tokens.lifeProjectsSectionType.experiences[1].role]:
+    'Automated Systems Designer',
+  [tokens.lifeProjectsSectionType.experiences[1].started]: '2021',
+  [tokens.lifeProjectsSectionType.experiences[1].upto]: 'present',
+  [tokens.lifeProjectsSectionType.experiences[1].tasks[0]]:
+    'Designing automated drip irrigation systems using soil moisture sensors, water pumps, and solenoid valves controlled by microcontrollers.',
+  [tokens.lifeProjectsSectionType.experiences[1].tasks[1]]:
+    'Building monitoring dashboards to track real-time temperature, humidity, and light levels for indoor and outdoor cultivation.',
+  [tokens.lifeProjectsSectionType.experiences[1].tasks[2]]:
+    'Automating grow cycles: scheduling watering, fertilization, and lighting for optimal plant growth with minimal manual intervention.',
+
+  // Life Projects - Tab 2: Corne Keyboards
+  [tokens.lifeProjectsSectionType.experiences[2].company]: 'Custom Corne Keyboards',
+  [tokens.lifeProjectsSectionType.experiences[2].role]:
+    'Keyboard Builder & Firmware Developer',
+  [tokens.lifeProjectsSectionType.experiences[2].started]: '2022',
+  [tokens.lifeProjectsSectionType.experiences[2].upto]: 'present',
+  [tokens.lifeProjectsSectionType.experiences[2].tasks[0]]:
+    'Hand-soldering split Corne (Crkbd) keyboards from scratch, including diodes, hotswap sockets, OLED displays, and RGB LEDs.',
+  [tokens.lifeProjectsSectionType.experiences[2].tasks[1]]:
+    'Flashing and customizing QMK/ZMK firmware for optimized key layouts, layers, and macros tailored to development workflows.',
+  [tokens.lifeProjectsSectionType.experiences[2].tasks[2]]:
+    'Designing and 3D-printing custom cases and tenting solutions for ergonomic split keyboard setups.',
 
   // Contact Section
-  [tokens.contactSectionType.title]: 'let’s get in touch',
-  [tokens.contactSectionType.subtitle]: 'what’s next',
+  [tokens.contactSectionType.title]: "let's get in touch",
+  [tokens.contactSectionType.subtitle]: "what's next",
   [tokens.contactSectionType.paragraphs[0]]:
     'I am currently seeking remote opportunities or other interesting projects.',
   [tokens.contactSectionType.paragraphs[1]]:
     'Whether you have a project to discuss or just want to say hi, my inbox is always open!',
+  [tokens.contactSectionType.ctaTitle]: 'Say Hello',
 
   // Courses Section
   [tokens.coursesSectionType.title]: 'Courses',
   [tokens.coursesSectionType.subtitle]: 'Projects',
   [tokens.coursesSectionType.paragraphs[0]]:
-    'I am completing a series of courses on test automation design in various languages and open source technologies, along with an automation project generator. I plan to finish its development by ⬛⬛/⬛⬛/2025. Stay tuned!',
+    'I am completing a series of courses on test automation design in various languages and open source technologies, along with an automation project generator. I plan to finish its development by 2027. Stay tuned!',
+  [tokens.coursesSectionType.ctaTitle]: 'Coming Soon',
 };

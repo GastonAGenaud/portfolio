@@ -14,6 +14,7 @@ export const tokens = {
   header: {
     about: 'header.about',
     projects: 'header.projects',
+    lifeProjects: 'header.lifeProjects',
     contact: 'header.contact',
     resume: 'header.resume',
     experience: 'header.experience',
@@ -159,6 +160,56 @@ export const tokens = {
       1: {
         name: 'projectsSectionType.projects.1.name',
       },
+      2: {
+        name: 'projectsSectionType.projects.2.name',
+      },
+      3: {
+        name: 'projectsSectionType.projects.3.name',
+      },
+      4: {
+        name: 'projectsSectionType.projects.4.name',
+      },
+      5: {
+        name: 'projectsSectionType.projects.5.name',
+      },
+    },
+  },
+  lifeProjectsSectionType: {
+    title: 'lifeProjectsSectionType.title',
+    experiences: {
+      0: {
+        company: 'lifeProjectsSectionType.experiences.0.company',
+        role: 'lifeProjectsSectionType.experiences.0.role',
+        started: 'lifeProjectsSectionType.experiences.0.started',
+        upto: 'lifeProjectsSectionType.experiences.0.upto',
+        tasks: {
+          0: 'lifeProjectsSectionType.experiences.0.tasks.0',
+          1: 'lifeProjectsSectionType.experiences.0.tasks.1',
+          2: 'lifeProjectsSectionType.experiences.0.tasks.2',
+        },
+      },
+      1: {
+        company: 'lifeProjectsSectionType.experiences.1.company',
+        role: 'lifeProjectsSectionType.experiences.1.role',
+        started: 'lifeProjectsSectionType.experiences.1.started',
+        upto: 'lifeProjectsSectionType.experiences.1.upto',
+        tasks: {
+          0: 'lifeProjectsSectionType.experiences.1.tasks.0',
+          1: 'lifeProjectsSectionType.experiences.1.tasks.1',
+          2: 'lifeProjectsSectionType.experiences.1.tasks.2',
+        },
+      },
+      2: {
+        company: 'lifeProjectsSectionType.experiences.2.company',
+        role: 'lifeProjectsSectionType.experiences.2.role',
+        started: 'lifeProjectsSectionType.experiences.2.started',
+        upto: 'lifeProjectsSectionType.experiences.2.upto',
+        tasks: {
+          0: 'lifeProjectsSectionType.experiences.2.tasks.0',
+          1: 'lifeProjectsSectionType.experiences.2.tasks.1',
+          2: 'lifeProjectsSectionType.experiences.2.tasks.2',
+        },
+      },
     },
   },
   contactSectionType: {
@@ -168,6 +219,7 @@ export const tokens = {
       0: 'contactSectionType.paragraphs.0',
       1: 'contactSectionType.paragraphs.1',
     },
+    ctaTitle: 'contactSectionType.ctaTitle',
   },
   coursesSectionType: {
     title: 'coursesSectionType.title',
@@ -175,5 +227,6 @@ export const tokens = {
     paragraphs: {
       0: 'coursesSectionType.paragraphs.0',
     },
+    ctaTitle: 'coursesSectionType.ctaTitle',
   },
 };

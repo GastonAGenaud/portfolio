@@ -16,7 +16,8 @@ export const useContactSection = (): ContactSectionType => {
       t(tokens.contactSectionType.paragraphs[0]),
       t(tokens.contactSectionType.paragraphs[1]),
     ],
-    link: `mailto:${author.email}`, // This remains the same, as it's not translated text.
+    link: `mailto:${author.email}`,
+    ctaTitle: t(tokens.contactSectionType.ctaTitle),
   };
 
   return contactSection;
