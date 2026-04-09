@@ -82,9 +82,9 @@ export const en = {
   // Experience 0: Darwoft
   [tokens.experienceSectionType.experiences[0].company]: 'Darwoft',
   [tokens.experienceSectionType.experiences[0].role]:
-    'Sr QA Automation Engineer & Tech Lead',
+    'Software Developer Engineer in Tests & Tech Lead / DevOps Engineer',
   [tokens.experienceSectionType.experiences[0].started]: 'August 2022',
-  [tokens.experienceSectionType.experiences[0].upto]: 'present',
+  [tokens.experienceSectionType.experiences[0].upto]: 'NaN',
   [tokens.experienceSectionType.experiences[0].tasks[0]]:
     'Mobile automation with Appium, Python, Pytest, and Behave, optimizing test coverage in mobile environments.',
   [tokens.experienceSectionType.experiences[0].tasks[1]]:
