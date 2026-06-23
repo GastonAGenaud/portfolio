@@ -1,4 +1,4 @@
-import { Inter, Roboto_Mono } from 'next/font/google';
+import { Cormorant_Garamond, Inter, Roboto_Mono } from 'next/font/google';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -22,6 +22,20 @@ const robotoMono = Roboto_Mono({
   ],
 });
 
-const fontVariables = `${inter.variable} ${robotoMono.variable}`;
+// Editorial serif used by the Creative persona (display headings)
+const cormorant = Cormorant_Garamond({
+  variable: '--font-serif',
+  subsets: ['latin'],
+  display: 'swap',
+  style: ['normal', 'italic'],
+  weight: [
+    '400', // Regular
+    '500', // Medium
+    '600', // Semibold
+    '700', // Bold
+  ],
+});
+
+const fontVariables = `${inter.variable} ${robotoMono.variable} ${cormorant.variable}`;
 
 export default fontVariables;

@@ -61,6 +61,7 @@ export const tokens = {
         point3: 'skillsSectionType.skill1.points.point3',
         point4: 'skillsSectionType.skill1.points.point4',
         point5: 'skillsSectionType.skill1.points.point5',
+        point6: 'skillsSectionType.skill1.points.point6',
       },
     },
     skill2: {
@@ -210,6 +211,17 @@ export const tokens = {
           2: 'lifeProjectsSectionType.experiences.2.tasks.2',
         },
       },
+      3: {
+        company: 'lifeProjectsSectionType.experiences.3.company',
+        role: 'lifeProjectsSectionType.experiences.3.role',
+        started: 'lifeProjectsSectionType.experiences.3.started',
+        upto: 'lifeProjectsSectionType.experiences.3.upto',
+        tasks: {
+          0: 'lifeProjectsSectionType.experiences.3.tasks.0',
+          1: 'lifeProjectsSectionType.experiences.3.tasks.1',
+          2: 'lifeProjectsSectionType.experiences.3.tasks.2',
+        },
+      },
     },
   },
   contactSectionType: {
@@ -228,5 +240,23 @@ export const tokens = {
       0: 'coursesSectionType.paragraphs.0',
     },
     ctaTitle: 'coursesSectionType.ctaTitle',
+  },
+  creativeSectionType: {
+    personaDev: 'creativeSectionType.personaDev',
+    personaStudio: 'creativeSectionType.personaStudio',
+    role: 'creativeSectionType.role',
+    tagline: 'creativeSectionType.tagline',
+    intro: 'creativeSectionType.intro',
+    galleryTitle: 'creativeSectionType.galleryTitle',
+    gallerySubtitle: 'creativeSectionType.gallerySubtitle',
+    albumCta: 'creativeSectionType.albumCta',
+    scrollHint: 'creativeSectionType.scrollHint',
+    sport: {
+      switchLabel: 'creativeSectionType.sport.switchLabel',
+      subtitle: 'creativeSectionType.sport.subtitle',
+      title: 'creativeSectionType.sport.title',
+      description: 'creativeSectionType.sport.description',
+      cta: 'creativeSectionType.sport.cta',
+    },
   },
 };

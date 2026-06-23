@@ -1,4 +1,6 @@
 'use client';
+import { usePersona } from '@/lib/hooks/use-persona';
+
 import {
   About,
   Contact,
@@ -11,10 +13,12 @@ import {
   Projects,
   Skills,
 } from '@/containers';
+import CreativeHome from '@/containers/creative/CreativeHome';
 
 import '../locales/i18n';
+import { AnimatePresence, motion } from 'framer-motion';
 import type { NextPage } from 'next';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 /**
  * TODO: Create separate page for all the projects with filters (vercel | netlify | github api for automation)
@@ -22,33 +26,37 @@ import React, { useEffect } from 'react';
  * TODO: Try test cases
  */
 
-const Home: NextPage = () => {
-  //const [showPopup, setShowPopup] = useState(false);
+const EngineerHome = () => (
+  <>
+    <Hero />
+    <About />
+    <Skills />
+    <Experience />
+    <FeaturedProjects />
+    <Projects />
+    <LifeProjects />
+    <Contact />
+    <Courses />
+  </>
+);
 
-  useEffect(() => {
-    //setShowPopup(true);
-  }, []);
+const Home: NextPage = () => {
+  const { persona } = usePersona();
 
   return (
-    <>
-      {/*<ChristmasPopup
-    isVisible={showPopup}
-    onClose={() => setShowPopup(false)}
-  />
-   Resto del contenido de tu página */}
-
-      <Layout>
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <FeaturedProjects />
-        <Projects />
-        <LifeProjects />
-        <Contact />
-        <Courses />
-      </Layout>
-    </>
+    <Layout>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={persona}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
+        >
+          {persona === 'creative' ? <CreativeHome /> : <EngineerHome />}
+        </motion.div>
+      </AnimatePresence>
+    </Layout>
   );
 };
 

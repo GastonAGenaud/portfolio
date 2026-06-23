@@ -8,6 +8,7 @@ module.exports = {
         signature: ['agustina', 'sans-serif'],
         sans: ['Inter', 'sans-serif'],
         mono: ['Roboto Mono', 'monospace'],
+        serif: ['var(--font-serif)', 'Cormorant Garamond', 'Georgia', 'serif'],
       },
       screens: {
         xs: '375px',

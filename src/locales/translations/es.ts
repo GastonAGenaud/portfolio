@@ -68,6 +68,8 @@ export const es = {
     'Desarrollo de pruebas de carga y rendimiento para garantizar escalabilidad.',
   [tokens.skillsSectionType.skill1.points.point5]:
     'Mentoría y liderazgo de equipos QA, impulsando el crecimiento profesional y la mejora continua.',
+  [tokens.skillsSectionType.skill1.points.point6]:
+    'Aprovechamiento de herramientas de IA y LLMs para acelerar el diseño de pruebas, el scripting y el análisis de resultados.',
   [tokens.skillsSectionType.skill2.title]: 'DevOps Engineer',
   [tokens.skillsSectionType.skill2.points.point1]:
     'Diseño de diagramas y flujos con Lucidchart para visualizaciones claras.',
@@ -226,6 +228,19 @@ export const es = {
   [tokens.lifeProjectsSectionType.experiences[2].tasks[2]]:
     'Diseño e impresión 3D de carcasas personalizadas y soluciones de tenting para configuraciones ergonómicas de teclados split.',
 
+  // Life Projects - Tab 3: IA & Datos Personales
+  [tokens.lifeProjectsSectionType.experiences[3].company]: 'IA & Datos Personales',
+  [tokens.lifeProjectsSectionType.experiences[3].role]:
+    'Quantified Self & Optimización Personal con IA',
+  [tokens.lifeProjectsSectionType.experiences[3].started]: '2024',
+  [tokens.lifeProjectsSectionType.experiences[3].upto]: 'presente',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[0]]:
+    'Desarrollo de proyectos personales de tracking de datos (hábitos, descanso, entrenamiento y métricas diarias) para entender y mejorar mi bienestar.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[1]]:
+    'Uso de IA y modelos de lenguaje para analizar mis datos, detectar patrones y obtener recomendaciones accionables hacia mis metas personales.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[2]]:
+    'Construcción de dashboards y automatizaciones que centralizan la información y miden el progreso de forma continua.',
+
   // Contact Section
   [tokens.contactSectionType.title]: 'pongámonos en contacto',
   [tokens.contactSectionType.subtitle]: 'qué sigue',
@@ -241,4 +256,24 @@ export const es = {
   [tokens.coursesSectionType.paragraphs[0]]:
     'Estoy completando una serie de cursos sobre diseño de automatización de pruebas en distintos lenguajes y tecnologías open source, junto con un generador de proyectos de automatización. Planeo finalizar su desarrollo en 2027. ¡Mantente atento!',
   [tokens.coursesSectionType.ctaTitle]: 'Próximamente',
+
+  // Creative (Photographer / Athlete) Persona
+  [tokens.creativeSectionType.personaDev]: 'Dev',
+  [tokens.creativeSectionType.personaStudio]: 'Estudio',
+  [tokens.creativeSectionType.role]: 'Fotógrafo & Atleta',
+  [tokens.creativeSectionType.tagline]:
+    'Donde la luz, el movimiento y la disciplina se encuentran.',
+  [tokens.creativeSectionType.intro]:
+    'Capturo historias en imágenes y persigo límites en el deporte. Este es mi lado visual.',
+  [tokens.creativeSectionType.galleryTitle]: 'Galería',
+  [tokens.creativeSectionType.gallerySubtitle]:
+    'Una selección de mi trabajo fotográfico.',
+  [tokens.creativeSectionType.albumCta]: 'Ver álbum completo',
+  [tokens.creativeSectionType.scrollHint]: 'Desliza para ver',
+  [tokens.creativeSectionType.sport.switchLabel]: 'Entrenamiento',
+  [tokens.creativeSectionType.sport.subtitle]: 'Atleta & Coach',
+  [tokens.creativeSectionType.sport.title]: 'Asesorías de Entrenamiento',
+  [tokens.creativeSectionType.sport.description]:
+    'Acompaño a personas a alcanzar sus metas físicas con planes personalizados, seguimiento de datos y un enfoque sostenible.',
+  [tokens.creativeSectionType.sport.cta]: 'Quiero entrenar',
 };

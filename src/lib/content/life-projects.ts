@@ -47,6 +47,18 @@ export const useLifeProjectsSection = (): LifeProjectsSectionType => {
           t(tokens.lifeProjectsSectionType.experiences[2].tasks[2]),
         ],
       },
+      {
+        company: t(tokens.lifeProjectsSectionType.experiences[3].company),
+        companyUrl: '',
+        role: t(tokens.lifeProjectsSectionType.experiences[3].role),
+        started: t(tokens.lifeProjectsSectionType.experiences[3].started),
+        upto: t(tokens.lifeProjectsSectionType.experiences[3].upto),
+        tasks: [
+          t(tokens.lifeProjectsSectionType.experiences[3].tasks[0]),
+          t(tokens.lifeProjectsSectionType.experiences[3].tasks[1]),
+          t(tokens.lifeProjectsSectionType.experiences[3].tasks[2]),
+        ],
+      },
     ],
   };
 

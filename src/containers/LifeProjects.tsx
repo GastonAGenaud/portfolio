@@ -12,6 +12,7 @@ const lotties = [
   '/lotties/smarthome.json',
   '/lotties/garden.json',
   '/lotties/keyboard.json',
+  '/lotties/cloudinfra.json',
 ];
 
 const tabContentVariants = {

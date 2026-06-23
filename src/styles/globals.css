@@ -37,6 +37,25 @@
     --color-dark-3: theme(colors.slate.700);
   }
 
+  /* Creative persona — editorial dark gallery palette.
+     Scoped to the data attribute so it overrides both light and dark themes. */
+  [data-persona='creative'] {
+    --color-bg: #0a0a0a;
+    --color-bg-secondary: #161615;
+    --color-accent: #e7e5e4;
+    --color-accent-light: rgb(231 229 228 / 0.08);
+    --color-accent-torch: rgb(255 255 255 / 0.05);
+    --color-text: #a8a29e;
+    --color-dark-1: #fafaf9;
+    --color-dark-2: #e7e5e4;
+    --color-dark-3: #57534e;
+  }
+
+  /* Silky persona / theme morph */
+  body {
+    transition: background-color 0.5s ease;
+  }
+
   @font-face {
     font-family: 'agustina';
     src: url('/fonts/Agustina-Signature.otf') format('opentype');

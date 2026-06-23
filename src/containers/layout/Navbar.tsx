@@ -1,16 +1,24 @@
 'use client';
 import { useNavbarSection } from '@/lib/content/navbar';
 import { author } from '@/lib/content/portfolio';
+import { usePersona } from '@/lib/hooks/use-persona';
 import useWindowWidth from '@/lib/hooks/use-window-width';
 import { getBreakpointsWidth } from '@/lib/utils/helper';
 
-import { Button, DarkModeButton, Link as CLink, NavButton } from '@/components';
+import {
+  Button,
+  DarkModeButton,
+  Link as CLink,
+  NavButton,
+  PersonaSwitch,
+  SportSwitch,
+} from '@/components';
 
 import { fadeIn, slideIn } from '@/styles/animations';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -77,6 +85,7 @@ const NavItem = ({ href, children, onClick, index, delay }: NavItemsProps) => {
 
 const Navbar = () => {
   const { cta, navLinks } = useNavbarSection();
+  const { isCreative, sportEnabled } = usePersona();
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
 
   const windowWidth = useWindowWidth();
@@ -108,13 +117,15 @@ const Navbar = () => {
     hideNavWhileScrolling({ when: !navbarCollapsed });
   }, [navbarCollapsed]);
 
+  const showDevNav = !isCreative && (navbarCollapsed || windowWidth > md);
+
   return (
     <motion.header
       variants={fadeIn(0.5)}
       initial="hidden"
       animate="show"
       id="navbar"
-      className="fixed inset-x-0 top-0 right-0 z-50 flex items-end justify-between px-8 py-4 duration-500 md:px-6 xl:px-12 backdrop-blur-lg"
+      className="fixed inset-x-0 top-0 right-0 z-50 flex items-center justify-between px-6 py-4 duration-500 md:px-6 xl:px-12 backdrop-blur-lg"
     >
       <h1 className="relative text-2xl capitalize font-signature text-accent group top-1">
         <Link href="/#hero" className="block">
@@ -123,84 +134,101 @@ const Navbar = () => {
         </Link>
       </h1>
 
-      <NavButton
-        onClick={() => {
-          setNavbarCollapsed((prev) => !prev);
-        }}
-        navbarCollapsed={navbarCollapsed}
-        className="md:invisible"
-      />
+      {/* Right cluster */}
+      <div className="flex items-center gap-3 md:gap-5">
+        {/* Developer nav links (engineer persona only) */}
+        {showDevNav && (
+          <nav className="capitalize absolute text-sm duration-200 md:bg-transparent z-50 w-[90%] left-1/2 -translate-x-1/2 top-full h-max rounded-xl shadow-xl p-6 bg-bg-secondary md:block md:static md:w-auto md:left-auto md:translate-x-0 md:top-auto md:rounded-none md:shadow-none md:p-0 md:h-auto">
+            <ul className="flex flex-col items-stretch gap-3 list-style-none lg:gap-5 xl:gap-6 md:flex-row md:items-center">
+              {navLinks.map(({ name, url }, i) => (
+                <NavItem
+                  key={i}
+                  href={url}
+                  index={i}
+                  delay={ANIMATION_DELAY}
+                  onClick={() => setNavbarCollapsed(false)}
+                >
+                  {name}
+                </NavItem>
+              ))}
 
-      {(navbarCollapsed || windowWidth > md) && (
-        <nav className="capitalize absolute text-sm duration-200 md:bg-transparent z-50 w-[90%] left-1/2 -translate-x-1/2 top-full h-max rounded-xl shadow-xl p-6 bg-bg-secondary md:blocks md:static md:w-auto md:left-auto md:transform-none md:top-auto md:rounded-none md:shadow-none md:p-0 md:h-auto">
-          <ul className="flex flex-col items-stretch gap-3 list-style-none lg:gap-5 xl:gap-6 md:flex-row md:items-center">
-            {navLinks.map(({ name, url }, i) => (
-              <NavItem
-                key={i}
-                href={url}
-                index={i}
-                delay={ANIMATION_DELAY}
-                onClick={() => setNavbarCollapsed(false)}
-              >
-                {name}
-              </NavItem>
-            ))}
-
-            <div className="flex items-center justify-between gap-5 xl:gap-6">
-              {cta && (
-                <Button
-                  type="link"
-                  href={cta.url}
-                  sameTab={cta?.sameTab}
+              <div className="flex items-center justify-between gap-5 xl:gap-6">
+                {cta && (
+                  <Button
+                    type="link"
+                    href={cta.url}
+                    sameTab={cta?.sameTab}
+                    variants={slideIn({
+                      delay: ANIMATION_DELAY + navLinks.length / 10,
+                      direction: 'down',
+                    })}
+                    initial="hidden"
+                    animate="show"
+                  >
+                    {cta.title}
+                  </Button>
+                )}
+                <DarkModeButton
+                  onClick={() => setNavbarCollapsed(false)}
                   variants={slideIn({
-                    delay: ANIMATION_DELAY + navLinks.length / 10,
+                    delay: ANIMATION_DELAY + (navLinks.length + 1) / 10,
                     direction: 'down',
                   })}
                   initial="hidden"
                   animate="show"
-                >
-                  {cta.title}
-                </Button>
-              )}
-              <DarkModeButton
-                onClick={() => setNavbarCollapsed(false)}
-                variants={slideIn({
-                  delay: ANIMATION_DELAY + (navLinks.length + 1) / 10,
-                  direction: 'down',
-                })}
-                initial="hidden"
-                animate="show"
-              />
-              <div>
-                <Button
-                  aria-controls={open ? 'language-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={handleClick}
-                >
-                  {t('Language')}
-                </Button>
-                <Menu
-                  id="language-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'language-button',
-                  }}
-                >
-                  <MenuItem onClick={() => handleChangeLanguage('en')}>
-                    English
-                  </MenuItem>
-                  <MenuItem onClick={() => handleChangeLanguage('es')}>
-                    Spanish
-                  </MenuItem>
-                </Menu>
+                />
               </div>
-            </div>
-          </ul>
-        </nav>
-      )}
+            </ul>
+          </nav>
+        )}
+
+        {/* Persona switch — always visible (the "botonera") */}
+        <PersonaSwitch />
+
+        {/* Sports toggle — only in creative persona AND when the flag is on */}
+        <AnimatePresence>
+          {isCreative && sportEnabled && <SportSwitch key="sport-switch" />}
+        </AnimatePresence>
+
+        {/* Language menu — available in both personas */}
+        <div>
+          <Button
+            aria-controls={open ? 'language-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+          >
+            {t('Language')}
+          </Button>
+          <Menu
+            id="language-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'language-button',
+            }}
+          >
+            <MenuItem onClick={() => handleChangeLanguage('en')}>
+              English
+            </MenuItem>
+            <MenuItem onClick={() => handleChangeLanguage('es')}>
+              Spanish
+            </MenuItem>
+          </Menu>
+        </div>
+
+        {/* Mobile hamburger — engineer persona only */}
+        {!isCreative && (
+          <NavButton
+            onClick={() => {
+              setNavbarCollapsed((prev) => !prev);
+            }}
+            navbarCollapsed={navbarCollapsed}
+            className="md:hidden"
+          />
+        )}
+      </div>
     </motion.header>
   );
 };

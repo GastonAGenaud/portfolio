@@ -68,6 +68,8 @@ export const en = {
     'Developing load and performance tests to ensure scalability.',
   [tokens.skillsSectionType.skill1.points.point5]:
     'Mentoring and leading QA teams, driving professional growth and continuous improvement.',
+  [tokens.skillsSectionType.skill1.points.point6]:
+    'Leveraging AI tools and LLMs to accelerate test design, scripting, and results analysis.',
   [tokens.skillsSectionType.skill2.title]: 'DevOps Engineer',
   [tokens.skillsSectionType.skill2.points.point1]:
     'Designing diagrams and workflows with Lucidchart for clear visualizations.',
@@ -226,6 +228,19 @@ export const en = {
   [tokens.lifeProjectsSectionType.experiences[2].tasks[2]]:
     'Designing and 3D-printing custom cases and tenting solutions for ergonomic split keyboard setups.',
 
+  // Life Projects - Tab 3: AI & Personal Data
+  [tokens.lifeProjectsSectionType.experiences[3].company]: 'AI & Personal Data',
+  [tokens.lifeProjectsSectionType.experiences[3].role]:
+    'Quantified Self & Personal Optimization with AI',
+  [tokens.lifeProjectsSectionType.experiences[3].started]: '2024',
+  [tokens.lifeProjectsSectionType.experiences[3].upto]: 'present',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[0]]:
+    'Building personal data-tracking projects (habits, rest, training, and daily metrics) to understand and improve my wellbeing.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[1]]:
+    'Using AI and language models to analyze my data, surface patterns, and get actionable recommendations toward my personal goals.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[2]]:
+    'Creating dashboards and automations that centralize the information and continuously measure progress.',
+
   // Contact Section
   [tokens.contactSectionType.title]: "let's get in touch",
   [tokens.contactSectionType.subtitle]: "what's next",
@@ -241,4 +256,24 @@ export const en = {
   [tokens.coursesSectionType.paragraphs[0]]:
     'I am completing a series of courses on test automation design in various languages and open source technologies, along with an automation project generator. I plan to finish its development by 2027. Stay tuned!',
   [tokens.coursesSectionType.ctaTitle]: 'Coming Soon',
+
+  // Creative (Photographer / Athlete) Persona
+  [tokens.creativeSectionType.personaDev]: 'Dev',
+  [tokens.creativeSectionType.personaStudio]: 'Studio',
+  [tokens.creativeSectionType.role]: 'Photographer & Athlete',
+  [tokens.creativeSectionType.tagline]:
+    'Where light, motion, and discipline meet.',
+  [tokens.creativeSectionType.intro]:
+    'I capture stories in images and chase limits in sport. This is my visual side.',
+  [tokens.creativeSectionType.galleryTitle]: 'Gallery',
+  [tokens.creativeSectionType.gallerySubtitle]:
+    'A selection of my photographic work.',
+  [tokens.creativeSectionType.albumCta]: 'View full album',
+  [tokens.creativeSectionType.scrollHint]: 'Scroll to explore',
+  [tokens.creativeSectionType.sport.switchLabel]: 'Training',
+  [tokens.creativeSectionType.sport.subtitle]: 'Athlete & Coach',
+  [tokens.creativeSectionType.sport.title]: 'Training Coaching',
+  [tokens.creativeSectionType.sport.description]:
+    'I help people reach their physical goals with personalized plans, data tracking, and a sustainable approach.',
+  [tokens.creativeSectionType.sport.cta]: "Let's train",
 };

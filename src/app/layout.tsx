@@ -1,4 +1,5 @@
 import { seoData } from '@/lib/content/portfolio';
+import PersonaProvider from '@/lib/hooks/use-persona';
 import ThemeProvider from '@/lib/hooks/use-theme';
 import fontVariables from '@/lib/utils/fonts';
 
@@ -80,7 +81,9 @@ export default function RootLayout({
       </head>
       <body className={`text-text bg-bg ${fontVariables}`}>
         <Cursor className="hidden dark:lg:block" />
-        <ThemeProvider>{children}</ThemeProvider>
+        <PersonaProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </PersonaProvider>
       </body>
     </html>
   );
