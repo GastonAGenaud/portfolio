@@ -129,7 +129,7 @@ const MilestoneSlide = ({
       <div className="relative order-2 lg:order-1">
         <span
           aria-hidden
-          className="pointer-events-none absolute -top-14 -left-1 select-none font-mono text-[6rem] font-bold leading-none text-accent opacity-[0.06] sm:-top-20 sm:text-[8rem]"
+          className="pointer-events-none absolute -top-2 -left-1 select-none font-mono text-[5rem] font-bold leading-none text-accent opacity-[0.07] sm:-top-3 sm:text-[6.5rem]"
         >
           {String(index + 1).padStart(2, '0')}
         </span>
