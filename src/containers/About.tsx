@@ -101,11 +101,11 @@ const About = () => {
             </Link>
             <br />
             <Link
-              href="https://www.coca-cola.com/ar"
+              href="https://www.koandina.com/"
               target="_blank"
               className="text-accent"
             >
-              Coca-Cola
+              Coca-Cola Andina
             </Link>
             <br />
             <Link
