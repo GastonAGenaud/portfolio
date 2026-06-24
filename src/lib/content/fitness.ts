@@ -20,17 +20,32 @@ import { useTranslation } from 'react-i18next';
  * blood-pressure log + bloodwork). Nothing pharmacological is represented here.
  */
 
-export const baseline = { weight: 92.2, bodyFatPct: 28.7 };
+// True starting point — the obesity peak (May 2024, ~122 kg). Body-fat at that
+// weight is an estimate; the tracked daily data begins in April 2026.
+export const baseline = { weight: 122, bodyFatPct: 38 };
 
 export const milestones: FitnessMilestone[] = [
   {
+    id: '2024-05-01',
+    date: '2024-05-01',
+    tag: { en: 'DAY 0', es: 'DÍA 0' },
+    title: { en: 'The start', es: 'El inicio' },
+    note: {
+      en: 'The real starting line — around 122 kg at the obesity peak, waist 124 cm. Everything below is what came after.',
+      es: 'La verdadera línea de largada — cerca de 122 kg en el pico de obesidad, cintura 124 cm. Todo lo de abajo es lo que vino después.',
+    },
+    weight: 122,
+    bodyFatPct: 38,
+    measures: { chest: 120, waist: 124, hip: 111.5, arm: 38 },
+  },
+  {
     id: '2026-04-12',
     date: '2026-04-12',
-    tag: { en: 'DAY 0', es: 'DÍA 0' },
-    title: { en: 'Baseline', es: 'Punto de partida' },
+    tag: { en: 'CUT START', es: 'INICIO CORTE' },
+    title: { en: 'The cut begins', es: 'Arranca el corte' },
     note: {
-      en: 'Where it started — a broad frame with a natural V-taper hidden under fat on the flanks and lower back.',
-      es: 'El punto de partida — estructura ancha con un V-taper natural escondido bajo la grasa de los flancos y la zona lumbar.',
+      en: 'The measured cut kicks off at 92.2 kg / 28.7% fat — roughly 30 kg already gone. From here it is tracked daily.',
+      es: 'Arranca el corte medido en 92.2 kg / 28.7% de grasa — con unos 30 kg ya perdidos. De acá en más, registrado a diario.',
     },
     weight: 92.2,
     bodyFatPct: 28.7,
@@ -273,7 +288,7 @@ export const nutritionProtocol: NutritionProtocol = {
 };
 
 export const comparison: Comparison = {
-  then: { date: '2026-04-12', weight: 92.2, bodyFatPct: 28.7, visceral: 14, muscleKg: 62.2, bp: '131/82' },
+  then: { date: '2024-05-01', weight: 122, bodyFatPct: 38 },
   now: { date: '2026-06-24', weight: 80.9, bodyFatPct: 23.9, visceral: 10, musclePct: 72.1, bp: '116/65' },
 };
 

@@ -16,14 +16,6 @@ import MilestoneCarousel from './MilestoneCarousel';
 import TrendChart from './TrendChart';
 import VitalsPanel from './VitalsPanel';
 
-const daysBetween = (a: string, b: string) => {
-  const [ay, am, ad] = a.split('-').map(Number);
-  const [by, bm, bd] = b.split('-').map(Number);
-  return Math.round(
-    (new Date(by, bm - 1, bd).getTime() - new Date(ay, am - 1, ad).getTime()) / 86400000
-  );
-};
-
 const FitnessSection = () => {
   const { t } = useTranslation();
   const tk = tokens.fitnessSectionType;
@@ -54,14 +46,16 @@ const FitnessSection = () => {
   const heroStats = useMemo(() => {
     const kgLost = baseline.weight - (latest.weight ?? baseline.weight);
     const fatDown = baseline.bodyFatPct - (latest.bodyFatPct ?? baseline.bodyFatPct);
-    const days = daysBetween(milestones[0].date, latest.date);
+    const firstWaist = measurements[0]?.waist;
+    const lastWaist = measurements[measurements.length - 1]?.waist;
+    const waistLost = firstWaist && lastWaist ? firstWaist - lastWaist : 0;
     return [
-      { value: `−${kgLost.toFixed(1)}`, unit: 'kg', label: t(tk.hero.lost) },
+      { value: `−${kgLost.toFixed(0)}`, unit: 'kg', label: t(tk.hero.lost) },
       { value: `−${fatDown.toFixed(1)}`, unit: 'pp', label: t(tk.hero.fatDown) },
       { value: `${latest.musclePct ?? 71.8}`, unit: '%', label: t(tk.hero.muscleUp) },
-      { value: `${days}`, unit: '', label: t(tk.hero.days) },
+      { value: `−${waistLost.toFixed(0)}`, unit: 'cm', label: t(tk.measures.waist) },
     ];
-  }, [baseline, latest, milestones, t, tk]);
+  }, [baseline, latest, measurements, t, tk]);
 
   const slideLabels = {
     weight: t(tk.metrics.weight),
