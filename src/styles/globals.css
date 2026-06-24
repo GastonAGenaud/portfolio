@@ -51,17 +51,17 @@
     --color-dark-3: #57534e;
   }
 
-  /* Training persona — athletic emerald palette (Dev=blue → Studio=black → Training=green). */
+  /* Training persona — athletic navy + red (Long-Haul Flight #002277 base, Wild Rider Red #ea2f28 accent). */
   [data-persona='training'] {
-    --color-bg: #07140e;
-    --color-bg-secondary: #0e1f17;
-    --color-accent: #5be49b;
-    --color-accent-light: rgb(91 228 155 / 0.12);
-    --color-accent-torch: rgb(91 228 155 / 0.06);
-    --color-text: #93a89c;
-    --color-dark-1: #eafff4;
-    --color-dark-2: #cde9db;
-    --color-dark-3: #35513f;
+    --color-bg: #050b22;
+    --color-bg-secondary: #0a1338;
+    --color-accent: #ea2f28;
+    --color-accent-light: rgb(234 47 40 / 0.14);
+    --color-accent-torch: rgb(234 47 40 / 0.06);
+    --color-text: #939cb8;
+    --color-dark-1: #eef2ff;
+    --color-dark-2: #ccd5f0;
+    --color-dark-3: #2c3760;
   }
 
   /* Silky persona / theme morph */
