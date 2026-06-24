@@ -52,7 +52,7 @@ const PersonaSwitch = ({ className = '' }: { className?: string }) => {
               />
             )}
             <Icon icon={opt.icon} width="15" height="15" />
-            <span className="hidden xs:inline">{t(opt.token)}</span>
+            <span className="hidden sm:inline">{t(opt.token)}</span>
           </button>
         );
       })}

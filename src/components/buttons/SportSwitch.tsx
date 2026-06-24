@@ -30,7 +30,7 @@ const SportSwitch = ({ className = '' }: { className?: string }) => {
       } ${className}`}
     >
       <Icon icon="tabler:barbell" width="15" height="15" />
-      <span className="hidden xs:inline">
+      <span className="hidden sm:inline">
         {t(tokens.creativeSectionType.sport.switchLabel)}
       </span>
     </motion.button>

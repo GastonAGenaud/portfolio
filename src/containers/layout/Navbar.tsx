@@ -125,7 +125,7 @@ const Navbar = () => {
       initial="hidden"
       animate="show"
       id="navbar"
-      className="fixed inset-x-0 top-0 right-0 z-50 flex items-center justify-between px-6 py-4 duration-500 md:px-6 xl:px-12 backdrop-blur-lg"
+      className="fixed inset-x-0 top-0 right-0 z-50 flex items-center justify-between px-4 py-4 duration-500 md:px-6 xl:px-12 backdrop-blur-lg"
     >
       <h1 className="relative text-2xl capitalize font-signature text-accent group top-1">
         <Link href="/#hero" className="block">
@@ -135,7 +135,7 @@ const Navbar = () => {
       </h1>
 
       {/* Right cluster */}
-      <div className="flex items-center gap-3 md:gap-5">
+      <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
         {/* Developer nav links (engineer persona only) */}
         {showDevNav && (
           <nav className="capitalize absolute text-sm duration-200 md:bg-transparent z-50 w-[90%] left-1/2 -translate-x-1/2 top-full h-max rounded-xl shadow-xl p-6 bg-bg-secondary md:block md:static md:w-auto md:left-auto md:translate-x-0 md:top-auto md:rounded-none md:shadow-none md:p-0 md:h-auto">
