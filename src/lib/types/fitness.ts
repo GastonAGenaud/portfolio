@@ -116,6 +116,7 @@ export interface Activity {
   walks: number;
   walkKm: number;
   activeKcal: number;
+  avgSteps: number;
   sessions: ActivitySession[];
 }
 

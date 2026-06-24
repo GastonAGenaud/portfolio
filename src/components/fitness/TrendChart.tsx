@@ -82,10 +82,10 @@ const TrendChart = ({ series, highlightDate, labels, locale }: Props) => {
         <circle cx={x(hi)} cy={yW(series[hi].weight)} r="5" fill="var(--color-accent)" stroke="var(--color-bg)" strokeWidth="2" />
         <circle cx={x(hi)} cy={yF(series[hi].bodyFat)} r="4" fill="var(--color-dark-2)" stroke="var(--color-bg)" strokeWidth="2" />
 
-        <text x={x(hi)} y={yW(series[hi].weight) - 12} textAnchor={anchor} className="fill-[var(--color-dark-1)] font-lexend" fontSize="13">
+        <text x={x(hi)} y={yW(series[hi].weight) - 12} textAnchor={anchor} className="fill-[var(--color-dark-1)] font-mono" fontSize="13">
           {series[hi].weight} kg
         </text>
-        <text x={x(hi)} y={yF(series[hi].bodyFat) + 22} textAnchor={anchor} className="fill-[var(--color-dark-3)] font-lexend" fontSize="12">
+        <text x={x(hi)} y={yF(series[hi].bodyFat) + 22} textAnchor={anchor} className="fill-[var(--color-dark-3)] font-mono" fontSize="12">
           {series[hi].bodyFat}%
         </text>
 

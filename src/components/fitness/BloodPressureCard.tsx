@@ -56,7 +56,7 @@ const BloodPressureCard = ({ series, labels }: Props) => {
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-dark-3">
             {labels.latest}
           </p>
-          <p className="mt-1 font-lexend text-3xl font-semibold text-dark-1">
+          <p className="mt-1 font-mono text-3xl font-semibold text-dark-1">
             {latest.sys}
             <span className="text-dark-3">/{latest.dia}</span>
             <span className="ml-1 text-xs font-normal text-dark-3">mmHg</span>
@@ -73,7 +73,7 @@ const BloodPressureCard = ({ series, labels }: Props) => {
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-dark-3">
             {labels.average}
           </p>
-          <p className="mt-1 font-lexend text-lg text-dark-1">
+          <p className="mt-1 font-mono text-lg text-dark-1">
             {avgSys}/{avgDia}
           </p>
         </div>
@@ -81,7 +81,7 @@ const BloodPressureCard = ({ series, labels }: Props) => {
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-dark-3">
             {labels.restingHr}
           </p>
-          <p className="mt-1 font-lexend text-lg text-dark-1">
+          <p className="mt-1 font-mono text-lg text-dark-1">
             {avgPulse}
             <span className="ml-1 text-xs font-normal text-dark-3">bpm</span>
           </p>

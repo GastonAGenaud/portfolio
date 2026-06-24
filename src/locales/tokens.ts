@@ -300,6 +300,7 @@ export const tokens = {
       minutes: 'fitnessSectionType.activity.minutes',
       walked: 'fitnessSectionType.activity.walked',
       energy: 'fitnessSectionType.activity.energy',
+      steps: 'fitnessSectionType.activity.steps',
       strengthLabel: 'fitnessSectionType.activity.strengthLabel',
       cyclingLabel: 'fitnessSectionType.activity.cyclingLabel',
     },
@@ -342,6 +343,10 @@ export const tokens = {
       then: 'fitnessSectionType.compare.then',
       now: 'fitnessSectionType.compare.now',
       gains: 'fitnessSectionType.compare.gains',
+    },
+    coach: {
+      label: 'fitnessSectionType.coach.label',
+      thanks: 'fitnessSectionType.coach.thanks',
     },
   },
 };

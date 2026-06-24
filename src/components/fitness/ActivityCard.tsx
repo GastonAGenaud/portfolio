@@ -13,6 +13,7 @@ interface Props {
     minutes: string;
     walked: string;
     energy: string;
+    steps: string;
     strengthLabel: string;
     cyclingLabel: string;
   };
@@ -31,6 +32,7 @@ const ActivityCard = ({ activity, locale, labels }: Props) => {
     { value: activity.strengthSessions, label: labels.strength },
     { value: activity.totalMinutes, label: labels.minutes },
     { value: activity.walkKm, label: labels.walked },
+    { value: activity.avgSteps.toLocaleString(), label: labels.steps },
     { value: activity.activeKcal.toLocaleString(), label: labels.energy },
   ];
 
@@ -46,10 +48,10 @@ const ActivityCard = ({ activity, locale, labels }: Props) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
         {stats.map((s) => (
           <div key={s.label} className="text-center">
-            <p className="font-lexend text-xl font-semibold text-dark-1 sm:text-2xl">{s.value}</p>
+            <p className="font-mono text-xl font-semibold text-dark-1 sm:text-2xl">{s.value}</p>
             <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-dark-3">{s.label}</p>
           </div>
         ))}

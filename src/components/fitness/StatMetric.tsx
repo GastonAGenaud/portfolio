@@ -36,7 +36,7 @@ const StatMetric = ({
       </span>
       <span
         className={clsx(
-          'font-lexend font-semibold leading-none text-dark-1',
+          'font-mono font-semibold leading-none text-dark-1',
           size === 'lg' ? 'mt-2 text-4xl sm:text-5xl' : 'mt-1.5 text-2xl'
         )}
       >

@@ -9,7 +9,6 @@ module.exports = {
         sans: ['Inter', 'sans-serif'],
         mono: ['Roboto Mono', 'monospace'],
         serif: ['var(--font-serif)', 'Cormorant Garamond', 'Georgia', 'serif'],
-        lexend: ['var(--font-lexend)', 'Lexend', 'Inter', 'sans-serif'],
       },
       screens: {
         xs: '375px',

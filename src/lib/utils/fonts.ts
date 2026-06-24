@@ -1,9 +1,4 @@
-import {
-  Cormorant_Garamond,
-  Inter,
-  Lexend,
-  Roboto_Mono,
-} from 'next/font/google';
+import { Cormorant_Garamond, Inter, Roboto_Mono } from 'next/font/google';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -41,14 +36,6 @@ const cormorant = Cormorant_Garamond({
   ],
 });
 
-// Geometric sans for fitness metrics / data (design reference: Lexend)
-const lexend = Lexend({
-  variable: '--font-lexend',
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-});
-
-const fontVariables = `${inter.variable} ${robotoMono.variable} ${cormorant.variable} ${lexend.variable}`;
+const fontVariables = `${inter.variable} ${robotoMono.variable} ${cormorant.variable}`;
 
 export default fontVariables;

@@ -35,7 +35,7 @@ const VitalsPanel = ({ blood, nutrition }: Props) => {
                 <span className={clsx('h-1.5 w-1.5 rounded-full', mk.status === 'good' ? 'bg-accent' : 'bg-dark-2')} />
                 {mk.label}
               </span>
-              <span className="mt-1 font-lexend text-base text-dark-1">{mk.value}</span>
+              <span className="mt-1 font-mono text-base text-dark-1">{mk.value}</span>
               <span className="font-mono text-[9px] text-dark-3">ref {mk.ref}</span>
             </div>
           ))}
@@ -57,7 +57,7 @@ const VitalsPanel = ({ blood, nutrition }: Props) => {
           {nutrition.rows.map((row) => (
             <div key={row.label} className="flex items-baseline justify-between gap-3 border-b border-dark-3/20 py-2 last:border-b-0">
               <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-dark-3">{row.label}</dt>
-              <dd className="text-right font-lexend text-sm text-dark-1">{row.value}</dd>
+              <dd className="text-right font-mono text-sm text-dark-1">{row.value}</dd>
             </div>
           ))}
         </dl>

@@ -299,6 +299,7 @@ export const activity: Activity = {
   walks: 17,
   walkKm: 31.2,
   activeKcal: 5823,
+  avgSteps: 10400,
   sessions: [
     { date: '2026-05-25', type: 'strength', minutes: 97, kcal: 820, hrAvg: 122, hrMax: 153 },
     { date: '2026-05-26', type: 'strength', minutes: 106, kcal: 779, hrAvg: 118, hrMax: 152 },
@@ -310,6 +311,14 @@ export const activity: Activity = {
 
 // Food-log adherence — average across 80 logged days (Apr–Jun).
 export const nutritionLog: NutritionLog = { days: 80, kcal: 1758, protein: 207 };
+
+// Coach credit.
+export const coach = {
+  name: 'Sebastián',
+  brand: 'THA CBO',
+  instagram: 'https://www.instagram.com/tha_cbo.ar/',
+  website: 'https://www.thacbo.com/',
+};
 
 export const pick = (text: LocalizedText, locale: Locale): string =>
   text[locale] ?? text.en;
@@ -338,5 +347,6 @@ export const useFitnessData = () => {
     measurements,
     activity,
     nutritionLog,
+    coach,
   };
 };

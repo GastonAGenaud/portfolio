@@ -312,6 +312,7 @@ export const es = {
   [tokens.fitnessSectionType.activity.minutes]: 'minutos entrenados',
   [tokens.fitnessSectionType.activity.walked]: 'km caminados',
   [tokens.fitnessSectionType.activity.energy]: 'kcal activas',
+  [tokens.fitnessSectionType.activity.steps]: 'pasos prom',
   [tokens.fitnessSectionType.activity.strengthLabel]: 'Fuerza',
   [tokens.fitnessSectionType.activity.cyclingLabel]: 'Ciclismo',
   [tokens.fitnessSectionType.hero.lost]: 'kg menos',
@@ -344,4 +345,7 @@ export const es = {
   [tokens.fitnessSectionType.compare.then]: 'Antes',
   [tokens.fitnessSectionType.compare.now]: 'Ahora',
   [tokens.fitnessSectionType.compare.gains]: 'Ganancias',
+  [tokens.fitnessSectionType.coach.label]: 'Entrenamiento & planificación',
+  [tokens.fitnessSectionType.coach.thanks]:
+    'Cada número acá es fruto de un acompañamiento constante en entrenamiento y nutrición. Gracias, Sebastián.',
 };

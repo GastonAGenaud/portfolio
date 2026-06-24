@@ -37,7 +37,7 @@ const fmtDate = (iso: string, locale: Locale) => {
 const Stat = ({ label, value, unit }: { label: string; value: string | number; unit?: string }) => (
   <div className="flex items-baseline justify-between gap-3 border-b border-dark-3/20 py-2 last:border-b-0">
     <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-dark-3">{label}</span>
-    <span className="font-lexend text-base text-dark-1">
+    <span className="font-mono text-base text-dark-1">
       {value}
       {unit && <span className="ml-0.5 text-xs text-dark-3">{unit}</span>}
     </span>
@@ -71,7 +71,7 @@ const Column = ({
 
 const Gain = ({ value, label }: { value: string; label: string }) => (
   <div className="flex items-center gap-2 rounded-full border border-dark-3/30 bg-accent-light px-3 py-1.5">
-    <span className="font-lexend text-sm font-semibold text-accent">{value}</span>
+    <span className="font-mono text-sm font-semibold text-accent">{value}</span>
     <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-dark-3">{label}</span>
   </div>
 );

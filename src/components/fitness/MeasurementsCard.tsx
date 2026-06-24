@@ -72,7 +72,7 @@ const MeasurementsCard = ({ data, labels }: Props) => {
       <div className="flex items-end gap-6">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-dark-3">{labels.waist}</p>
-          <p className="mt-1 font-lexend text-3xl font-semibold text-dark-1">
+          <p className="mt-1 font-mono text-3xl font-semibold text-dark-1">
             {waists[n - 1]}
             <span className="ml-1 text-xs font-normal text-dark-3">cm</span>
           </p>
@@ -90,7 +90,7 @@ const MeasurementsCard = ({ data, labels }: Props) => {
         {others.map((o) => (
           <div key={o.label}>
             <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-dark-3">{o.label}</p>
-            <p className="mt-1 font-lexend text-base text-dark-1">
+            <p className="mt-1 font-mono text-base text-dark-1">
               {o.last}
               <span className="text-xs text-dark-3"> cm</span>
             </p>

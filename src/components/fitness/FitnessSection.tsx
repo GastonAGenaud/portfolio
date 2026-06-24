@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import ActivityCard from './ActivityCard';
 import BloodPressureCard from './BloodPressureCard';
+import CoachCredit from './CoachCredit';
 import ComparisonView from './ComparisonView';
 import MeasurementsCard from './MeasurementsCard';
 import MilestoneCarousel from './MilestoneCarousel';
@@ -39,6 +40,7 @@ const FitnessSection = () => {
     measurements,
     activity,
     nutritionLog,
+    coach,
   } = useFitnessData();
 
   const [active, setActive] = useState(0);
@@ -107,7 +109,7 @@ const FitnessSection = () => {
             key={s.label}
             className="rounded-xl border border-white/[0.06] bg-bg-secondary/40 px-4 py-4 text-center"
           >
-            <p className="font-lexend text-2xl font-semibold text-dark-1 sm:text-3xl">
+            <p className="font-mono text-2xl font-semibold text-dark-1 sm:text-3xl">
               {s.value}
               {s.unit && <span className="ml-0.5 text-sm text-dark-3">{s.unit}</span>}
             </p>
@@ -170,6 +172,7 @@ const FitnessSection = () => {
             minutes: t(tk.activity.minutes),
             walked: t(tk.activity.walked),
             energy: t(tk.activity.energy),
+            steps: t(tk.activity.steps),
             strengthLabel: t(tk.activity.strengthLabel),
             cyclingLabel: t(tk.activity.cyclingLabel),
           }}
@@ -228,6 +231,12 @@ const FitnessSection = () => {
             },
           ],
         }}
+      />
+
+      {/* coach credit + thanks */}
+      <CoachCredit
+        coach={coach}
+        labels={{ label: t(tk.coach.label), thanks: t(tk.coach.thanks) }}
       />
     </div>
   );
