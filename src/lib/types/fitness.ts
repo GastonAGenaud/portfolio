@@ -125,3 +125,19 @@ export interface NutritionLog {
   kcal: number;
   protein: number;
 }
+
+export interface RouteShape {
+  date: string;
+  km: number;
+  d: string; // normalized SVG path
+}
+
+export interface Routes {
+  count: number;
+  totalKm: number;
+  totalHours: number;
+  elevGain: number;
+  firstDate: string;
+  lastDate: string;
+  shapes: RouteShape[];
+}

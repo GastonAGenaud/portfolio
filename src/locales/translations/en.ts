@@ -315,6 +315,12 @@ export const en = {
   [tokens.fitnessSectionType.activity.steps]: 'avg steps',
   [tokens.fitnessSectionType.activity.strengthLabel]: 'Strength',
   [tokens.fitnessSectionType.activity.cyclingLabel]: 'Cycling',
+  [tokens.fitnessSectionType.routes.title]: 'Movement · GPS routes',
+  [tokens.fitnessSectionType.routes.subtitle]: 'Every tracked walk & run since Apr 2024',
+  [tokens.fitnessSectionType.routes.routes]: 'routes',
+  [tokens.fitnessSectionType.routes.km]: 'km total',
+  [tokens.fitnessSectionType.routes.hours]: 'hours',
+  [tokens.fitnessSectionType.routes.elev]: 'm climbed',
   [tokens.fitnessSectionType.hero.lost]: 'kg lost',
   [tokens.fitnessSectionType.hero.fatDown]: 'body fat',
   [tokens.fitnessSectionType.hero.muscleUp]: 'muscle record',
@@ -348,4 +354,7 @@ export const en = {
   [tokens.fitnessSectionType.coach.label]: 'Training · Nutrition · Support',
   [tokens.fitnessSectionType.coach.thanks]:
     'Every number here is the result of consistent coaching and nutrition guidance. Thank you, Sebastián.',
+  [tokens.fitnessSectionType.coach.secondaryLabel]: 'Early-stage support',
+  [tokens.fitnessSectionType.coach.secondaryThanks]:
+    'And thanks to Matías Rosakesque for the training support and padel coaching in the early days.',
 };

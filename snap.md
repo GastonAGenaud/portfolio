@@ -1,0 +1,771 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - heading "Gaston Genaud" [level=1] [ref=e3]:
+      - link "Gaston Genaud" [ref=e4] [cursor=pointer]:
+        - /url: /#hero
+        - text: Gaston Genaud
+    - generic [ref=e5]:
+      - tablist "Persona" [ref=e6]:
+        - tab "Dev" [ref=e7] [cursor=pointer]:
+          - img [ref=e783]
+          - generic [ref=e8]: Dev
+        - tab "Studio" [ref=e9] [cursor=pointer]:
+          - img [ref=e785]
+          - generic [ref=e10]: Studio
+        - tab "Training" [active] [selected] [ref=e11] [cursor=pointer]:
+          - img [ref=e787]
+          - generic [ref=e13]: Training
+      - button "Language" [ref=e15] [cursor=pointer]
+  - main [ref=e16]:
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - img [ref=e789]
+          - text: Body · Progress log
+        - heading "Athletic Transformation" [level=2] [ref=e22]
+        - paragraph [ref=e23]: A data-driven body recomposition — fat down, muscle preserved. Tracked measurement by measurement.
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: −41kg
+          - paragraph [ref=e27]: kg lost
+        - generic [ref=e28]:
+          - paragraph [ref=e29]: −14.1pp
+          - paragraph [ref=e30]: body fat
+        - generic [ref=e31]:
+          - paragraph [ref=e32]: 72.1%
+          - paragraph [ref=e33]: muscle record
+        - generic [ref=e34]:
+          - paragraph [ref=e35]: −35cm
+          - paragraph [ref=e36]: Waist
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - generic [ref=e39]:
+            - generic [ref=e41]:
+              - generic [ref=e42]:
+                - generic: "01"
+                - generic [ref=e43]:
+                  - generic [ref=e44]:
+                    - generic [ref=e45]: 01 / 13
+                    - generic [ref=e46]: DAY 0
+                  - heading "The start" [level=3] [ref=e47]
+                  - paragraph [ref=e48]: May 1, 2024
+                  - paragraph [ref=e49]: The real starting line — around 122 kg at the obesity peak, waist 124 cm. Everything below is what came after.
+                  - generic [ref=e50]:
+                    - generic [ref=e51]:
+                      - generic [ref=e52]: Weight
+                      - generic [ref=e53]: 122kg
+                    - generic [ref=e54]:
+                      - generic [ref=e55]: Body fat
+                      - generic [ref=e56]: 38%
+                    - generic [ref=e57]:
+                      - generic [ref=e58]: Muscle
+                      - generic [ref=e59]: —
+                  - button "Details" [ref=e61] [cursor=pointer]:
+                    - text: Details
+                    - img [ref=e791]
+              - generic [ref=e63]:
+                - img "Athletic figure placeholder" [ref=e65]
+                - generic [ref=e66]: Photo coming soon
+            - generic [ref=e68]:
+              - generic [ref=e69]:
+                - generic: "02"
+                - generic [ref=e70]:
+                  - generic [ref=e71]:
+                    - generic [ref=e72]: 02 / 13
+                    - generic [ref=e73]: CUT START
+                  - heading "The cut begins" [level=3] [ref=e74]
+                  - paragraph [ref=e75]: April 12, 2026
+                  - paragraph [ref=e76]: The measured cut kicks off at 92.2 kg / 28.7% fat — roughly 30 kg already gone. From here it is tracked daily.
+                  - generic [ref=e77]:
+                    - generic [ref=e78]:
+                      - generic [ref=e79]: Weight
+                      - generic [ref=e80]: 92.2kg
+                      - generic [ref=e81]: ▼ 29.8 kg
+                    - generic [ref=e82]:
+                      - generic [ref=e83]: Body fat
+                      - generic [ref=e84]: 28.7%
+                      - generic [ref=e85]: ▼ 9.3 pp
+                    - generic [ref=e86]:
+                      - generic [ref=e87]: Muscle
+                      - generic [ref=e88]: 62.2kg
+                  - generic [ref=e89]:
+                    - generic [ref=e90]: vs baseline
+                    - button "Details" [ref=e91] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e793]
+              - generic [ref=e93]:
+                - img "Athletic figure placeholder" [ref=e95]
+                - generic [ref=e96]: Photo coming soon
+            - generic [ref=e98]:
+              - generic [ref=e99]:
+                - generic: "03"
+                - generic [ref=e100]:
+                  - generic [ref=e102]: 03 / 13
+                  - heading "First InBody" [level=3] [ref=e103]
+                  - paragraph [ref=e104]: April 14, 2026
+                  - paragraph [ref=e105]: Lean mass holds while the scale barely moves — muscle preserved from week one.
+                  - generic [ref=e106]:
+                    - generic [ref=e107]:
+                      - generic [ref=e108]: Weight
+                      - generic [ref=e109]: 92.3kg
+                      - generic [ref=e110]: ▼ 29.7 kg
+                    - generic [ref=e111]:
+                      - generic [ref=e112]: Body fat
+                      - generic [ref=e113]: 28.3%
+                      - generic [ref=e114]: ▼ 9.7 pp
+                    - generic [ref=e115]:
+                      - generic [ref=e116]: Muscle
+                      - generic [ref=e117]: 62.6kg
+                  - generic [ref=e118]:
+                    - generic [ref=e119]: vs baseline
+                    - button "Details" [ref=e120] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e795]
+              - generic [ref=e122]:
+                - img "Athletic figure placeholder" [ref=e124]
+                - generic [ref=e125]: Photo coming soon
+            - generic [ref=e127]:
+              - generic [ref=e128]:
+                - generic: "04"
+                - generic [ref=e129]:
+                  - generic [ref=e131]: 04 / 13
+                  - heading "Dialed in" [level=3] [ref=e132]
+                  - paragraph [ref=e133]: April 26, 2026
+                  - paragraph [ref=e134]: −3.4 kg in two weeks, almost entirely from fat. The cut is working.
+                  - generic [ref=e135]:
+                    - generic [ref=e136]:
+                      - generic [ref=e137]: Weight
+                      - generic [ref=e138]: 88.8kg
+                      - generic [ref=e139]: ▼ 33.2 kg
+                    - generic [ref=e140]:
+                      - generic [ref=e141]: Body fat
+                      - generic [ref=e142]: 27.6%
+                      - generic [ref=e143]: ▼ 10.4 pp
+                    - generic [ref=e144]:
+                      - generic [ref=e145]: Muscle
+                      - generic [ref=e146]: 64.3kg
+                  - generic [ref=e147]:
+                    - generic [ref=e148]: vs baseline
+                    - button "Details" [ref=e149] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e797]
+              - generic [ref=e151]:
+                - img "Athletic figure placeholder" [ref=e153]
+                - generic [ref=e154]: Photo coming soon
+            - generic [ref=e156]:
+              - generic [ref=e157]:
+                - generic: "05"
+                - generic [ref=e158]:
+                  - generic [ref=e159]:
+                    - generic [ref=e160]: 05 / 13
+                    - generic [ref=e161]: VISCERAL 12
+                  - heading "First breakthrough" [level=3] [ref=e162]
+                  - paragraph [ref=e163]: April 29, 2026
+                  - paragraph [ref=e164]: Visceral fat drops from 13 to 12 for the first time after three weeks stuck.
+                  - generic [ref=e165]:
+                    - generic [ref=e166]:
+                      - generic [ref=e167]: Weight
+                      - generic [ref=e168]: 89.8kg
+                      - generic [ref=e169]: ▼ 32.2 kg
+                    - generic [ref=e170]:
+                      - generic [ref=e171]: Body fat
+                      - generic [ref=e172]: 27.6%
+                      - generic [ref=e173]: ▼ 10.4 pp
+                    - generic [ref=e174]:
+                      - generic [ref=e175]: Muscle
+                      - generic [ref=e176]: 61.5kg
+                  - generic [ref=e177]:
+                    - generic [ref=e178]: vs baseline
+                    - button "Details" [ref=e179] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e799]
+              - generic [ref=e181]:
+                - img "Athletic figure placeholder" [ref=e183]
+                - generic [ref=e184]: Photo coming soon
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - generic: "06"
+                - generic [ref=e188]:
+                  - generic [ref=e190]: 06 / 13
+                  - heading "Holding form" [level=3] [ref=e191]
+                  - paragraph [ref=e192]: May 6, 2026
+                  - paragraph [ref=e193]: Weight under 88 kg, body fat under 27% — steady, controlled decline.
+                  - generic [ref=e194]:
+                    - generic [ref=e195]:
+                      - generic [ref=e196]: Weight
+                      - generic [ref=e197]: 87.9kg
+                      - generic [ref=e198]: ▼ 34.1 kg
+                    - generic [ref=e199]:
+                      - generic [ref=e200]: Body fat
+                      - generic [ref=e201]: 26.9%
+                      - generic [ref=e202]: ▼ 11.1 pp
+                    - generic [ref=e203]:
+                      - generic [ref=e204]: Muscle
+                      - generic [ref=e205]: 64.3kg
+                  - generic [ref=e206]:
+                    - generic [ref=e207]: vs baseline
+                    - button "Details" [ref=e208] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e801]
+              - generic [ref=e210]:
+                - img "Athletic figure placeholder" [ref=e212]
+                - generic [ref=e213]: Photo coming soon
+            - generic [ref=e215]:
+              - generic [ref=e216]:
+                - generic: "07"
+                - generic [ref=e217]:
+                  - generic [ref=e218]:
+                    - generic [ref=e219]: 07 / 13
+                    - generic [ref=e220]: THE BACK
+                  - heading "The back appeared" [level=3] [ref=e221]
+                  - paragraph [ref=e222]: May 7, 2026
+                  - paragraph [ref=e223]: Week 4, the most important change — first real separation across traps, rhomboids and rear delts. The V-taper is visually confirmed.
+                  - generic [ref=e224]:
+                    - generic [ref=e225]:
+                      - generic [ref=e226]: Weight
+                      - generic [ref=e227]: 86.6kg
+                      - generic [ref=e228]: ▼ 35.4 kg
+                    - generic [ref=e229]:
+                      - generic [ref=e230]: Body fat
+                      - generic [ref=e231]: 26.2%
+                      - generic [ref=e232]: ▼ 11.8 pp
+                    - generic [ref=e233]:
+                      - generic [ref=e234]: Muscle
+                      - generic [ref=e235]: 63.9kg
+                  - generic [ref=e236]:
+                    - generic [ref=e237]: vs baseline
+                    - button "Details" [ref=e238] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e803]
+              - generic [ref=e240]:
+                - img "Athletic figure placeholder" [ref=e242]
+                - generic [ref=e243]: Photo coming soon
+            - generic [ref=e245]:
+              - generic [ref=e246]:
+                - generic: "08"
+                - generic [ref=e247]:
+                  - generic [ref=e249]: 08 / 13
+                  - heading "Lean and lighter" [level=3] [ref=e250]
+                  - paragraph [ref=e251]: May 22, 2026
+                  - paragraph [ref=e252]: Under 85 kg with body fat near 25% — the deficit keeps eating fat, not muscle.
+                  - generic [ref=e253]:
+                    - generic [ref=e254]:
+                      - generic [ref=e255]: Weight
+                      - generic [ref=e256]: 84.8kg
+                      - generic [ref=e257]: ▼ 37.2 kg
+                    - generic [ref=e258]:
+                      - generic [ref=e259]: Body fat
+                      - generic [ref=e260]: 25.8%
+                      - generic [ref=e261]: ▼ 12.2 pp
+                    - generic [ref=e262]:
+                      - generic [ref=e263]: Muscle
+                      - generic [ref=e264]: 62.9kg
+                  - generic [ref=e265]:
+                    - generic [ref=e266]: vs baseline
+                    - button "Details" [ref=e267] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e805]
+              - generic [ref=e269]:
+                - img "Athletic figure placeholder" [ref=e271]
+                - generic [ref=e272]: Photo coming soon
+            - generic [ref=e274]:
+              - generic [ref=e275]:
+                - generic: "09"
+                - generic [ref=e276]:
+                  - generic [ref=e278]: 09 / 13
+                  - heading "Clean recomposition" [level=3] [ref=e279]
+                  - paragraph [ref=e280]: May 29, 2026
+                  - paragraph [ref=e281]: Weight down, muscle percentage climbing measurement after measurement.
+                  - generic [ref=e282]:
+                    - generic [ref=e283]:
+                      - generic [ref=e284]: Weight
+                      - generic [ref=e285]: 83.5kg
+                      - generic [ref=e286]: ▼ 38.5 kg
+                    - generic [ref=e287]:
+                      - generic [ref=e288]: Body fat
+                      - generic [ref=e289]: 25.1%
+                      - generic [ref=e290]: ▼ 12.9 pp
+                    - generic [ref=e291]:
+                      - generic [ref=e292]: Muscle
+                      - generic [ref=e293]: 70.9%
+                  - generic [ref=e294]:
+                    - generic [ref=e295]: vs baseline
+                    - button "Details" [ref=e296] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e807]
+              - generic [ref=e298]:
+                - img "Athletic figure placeholder" [ref=e300]
+                - generic [ref=e301]: Photo coming soon
+            - generic [ref=e303]:
+              - generic [ref=e304]:
+                - generic: "10"
+                - generic [ref=e305]:
+                  - generic [ref=e306]:
+                    - generic [ref=e307]: 10 / 13
+                    - generic [ref=e308]: RECORD
+                  - heading "Under 25%" [level=3] [ref=e309]
+                  - paragraph [ref=e310]: June 4, 2026
+                  - paragraph [ref=e311]: Body fat crosses below 25% for the first time and muscle hits a record 71.2%.
+                  - generic [ref=e312]:
+                    - generic [ref=e313]:
+                      - generic [ref=e314]: Weight
+                      - generic [ref=e315]: 82.7kg
+                      - generic [ref=e316]: ▼ 39.3 kg
+                    - generic [ref=e317]:
+                      - generic [ref=e318]: Body fat
+                      - generic [ref=e319]: 24.8%
+                      - generic [ref=e320]: ▼ 13.2 pp
+                    - generic [ref=e321]:
+                      - generic [ref=e322]: Muscle
+                      - generic [ref=e323]: 71.2%
+                  - generic [ref=e324]:
+                    - generic [ref=e325]: vs baseline
+                    - button "Details" [ref=e326] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e809]
+              - generic [ref=e328]:
+                - img "Athletic figure placeholder" [ref=e330]
+                - generic [ref=e331]: Photo coming soon
+            - generic [ref=e333]:
+              - generic [ref=e334]:
+                - generic: "11"
+                - generic [ref=e335]:
+                  - generic [ref=e336]:
+                    - generic [ref=e337]: 11 / 13
+                    - generic [ref=e338]: −10.4 KG
+                  - heading "New low" [level=3] [ref=e339]
+                  - paragraph [ref=e340]: June 11, 2026
+                  - paragraph [ref=e341]: 81.8 kg at 24.2% fat with a record 71.8% muscle — −10.4 kg from baseline, mostly fat.
+                  - generic [ref=e342]:
+                    - generic [ref=e343]:
+                      - generic [ref=e344]: Weight
+                      - generic [ref=e345]: 81.8kg
+                      - generic [ref=e346]: ▼ 40.2 kg
+                    - generic [ref=e347]:
+                      - generic [ref=e348]: Body fat
+                      - generic [ref=e349]: 24.2%
+                      - generic [ref=e350]: ▼ 13.8 pp
+                    - generic [ref=e351]:
+                      - generic [ref=e352]: Muscle
+                      - generic [ref=e353]: 71.8%
+                  - generic [ref=e354]:
+                    - generic [ref=e355]: vs baseline
+                    - button "Details" [ref=e356] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e811]
+              - generic [ref=e358]:
+                - img "Athletic figure placeholder" [ref=e360]
+                - generic [ref=e361]: Photo coming soon
+            - generic [ref=e363]:
+              - generic [ref=e364]:
+                - generic: "12"
+                - generic [ref=e365]:
+                  - generic [ref=e366]:
+                    - generic [ref=e367]: 12 / 13
+                    - generic [ref=e368]: LATEST
+                  - heading "Sharpest yet" [level=3] [ref=e369]
+                  - paragraph [ref=e370]: June 24, 2026
+                  - paragraph [ref=e371]: 80.9 kg at 23.9% fat — muscle a record 72.1%, visceral down to 10, waist 89 cm. −11.3 kg from baseline.
+                  - generic [ref=e372]:
+                    - generic [ref=e373]:
+                      - generic [ref=e374]: Weight
+                      - generic [ref=e375]: 80.9kg
+                      - generic [ref=e376]: ▼ 41.1 kg
+                    - generic [ref=e377]:
+                      - generic [ref=e378]: Body fat
+                      - generic [ref=e379]: 23.9%
+                      - generic [ref=e380]: ▼ 14.1 pp
+                    - generic [ref=e381]:
+                      - generic [ref=e382]: Muscle
+                      - generic [ref=e383]: 72.1%
+                  - generic [ref=e384]:
+                    - generic [ref=e385]: vs baseline
+                    - button "Details" [ref=e386] [cursor=pointer]:
+                      - text: Details
+                      - img [ref=e813]
+              - generic [ref=e388]:
+                - img "Athletic figure placeholder" [ref=e390]
+                - generic [ref=e391]: Photo coming soon
+            - generic [ref=e393]:
+              - generic [ref=e394]:
+                - generic: "13"
+                - generic [ref=e395]:
+                  - generic [ref=e396]:
+                    - generic [ref=e397]: 13 / 13
+                    - generic [ref=e398]: IN PROGRESS
+                  - heading "The Goal" [level=3] [ref=e399]
+                  - paragraph [ref=e400]: September 23, 2026
+                  - paragraph [ref=e401]: The target — 78 kg at 14% body fat. Lean, defined, athletic. Still climbing.
+                  - generic [ref=e402]:
+                    - generic [ref=e403]:
+                      - generic [ref=e404]: Target · Weight
+                      - generic [ref=e405]: 78kg
+                    - generic [ref=e406]:
+                      - generic [ref=e407]: Target · Body fat
+                      - generic [ref=e408]: 14%
+                    - generic [ref=e409]:
+                      - generic [ref=e410]: Muscle
+                      - generic [ref=e411]: —
+                  - button "Details" [ref=e413] [cursor=pointer]:
+                    - text: Details
+                    - img [ref=e815]
+              - generic [ref=e415]:
+                - img "Athletic figure placeholder" [ref=e417]
+                - generic [ref=e418]: Photo coming soon
+          - generic:
+            - img
+            - text: Drag · or use the dots
+        - generic [ref=e419]:
+          - button "Previous" [disabled] [ref=e420]:
+            - img [ref=e817]
+          - generic [ref=e422]:
+            - button "May 1" [ref=e424] [cursor=pointer]:
+              - generic [ref=e426]: May 1
+            - button "Apr 12" [ref=e427] [cursor=pointer]:
+              - generic [ref=e429]: Apr 12
+            - button "Apr 14" [ref=e430] [cursor=pointer]:
+              - generic [ref=e432]: Apr 14
+            - button "Apr 26" [ref=e433] [cursor=pointer]:
+              - generic [ref=e435]: Apr 26
+            - button "Apr 29" [ref=e436] [cursor=pointer]:
+              - generic [ref=e438]: Apr 29
+            - button "May 6" [ref=e439] [cursor=pointer]:
+              - generic [ref=e441]: May 6
+            - button "May 7" [ref=e442] [cursor=pointer]:
+              - generic [ref=e444]: May 7
+            - button "May 22" [ref=e445] [cursor=pointer]:
+              - generic [ref=e447]: May 22
+            - button "May 29" [ref=e448] [cursor=pointer]:
+              - generic [ref=e450]: May 29
+            - button "Jun 4" [ref=e451] [cursor=pointer]:
+              - generic [ref=e453]: Jun 4
+            - button "Jun 11" [ref=e454] [cursor=pointer]:
+              - generic [ref=e456]: Jun 11
+            - button "Jun 24" [ref=e457] [cursor=pointer]:
+              - generic [ref=e459]: Jun 24
+            - button "Sep 23" [ref=e460] [cursor=pointer]:
+              - img [ref=e819]
+              - generic [ref=e462]: Sep 23
+          - button "Next" [ref=e463] [cursor=pointer]:
+            - img [ref=e821]
+      - generic [ref=e464]:
+        - generic [ref=e465]:
+          - heading "Then vs Now" [level=3] [ref=e466]
+          - paragraph [ref=e467]: Baseline against the latest measurement
+        - generic [ref=e468]:
+          - generic [ref=e469]:
+            - generic [ref=e470]:
+              - generic [ref=e471]: Then
+              - generic [ref=e472]: May 1, 2024
+            - img "Athletic figure placeholder" [ref=e475]
+            - generic [ref=e476]:
+              - generic [ref=e477]: Weight
+              - generic [ref=e478]: 122kg
+            - generic [ref=e479]:
+              - generic [ref=e480]: Body fat
+              - generic [ref=e481]: 38%
+          - generic:
+            - generic:
+              - img
+          - generic [ref=e482]:
+            - generic [ref=e483]:
+              - generic [ref=e484]: Now
+              - generic [ref=e485]: Jun 24, 2026
+            - img "Athletic figure placeholder" [ref=e488]
+            - generic [ref=e489]:
+              - generic [ref=e490]: Weight
+              - generic [ref=e491]: 80.9kg
+            - generic [ref=e492]:
+              - generic [ref=e493]: Body fat
+              - generic [ref=e494]: 23.9%
+            - generic [ref=e495]:
+              - generic [ref=e496]: Visceral
+              - generic [ref=e497]: "10"
+            - generic [ref=e498]:
+              - generic [ref=e499]: Blood pressure
+              - generic [ref=e500]: 116/65
+        - generic [ref=e501]:
+          - paragraph [ref=e502]: Gains
+          - generic [ref=e503]:
+            - generic [ref=e504]:
+              - generic [ref=e505]: "-41.1 kg"
+              - generic [ref=e506]: Weight
+            - generic [ref=e507]:
+              - generic [ref=e508]: "-14.1 pp"
+              - generic [ref=e509]: Body fat
+            - generic [ref=e510]:
+              - generic [ref=e511]: 72.1%
+              - generic [ref=e512]: Muscle
+      - generic [ref=e513]:
+        - generic [ref=e514]:
+          - generic [ref=e515]:
+            - img [ref=e823]
+            - generic [ref=e517]:
+              - heading "Measurements" [level=3] [ref=e518]
+              - paragraph [ref=e519]: Tape — the V-taper in centimetres
+          - generic [ref=e520]:
+            - generic [ref=e521]:
+              - paragraph [ref=e522]: Waist
+              - paragraph [ref=e523]: 89cm
+              - generic [ref=e524]: ▼ 35 cm
+            - img [ref=e525]
+          - generic [ref=e528]:
+            - generic [ref=e529]:
+              - paragraph [ref=e530]: Hip
+              - paragraph [ref=e531]: 87 cm
+              - paragraph [ref=e532]: "-24.5"
+            - generic [ref=e533]:
+              - paragraph [ref=e534]: Chest
+              - paragraph [ref=e535]: 101.5 cm
+              - paragraph [ref=e536]: "-18.5"
+            - generic [ref=e537]:
+              - paragraph [ref=e538]: Arm
+              - paragraph [ref=e539]: 39.5 cm
+              - paragraph [ref=e540]: "+1.5"
+        - generic [ref=e541]:
+          - generic [ref=e542]:
+            - img [ref=e825]
+            - generic [ref=e544]:
+              - heading "Training load" [level=3] [ref=e545]
+              - paragraph [ref=e546]: Apple Watch · last 7 days
+          - generic [ref=e547]:
+            - generic [ref=e548]:
+              - paragraph [ref=e549]: "4"
+              - paragraph [ref=e550]: strength sessions
+            - generic [ref=e551]:
+              - paragraph [ref=e552]: "388"
+              - paragraph [ref=e553]: minutes trained
+            - generic [ref=e554]:
+              - paragraph [ref=e555]: "31.2"
+              - paragraph [ref=e556]: km walked
+            - generic [ref=e557]:
+              - paragraph [ref=e558]: 10,400
+              - paragraph [ref=e559]: avg steps
+            - generic [ref=e560]:
+              - paragraph [ref=e561]: 5,823
+              - paragraph [ref=e562]: active kcal
+          - list [ref=e563]:
+            - listitem [ref=e564]:
+              - img [ref=e827]
+              - generic [ref=e565]: May 25
+              - generic [ref=e566]: Strength
+              - generic [ref=e567]: 97′
+              - generic [ref=e568]: 820 kcal
+              - generic [ref=e569]: ♥ 122/153
+            - listitem [ref=e570]:
+              - img [ref=e829]
+              - generic [ref=e571]: May 26
+              - generic [ref=e572]: Strength
+              - generic [ref=e573]: 106′
+              - generic [ref=e574]: 779 kcal
+              - generic [ref=e575]: ♥ 118/152
+            - listitem [ref=e576]:
+              - img [ref=e831]
+              - generic [ref=e577]: May 27
+              - generic [ref=e578]: Strength
+              - generic [ref=e579]: 98′
+              - generic [ref=e580]: 594 kcal
+              - generic [ref=e581]: ♥ 107/151
+            - listitem [ref=e582]:
+              - img [ref=e833]
+              - generic [ref=e583]: May 28
+              - generic [ref=e584]: Strength
+              - generic [ref=e585]: 87′
+              - generic [ref=e586]: 625 kcal
+              - generic [ref=e587]: ♥ 117/149
+            - listitem [ref=e588]:
+              - img [ref=e835]
+              - generic [ref=e589]: May 23
+              - generic [ref=e590]: Cycling
+              - generic [ref=e591]: 30′
+              - generic [ref=e592]: 239 kcal
+              - generic [ref=e593]: ♥ 121/152
+      - generic [ref=e594]:
+        - generic [ref=e595]:
+          - img [ref=e837]
+          - generic [ref=e597]:
+            - heading "Movement · GPS routes" [level=3] [ref=e598]
+            - paragraph [ref=e599]: Every tracked walk & run since Apr 2024
+        - generic [ref=e600]:
+          - generic [ref=e601]:
+            - paragraph [ref=e602]: "188"
+            - paragraph [ref=e603]: routes
+          - generic [ref=e604]:
+            - paragraph [ref=e605]: "256"
+            - paragraph [ref=e606]: km total
+          - generic [ref=e607]:
+            - paragraph [ref=e608]: "78"
+            - paragraph [ref=e609]: hours
+          - generic [ref=e610]:
+            - paragraph [ref=e611]: 13,375
+            - paragraph [ref=e612]: m climbed
+        - generic [ref=e613]:
+          - generic [ref=e614]:
+            - img [ref=e615]
+            - generic: 8.5k
+          - generic [ref=e617]:
+            - img [ref=e618]
+            - generic: 7.8k
+          - generic [ref=e620]:
+            - img [ref=e621]
+            - generic: 7.8k
+          - generic [ref=e623]:
+            - img [ref=e624]
+            - generic: 7.6k
+          - generic [ref=e626]:
+            - img [ref=e627]
+            - generic: 7.4k
+          - generic [ref=e629]:
+            - img [ref=e630]
+            - generic: 6.7k
+          - generic [ref=e632]:
+            - img [ref=e633]
+            - generic: 5.2k
+          - generic [ref=e635]:
+            - img [ref=e636]
+            - generic: 5.1k
+          - generic [ref=e638]:
+            - img [ref=e639]
+            - generic: 4.8k
+      - generic [ref=e641]:
+        - generic [ref=e642]:
+          - generic [ref=e643]:
+            - heading "The full trajectory" [level=3] [ref=e644]
+            - generic [ref=e645]:
+              - generic [ref=e646]: Weight (kg)
+              - generic [ref=e648]: Body fat (%)
+          - img "The full trajectory" [ref=e650]:
+            - generic [ref=e656]: 80.9 kg
+            - generic [ref=e657]: 23.9%
+            - generic [ref=e658]: Apr 10
+            - generic [ref=e659]: Jun 24
+        - generic [ref=e660]:
+          - generic [ref=e661]:
+            - img [ref=e839]
+            - generic [ref=e663]:
+              - heading "Blood pressure" [level=3] [ref=e664]
+              - paragraph [ref=e665]: Fasted AM log — elevated to optimal
+          - generic [ref=e666]:
+            - generic [ref=e667]:
+              - paragraph [ref=e668]: Latest
+              - paragraph [ref=e669]:
+                - text: "125"
+                - generic [ref=e670]: /76
+                - text: mmHg
+            - img [ref=e671]
+          - generic [ref=e674]:
+            - generic [ref=e675]:
+              - paragraph [ref=e676]: Average
+              - paragraph [ref=e677]: 123/75
+            - generic [ref=e678]:
+              - paragraph [ref=e679]: Resting HR
+              - paragraph [ref=e680]: 59bpm
+      - generic [ref=e681]:
+        - generic [ref=e682]:
+          - generic [ref=e683]:
+            - img [ref=e843]
+            - generic [ref=e685]:
+              - heading "Bloodwork" [level=3] [ref=e686]
+              - paragraph [ref=e687]: Fasted draw · 06/01/2026
+          - generic [ref=e688]:
+            - generic [ref=e689]:
+              - generic [ref=e690]: Glucose
+              - generic [ref=e692]: 84 mg/dL
+              - generic [ref=e693]: ref 60–110
+            - generic [ref=e694]:
+              - generic [ref=e695]: HbA1c
+              - generic [ref=e697]: 5.20%
+              - generic [ref=e698]: ref < 5.7
+            - generic [ref=e699]:
+              - generic [ref=e700]: Total cholesterol
+              - generic [ref=e702]: "149"
+              - generic [ref=e703]: ref < 200
+            - generic [ref=e704]:
+              - generic [ref=e705]: HDL
+              - generic [ref=e707]: "55"
+              - generic [ref=e708]: ref 60+
+            - generic [ref=e709]:
+              - generic [ref=e710]: LDL
+              - generic [ref=e712]: "84.2"
+              - generic [ref=e713]: ref < 130
+            - generic [ref=e714]:
+              - generic [ref=e715]: Triglycerides
+              - generic [ref=e717]: "49"
+              - generic [ref=e718]: ref < 150
+            - generic [ref=e719]:
+              - generic [ref=e720]: Creatinine
+              - generic [ref=e722]: "0.8"
+              - generic [ref=e723]: ref 0.7–1.3
+            - generic [ref=e724]:
+              - generic [ref=e725]: Vitamin D
+              - generic [ref=e727]: "29.1"
+              - generic [ref=e728]: ref 30+
+          - paragraph [ref=e729]: Metabolic, lipid, renal and vitamin markers — the health side of the work.
+        - generic [ref=e730]:
+          - generic [ref=e731]:
+            - img [ref=e845]
+            - heading "Fuel protocol" [level=3] [ref=e733]
+          - generic [ref=e734]:
+            - generic [ref=e735]:
+              - term [ref=e736]: kcal floor
+              - definition [ref=e737]: "1800"
+            - generic [ref=e738]:
+              - term [ref=e739]: Protein
+              - definition [ref=e740]: 1.8–2 g/kg
+            - generic [ref=e741]:
+              - term [ref=e742]: Carbs
+              - definition [ref=e743]: ~120 g rest · ~160 g training
+            - generic [ref=e744]:
+              - term [ref=e745]: Fats
+              - definition [ref=e746]: maintained
+            - generic [ref=e747]:
+              - term [ref=e748]: Fiber
+              - definition [ref=e749]: ≥ 20 g
+            - generic [ref=e750]:
+              - term [ref=e751]: Daily steps
+              - definition [ref=e752]: "10.000"
+            - generic [ref=e753]:
+              - term [ref=e754]: Logged avg
+              - definition [ref=e755]: 80 d · 1758 kcal · 207 g P
+      - generic [ref=e756]:
+        - paragraph [ref=e757]: Training · Nutrition · Support
+        - paragraph [ref=e758]: Sebastián · THA CBO
+        - generic [ref=e759]:
+          - link "@tha_cbo.ar" [ref=e760] [cursor=pointer]:
+            - /url: https://www.instagram.com/tha_cbo.ar/
+            - img [ref=e847]
+            - text: "@tha_cbo.ar"
+          - link "www.thacbo.com" [ref=e761] [cursor=pointer]:
+            - /url: https://www.thacbo.com/
+            - img [ref=e849]
+            - text: www.thacbo.com
+        - paragraph [ref=e762]: Every number here is the result of consistent coaching and nutrition guidance. Thank you, Sebastián.
+        - generic [ref=e763]:
+          - paragraph [ref=e764]: Early-stage support
+          - paragraph [ref=e765]:
+            - text: And thanks to Matías Rosakesque for the training support and padel coaching in the early days.
+            - link "@mati_00_d" [ref=e766] [cursor=pointer]:
+              - /url: https://www.instagram.com/mati_00_d/
+  - contentinfo [ref=e767]:
+    - link "Built by Gaston Genaud" [ref=e768] [cursor=pointer]:
+      - /url: https://github.com/GastonAGenaud/portfolio
+  - list [ref=e770]:
+    - listitem [ref=e771]:
+      - link [ref=e772] [cursor=pointer]:
+        - /url: https://adobe.ly/49JhF7I
+        - img [ref=e853]
+    - listitem [ref=e773]:
+      - link [ref=e774] [cursor=pointer]:
+        - /url: https://github.com/GastonAGenaud/
+        - img [ref=e855]
+    - listitem [ref=e775]:
+      - link [ref=e776] [cursor=pointer]:
+        - /url: https://www.instagram.com/gastongenaud
+        - img [ref=e857]
+    - listitem [ref=e777]:
+      - link [ref=e778] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/gaston-genaud/
+        - img [ref=e859]
+  - link "gastongenaudar@gmail.com" [ref=e781] [cursor=pointer]:
+    - /url: mailto:gastongenaudar@gmail.com
+  - alert [ref=e863]

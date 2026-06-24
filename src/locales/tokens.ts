@@ -304,6 +304,14 @@ export const tokens = {
       strengthLabel: 'fitnessSectionType.activity.strengthLabel',
       cyclingLabel: 'fitnessSectionType.activity.cyclingLabel',
     },
+    routes: {
+      title: 'fitnessSectionType.routes.title',
+      subtitle: 'fitnessSectionType.routes.subtitle',
+      routes: 'fitnessSectionType.routes.routes',
+      km: 'fitnessSectionType.routes.km',
+      hours: 'fitnessSectionType.routes.hours',
+      elev: 'fitnessSectionType.routes.elev',
+    },
     hero: {
       lost: 'fitnessSectionType.hero.lost',
       fatDown: 'fitnessSectionType.hero.fatDown',
@@ -347,6 +355,8 @@ export const tokens = {
     coach: {
       label: 'fitnessSectionType.coach.label',
       thanks: 'fitnessSectionType.coach.thanks',
+      secondaryLabel: 'fitnessSectionType.coach.secondaryLabel',
+      secondaryThanks: 'fitnessSectionType.coach.secondaryThanks',
     },
   },
 };

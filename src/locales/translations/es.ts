@@ -315,6 +315,12 @@ export const es = {
   [tokens.fitnessSectionType.activity.steps]: 'pasos prom',
   [tokens.fitnessSectionType.activity.strengthLabel]: 'Fuerza',
   [tokens.fitnessSectionType.activity.cyclingLabel]: 'Ciclismo',
+  [tokens.fitnessSectionType.routes.title]: 'Movimiento · Rutas GPS',
+  [tokens.fitnessSectionType.routes.subtitle]: 'Cada caminata y trote registrado desde abr 2024',
+  [tokens.fitnessSectionType.routes.routes]: 'rutas',
+  [tokens.fitnessSectionType.routes.km]: 'km total',
+  [tokens.fitnessSectionType.routes.hours]: 'horas',
+  [tokens.fitnessSectionType.routes.elev]: 'm de desnivel',
   [tokens.fitnessSectionType.hero.lost]: 'kg menos',
   [tokens.fitnessSectionType.hero.fatDown]: 'grasa corporal',
   [tokens.fitnessSectionType.hero.muscleUp]: 'récord músculo',
@@ -348,4 +354,7 @@ export const es = {
   [tokens.fitnessSectionType.coach.label]: 'Entrenamiento · Nutrición · Acompañamiento',
   [tokens.fitnessSectionType.coach.thanks]:
     'Cada número acá es fruto de un acompañamiento constante en entrenamiento y nutrición. Gracias, Sebastián.',
+  [tokens.fitnessSectionType.coach.secondaryLabel]: 'Apoyo de la primera etapa',
+  [tokens.fitnessSectionType.coach.secondaryThanks]:
+    'Y gracias a Matías Rosakesque por el acompañamiento de entrenamiento y el pádel en los inicios.',
 };

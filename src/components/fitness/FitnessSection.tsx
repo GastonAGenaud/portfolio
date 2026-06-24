@@ -13,6 +13,7 @@ import CoachCredit from './CoachCredit';
 import ComparisonView from './ComparisonView';
 import MeasurementsCard from './MeasurementsCard';
 import MilestoneCarousel from './MilestoneCarousel';
+import RoutesCard from './RoutesCard';
 import TrendChart from './TrendChart';
 import VitalsPanel from './VitalsPanel';
 
@@ -32,7 +33,9 @@ const FitnessSection = () => {
     measurements,
     activity,
     nutritionLog,
+    routes,
     coach,
+    coachSecondary,
   } = useFitnessData();
 
   const [active, setActive] = useState(0);
@@ -173,6 +176,19 @@ const FitnessSection = () => {
         />
       </div>
 
+      {/* gps routes */}
+      <RoutesCard
+        routes={routes}
+        labels={{
+          title: t(tk.routes.title),
+          subtitle: t(tk.routes.subtitle),
+          routes: t(tk.routes.routes),
+          km: t(tk.routes.km),
+          hours: t(tk.routes.hours),
+          elev: t(tk.routes.elev),
+        }}
+      />
+
       {/* trend + blood pressure */}
       <div className="grid gap-5 lg:grid-cols-[1.5fr_1fr]">
         <TrendChart
@@ -230,7 +246,13 @@ const FitnessSection = () => {
       {/* coach credit + thanks */}
       <CoachCredit
         coach={coach}
-        labels={{ label: t(tk.coach.label), thanks: t(tk.coach.thanks) }}
+        secondary={coachSecondary}
+        labels={{
+          label: t(tk.coach.label),
+          thanks: t(tk.coach.thanks),
+          secondaryLabel: t(tk.coach.secondaryLabel),
+          secondaryThanks: t(tk.coach.secondaryThanks),
+        }}
       />
     </div>
   );
