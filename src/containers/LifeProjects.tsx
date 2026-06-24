@@ -1,7 +1,6 @@
 'use client';
 import { ShowLottie, Link, ListItem } from '@/components';
-import useWindowWidth from '@/lib/hooks/use-window-width';
-import { getBreakpointsWidth, getId } from '@/lib/utils/helper';
+import { getId } from '@/lib/utils/helper';
 
 import { useLifeProjectsSection } from '../lib/content/life-projects';
 import { getSectionAnimation } from '../styles/animations';
@@ -30,16 +29,9 @@ const lottieVariants = {
 const LifeProjects = () => {
   const { title, experiences } = useLifeProjectsSection();
   const [activeTab, setActiveTab] = useState(0);
-  const windowWidth = useWindowWidth();
-  const sm = getBreakpointsWidth('sm');
 
   const { role, company, companyUrl, started, upto, tasks } =
     experiences[activeTab];
-
-  const sliderStyle =
-    windowWidth <= sm
-      ? { left: `calc(${activeTab}*120px)` }
-      : { top: `calc(${activeTab}*2.5rem)` };
 
   return (
     <motion.section
@@ -71,26 +63,21 @@ const LifeProjects = () => {
         {/* Right: Tabs + Content */}
         <div className="w-full lg:w-3/5">
           <div className="flex flex-col sm:flex-row text-sm md:text-base gap-6 md:gap-10 min-h-[250px]">
-            {/* Sidebar */}
-            <div className="font-mono text-xs sm:text-sm relative flex justify-start sm:flex-col overflow-scroll sm:overflow-auto sm:min-w-[180px]">
+            {/* Sidebar — per-item indicator so long, wrapping labels never overlap */}
+            <div className="font-mono text-xs sm:text-sm flex flex-row sm:flex-col overflow-x-auto sm:overflow-visible sm:min-w-[200px] shrink-0">
               {experiences.map(({ company }, i) => (
                 <button
                   key={`tab-${i}`}
-                  className={`h-10 min-w-[120px] sm:w-auto sm:px-5 sm:!text-left capitalize hover:bg-accent-light hover:text-accent focus:outline-none focus:bg-accent-light focus:text-accent transition-colors duration-200 ${
-                    i === activeTab ? 'text-accent' : ''
-                  }`}
                   onClick={() => setActiveTab(i)}
+                  className={`shrink-0 whitespace-nowrap sm:whitespace-normal text-left capitalize px-4 py-3 border-b-2 sm:border-b-0 sm:border-l-2 sm:rounded-r-md transition-colors duration-200 hover:bg-accent-light hover:text-accent focus:outline-none focus:bg-accent-light focus:text-accent ${
+                    i === activeTab
+                      ? 'border-accent text-accent bg-accent-light/30'
+                      : 'border-dark-3/40'
+                  }`}
                 >
                   {company}
                 </button>
               ))}
-              {/* Slider background */}
-              <div className="absolute h-0.5 w-full sm:w-0.5 sm:h-full rounded-full bottom-0 sm:inset-0 left-0 bg-dark-3"></div>
-              {/* Active slider */}
-              <div
-                style={sliderStyle}
-                className="absolute h-0.5 w-[120px] sm:w-0.5 sm:h-10 rounded-full bg-accent bottom-0 left-0 sm:inset-0 transition-all duration-300 ease-in-out"
-              ></div>
             </div>
 
             {/* Content with fade transition */}
