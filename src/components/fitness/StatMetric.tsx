@@ -5,9 +5,7 @@ interface Props {
   label: string;
   value: string | number;
   unit?: string;
-  /** Signed delta vs baseline (already computed). */
   delta?: number;
-  /** Whether a positive delta is the "good" direction (muscle up = true). */
   positiveIsGood?: boolean;
   deltaUnit?: string;
   size?: 'lg' | 'sm';
@@ -24,7 +22,7 @@ const StatMetric = ({
   size = 'sm',
   className,
 }: Props) => {
-  const hasDelta = typeof delta === 'number' && Math.abs(delta) > 0.001;
+  const hasDelta = typeof delta === 'number' && Math.abs(delta) > 0.05;
   const isGood = hasDelta
     ? positiveIsGood
       ? (delta as number) > 0
@@ -33,29 +31,27 @@ const StatMetric = ({
 
   return (
     <div className={clsx('flex flex-col', className)}>
-      <span className="text-[11px] uppercase tracking-[0.16em] text-[var(--gk-muted)]">
+      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-dark-3">
         {label}
       </span>
       <span
         className={clsx(
-          'font-mono font-semibold leading-none text-[var(--gk-marble)]',
-          size === 'lg' ? 'text-4xl sm:text-5xl mt-2' : 'text-2xl mt-1.5'
+          'font-mono font-semibold leading-none text-dark-1',
+          size === 'lg' ? 'mt-2 text-4xl sm:text-5xl' : 'mt-1.5 text-2xl'
         )}
       >
         {value}
         {unit && (
-          <span className="ml-1 text-sm font-normal text-[var(--gk-muted)]">
-            {unit}
-          </span>
+          <span className="ml-1 text-sm font-normal text-dark-3">{unit}</span>
         )}
       </span>
       {hasDelta && (
         <span
           className={clsx(
-            'mt-1.5 inline-flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-mono',
+            'mt-2 inline-flex w-fit items-center gap-1 rounded-full px-2 py-0.5 font-mono text-[10px]',
             isGood
-              ? 'bg-[var(--gk-teal-soft)] text-[var(--gk-teal)]'
-              : 'bg-white/5 text-[var(--gk-muted)]'
+              ? 'bg-accent-light text-accent'
+              : 'bg-white/5 text-dark-3'
           )}
         >
           {(delta as number) > 0 ? '▲' : '▼'}{' '}

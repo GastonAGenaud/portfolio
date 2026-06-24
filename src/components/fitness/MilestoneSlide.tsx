@@ -2,9 +2,9 @@
 import { FitnessMilestone, Locale } from '@/lib/types/fitness';
 
 import { Icon } from '@iconify/react';
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import BodySilhouette from './BodySilhouette';
 import StatMetric from './StatMetric';
@@ -29,7 +29,6 @@ export interface SlideLabels {
   hideDetails: string;
   vsBaseline: string;
   target: string;
-  goalEta: string;
   photoPlaceholder: string;
 }
 
@@ -53,11 +52,11 @@ const formatDate = (iso: string, locale: Locale) => {
 };
 
 const DetailRow = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex items-baseline justify-between gap-3 border-b border-[var(--gk-border)] py-1.5">
-    <span className="text-[11px] uppercase tracking-[0.14em] text-[var(--gk-muted)]">
+  <div className="flex items-baseline justify-between gap-3 border-b border-dark-3/20 py-2">
+    <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-dark-3">
       {label}
     </span>
-    <span className="font-mono text-sm text-[var(--gk-marble)]">{value}</span>
+    <span className="font-mono text-sm text-dark-1">{value}</span>
   </div>
 );
 
@@ -71,6 +70,8 @@ const MilestoneSlide = ({
   labels,
 }: Props) => {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const m = milestone;
 
   const weightDelta =
@@ -95,59 +96,67 @@ const MilestoneSlide = ({
   const muscleUnit =
     typeof m.musclePct === 'number' ? '%' : muscleValue === '—' ? '' : 'kg';
 
-  const detailRows: { label: string; value: string }[] = [];
-  if (typeof m.leanKg === 'number')
-    detailRows.push({ label: labels.lean, value: `${m.leanKg} kg` });
-  if (typeof m.muscleKg === 'number')
-    detailRows.push({ label: labels.muscleMass, value: `${m.muscleKg} kg` });
-  if (typeof m.skeletalKg === 'number')
-    detailRows.push({ label: labels.skeletal, value: `${m.skeletalKg} kg` });
-  if (typeof m.visceral === 'number')
-    detailRows.push({ label: labels.visceral, value: `${m.visceral}` });
-  if (typeof m.restingHr === 'number')
-    detailRows.push({ label: labels.restingHr, value: `${m.restingHr} bpm` });
-  if (typeof m.bmi === 'number')
-    detailRows.push({ label: labels.bmi, value: `${m.bmi}` });
-  if (typeof m.vo2 === 'number')
-    detailRows.push({ label: labels.vo2, value: `${m.vo2}` });
+  // Composition breakdown (height-derived BMI intentionally omitted).
+  const rows: { label: string; value: string }[] = [];
+  if (typeof m.weight === 'number') rows.push({ label: labels.weight, value: `${m.weight} kg` });
+  if (typeof m.bodyFatPct === 'number') rows.push({ label: labels.bodyFat, value: `${m.bodyFatPct} %` });
+  if (typeof m.musclePct === 'number') rows.push({ label: labels.muscle, value: `${m.musclePct} %` });
+  if (typeof m.leanKg === 'number') rows.push({ label: labels.lean, value: `${m.leanKg} kg` });
+  if (typeof m.muscleKg === 'number') rows.push({ label: labels.muscleMass, value: `${m.muscleKg} kg` });
+  if (typeof m.skeletalKg === 'number') rows.push({ label: labels.skeletal, value: `${m.skeletalKg} kg` });
+  if (typeof m.visceral === 'number') rows.push({ label: labels.visceral, value: `${m.visceral}` });
+  if (typeof m.restingHr === 'number') rows.push({ label: labels.restingHr, value: `${m.restingHr} bpm` });
+  if (typeof m.vo2 === 'number') rows.push({ label: labels.vo2, value: `${m.vo2}` });
+
+  const measureRows: { label: string; value: string }[] = [];
+  if (m.measures?.chest) measureRows.push({ label: labels.chest, value: `${m.measures.chest} cm` });
+  if (m.measures?.waist) measureRows.push({ label: labels.waist, value: `${m.measures.waist} cm` });
+  if (m.measures?.hip) measureRows.push({ label: labels.hip, value: `${m.measures.hip} cm` });
+  if (m.measures?.arm) measureRows.push({ label: labels.arm, value: `${m.measures.arm} cm` });
+
+  const canOpen = rows.length > 0 || measureRows.length > 0;
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
     <div className="grid h-full grid-cols-1 items-center gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
-      {/* ---------- DATA ---------- */}
+      {/* DATA */}
       <div className="relative order-2 lg:order-1">
-        {/* giant index */}
         <span
           aria-hidden
-          className="pointer-events-none absolute -top-16 -left-2 select-none font-mono text-[7rem] font-bold leading-none text-[var(--gk-bronze)] opacity-10 sm:-top-20 sm:text-[9rem]"
+          className="pointer-events-none absolute -top-14 -left-1 select-none font-mono text-[6rem] font-bold leading-none text-accent opacity-[0.06] sm:-top-20 sm:text-[8rem]"
         >
           {String(index + 1).padStart(2, '0')}
         </span>
 
         <div className="relative">
           <div className="mb-3 flex items-center gap-3">
-            <span className="font-mono text-xs tracking-[0.2em] text-[var(--gk-bronze)]">
+            <span className="font-mono text-xs tracking-[0.2em] text-dark-3">
               {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
             </span>
             {m.tag && (
-              <span className="rounded-full bg-[var(--gk-bronze-soft)] px-2.5 py-0.5 font-mono text-[10px] tracking-[0.18em] text-[var(--gk-bronze)]">
+              <span className="rounded-full border border-dark-3/30 px-2.5 py-0.5 font-mono text-[10px] tracking-[0.18em] text-accent">
                 {localize(m.tag)}
               </span>
             )}
           </div>
 
-          <h2 className="text-3xl font-semibold text-[var(--gk-marble)] sm:text-4xl">
+          <h3 className="font-serif text-3xl text-dark-1 sm:text-4xl">
             {localize(m.title)}
-          </h2>
-          <p className="mt-1 font-mono text-sm text-[var(--gk-muted)]">
-            {m.isGoal ? `${labels.goalEta}: ` : ''}
+          </h3>
+          <p className="mt-1 font-mono text-xs text-dark-3">
             {formatDate(m.date, locale)}
           </p>
 
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--gk-muted)]">
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-text">
             {localize(m.note)}
           </p>
 
-          {/* metric trio */}
           <div className="mt-6 flex flex-wrap gap-x-8 gap-y-4">
             <StatMetric
               label={m.isGoal ? `${labels.target} · ${labels.weight}` : labels.weight}
@@ -155,7 +164,6 @@ const MilestoneSlide = ({
               unit="kg"
               size="lg"
               delta={m.isGoal ? undefined : weightDelta}
-              positiveIsGood={false}
               deltaUnit=" kg"
             />
             <StatMetric
@@ -164,103 +172,113 @@ const MilestoneSlide = ({
               unit="%"
               size="lg"
               delta={m.isGoal ? undefined : fatDelta}
-              positiveIsGood={false}
               deltaUnit=" pp"
             />
-            <StatMetric
-              label={labels.muscle}
-              value={muscleValue}
-              unit={muscleUnit}
-              size="lg"
-            />
+            <StatMetric label={labels.muscle} value={muscleValue} unit={muscleUnit} size="lg" />
           </div>
 
-          {/* baseline reference + details toggle */}
           <div className="mt-5 flex items-center gap-4">
             {hasDeltas && (
-              <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--gk-muted)]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-dark-3">
                 {labels.vsBaseline}
               </span>
             )}
-            {(detailRows.length > 0 || m.measures) && (
+            {canOpen && (
               <button
                 type="button"
-                onClick={() => setOpen((v) => !v)}
-                className="ml-auto inline-flex items-center gap-1.5 font-mono text-xs text-[var(--gk-bronze)] duration-200 hover:opacity-80 focus:outline-none"
+                onClick={() => setOpen(true)}
+                className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-dark-3/40 px-3.5 py-1.5 font-mono text-xs text-accent transition-colors duration-200 hover:border-accent hover:bg-accent-light focus:outline-none"
               >
-                {open ? labels.hideDetails : labels.details}
-                <Icon
-                  icon="ph:caret-down"
-                  className={clsx('duration-200', open && 'rotate-180')}
-                  width="14"
-                />
+                {labels.details}
+                <Icon icon="tabler:layout-grid" width="14" />
               </button>
             )}
           </div>
-
-          {open && (detailRows.length > 0 || m.measures) && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              className="mt-3 grid gap-x-8 gap-y-0 sm:grid-cols-2"
-            >
-              <div>
-                {detailRows.map((row) => (
-                  <DetailRow key={row.label} {...row} />
-                ))}
-              </div>
-              {m.measures && (
-                <div>
-                  <p className="border-b border-[var(--gk-border)] py-1.5 text-[11px] uppercase tracking-[0.14em] text-[var(--gk-bronze)]">
-                    {labels.measuresTitle}
-                  </p>
-                  {typeof m.measures.chest === 'number' && (
-                    <DetailRow label={labels.chest} value={`${m.measures.chest} cm`} />
-                  )}
-                  {typeof m.measures.waist === 'number' && (
-                    <DetailRow label={labels.waist} value={`${m.measures.waist} cm`} />
-                  )}
-                  {typeof m.measures.hip === 'number' && (
-                    <DetailRow label={labels.hip} value={`${m.measures.hip} cm`} />
-                  )}
-                  {typeof m.measures.arm === 'number' && (
-                    <DetailRow label={labels.arm} value={`${m.measures.arm} cm`} />
-                  )}
-                </div>
-              )}
-            </motion.div>
-          )}
         </div>
       </div>
 
-      {/* ---------- FIGURE ---------- */}
+      {/* FIGURE */}
       <div className="order-1 flex items-center justify-center lg:order-2">
-        <div
-          className={clsx(
-            'relative aspect-[3/4] w-full max-w-[300px] overflow-hidden rounded-2xl border lg:max-w-[360px]',
-            'border-[var(--gk-border)] bg-[var(--gk-surface)]'
-          )}
-        >
+        <div className="relative aspect-[3/4] w-full max-w-[280px] overflow-hidden rounded-xl border border-white/[0.06] bg-bg-secondary lg:max-w-[330px]">
           {m.image ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={`/fitness/${m.image}`}
-              alt={localize(m.title)}
-              className="h-full w-full object-cover"
-            />
+            <img src={`/fitness/${m.image}`} alt={localize(m.title)} className="h-full w-full object-cover" />
           ) : (
-            <BodySilhouette goal={m.isGoal} className="p-2" />
+            <BodySilhouette goal={m.isGoal} className="p-3" />
           )}
-
-          {/* bottom gradient + caption */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/55 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/55 to-transparent" />
           {!m.image && (
-            <span className="absolute bottom-3 left-4 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--gk-muted)]">
+            <span className="absolute bottom-3 left-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dark-3">
               {labels.photoPlaceholder}
             </span>
           )}
         </div>
       </div>
+
+      {/* DETAILS MODAL */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                className="fixed inset-0 z-[120] flex items-end justify-center bg-black/80 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setOpen(false)}
+              >
+                <motion.div
+                  className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-t-2xl border border-dark-3/30 bg-bg-secondary p-6 shadow-2xl sm:rounded-2xl"
+                  initial={{ y: 30, opacity: 0, scale: 0.98 }}
+                  animate={{ y: 0, opacity: 1, scale: 1 }}
+                  exit={{ y: 20, opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+                  onClick={(e) => e.stopPropagation()}
+                  data-persona-scope
+                >
+                  <div className="mb-5 flex items-start justify-between gap-4">
+                    <div>
+                      {m.tag && (
+                        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+                          {localize(m.tag)}
+                        </span>
+                      )}
+                      <h4 className="font-serif text-2xl text-dark-1">{localize(m.title)}</h4>
+                      <p className="font-mono text-[11px] text-dark-3">{formatDate(m.date, locale)}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setOpen(false)}
+                      aria-label="Close"
+                      className="rounded-full p-1 text-dark-3 transition-colors hover:text-accent focus:outline-none"
+                    >
+                      <Icon icon="tabler:x" width="22" />
+                    </button>
+                  </div>
+
+                  <div className="grid gap-x-8 sm:grid-cols-2">
+                    <div>
+                      {rows.map((r) => (
+                        <DetailRow key={r.label} {...r} />
+                      ))}
+                    </div>
+                    {measureRows.length > 0 && (
+                      <div>
+                        <p className="border-b border-dark-3/20 pb-2 pt-2 font-mono text-[10px] uppercase tracking-[0.16em] text-accent sm:pt-0">
+                          {labels.measuresTitle}
+                        </p>
+                        {measureRows.map((r) => (
+                          <DetailRow key={r.label} {...r} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </div>
   );
 };
