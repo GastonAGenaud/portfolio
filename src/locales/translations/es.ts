@@ -260,11 +260,11 @@ export const es = {
   // Creative (Photographer / Athlete) Persona
   [tokens.creativeSectionType.personaDev]: 'Dev',
   [tokens.creativeSectionType.personaStudio]: 'Estudio',
-  [tokens.creativeSectionType.role]: 'Fotógrafo & Atleta',
+  [tokens.creativeSectionType.role]: 'Fotógrafo',
   [tokens.creativeSectionType.tagline]:
     'Donde la luz, el movimiento y la disciplina se encuentran.',
   [tokens.creativeSectionType.intro]:
-    'Capturo historias en imágenes y persigo límites en el deporte. Este es mi lado visual.',
+    'Capturo historias y momentos en imágenes. Este es mi lado visual.',
   [tokens.creativeSectionType.galleryTitle]: 'Galería',
   [tokens.creativeSectionType.gallerySubtitle]:
     'Una selección de mi trabajo fotográfico.',
