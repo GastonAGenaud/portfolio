@@ -99,6 +99,32 @@ const About = () => {
             >
               Naranja X
             </Link>
+            <br />
+            <Link
+              href="https://www.coca-cola.com/ar"
+              target="_blank"
+              className="text-accent"
+            >
+              Coca-Cola
+            </Link>
+            <br />
+            <Link
+              href="https://www.nbch.com.ar/"
+              target="_blank"
+              className="text-accent"
+            >
+              Banco del Chaco
+            </Link>
+            <br />
+            <Link
+              href="https://cordoba.gob.ar/"
+              target="_blank"
+              className="text-accent"
+            >
+              Municipalidad de Córdoba
+            </Link>
+            <br />
+            <span>ProdEng (Vaca Muerta)</span>
           </p>
           <p>{t(tokens.aboutSectionType.focus)}</p>
 
