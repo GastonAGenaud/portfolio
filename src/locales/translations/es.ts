@@ -333,7 +333,7 @@ export const es = {
   [tokens.fitnessSectionType.nutrition.fat]: 'Grasas',
   [tokens.fitnessSectionType.nutrition.fiber]: 'Fibra',
   [tokens.fitnessSectionType.nutrition.steps]: 'Pasos diarios',
-  [tokens.fitnessSectionType.nutrition.logged]: 'Prom. registrado (jun)',
+  [tokens.fitnessSectionType.nutrition.logged]: 'Prom. registrado',
   [tokens.fitnessSectionType.blood.title]: 'Análisis de sangre',
   [tokens.fitnessSectionType.blood.subtitle]: 'Extracción en ayunas · 01/06/2026',
   [tokens.fitnessSectionType.blood.disclaimer]:

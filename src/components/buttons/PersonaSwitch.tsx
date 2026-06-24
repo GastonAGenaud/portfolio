@@ -20,6 +20,11 @@ const options: Option[] = [
     icon: 'ph:camera-bold',
     token: tokens.creativeSectionType.personaStudio,
   },
+  {
+    key: 'training',
+    icon: 'ph:crown-fill',
+    token: tokens.creativeSectionType.sport.switchLabel,
+  },
 ];
 
 const PersonaSwitch = ({ className = '' }: { className?: string }) => {

@@ -224,7 +224,7 @@ const FitnessSection = () => {
             { label: t(tk.nutrition.steps), value: nutritionProtocol.steps },
             {
               label: t(tk.nutrition.logged),
-              value: `${nutritionLog.kcal} kcal · ${nutritionLog.protein} g P`,
+              value: `${nutritionLog.days} d · ${nutritionLog.kcal} kcal · ${nutritionLog.protein} g P`,
             },
           ],
         }}

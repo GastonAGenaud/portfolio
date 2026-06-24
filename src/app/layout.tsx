@@ -77,8 +77,13 @@ export default function RootLayout({
 }) {
   // Resolve the persona on the server from the cookie so the SSR HTML matches
   // the client's first render (no hydration mismatch for returning Studio users).
+  const cookiePersona = cookies().get('persona')?.value;
   const initialPersona: Persona =
-    cookies().get('persona')?.value === 'creative' ? 'creative' : 'engineer';
+    cookiePersona === 'creative'
+      ? 'creative'
+      : cookiePersona === 'training'
+      ? 'training'
+      : 'engineer';
 
   return (
     <html

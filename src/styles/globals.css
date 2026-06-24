@@ -51,6 +51,19 @@
     --color-dark-3: #57534e;
   }
 
+  /* Training persona — athletic emerald palette (Dev=blue → Studio=black → Training=green). */
+  [data-persona='training'] {
+    --color-bg: #07140e;
+    --color-bg-secondary: #0e1f17;
+    --color-accent: #5be49b;
+    --color-accent-light: rgb(91 228 155 / 0.12);
+    --color-accent-torch: rgb(91 228 155 / 0.06);
+    --color-text: #93a89c;
+    --color-dark-1: #eafff4;
+    --color-dark-2: #cde9db;
+    --color-dark-3: #35513f;
+  }
+
   /* Silky persona / theme morph */
   body {
     transition: background-color 0.5s ease;

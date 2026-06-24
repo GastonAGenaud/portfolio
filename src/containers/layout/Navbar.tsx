@@ -11,14 +11,13 @@ import {
   Link as CLink,
   NavButton,
   PersonaSwitch,
-  SportSwitch,
 } from '@/components';
 
 import { fadeIn, slideIn } from '@/styles/animations';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -104,7 +103,8 @@ const NavItem = ({ href, children, onClick, index, delay }: NavItemsProps) => {
 
 const Navbar = () => {
   const { cta, navLinks } = useNavbarSection();
-  const { isCreative, sportEnabled } = usePersona();
+  const { persona } = usePersona();
+  const isEngineer = persona === 'engineer';
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
 
   const windowWidth = useWindowWidth();
@@ -137,7 +137,7 @@ const Navbar = () => {
     return cleanup;
   }, [navbarCollapsed]);
 
-  const showDevNav = !isCreative && (navbarCollapsed || windowWidth > md);
+  const showDevNav = isEngineer && (navbarCollapsed || windowWidth > md);
 
   return (
     <motion.header
@@ -202,15 +202,10 @@ const Navbar = () => {
           </nav>
         )}
 
-        {/* Persona switch — always visible (the "botonera") */}
+        {/* Persona switch — Dev / Studio / Training (the botonera) */}
         <PersonaSwitch />
 
-        {/* Sports toggle — only in creative persona AND when the flag is on */}
-        <AnimatePresence>
-          {isCreative && sportEnabled && <SportSwitch key="sport-switch" />}
-        </AnimatePresence>
-
-        {/* Language menu — available in both personas */}
+        {/* Language menu — available in every persona */}
         <div>
           <Button
             aria-controls={open ? 'language-menu' : undefined}
@@ -239,7 +234,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile hamburger — engineer persona only */}
-        {!isCreative && (
+        {isEngineer && (
           <NavButton
             onClick={() => {
               setNavbarCollapsed((prev) => !prev);

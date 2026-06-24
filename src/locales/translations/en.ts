@@ -333,7 +333,7 @@ export const en = {
   [tokens.fitnessSectionType.nutrition.fat]: 'Fats',
   [tokens.fitnessSectionType.nutrition.fiber]: 'Fiber',
   [tokens.fitnessSectionType.nutrition.steps]: 'Daily steps',
-  [tokens.fitnessSectionType.nutrition.logged]: 'Logged avg (Jun)',
+  [tokens.fitnessSectionType.nutrition.logged]: 'Logged avg',
   [tokens.fitnessSectionType.blood.title]: 'Bloodwork',
   [tokens.fitnessSectionType.blood.subtitle]: 'Fasted draw · 06/01/2026',
   [tokens.fitnessSectionType.blood.disclaimer]:

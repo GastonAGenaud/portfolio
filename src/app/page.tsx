@@ -14,6 +14,7 @@ import {
   Skills,
 } from '@/containers';
 import CreativeHome from '@/containers/creative/CreativeHome';
+import TrainingHome from '@/containers/training/TrainingHome';
 
 import '../locales/i18n';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -53,7 +54,13 @@ const Home: NextPage = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, ease: 'easeInOut' }}
         >
-          {persona === 'creative' ? <CreativeHome /> : <EngineerHome />}
+          {persona === 'training' ? (
+            <TrainingHome />
+          ) : persona === 'creative' ? (
+            <CreativeHome />
+          ) : (
+            <EngineerHome />
+          )}
         </motion.div>
       </AnimatePresence>
     </Layout>

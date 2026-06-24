@@ -201,24 +201,34 @@ export const milestones: FitnessMilestone[] = [
   },
 ];
 
-// Full daily series (scale + InBody) for the weight / body-fat trend.
+// Full daily series (scale + InBody log) for the weight / body-fat trend.
 export const dailySeries: TrendPoint[] = [
+  { date: '2026-04-10', weight: 94.4, bodyFat: 28.9 },
   { date: '2026-04-12', weight: 92.2, bodyFat: 28.7 },
-  { date: '2026-04-14', weight: 92.3, bodyFat: 28.3 },
-  { date: '2026-04-26', weight: 88.8, bodyFat: 27.6 },
+  { date: '2026-04-16', weight: 92.3, bodyFat: 28.4 },
+  { date: '2026-04-17', weight: 91.4, bodyFat: 28.4 },
+  { date: '2026-04-19', weight: 90.1, bodyFat: 28.0 },
+  { date: '2026-04-21', weight: 90.6, bodyFat: 28.0 },
+  { date: '2026-04-28', weight: 89.8, bodyFat: 27.7 },
   { date: '2026-04-29', weight: 89.8, bodyFat: 27.6 },
+  { date: '2026-04-30', weight: 89.5, bodyFat: 27.4 },
+  { date: '2026-05-04', weight: 89.6, bodyFat: 27.5 },
+  { date: '2026-05-05', weight: 89.1, bodyFat: 27.3 },
   { date: '2026-05-06', weight: 87.9, bodyFat: 26.9 },
-  { date: '2026-05-07', weight: 86.6, bodyFat: 26.2 },
+  { date: '2026-05-08', weight: 87.6, bodyFat: 26.9 },
+  { date: '2026-05-09', weight: 87.2, bodyFat: 26.7 },
+  { date: '2026-05-10', weight: 86.7, bodyFat: 26.7 },
+  { date: '2026-05-12', weight: 86.6, bodyFat: 26.7 },
+  { date: '2026-05-14', weight: 86.3, bodyFat: 26.5 },
+  { date: '2026-05-17', weight: 85.6, bodyFat: 26.2 },
+  { date: '2026-05-18', weight: 85.9, bodyFat: 26.2 },
   { date: '2026-05-22', weight: 84.8, bodyFat: 25.8 },
-  { date: '2026-05-23', weight: 84.6, bodyFat: 25.6 },
-  { date: '2026-05-24', weight: 84.6, bodyFat: 25.6 },
-  { date: '2026-05-25', weight: 87.1, bodyFat: 25.9 },
-  { date: '2026-05-26', weight: 86.3, bodyFat: 25.8 },
-  { date: '2026-05-27', weight: 84.4, bodyFat: 25.6 },
-  { date: '2026-05-28', weight: 84.1, bodyFat: 25.5 },
   { date: '2026-05-29', weight: 83.5, bodyFat: 25.1 },
   { date: '2026-06-04', weight: 82.7, bodyFat: 24.8 },
+  { date: '2026-06-05', weight: 82.8, bodyFat: 24.8 },
+  { date: '2026-06-07', weight: 82.7, bodyFat: 24.8 },
   { date: '2026-06-09', weight: 82.4, bodyFat: 24.5 },
+  { date: '2026-06-10', weight: 83.7, bodyFat: 24.9 },
   { date: '2026-06-11', weight: 81.8, bodyFat: 24.2 },
   { date: '2026-06-24', weight: 80.9, bodyFat: 23.9 },
 ];
@@ -267,8 +277,11 @@ export const comparison: Comparison = {
   now: { date: '2026-06-24', weight: 80.9, bodyFatPct: 23.9, visceral: 10, musclePct: 72.1, bp: '116/65' },
 };
 
-// Tape measurements across the 2026 cut (cm). Notes intentionally omitted.
+// Tape measurements (cm). Includes the older 2024/2025 records for the full
+// arc. Notes intentionally omitted (chemistry).
 export const measurements: MeasurementPoint[] = [
+  { date: '2024-05-01', waist: 124, hip: 111.5, chest: 120, bicep: 38, thigh: 71 },
+  { date: '2025-06-01', waist: 102.2, hip: 108, chest: 108.5, thigh: 67.5 },
   { date: '2026-04-12', waist: 103, hip: 96, chest: 104.8, bicep: 34 },
   { date: '2026-04-28', waist: 101, hip: 97, chest: 105.5, bicep: 41, thigh: 57.5 },
   { date: '2026-05-05', waist: 101, hip: 95, chest: 104, bicep: 41.4, thigh: 58 },
@@ -295,8 +308,8 @@ export const activity: Activity = {
   ],
 };
 
-// Food-log adherence — June average (22 days logged).
-export const nutritionLog: NutritionLog = { days: 22, kcal: 1706, protein: 186 };
+// Food-log adherence — average across 80 logged days (Apr–Jun).
+export const nutritionLog: NutritionLog = { days: 80, kcal: 1758, protein: 207 };
 
 export const pick = (text: LocalizedText, locale: Locale): string =>
   text[locale] ?? text.en;
