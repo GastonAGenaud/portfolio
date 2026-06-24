@@ -282,6 +282,8 @@ export const en = {
   [tokens.fitnessSectionType.title]: 'Athletic Transformation',
   [tokens.fitnessSectionType.subtitle]:
     'A data-driven body recomposition — fat down, muscle preserved. Tracked measurement by measurement.',
+  [tokens.fitnessSectionType.intro]:
+    'This is a personal project. Pulling the data, measuring day after day, tracking nutrition, running and logging every route — I do it to learn: to understand my body, find patterns and look after my health. It is a healthy hobby and, above all, a commitment — a focused, organized mindset carried into the physical side. It also says something about me: the discipline and the skills I bring to my work every day.',
   [tokens.fitnessSectionType.vsBaseline]: 'vs baseline',
   [tokens.fitnessSectionType.details]: 'Details',
   [tokens.fitnessSectionType.hideDetails]: 'Hide details',

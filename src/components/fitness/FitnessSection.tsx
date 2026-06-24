@@ -99,6 +99,9 @@ const FitnessSection = () => {
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text sm:text-base">
           {t(tk.subtitle)}
         </p>
+        <p className="mt-5 max-w-2xl border-l-2 border-accent pl-4 text-sm leading-relaxed text-dark-3">
+          {t(tk.intro)}
+        </p>
       </div>
 
       {/* hero stats */}

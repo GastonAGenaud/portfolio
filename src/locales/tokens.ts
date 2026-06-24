@@ -263,6 +263,7 @@ export const tokens = {
     eyebrow: 'fitnessSectionType.eyebrow',
     title: 'fitnessSectionType.title',
     subtitle: 'fitnessSectionType.subtitle',
+    intro: 'fitnessSectionType.intro',
     vsBaseline: 'fitnessSectionType.vsBaseline',
     details: 'fitnessSectionType.details',
     hideDetails: 'fitnessSectionType.hideDetails',

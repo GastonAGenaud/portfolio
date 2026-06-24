@@ -282,6 +282,8 @@ export const es = {
   [tokens.fitnessSectionType.title]: 'Transformación Atlética',
   [tokens.fitnessSectionType.subtitle]:
     'Una recomposición corporal guiada por datos — grasa abajo, músculo preservado. Medición a medición.',
+  [tokens.fitnessSectionType.intro]:
+    'Este es un proyecto personal. Extraer los datos, medir día a día, seguir la nutrición, correr y documentar cada ruta lo hago con un fin educativo: entender mi cuerpo, encontrar patrones y cuidar mi salud. Es un hobby sano y, sobre todo, un compromiso — una mentalidad enfocada y ordenada llevada al plano físico. También habla de mí: de la disciplina y las skills con las que trabajo todos los días.',
   [tokens.fitnessSectionType.vsBaseline]: 'vs inicio',
   [tokens.fitnessSectionType.details]: 'Detalle',
   [tokens.fitnessSectionType.hideDetails]: 'Ocultar detalle',
