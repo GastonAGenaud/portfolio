@@ -124,7 +124,13 @@ const About = () => {
               Municipalidad de Córdoba
             </Link>
             <br />
-            <span>ProdEng (Vaca Muerta)</span>
+            <Link
+              href="https://www.prodeng.com.ar/"
+              target="_blank"
+              className="text-accent"
+            >
+              ProdEng (Vaca Muerta)
+            </Link>
           </p>
           <p>{t(tokens.aboutSectionType.focus)}</p>
 
