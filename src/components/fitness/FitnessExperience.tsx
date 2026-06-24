@@ -3,10 +3,12 @@ import { useFitnessContent } from '@/lib/content/fitness';
 
 import { tokens } from '@/locales/tokens';
 
+import ModeSwitch from '@/components/buttons/ModeSwitch';
+
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -36,7 +38,6 @@ const FitnessExperience = () => {
     baseline,
     localize,
   } = useFitnessContent();
-  const router = useRouter();
   const tk = tokens.fitness;
 
   // Story flows baseline → goal; the carousel opens on the first slide.
@@ -138,18 +139,19 @@ const FitnessExperience = () => {
 
   return (
     <div className="mx-auto max-w-screen-xl px-5 py-8 sm:px-8 sm:py-10">
-      {/* header */}
-      <header className="flex items-center justify-between gap-4">
-        <button
-          type="button"
-          onClick={() => router.push('/')}
-          className="inline-flex items-center gap-2 rounded-full border border-[var(--gk-border)] px-4 py-2 font-mono text-xs text-[var(--gk-muted)] duration-200 hover:border-[var(--gk-bronze)] hover:text-[var(--gk-marble)] focus:outline-none"
+      {/* header — signature + switch (the transition) + language, consistent with the portfolio navbar */}
+      <header className="flex items-center justify-between gap-3">
+        <Link
+          href="/"
+          className="group relative top-1 font-signature text-2xl capitalize text-[var(--gk-bronze)]"
         >
-          <Icon icon="ph:arrow-left" width="15" />
-          {t(tk.back)}
-        </button>
-
-        <LanguageToggle locale={locale} />
+          Gaston Genaud
+          <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[var(--gk-bronze)] duration-300 group-hover:w-full" />
+        </Link>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <ModeSwitch variant="greek" />
+          <LanguageToggle locale={locale} />
+        </div>
       </header>
 
       {/* title */}
@@ -160,7 +162,7 @@ const FitnessExperience = () => {
         className="mt-10 text-center"
       >
         <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-[var(--gk-bronze)]">
-          <Icon icon="game-icons:laurel-crown" width="18" />
+          <Icon icon="ph:crown-fill" width="16" />
           {t(tk.eyebrow)}
         </span>
         <h1 className="mt-3 text-4xl font-bold tracking-tight text-[var(--gk-marble)] sm:text-6xl">
