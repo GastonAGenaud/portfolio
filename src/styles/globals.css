@@ -62,7 +62,7 @@
   }
 
   * {
-    @apply focus:outline-dashed outline-[3px] outline-offset-4 outline-accent;
+    @apply focus-visible:outline-dashed outline-[3px] outline-offset-4 outline-accent;
   }
 }
 

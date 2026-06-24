@@ -19,11 +19,10 @@ const SportSwitch = ({ className = '' }: { className?: string }) => {
 
   return (
     <motion.button
-      layout
       initial={{ opacity: 0, width: 0, scale: 0.85 }}
       animate={{ opacity: 1, width: 'auto', scale: 1 }}
       exit={{ opacity: 0, width: 0, scale: 0.85 }}
-      transition={{ type: 'spring', stiffness: 230, damping: 28, mass: 0.7 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       onClick={toggleSport}
       aria-pressed={sportActive}
       title={t(tokens.creativeSectionType.sport.switchLabel)}
