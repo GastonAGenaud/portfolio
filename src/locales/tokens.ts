@@ -287,6 +287,21 @@ export const tokens = {
       waist: 'fitnessSectionType.measures.waist',
       hip: 'fitnessSectionType.measures.hip',
       arm: 'fitnessSectionType.measures.arm',
+      thigh: 'fitnessSectionType.measures.thigh',
+    },
+    measureTrend: {
+      title: 'fitnessSectionType.measureTrend.title',
+      subtitle: 'fitnessSectionType.measureTrend.subtitle',
+    },
+    activity: {
+      title: 'fitnessSectionType.activity.title',
+      subtitle: 'fitnessSectionType.activity.subtitle',
+      strength: 'fitnessSectionType.activity.strength',
+      minutes: 'fitnessSectionType.activity.minutes',
+      walked: 'fitnessSectionType.activity.walked',
+      energy: 'fitnessSectionType.activity.energy',
+      strengthLabel: 'fitnessSectionType.activity.strengthLabel',
+      cyclingLabel: 'fitnessSectionType.activity.cyclingLabel',
     },
     hero: {
       lost: 'fitnessSectionType.hero.lost',
@@ -314,6 +329,7 @@ export const tokens = {
       fat: 'fitnessSectionType.nutrition.fat',
       fiber: 'fitnessSectionType.nutrition.fiber',
       steps: 'fitnessSectionType.nutrition.steps',
+      logged: 'fitnessSectionType.nutrition.logged',
     },
     blood: {
       title: 'fitnessSectionType.blood.title',

@@ -7,8 +7,10 @@ import { Icon } from '@iconify/react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import ActivityCard from './ActivityCard';
 import BloodPressureCard from './BloodPressureCard';
 import ComparisonView from './ComparisonView';
+import MeasurementsCard from './MeasurementsCard';
 import MilestoneCarousel from './MilestoneCarousel';
 import TrendChart from './TrendChart';
 import VitalsPanel from './VitalsPanel';
@@ -34,6 +36,9 @@ const FitnessSection = () => {
     bloodPanel,
     nutritionProtocol,
     comparison,
+    measurements,
+    activity,
+    nutritionLog,
   } = useFitnessData();
 
   const [active, setActive] = useState(0);
@@ -142,6 +147,35 @@ const FitnessSection = () => {
         }}
       />
 
+      {/* measurements + activity */}
+      <div className="grid gap-5 lg:grid-cols-2">
+        <MeasurementsCard
+          data={measurements}
+          labels={{
+            title: t(tk.measureTrend.title),
+            subtitle: t(tk.measureTrend.subtitle),
+            waist: t(tk.measures.waist),
+            hip: t(tk.measures.hip),
+            chest: t(tk.measures.chest),
+            bicep: t(tk.measures.arm),
+          }}
+        />
+        <ActivityCard
+          activity={activity}
+          locale={locale}
+          labels={{
+            title: t(tk.activity.title),
+            subtitle: t(tk.activity.subtitle),
+            strength: t(tk.activity.strength),
+            minutes: t(tk.activity.minutes),
+            walked: t(tk.activity.walked),
+            energy: t(tk.activity.energy),
+            strengthLabel: t(tk.activity.strengthLabel),
+            cyclingLabel: t(tk.activity.cyclingLabel),
+          }}
+        />
+      </div>
+
       {/* trend + blood pressure */}
       <div className="grid gap-5 lg:grid-cols-[1.5fr_1fr]">
         <TrendChart
@@ -188,6 +222,10 @@ const FitnessSection = () => {
             { label: t(tk.nutrition.fat), value: localize(nutritionProtocol.fat) },
             { label: t(tk.nutrition.fiber), value: nutritionProtocol.fiber },
             { label: t(tk.nutrition.steps), value: nutritionProtocol.steps },
+            {
+              label: t(tk.nutrition.logged),
+              value: `${nutritionLog.kcal} kcal · ${nutritionLog.protein} g P`,
+            },
           ],
         }}
       />

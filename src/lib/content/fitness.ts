@@ -1,11 +1,14 @@
 'use client';
 import {
+  Activity,
   BloodPanel,
   BloodPressurePoint,
   Comparison,
   FitnessMilestone,
   Locale,
   LocalizedText,
+  MeasurementPoint,
+  NutritionLog,
   NutritionProtocol,
   TrendPoint,
 } from '@/lib/types/fitness';
@@ -167,6 +170,23 @@ export const milestones: FitnessMilestone[] = [
     musclePct: 71.8,
   },
   {
+    id: '2026-06-24',
+    date: '2026-06-24',
+    tag: { en: 'LATEST', es: 'HOY' },
+    title: { en: 'Sharpest yet', es: 'Lo más afilado' },
+    note: {
+      en: '80.9 kg at 23.9% fat — muscle a record 72.1%, visceral down to 10, waist 89 cm. −11.3 kg from baseline.',
+      es: '80.9 kg al 23.9% de grasa — músculo récord 72.1%, visceral en 10, cintura 89 cm. −11.3 kg desde el inicio.',
+    },
+    weight: 80.9,
+    bodyFatPct: 23.9,
+    musclePct: 72.1,
+    muscleKg: 58.3,
+    visceral: 10,
+    restingHr: 73,
+    measures: { chest: 101.5, waist: 89, hip: 87, arm: 39.5 },
+  },
+  {
     id: 'goal',
     date: '2026-09-23',
     tag: { en: 'IN PROGRESS', es: 'EN PROGRESO' },
@@ -200,6 +220,7 @@ export const dailySeries: TrendPoint[] = [
   { date: '2026-06-04', weight: 82.7, bodyFat: 24.8 },
   { date: '2026-06-09', weight: 82.4, bodyFat: 24.5 },
   { date: '2026-06-11', weight: 81.8, bodyFat: 24.2 },
+  { date: '2026-06-24', weight: 80.9, bodyFat: 23.9 },
 ];
 
 // Blood-pressure log (fasted AM). Improves from elevated → optimal.
@@ -243,8 +264,39 @@ export const nutritionProtocol: NutritionProtocol = {
 
 export const comparison: Comparison = {
   then: { date: '2026-04-12', weight: 92.2, bodyFatPct: 28.7, visceral: 14, muscleKg: 62.2, bp: '131/82' },
-  now: { date: '2026-06-11', weight: 81.8, bodyFatPct: 24.2, visceral: 12, musclePct: 71.8, bp: '116/65' },
+  now: { date: '2026-06-24', weight: 80.9, bodyFatPct: 23.9, visceral: 10, musclePct: 72.1, bp: '116/65' },
 };
+
+// Tape measurements across the 2026 cut (cm). Notes intentionally omitted.
+export const measurements: MeasurementPoint[] = [
+  { date: '2026-04-12', waist: 103, hip: 96, chest: 104.8, bicep: 34 },
+  { date: '2026-04-28', waist: 101, hip: 97, chest: 105.5, bicep: 41, thigh: 57.5 },
+  { date: '2026-05-05', waist: 101, hip: 95, chest: 104, bicep: 41.4, thigh: 58 },
+  { date: '2026-05-14', waist: 97.6, hip: 92.5, bicep: 41 },
+  { date: '2026-06-10', waist: 94.3, hip: 89, chest: 101, bicep: 39.1 },
+  { date: '2026-06-24', waist: 89, hip: 87, chest: 101.5, bicep: 39.5, thigh: 57 },
+];
+
+// Objective device data (Apple Watch) — 7-day window.
+export const activity: Activity = {
+  weekStart: '2026-05-22',
+  weekEnd: '2026-05-29',
+  strengthSessions: 4,
+  totalMinutes: 388,
+  walks: 17,
+  walkKm: 31.2,
+  activeKcal: 5823,
+  sessions: [
+    { date: '2026-05-25', type: 'strength', minutes: 97, kcal: 820, hrAvg: 122, hrMax: 153 },
+    { date: '2026-05-26', type: 'strength', minutes: 106, kcal: 779, hrAvg: 118, hrMax: 152 },
+    { date: '2026-05-27', type: 'strength', minutes: 98, kcal: 594, hrAvg: 107, hrMax: 151 },
+    { date: '2026-05-28', type: 'strength', minutes: 87, kcal: 625, hrAvg: 117, hrMax: 149 },
+    { date: '2026-05-23', type: 'cycling', minutes: 30, kcal: 239, hrAvg: 121, hrMax: 152 },
+  ],
+};
+
+// Food-log adherence — June average (22 days logged).
+export const nutritionLog: NutritionLog = { days: 22, kcal: 1706, protein: 186 };
 
 export const pick = (text: LocalizedText, locale: Locale): string =>
   text[locale] ?? text.en;
@@ -270,5 +322,8 @@ export const useFitnessData = () => {
     bloodPanel,
     nutritionProtocol,
     comparison,
+    measurements,
+    activity,
+    nutritionLog,
   };
 };

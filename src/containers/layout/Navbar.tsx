@@ -41,18 +41,37 @@ const hideNavWhileScrolling = ({
   when: boolean;
 }) => {
   const nav = document.getElementById(id);
-  if (!nav) return;
+  if (!nav) return () => undefined;
 
   let prevScrollPos = window.scrollY;
+  let ticking = false;
 
-  window.onscroll = () => {
-    if (when) {
-      const curScrollPos = window.scrollY;
-      if (prevScrollPos < curScrollPos) nav.style.top = `-${offset}px`;
-      else nav.style.top = '0';
-      prevScrollPos = curScrollPos;
+  const update = () => {
+    ticking = false;
+    const cur = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    // Always show near the very top or bottom; otherwise hide on the way down
+    // and reveal on the way up. (Fixes: header staying hidden after reaching
+    // the bottom and scrolling back up.)
+    if (!when || cur <= offset || cur >= max - 8) {
+      nav.style.top = '0';
+    } else if (cur > prevScrollPos + 4) {
+      nav.style.top = `-${offset}px`;
+    } else if (cur < prevScrollPos - 4) {
+      nav.style.top = '0';
+    }
+    prevScrollPos = cur;
+  };
+
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(update);
     }
   };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  return () => window.removeEventListener('scroll', onScroll);
 };
 
 type NavItemsProps = {
@@ -114,7 +133,8 @@ const Navbar = () => {
   );
 
   useEffect(() => {
-    hideNavWhileScrolling({ when: !navbarCollapsed });
+    const cleanup = hideNavWhileScrolling({ when: !navbarCollapsed });
+    return cleanup;
   }, [navbarCollapsed]);
 
   const showDevNav = !isCreative && (navbarCollapsed || windowWidth > md);

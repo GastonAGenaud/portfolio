@@ -89,3 +89,38 @@ export interface Comparison {
   then: ComparisonSnapshot;
   now: ComparisonSnapshot;
 }
+
+export interface MeasurementPoint {
+  date: string;
+  waist: number; // cm
+  hip?: number;
+  chest?: number;
+  bicep?: number;
+  thigh?: number;
+}
+
+export interface ActivitySession {
+  date: string;
+  type: 'strength' | 'cycling';
+  minutes: number;
+  kcal: number;
+  hrAvg: number;
+  hrMax: number;
+}
+
+export interface Activity {
+  weekStart: string;
+  weekEnd: string;
+  strengthSessions: number;
+  totalMinutes: number;
+  walks: number;
+  walkKm: number;
+  activeKcal: number;
+  sessions: ActivitySession[];
+}
+
+export interface NutritionLog {
+  days: number;
+  kcal: number;
+  protein: number;
+}
