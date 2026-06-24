@@ -23,8 +23,7 @@ export const seoData = {
   description:
     'Gaston Genaud is a SDET who specializes in building and designing exceptional automation projects.',
   author: author.name,
-  image:
-    'https://media.licdn.com/dms/image/C4D03AQFDpEm9W82qrg/profile-displayphoto-shrink_800_800/0/1631735599927?e=1707955200&v=beta&t=u9cROMqiOSH9PrhEKgpaZk8edrEsIiePgkcRUz92EU8',
+  image: 'https://gastongenaud.com/og.png',
   url: 'https://gastongenaud.com/',
   keywords: [
     'Gaston',
