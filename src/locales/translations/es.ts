@@ -345,7 +345,7 @@ export const es = {
   [tokens.fitnessSectionType.compare.then]: 'Antes',
   [tokens.fitnessSectionType.compare.now]: 'Ahora',
   [tokens.fitnessSectionType.compare.gains]: 'Ganancias',
-  [tokens.fitnessSectionType.coach.label]: 'Entrenamiento & planificación',
+  [tokens.fitnessSectionType.coach.label]: 'Entrenamiento · Nutrición · Acompañamiento',
   [tokens.fitnessSectionType.coach.thanks]:
     'Cada número acá es fruto de un acompañamiento constante en entrenamiento y nutrición. Gracias, Sebastián.',
 };

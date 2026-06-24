@@ -345,7 +345,7 @@ export const en = {
   [tokens.fitnessSectionType.compare.then]: 'Then',
   [tokens.fitnessSectionType.compare.now]: 'Now',
   [tokens.fitnessSectionType.compare.gains]: 'Gains',
-  [tokens.fitnessSectionType.coach.label]: 'Coaching & programming',
+  [tokens.fitnessSectionType.coach.label]: 'Training · Nutrition · Support',
   [tokens.fitnessSectionType.coach.thanks]:
     'Every number here is the result of consistent coaching and nutrition guidance. Thank you, Sebastián.',
 };
