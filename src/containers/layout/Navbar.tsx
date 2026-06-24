@@ -4,7 +4,7 @@ import { author } from '@/lib/content/portfolio';
 import useWindowWidth from '@/lib/hooks/use-window-width';
 import { getBreakpointsWidth } from '@/lib/utils/helper';
 
-import { Button, DarkModeButton, Link as CLink, NavButton } from '@/components';
+import { Button, Link as CLink, ModeSwitch, NavButton } from '@/components';
 
 import { fadeIn, slideIn } from '@/styles/animations';
 
@@ -162,15 +162,16 @@ const Navbar = () => {
                   {cta.title}
                 </Button>
               )}
-              <DarkModeButton
-                onClick={() => setNavbarCollapsed(false)}
+              <motion.div
                 variants={slideIn({
                   delay: ANIMATION_DELAY + (navLinks.length + 1) / 10,
                   direction: 'down',
                 })}
                 initial="hidden"
                 animate="show"
-              />
+              >
+                <ModeSwitch onNavigate={() => setNavbarCollapsed(false)} />
+              </motion.div>
               <div>
                 <Button
                   aria-controls={open ? 'language-menu' : undefined}

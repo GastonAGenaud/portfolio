@@ -2,6 +2,7 @@
 import Button from './buttons/Button';
 import DarkModeButton from './buttons/DarkModeButton';
 import Link from './buttons/Link';
+import ModeSwitch from './buttons/ModeSwitch';
 import NavButton from './buttons/NavButton';
 import ListItem from './lists/ListItem';
 import TabList from './lists/TabList';
@@ -23,6 +24,7 @@ export {
   DarkModeButton,
   Link,
   ListItem,
+  ModeSwitch,
   NavButton,
   ProjectCard,
   ShowLottie,
