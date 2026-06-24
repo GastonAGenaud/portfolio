@@ -9,8 +9,8 @@ import {
   Button,
   DarkModeButton,
   Link as CLink,
+  ModeSwitch,
   NavButton,
-  PersonaSwitch,
   SportSwitch,
 } from '@/components';
 
@@ -182,8 +182,8 @@ const Navbar = () => {
           </nav>
         )}
 
-        {/* Persona switch — always visible (the "botonera") */}
-        <PersonaSwitch />
+        {/* Mode switch — always visible (Dev / Studio / Greek) */}
+        <ModeSwitch onNavigate={() => setNavbarCollapsed(false)} />
 
         {/* Sports toggle — only in creative persona AND when the flag is on */}
         <AnimatePresence>

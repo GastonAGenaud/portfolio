@@ -2,6 +2,7 @@
 import Button from './buttons/Button';
 import DarkModeButton from './buttons/DarkModeButton';
 import Link from './buttons/Link';
+import ModeSwitch from './buttons/ModeSwitch';
 import NavButton from './buttons/NavButton';
 import PersonaSwitch from './buttons/PersonaSwitch';
 import SportSwitch from './buttons/SportSwitch';
@@ -25,6 +26,7 @@ export {
   DarkModeButton,
   Link,
   ListItem,
+  ModeSwitch,
   NavButton,
   PersonaSwitch,
   ProjectCard,
