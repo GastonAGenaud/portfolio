@@ -11,6 +11,10 @@ import { FEATURES } from '@/lib/config/features';
 
 export type Persona = 'engineer' | 'creative';
 
+export const PERSONA_COOKIE = 'persona';
+// One year — refreshed on every toggle.
+const PERSONA_MAX_AGE = 60 * 60 * 24 * 365;
+
 type PersonaState = {
   persona: Persona;
   isCreative: boolean;
@@ -43,18 +47,19 @@ const PersonaContext = createContext(initialState);
 
 export default function PersonaProvider({
   children,
+  initialPersona = 'engineer',
 }: {
   children: React.ReactNode;
+  /**
+   * Resolved on the server from the `persona` cookie (see app/layout.tsx) so the
+   * first client render matches the server HTML. Reading localStorage in the
+   * initializer instead would make the server render `engineer` while the client
+   * hydrates as `creative`, causing a hydration mismatch + flash for returning
+   * Studio visitors.
+   */
+  initialPersona?: Persona;
 }) {
-  // Read synchronously (mirrors use-theme) so a reload while in creative mode
-  // doesn't flash the engineer layout. The no-flash script sets the matching
-  // `data-persona` attribute before paint.
-  const [persona, setPersonaState] = useState<Persona>(
-    typeof window !== 'undefined' &&
-      localStorage.getItem('persona') === 'creative'
-      ? 'creative'
-      : 'engineer'
-  );
+  const [persona, setPersonaState] = useState<Persona>(initialPersona);
   const [sportActive, setSportActive] = useState<boolean>(false);
 
   const setPersona = useCallback((next: Persona) => {
@@ -71,7 +76,8 @@ export default function PersonaProvider({
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
-    localStorage.setItem('persona', persona);
+    // Persist to a cookie so the next server render resolves the same persona.
+    document.cookie = `${PERSONA_COOKIE}=${persona}; path=/; max-age=${PERSONA_MAX_AGE}; SameSite=Lax`;
     document.documentElement.dataset.persona = persona;
     // Leaving the creative persona always collapses the sports view.
     if (persona !== 'creative') setSportActive(false);

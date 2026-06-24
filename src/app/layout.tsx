@@ -1,5 +1,5 @@
 import { seoData } from '@/lib/content/portfolio';
-import PersonaProvider from '@/lib/hooks/use-persona';
+import PersonaProvider, { type Persona } from '@/lib/hooks/use-persona';
 import ThemeProvider from '@/lib/hooks/use-theme';
 import fontVariables from '@/lib/utils/fonts';
 
@@ -7,6 +7,7 @@ import Cursor from '@/components/ui/Cursor';
 
 import '../styles/globals.css';
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: seoData.title,
@@ -74,14 +75,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Resolve the persona on the server from the cookie so the SSR HTML matches
+  // the client's first render (no hydration mismatch for returning Studio users).
+  const initialPersona: Persona =
+    cookies().get('persona')?.value === 'creative' ? 'creative' : 'engineer';
+
   return (
-    <html lang="en" className="scroll-smooth">
+    <html
+      lang="en"
+      className="scroll-smooth"
+      data-persona={initialPersona}
+      suppressHydrationWarning
+    >
       <head>
         <script src="/scripts/no-flash.js" async />
       </head>
       <body className={`text-text bg-bg ${fontVariables}`}>
         <Cursor className="hidden dark:lg:block" />
-        <PersonaProvider>
+        <PersonaProvider initialPersona={initialPersona}>
           <ThemeProvider>{children}</ThemeProvider>
         </PersonaProvider>
       </body>
