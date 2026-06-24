@@ -14,6 +14,8 @@ import {
   TrendPoint,
 } from '@/lib/types/fitness';
 
+import { ecg } from '@/lib/content/ecg-data';
+
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -392,6 +394,7 @@ export const useFitnessData = () => {
     activity,
     nutritionLog,
     routes,
+    ecg,
     coach,
     coachSecondary,
   };

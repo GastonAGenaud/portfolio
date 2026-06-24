@@ -141,3 +141,16 @@ export interface Routes {
   lastDate: string;
   shapes: RouteShape[];
 }
+
+export interface EcgRecording {
+  date: string;
+  cls: string;
+  rate: number;
+  durationSec: number;
+  thumb: string; // normalized SVG path (~3 s)
+}
+
+export interface Ecg {
+  main: { date: string; cls: string; d: string };
+  ecgs: EcgRecording[];
+}

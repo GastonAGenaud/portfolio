@@ -312,6 +312,12 @@ export const tokens = {
       hours: 'fitnessSectionType.routes.hours',
       elev: 'fitnessSectionType.routes.elev',
     },
+    ecg: {
+      title: 'fitnessSectionType.ecg.title',
+      subtitle: 'fitnessSectionType.ecg.subtitle',
+      rhythm: 'fitnessSectionType.ecg.rhythm',
+      recordings: 'fitnessSectionType.ecg.recordings',
+    },
     hero: {
       lost: 'fitnessSectionType.hero.lost',
       fatDown: 'fitnessSectionType.hero.fatDown',

@@ -11,6 +11,7 @@ import ActivityCard from './ActivityCard';
 import BloodPressureCard from './BloodPressureCard';
 import CoachCredit from './CoachCredit';
 import ComparisonView from './ComparisonView';
+import EcgCard from './EcgCard';
 import MeasurementsCard from './MeasurementsCard';
 import MilestoneCarousel from './MilestoneCarousel';
 import RoutesCard from './RoutesCard';
@@ -34,6 +35,7 @@ const FitnessSection = () => {
     activity,
     nutritionLog,
     routes,
+    ecg,
     coach,
     coachSecondary,
   } = useFitnessData();
@@ -212,6 +214,18 @@ const FitnessSection = () => {
           }}
         />
       </div>
+
+      {/* ecg */}
+      <EcgCard
+        ecg={ecg}
+        locale={locale}
+        labels={{
+          title: t(tk.ecg.title),
+          subtitle: t(tk.ecg.subtitle),
+          rhythm: t(tk.ecg.rhythm),
+          recordings: t(tk.ecg.recordings),
+        }}
+      />
 
       {/* bloodwork + nutrition */}
       <VitalsPanel
