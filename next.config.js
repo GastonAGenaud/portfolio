@@ -2,6 +2,10 @@
 module.exports = {
   reactStrictMode: true,
   images: {
+    // Serve images as-is (no Vercel Image Optimization). The account's
+    // optimization quota was returning HTTP 402; assets here are already
+    // web-sized, so optimization isn't needed.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
