@@ -48,10 +48,12 @@ const ActivityCard = ({ activity, locale, labels }: Props) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+      <div className="grid grid-cols-3 gap-x-4 gap-y-3 sm:grid-cols-5">
         {stats.map((s) => (
-          <div key={s.label} className="text-center">
-            <p className="font-mono text-xl font-semibold text-dark-1 sm:text-2xl">{s.value}</p>
+          <div key={s.label} className="min-w-0 text-center">
+            <p className="whitespace-nowrap font-mono text-base font-semibold tabular-nums text-dark-1 sm:text-lg">
+              {s.value}
+            </p>
             <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.1em] text-dark-3">{s.label}</p>
           </div>
         ))}
