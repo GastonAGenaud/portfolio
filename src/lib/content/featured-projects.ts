@@ -19,7 +19,7 @@ export const useFeaturedProjectsSection = (): FeaturedProjectsSectionType => {
         ),
         tasks: t(tokens.featuredProjectsSectionType.projects[0].tasks),
         url: 'https://github.com/GastonAGenaud/appium-python-automation',
-        img: 'https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/4b6d6bae-e617-4e96-b9d1-79fa542b8207/appium-architecture-opt.png',
+        img: '/projects/07.png',
         tags: ['Selenium', 'Appium', 'behave', 'Python', 'BDD', 'TDD'],
       },
       {
@@ -30,7 +30,7 @@ export const useFeaturedProjectsSection = (): FeaturedProjectsSectionType => {
         ),
         tasks: t(tokens.featuredProjectsSectionType.projects[1].tasks),
         url: 'https://github.com/GastonAGenaud/cypress-cucumber',
-        img: 'https://miro.medium.com/v2/resize:fit:564/1*BTN81ohJEdFHP2LUQ-rDkQ.png',
+        img: '/projects/08.png',
         tags: ['Cypress', 'Cucumber', 'BDD', 'TDD', 'JavaScript'],
       },
     ],

@@ -37,8 +37,8 @@ const ProjectCard = ({
           <Image
             src={img}
             alt={name}
-            width={300}
-            height={300}
+            width={800}
+            height={450}
             placeholder="blur"
             blurDataURL={blurImageURL}
             className="object-cover w-full h-full transition-all duration-300 group-hover:scale-110 group-focus:scale-110"
