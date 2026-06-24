@@ -47,10 +47,14 @@ const ModeSwitch = ({ onNavigate, variant = 'site', className }: Props) => {
   const showGreek = onFitness || persona === 'creative';
 
   // Dev/Studio set the persona; when on /fitness they also navigate back home.
+  // Switching mode lands you at the top of the page rather than keeping the
+  // previous scroll position. A route change (from /fitness) already scrolls to
+  // top; an in-place persona swap on home does not, so reset it explicitly.
   const selectPersona = (next: Persona) => {
     onNavigate?.();
     setPersona(next);
     if (onFitness) router.push('/');
+    else window.scrollTo({ top: 0, left: 0 });
   };
   const goFitness = () => {
     onNavigate?.();
