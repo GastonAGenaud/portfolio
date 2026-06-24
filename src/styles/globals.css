@@ -69,6 +69,29 @@
     transition: background-color 0.5s ease;
   }
 
+  /* Fitness palette — scoped to /fitness, independent from dark/light */
+  .greek-theme {
+    --gk-bg: #0c0b10;
+    --gk-bg-2: #13111a;
+    --gk-surface: #17151f;
+    --gk-surface-2: #1e1b27;
+    --gk-border: #2a2733;
+    --gk-marble: #ece6da;
+    --gk-muted: #8b8598;
+    --gk-bronze: #e0aa4e;
+    --gk-bronze-soft: rgba(224, 170, 78, 0.14);
+    --gk-bronze-dim: rgba(224, 170, 78, 0.45);
+    --gk-teal: #43c9b4;
+    --gk-teal-soft: rgba(67, 201, 180, 0.14);
+    --gk-glass: rgba(23, 21, 31, 0.62);
+    --gk-glass-2: rgba(12, 11, 16, 0.5);
+    color: var(--gk-marble);
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(224, 170, 78, 0.1), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(67, 201, 180, 0.08), transparent 60%),
+      linear-gradient(180deg, var(--gk-bg) 0%, var(--gk-bg-2) 100%);
+  }
+
   @font-face {
     font-family: 'agustina';
     src: url('/fonts/Agustina-Signature.otf') format('opentype');
@@ -88,4 +111,31 @@
 .heading-tertiary,
 .h3 {
   @apply text-xl sm:text-2xl tracking-wide capitalize font-medium text-dark-2;
+}
+
+/* Greek theme animations */
+@keyframes gk-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes gk-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+.gk-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.gk-hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
