@@ -6,9 +6,9 @@
  * Everything here defaults to OFF.
  */
 
-// Flip to `true` to enable the Sports / Training-advisory area locally
+// Flip to `true` to enable the Sports / Training area locally
 // without setting an environment variable.
-const SPORT_FALLBACK = false;
+const SPORT_FALLBACK = true;
 
 export const FEATURES = {
   /**

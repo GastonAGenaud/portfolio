@@ -7,38 +7,24 @@ import {
   useState,
 } from 'react';
 
-import { FEATURES } from '@/lib/config/features';
-
-export type Persona = 'engineer' | 'creative';
+export type Persona = 'engineer' | 'creative' | 'training';
 
 export const PERSONA_COOKIE = 'persona';
-// One year — refreshed on every toggle.
+// One year — refreshed on every change.
 const PERSONA_MAX_AGE = 60 * 60 * 24 * 365;
 
 type PersonaState = {
   persona: Persona;
   isCreative: boolean;
-  togglePersona: () => void;
+  isTraining: boolean;
   setPersona: (persona: Persona) => void;
-  /** Feature flag — when false the sports switch + section never render. */
-  sportEnabled: boolean;
-  /** User toggle, only meaningful inside the creative persona. */
-  sportActive: boolean;
-  toggleSport: () => void;
 };
 
 const initialState: PersonaState = {
   persona: 'engineer',
   isCreative: false,
-  togglePersona: () => {
-    return;
-  },
+  isTraining: false,
   setPersona: () => {
-    return;
-  },
-  sportEnabled: FEATURES.sport,
-  sportActive: false,
-  toggleSport: () => {
     return;
   },
 };
@@ -52,26 +38,15 @@ export default function PersonaProvider({
   children: React.ReactNode;
   /**
    * Resolved on the server from the `persona` cookie (see app/layout.tsx) so the
-   * first client render matches the server HTML. Reading localStorage in the
-   * initializer instead would make the server render `engineer` while the client
-   * hydrates as `creative`, causing a hydration mismatch + flash for returning
-   * Studio visitors.
+   * first client render matches the server HTML — no hydration mismatch/flash
+   * for returning Studio/Training visitors.
    */
   initialPersona?: Persona;
 }) {
   const [persona, setPersonaState] = useState<Persona>(initialPersona);
-  const [sportActive, setSportActive] = useState<boolean>(false);
 
   const setPersona = useCallback((next: Persona) => {
     setPersonaState(next);
-  }, []);
-
-  const togglePersona = useCallback(() => {
-    setPersonaState((prev) => (prev === 'engineer' ? 'creative' : 'engineer'));
-  }, []);
-
-  const toggleSport = useCallback(() => {
-    setSportActive((prev) => !prev);
   }, []);
 
   useEffect(() => {
@@ -79,8 +54,6 @@ export default function PersonaProvider({
     // Persist to a cookie so the next server render resolves the same persona.
     document.cookie = `${PERSONA_COOKIE}=${persona}; path=/; max-age=${PERSONA_MAX_AGE}; SameSite=Lax`;
     document.documentElement.dataset.persona = persona;
-    // Leaving the creative persona always collapses the sports view.
-    if (persona !== 'creative') setSportActive(false);
   }, [persona]);
 
   return (
@@ -88,11 +61,8 @@ export default function PersonaProvider({
       value={{
         persona,
         isCreative: persona === 'creative',
-        togglePersona,
+        isTraining: persona === 'training',
         setPersona,
-        sportEnabled: FEATURES.sport,
-        sportActive,
-        toggleSport,
       }}
     >
       {children}

@@ -51,6 +51,19 @@
     --color-dark-3: #57534e;
   }
 
+  /* Training persona — athletic navy + red (Long-Haul Flight #002277 base, Wild Rider Red #ea2f28 accent). */
+  [data-persona='training'] {
+    --color-bg: #050b22;
+    --color-bg-secondary: #0a1338;
+    --color-accent: #ea2f28;
+    --color-accent-light: rgb(234 47 40 / 0.14);
+    --color-accent-torch: rgb(234 47 40 / 0.06);
+    --color-text: #a8b1cf;
+    --color-dark-1: #eef2ff;
+    --color-dark-2: #ccd5f0;
+    --color-dark-3: #7782b1;
+  }
+
   /* Silky persona / theme morph */
   body {
     transition: background-color 0.5s ease;
@@ -85,7 +98,7 @@
   }
 
   * {
-    @apply focus:outline-dashed outline-[3px] outline-offset-4 outline-accent;
+    @apply focus-visible:outline-dashed outline-[3px] outline-offset-4 outline-accent;
   }
 }
 

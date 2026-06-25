@@ -9,16 +9,15 @@ import {
   Button,
   DarkModeButton,
   Link as CLink,
-  ModeSwitch,
   NavButton,
-  SportSwitch,
+  PersonaSwitch,
 } from '@/components';
 
 import { fadeIn, slideIn } from '@/styles/animations';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -41,18 +40,37 @@ const hideNavWhileScrolling = ({
   when: boolean;
 }) => {
   const nav = document.getElementById(id);
-  if (!nav) return;
+  if (!nav) return () => undefined;
 
   let prevScrollPos = window.scrollY;
+  let ticking = false;
 
-  window.onscroll = () => {
-    if (when) {
-      const curScrollPos = window.scrollY;
-      if (prevScrollPos < curScrollPos) nav.style.top = `-${offset}px`;
-      else nav.style.top = '0';
-      prevScrollPos = curScrollPos;
+  const update = () => {
+    ticking = false;
+    const cur = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    // Always show near the very top or bottom; otherwise hide on the way down
+    // and reveal on the way up. (Fixes: header staying hidden after reaching
+    // the bottom and scrolling back up.)
+    if (!when || cur <= offset || cur >= max - 8) {
+      nav.style.top = '0';
+    } else if (cur > prevScrollPos + 4) {
+      nav.style.top = `-${offset}px`;
+    } else if (cur < prevScrollPos - 4) {
+      nav.style.top = '0';
+    }
+    prevScrollPos = cur;
+  };
+
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(update);
     }
   };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  return () => window.removeEventListener('scroll', onScroll);
 };
 
 type NavItemsProps = {
@@ -85,7 +103,8 @@ const NavItem = ({ href, children, onClick, index, delay }: NavItemsProps) => {
 
 const Navbar = () => {
   const { cta, navLinks } = useNavbarSection();
-  const { isCreative, sportEnabled } = usePersona();
+  const { persona } = usePersona();
+  const isEngineer = persona === 'engineer';
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
 
   const windowWidth = useWindowWidth();
@@ -114,10 +133,11 @@ const Navbar = () => {
   );
 
   useEffect(() => {
-    hideNavWhileScrolling({ when: !navbarCollapsed });
+    const cleanup = hideNavWhileScrolling({ when: !navbarCollapsed });
+    return cleanup;
   }, [navbarCollapsed]);
 
-  const showDevNav = !isCreative && (navbarCollapsed || windowWidth > md);
+  const showDevNav = isEngineer && (navbarCollapsed || windowWidth > md);
 
   return (
     <motion.header
@@ -182,15 +202,10 @@ const Navbar = () => {
           </nav>
         )}
 
-        {/* Mode switch — always visible (Dev / Studio / Greek) */}
-        <ModeSwitch onNavigate={() => setNavbarCollapsed(false)} />
+        {/* Persona switch — Dev / Studio / Training (the botonera) */}
+        <PersonaSwitch />
 
-        {/* Sports toggle — only in creative persona AND when the flag is on */}
-        <AnimatePresence>
-          {isCreative && sportEnabled && <SportSwitch key="sport-switch" />}
-        </AnimatePresence>
-
-        {/* Language menu — available in both personas */}
+        {/* Language menu — available in every persona */}
         <div>
           <Button
             aria-controls={open ? 'language-menu' : undefined}
@@ -219,7 +234,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile hamburger — engineer persona only */}
-        {!isCreative && (
+        {isEngineer && (
           <NavButton
             onClick={() => {
               setNavbarCollapsed((prev) => !prev);

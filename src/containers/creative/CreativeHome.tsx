@@ -1,14 +1,12 @@
 'use client';
 import { author, socialLinks } from '@/lib/content/portfolio';
-import { usePersona } from '@/lib/hooks/use-persona';
 
 import { tokens } from '@/locales/tokens';
 
 import Gallery from '@/components/creative/Gallery';
 
-import Training from './Training';
 import { Icon } from '@iconify/react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const socials = [
@@ -19,7 +17,6 @@ const socials = [
 
 const CreativeHome = () => {
   const { t } = useTranslation();
-  const { sportEnabled, sportActive } = usePersona();
 
   return (
     <div className="mx-auto max-w-6xl px-6 sm:px-10">
@@ -87,10 +84,6 @@ const CreativeHome = () => {
       </section>
 
       <Gallery />
-
-      <AnimatePresence>
-        {sportEnabled && sportActive && <Training />}
-      </AnimatePresence>
     </div>
   );
 };
