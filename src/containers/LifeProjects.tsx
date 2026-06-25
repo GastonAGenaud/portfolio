@@ -1,5 +1,5 @@
 'use client';
-import { ShowLottie, Link, ListItem } from '@/components';
+import { ShowLottie, Link, ListItem, Carousel } from '@/components';
 import { getId } from '@/lib/utils/helper';
 
 import { useLifeProjectsSection } from '../lib/content/life-projects';
@@ -30,7 +30,7 @@ const LifeProjects = () => {
   const { title, experiences } = useLifeProjectsSection();
   const [activeTab, setActiveTab] = useState(0);
 
-  const { role, company, companyUrl, started, upto, tasks } =
+  const { role, company, companyUrl, started, upto, tasks, images } =
     experiences[activeTab];
 
   return (
@@ -51,11 +51,16 @@ const LifeProjects = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
+              className={images && images.length > 0 ? 'w-full max-w-[340px]' : ''}
             >
-              <ShowLottie
-                path={lotties[activeTab]}
-                className="max-w-[300px] md:max-w-[350px]"
-              />
+              {images && images.length > 0 ? (
+                <Carousel images={images} alt={`${company} build photo`} />
+              ) : (
+                <ShowLottie
+                  path={lotties[activeTab]}
+                  className="max-w-[300px] md:max-w-[350px]"
+                />
+              )}
             </motion.div>
           </AnimatePresence>
         </div>

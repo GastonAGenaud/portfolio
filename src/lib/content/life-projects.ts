@@ -46,6 +46,15 @@ export const useLifeProjectsSection = (): LifeProjectsSectionType => {
           t(tokens.lifeProjectsSectionType.experiences[2].tasks[1]),
           t(tokens.lifeProjectsSectionType.experiences[2].tasks[2]),
         ],
+        images: [
+          '/keyboards/kb-01.jpg',
+          '/keyboards/kb-07.jpg',
+          '/keyboards/kb-09.jpg',
+          '/keyboards/kb-04.jpg',
+          '/keyboards/kb-02.jpg',
+          '/keyboards/kb-06.jpg',
+          '/keyboards/kb-08.jpg',
+        ],
       },
       {
         company: t(tokens.lifeProjectsSectionType.experiences[3].company),

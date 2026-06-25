@@ -13,6 +13,7 @@ import SkillIcon from './skills/SkillIcon';
 import SocialIcon from './socials/SocialIcon';
 import SocialLink from './socials/SocialLink';
 import AuthorImage from './ui/AuthorImage';
+import Carousel from './ui/Carousel';
 import Cursor from './ui/Cursor';
 import ProjectCard from './ui/ProjectCard';
 import ShowLottie from './ui/ShowLottie';
@@ -22,6 +23,7 @@ import Wrapper from './ui/Wrapper';
 export {
   AuthorImage,
   Button,
+  Carousel,
   Cursor,
   DarkModeButton,
   Link,

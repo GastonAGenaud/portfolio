@@ -22,6 +22,8 @@ export type ExperienceType = {
   started: Date | string;
   upto: Date | 'present' | string;
   tasks: string[];
+  /** Optional image gallery rendered as a small carousel (e.g. build photos). */
+  images?: string[];
 };
 
 export type ProjectType = {
