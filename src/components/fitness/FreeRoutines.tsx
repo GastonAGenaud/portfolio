@@ -47,7 +47,7 @@ const FreeRoutines = () => {
       >
         <span className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-accent">
           <Icon icon="ph:barbell-fill" width="15" />
-          Gratis
+          Contenido gratuito
         </span>
         <h2 className="mt-3 font-serif text-3xl tracking-tight text-dark-1 sm:text-4xl">
           Rutinas de Gym
