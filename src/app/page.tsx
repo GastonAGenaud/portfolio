@@ -44,15 +44,24 @@ const EngineerHome = () => (
 const Home: NextPage = () => {
   const { persona } = usePersona();
 
+  // Land at the top whenever the persona changes — otherwise the previous
+  // scroll position carries into the new view, dropping you mid-page (or into
+  // an empty area below shorter content) instead of at its hero.
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [persona]);
+
   return (
     <Layout>
+      {/* mode="wait" + no exit anim: the old view unmounts at once so it never
+          lingers under the new persona's theme (which flips instantly), then the
+          new view fades in. Avoids the "mixed text / wrong colors" flash. */}
       <AnimatePresence mode="wait">
         <motion.div
           key={persona}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: 'easeInOut' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
         >
           {persona === 'training' ? (
             <TrainingHome />
