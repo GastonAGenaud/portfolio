@@ -4,6 +4,7 @@ import { useFitnessData } from '@/lib/content/fitness';
 import { tokens } from '@/locales/tokens';
 
 import { Icon } from '@iconify/react';
+import { motion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -87,25 +88,50 @@ const FitnessSection = () => {
 
   return (
     <div className="space-y-12">
-      {/* header */}
+      {/* header — staggered entrance, like the Studio hero */}
       <div>
-        <span className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-accent"
+        >
           <Icon icon="ph:crown-fill" width="15" />
           {t(tk.eyebrow)}
-        </span>
-        <h2 className="mt-3 font-serif text-4xl tracking-tight text-dark-1 sm:text-5xl">
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.08 }}
+          className="mt-3 font-serif text-4xl tracking-tight text-dark-1 sm:text-5xl"
+        >
           {t(tk.title)}
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text sm:text-base">
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.16 }}
+          className="mt-3 max-w-2xl text-sm leading-relaxed text-text sm:text-base"
+        >
           {t(tk.subtitle)}
-        </p>
-        <p className="mt-5 max-w-2xl border-l-2 border-accent pl-4 text-sm leading-relaxed text-dark-3">
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.24 }}
+          className="mt-5 max-w-2xl border-l-2 border-accent pl-4 text-sm leading-relaxed text-dark-3"
+        >
           {t(tk.intro)}
-        </p>
+        </motion.p>
       </div>
 
       {/* hero stats */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.32 }}
+        className="grid grid-cols-2 gap-3 sm:grid-cols-4"
+      >
         {heroStats.map((s) => (
           <div
             key={s.label}
@@ -120,7 +146,7 @@ const FitnessSection = () => {
             </p>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {/* carousel (draggable + snap) */}
       <MilestoneCarousel

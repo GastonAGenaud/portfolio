@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutina Meadows PPL v3 — QR locales</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#6b7280; --line:#d1d5db; --line-soft:#e5e7eb;
+    --head:#111827; --suggest:#9ca3af; --suggest-bg:#f3f4f6;
+    --star:#b45309; --swap:#0e7490;
+    --push-h:#b91c1c; --pull-h:#1d4ed8; --legs-h:#15803d; --pushl-h:#c2410c; --pulll-h:#7c3aed;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); margin:0; padding:0; font-size:12px; line-height:1.45; background:#fff;}
+  .wrap{max-width:920px; margin:0 auto; padding:24px;}
+  h1{font-size:22px; margin:0 0 2px; color:var(--head);}
+  h2{font-size:16px; margin:24px 0 4px; padding:7px 12px; border-radius:6px; color:#fff;}
+  h3{font-size:12.5px; margin:13px 0 5px; color:var(--head); text-transform:uppercase; letter-spacing:.4px;
+    border-bottom:2px solid var(--line); padding-bottom:3px;}
+  .sub{color:var(--muted); font-size:12px; margin:0 0 4px; font-style:italic;}
+  .topbar{display:flex; justify-content:space-between; align-items:flex-end; border-bottom:3px solid var(--head); padding-bottom:8px; flex-wrap:wrap; gap:6px;}
+  .meta{color:var(--muted); font-size:11px; text-align:right;}
+  .legend{background:#f9fafb; border:1px solid var(--line-soft); border-radius:8px; padding:10px 14px; margin:14px 0; font-size:11px;}
+  .legend b{color:var(--head);}
+  .legend ul{margin:6px 0 0; padding-left:18px;}
+  .legend li{margin:2px 0;}
+  table{width:100%; border-collapse:collapse; margin:4px 0 8px; font-size:11px;}
+  th{background:var(--head); color:#fff; text-align:left; padding:5px 6px; font-weight:600; font-size:10px;}
+  td{padding:4px 6px; border-bottom:1px solid var(--line-soft); vertical-align:middle;}
+  tr:nth-child(even) td{background:#fafafa;}
+  .ex{font-weight:600; color:var(--head);}
+  .plan{color:var(--muted); white-space:nowrap; font-size:9.5px;}
+  .set{font-variant-numeric:tabular-nums; text-align:center; white-space:nowrap; font-size:10px;}
+  .s4{background:var(--suggest-bg)!important; color:var(--suggest); text-align:center; font-variant-numeric:tabular-nums; font-style:italic; white-space:nowrap; font-size:10px;}
+  .note{color:var(--muted); font-size:9.5px;}
+  .qr{text-align:center; width:54px;}
+  .qr canvas, .qr img{width:46px!important; height:46px!important; display:block; margin:0 auto;}
+  .star{color:var(--star); font-weight:700;}
+  .swap{color:var(--swap); font-weight:700;}
+  .cardio{background:#f0f9ff; border-left:3px solid #0284c7; padding:7px 11px; margin:6px 0 2px; font-size:10.5px; color:#0c4a6e; border-radius:0 5px 5px 0;}
+  .colEx{width:18%;} .colPlan{width:12.5%;} .colSet{width:9.5%;} .colS4{width:8%;} .colNote{width:16%;} .colQR{width:54px;}
+  .page-break{page-break-before:always;}
+  .principios{font-size:11px;}
+  .principios li{margin:3px 0;}
+  .restday{background:#f9fafb; border:1px dashed var(--line); border-radius:8px; padding:14px; margin:8px 0; font-size:11.5px;}
+  .privacy{background:#fef2f2; border:2px solid #dc2626; border-radius:8px; padding:12px 16px; margin:8px 0 16px; font-size:11.5px; color:#7f1d1d;}
+  .privacy b{color:#991b1b;}
+  .annex h2{background:#334155;}
+  #status{position:fixed; top:16px; left:16px; background:#111827; color:#fff; padding:8px 14px; border-radius:8px; font-size:12px; z-index:99; box-shadow:0 2px 8px rgba(0,0,0,.2);}
+  #status.ok{background:#15803d;}
+  #status.err{background:#b91c1c;}
+  .btns{position:fixed; top:16px; right:16px; z-index:99; display:flex; gap:8px;}
+  .btn{background:var(--head); color:#fff; border:none; padding:10px 16px; border-radius:8px; font-size:13px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.2);}
+  .btn.green{background:#15803d;}
+  @media print{
+    body{font-size:10.5px;} .wrap{padding:0;} .no-print{display:none;}
+    h2,th{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .s4,.cardio,.legend,.restday,.privacy,tr:nth-child(even) td{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .qr canvas,.qr img{width:44px!important; height:44px!important;}
+  }
+</style>
+</head>
+<body>
+<div id="status" class="no-print">Generando QR…</div>
+<div class="btns no-print">
+  <button class="btn green" onclick="window.print()">🖨️ Descargar PDF</button>
+</div>
+<div class="wrap">
+
+  <div class="topbar">
+    <div>
+      <h1>Rutina Meadows — PPL v3</h1>
+      <div class="sub" style="font-style:normal;">Heavy Duty · Overlay Meadows (Mountain Dog)</div>
+    </div>
+    <div class="meta">Gastón Genaud</div>
+  </div>
+
+  <div class="legend">
+    <b>Cómo leer esta hoja</b>
+    <ul>
+      <li><span class="star">★</span> = ejercicio del overlay Meadows (prioridad). <span class="swap">🔁</span> = ejercicio cambiado (ver nota).</li>
+      <li><b>QR</b> = escaneá con la cámara para ver el video de técnica (búsqueda John Meadows en YouTube).</li>
+      <li><b>S1–S3</b> = series cargadas <code>peso×reps@RPE</code>. <b>S4 sug.</b> (gris) = peso sugerido próxima semana.</li>
+      <li><b>RPE:</b> 8 = dejar 2 reps · 9 = dejar 1 · 10 = fallo. Fallo solo en accesorios; compounds RPE 8 máx.</li>
+    </ul>
+  </div>
+
+  <!-- LUNES -->
+  <h2 style="background:var(--push-h);">🟥 Lunes — Push pesado</h2>
+  <div class="sub">Pecho alto · ★ Cluster Hombros Meadows (15 sets) · Tríceps</div>
+  <h3>Pecho (foco superior)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Incline DB Press 30°</td><td class="plan">4×6-8 @8/8/9/9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Subir a 35 kg con 8 limpias en las 3. Codos 30-40°.</td><td class="qr" data-q="John Meadows incline dumbbell press"></td></tr>
+    <tr><td class="ex">Flat DB Press</td><td class="plan">3×8-10 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Backdown del pesado. Mancuernas en arco.</td><td class="qr" data-q="John Meadows flat dumbbell press"></td></tr>
+    <tr><td class="ex">Parallel Bar Dips</td><td class="plan">2×8-12 @8-9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Inclinación adelante = pecho. Lastre con 12 limpias.</td><td class="qr" data-q="John Meadows chest dips"></td></tr>
+  </table>
+  <h3><span class="star">★</span> Hombros — Cluster Meadows (15 sets)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex"><span class="swap">🔁</span> Seated DB Shoulder Press</td><td class="plan">3×6-8 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note"><b>Cambio:</b> reemplaza Press Smith (−40%). Mancuernas = mejor ROM.</td><td class="qr" data-q="John Meadows seated dumbbell shoulder press"></td></tr>
+    <tr><td class="ex"><span class="star">★</span> DB Side Lateral full ROM</td><td class="plan">4×10-12 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Estricto, sin trap. Filmar 1 set antes de subir.</td><td class="qr" data-q="John Meadows side lateral raise"></td></tr>
+    <tr><td class="ex"><span class="star">★</span> Heavy Partial Side Lateral</td><td class="plan">3×20-25 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">ROM 1/3 abajo. 30-50% más que el lateral estricto.</td><td class="qr" data-q="John Meadows heavy partial lateral raise"></td></tr>
+    <tr><td class="ex"><span class="star">★</span> Hang &amp; Swings (rear delt)</td><td class="plan">3×25-30 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note"><b>SOLO 3 series.</b> Boca abajo en banco inclinado.</td><td class="qr" data-q="John Meadows hang and swing rear delt"></td></tr>
+    <tr><td class="ex">Reverse Fly Pec Deck</td><td class="plan">2×15-20 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Squeeze 1 seg arriba.</td><td class="qr" data-q="John Meadows reverse pec deck rear delt"></td></tr>
+  </table>
+  <h3>Tríceps</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">EZ Bar French Press</td><td class="plan">3×8-10 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Codos fijos, bajar atrás de la cabeza.</td><td class="qr" data-q="John Meadows EZ bar french press triceps"></td></tr>
+    <tr><td class="ex">Rope Triceps Ext. unilateral</td><td class="plan">2×12-15 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Un brazo por vez, squeeze final.</td><td class="qr" data-q="single arm rope triceps extension"></td></tr>
+  </table>
+  <div class="cardio"><b>Cardio post-pesas (30 min):</b> caminadora inclinada 8-10° + bici · FC 140 lpm (zona 2) · electrolitos (sal rosa + limón o LMNT).</div>
+
+  <!-- MARTES -->
+  <div class="page-break"></div>
+  <h2 style="background:var(--pull-h);">🟦 Martes — Pull pesado</h2>
+  <div class="sub">Dorsal width · Rear delts directos · ★ Cluster Bíceps Meadows (9 sets)</div>
+  <h3>Espalda (foco ancho)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Dominada ancha pronada (o jalón)</td><td class="plan">4×6-10 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Width primario. Bajar asistencia = más peso propio.</td><td class="qr" data-q="John Meadows wide grip pull up lat"></td></tr>
+    <tr><td class="ex">Jalón unilateral polea alta</td><td class="plan">3×10-12 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Un brazo. Estiramiento + contracción máxima.</td><td class="qr" data-q="John Meadows single arm lat pulldown"></td></tr>
+    <tr><td class="ex">Remo horizontal pecho apoyado</td><td class="plan">3×8-10 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Plate-loaded. Grosor sin fatigar lumbar.</td><td class="qr" data-q="John Meadows chest supported row"></td></tr>
+    <tr><td class="ex">Pullover polea con cuerda</td><td class="plan">3×12-15 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Expansión torácica. Codos levemente flexionados.</td><td class="qr" data-q="John Meadows cable rope pullover"></td></tr>
+  </table>
+  <h3>Rear delts (directo)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Face Pull codo alto</td><td class="plan">4×15-20 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Codos altos, pausa 1 seg.</td><td class="qr" data-q="John Meadows face pull rear delt"></td></tr>
+    <tr><td class="ex">Reverse Fly Pec Deck</td><td class="plan">3×15-20 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Squeeze 1 seg arriba.</td><td class="qr" data-q="John Meadows reverse pec deck rear delt"></td></tr>
+  </table>
+  <h3><span class="star">★</span> Bíceps — Cluster Meadows (9 sets)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">EZ (Z) Bar Curl</td><td class="plan">3×8-10 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Codos pegados al torso.</td><td class="qr" data-q="John Meadows EZ bar curl"></td></tr>
+    <tr><td class="ex"><span class="star">★</span> Incline Bench DB Hammer Curl</td><td class="plan">3×10-12 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">DB hasta la oreja. Brachialis directo.</td><td class="qr" data-q="John Meadows incline hammer curl"></td></tr>
+    <tr><td class="ex"><span class="star">★</span> EZ Bar Reverse Curl</td><td class="plan">3×12 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Hasta el mentón, bajar 2-3 seg.</td><td class="qr" data-q="John Meadows reverse curl brachialis"></td></tr>
+  </table>
+  <div class="cardio"><b>Cardio post-pesas (30 min):</b> caminadora inclinada 8-10° + bici · FC 140 lpm (zona 2) · electrolitos.</div>
+
+  <!-- MIÉRCOLES -->
+  <div class="page-break"></div>
+  <h2 style="background:var(--legs-h);">🟩 Miércoles — Piernas + Core</h2>
+  <div class="sub">Buena hidratación y electrolitos. ROM completo en todo.</div>
+  <h3>Piernas</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Hack Squat</td><td class="plan">3×6-8 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Reemplaza sentadilla. ROM completo.</td><td class="qr" data-q="John Meadows hack squat"></td></tr>
+    <tr><td class="ex">RDL con DB pesadas o Smith</td><td class="plan">3×8-10 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Cadena posterior. Cadera atrás, espalda neutra.</td><td class="qr" data-q="John Meadows romanian deadlift RDL"></td></tr>
+    <tr><td class="ex">Prensa 45° (o 2da serie Hack)</td><td class="plan">3×10-12 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Si no hay prensa: 2da pasada de hack.</td><td class="qr" data-q="John Meadows leg press"></td></tr>
+    <tr><td class="ex">Curl femoral acostado</td><td class="plan">3×10-12 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Squeeze arriba, bajar controlado.</td><td class="qr" data-q="lying leg curl hamstring technique"></td></tr>
+    <tr><td class="ex">Extensión de cuádriceps</td><td class="plan">2×12-15 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Pausa arriba 1 seg.</td><td class="qr" data-q="leg extension quad technique"></td></tr>
+    <tr><td class="ex">Gemelos de pie</td><td class="plan">4×10-15 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">ROM completo. Pausa abajo + arriba.</td><td class="qr" data-q="standing calf raise technique"></td></tr>
+  </table>
+  <h3>Core (anti-rotación)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Pallof press en cable</td><td class="plan">3×10/lado @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Resistir rotación, brazos firmes.</td><td class="qr" data-q="Pallof press cable core"></td></tr>
+    <tr><td class="ex">Plancha con peso</td><td class="plan">2×30-45 seg</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Cuerpo recto, glúteos activos.</td><td class="qr" data-q="weighted plank core"></td></tr>
+    <tr><td class="ex">Elevaciones piernas colgado</td><td class="plan">3×10-12 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Sin balanceo. <b>No saltar.</b></td><td class="qr" data-q="hanging leg raise"></td></tr>
+  </table>
+  <div class="cardio"><b>Cardio post-pesas (30 min):</b> caminadora inclinada 8-10° + bici · FC 140 lpm (zona 2) · electrolitos.</div>
+
+  <!-- JUEVES -->
+  <div class="page-break"></div>
+  <h2 style="background:var(--pushl-h);">🟧 Jueves — Push ligero</h2>
+  <div class="sub">Hombros foco · NO fallo en compounds. Volumen delt lateral + posterior.</div>
+  <h3>Pecho (volumen moderado)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Incline DB Press 30°</td><td class="plan">3×10-12 @7</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Volumen, no carga máxima. RPE 7.</td><td class="qr" data-q="John Meadows incline dumbbell press"></td></tr>
+  </table>
+  <h3>Hombros (día 2/4 laterales + rear delt)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">DB Side Lateral</td><td class="plan">4×12-15 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Estricto. Bottleneck del V-taper.</td><td class="qr" data-q="John Meadows side lateral raise"></td></tr>
+    <tr><td class="ex"><span class="star">★</span> Low Cable Side Lateral cross-body</td><td class="plan">3×15-20 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Mano cruza el cuerpo = más ROM.</td><td class="qr" data-q="low cable cross body lateral raise"></td></tr>
+    <tr><td class="ex">Reverse Fly Pec Deck</td><td class="plan">3×15-20 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Rear delt directo.</td><td class="qr" data-q="John Meadows reverse pec deck rear delt"></td></tr>
+  </table>
+  <h3>Tríceps (volumen)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Extensión polea con cuerda</td><td class="plan">3×12-15 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Separar la cuerda al final.</td><td class="qr" data-q="rope triceps pushdown technique"></td></tr>
+    <tr><td class="ex">Press francés en polea</td><td class="plan">2×12-15 @7</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Estiramiento largo del tríceps.</td><td class="qr" data-q="cable overhead triceps extension"></td></tr>
+  </table>
+  <div class="cardio"><b>Cardio post-pesas (30 min):</b> caminadora inclinada 8-10° + bici · FC 140 lpm (zona 2) · electrolitos.</div>
+
+  <!-- VIERNES -->
+  <div class="page-break"></div>
+  <h2 style="background:var(--pulll-h);">🟪 Viernes — Pull ligero</h2>
+  <div class="sub">Lats volumen · Laterales día 3+4/4 · ★ Bíceps stretch position Meadows.</div>
+  <h3>Espalda (volumen moderado)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Jalón agarre ancho pronado</td><td class="plan">3×10-12 @7</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Volumen. Contracción consciente.</td><td class="qr" data-q="wide grip lat pulldown technique"></td></tr>
+    <tr><td class="ex">Remo bajo polea agarre neutro</td><td class="plan">3×10-12 @7</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Codos pegados al torso.</td><td class="qr" data-q="seated cable row neutral grip"></td></tr>
+  </table>
+  <h3>Hombros (día 3+4/4 laterales)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Vuelo lateral cable cruzado</td><td class="plan">3×15-20 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Ambos brazos. Tensión constante.</td><td class="qr" data-q="cable lateral raise crossover"></td></tr>
+    <tr><td class="ex">DB lateral sentado torso inclinado</td><td class="plan">3×12-15 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Inclinar el torso = más estiramiento.</td><td class="qr" data-q="seated leaning lateral raise dumbbell"></td></tr>
+  </table>
+  <h3>Rear delt (día 2/2)</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Face Pull con pausa 1 seg</td><td class="plan">3×15-20 @9</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Pausa 1 seg en contracción.</td><td class="qr" data-q="John Meadows face pull rear delt"></td></tr>
+  </table>
+  <h3><span class="star">★</span> Bíceps — Finisher stretch position Meadows</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex"><span class="star">★</span> EZ Bar Preacher Curl</td><td class="plan">2×10-12 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Eccentric 3 seg. NO lockout abajo.</td><td class="qr" data-q="John Meadows preacher curl stretch"></td></tr>
+    <tr><td class="ex"><span class="star">★</span> One-Arm DB Hammer Preacher</td><td class="plan">2×12 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Brachialis en stretch. Squeeze 1 seg.</td><td class="qr" data-q="one arm hammer preacher curl"></td></tr>
+  </table>
+  <h3>Core</h3>
+  <table>
+    <colgroup><col class="colEx"><col class="colPlan"><col class="colSet"><col class="colSet"><col class="colSet"><col class="colS4"><col class="colNote"><col class="colQR"></colgroup>
+    <tr><th>Ejercicio</th><th>Plan</th><th>S1</th><th>S2</th><th>S3</th><th>S4 sug.</th><th>Observaciones</th><th>Video</th></tr>
+    <tr><td class="ex">Crunch con peso</td><td class="plan">3×15-20 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Controlado. <b>No saltar.</b></td><td class="qr" data-q="cable crunch weighted abs"></td></tr>
+    <tr><td class="ex">Leg raise colgado</td><td class="plan">3×10-15 @8</td><td class="set"></td><td class="set"></td><td class="set"></td><td class="s4"></td><td class="note">Sin balanceo. <b>No saltar.</b></td><td class="qr" data-q="hanging leg raise"></td></tr>
+  </table>
+  <div class="cardio"><b>Cardio post-pesas (30 min):</b> caminadora inclinada 8-10° + bici · FC 140 lpm (zona 2) · electrolitos.</div>
+
+  <!-- FINDE -->
+  <div class="page-break"></div>
+  <h2 style="background:#475569;">⬜ Sábado — Descanso activo</h2>
+  <div class="restday">
+    <b>Elegir UNA opción (no combinar):</b>
+    <ul style="margin:6px 0 0;">
+      <li><b>Natación</b> — 45 min, ritmo relajado.</li>
+      <li><b>Caminata larga</b> — 8.000-10.000 pasos al aire libre.</li>
+      <li><b>Ciclismo outdoor</b> — 45 min, zona 1-2 (110-125 bpm).</li>
+    </ul>
+    <p style="margin:8px 0 0;"><b>Regla:</b> sin pesas, sin HIIT, sin intentar "aprovechar" el día.</p>
+  </div>
+  <h2 style="background:#334155;">⬛ Domingo — Descanso total</h2>
+  <div class="restday">
+    <ul style="margin:0;">
+      <li>Sin gym obligatorio. Caminar normal sí, sin forzar el contador de pasos.</li>
+      
+      <li>Planificar la semana + review del Planning Semanal.</li>
+      <li><b>Este día no se negocia.</b> Recuperación del sistema nervioso.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+(function(){
+  var statusEl = document.getElementById('status');
+  function setStatus(msg, cls){ statusEl.textContent = msg; statusEl.className = 'no-print' + (cls?(' '+cls):''); }
+
+  function renderAll(){
+    if(typeof QRCode === 'undefined'){ setStatus('⚠️ No cargó la librería QR', 'err'); return; }
+    var cells = document.querySelectorAll('td.qr[data-q]');
+    var total = cells.length, done = 0, failed = 0;
+    cells.forEach(function(cell){
+      var q = cell.getAttribute('data-q');
+      var url = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+      try{
+        // QRCode.js renders into the element (canvas + img fallback)
+        new QRCode(cell, { text: url, width: 92, height: 92, correctLevel: QRCode.CorrectLevel.M });
+        done++;
+      }catch(e){ failed++; }
+    });
+    // Validation: count actually-rendered canvas/img inside qr cells
+    setTimeout(function(){
+      var rendered = document.querySelectorAll('td.qr canvas, td.qr img').length;
+      if(rendered >= total && failed === 0){
+        setStatus('✅ ' + rendered + '/' + total + ' QR generados y visibles. Listo para descargar.', 'ok');
+        setTimeout(function(){ statusEl.style.display='none'; }, 4000);
+      } else {
+        setStatus('⚠️ QR visibles: ' + rendered + '/' + total + (failed?(' · '+failed+' fallaron'):''), 'err');
+      }
+    }, 600);
+  }
+
+  if(document.readyState === 'complete' || document.readyState === 'interactive'){
+    setTimeout(renderAll, 100);
+  } else {
+    window.addEventListener('DOMContentLoaded', function(){ setTimeout(renderAll, 100); });
+  }
+})();
+</script>
+</body>
+</html>
