@@ -1,3 +1,4 @@
+import { FEATURES } from '@/lib/config/features';
 import { seoData } from '@/lib/content/portfolio';
 import PersonaProvider, { type Persona } from '@/lib/hooks/use-persona';
 import ThemeProvider from '@/lib/hooks/use-theme';
@@ -81,7 +82,7 @@ export default function RootLayout({
   const initialPersona: Persona =
     cookiePersona === 'creative'
       ? 'creative'
-      : cookiePersona === 'training'
+      : cookiePersona === 'training' && FEATURES.sport
       ? 'training'
       : 'engineer';
 

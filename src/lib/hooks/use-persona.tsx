@@ -1,4 +1,6 @@
 'use client';
+import { FEATURES } from '@/lib/config/features';
+
 import {
   createContext,
   useCallback,
@@ -46,6 +48,8 @@ export default function PersonaProvider({
   const [persona, setPersonaState] = useState<Persona>(initialPersona);
 
   const setPersona = useCallback((next: Persona) => {
+    // Training is feature-flagged; ignore attempts to enter it while off.
+    if (next === 'training' && !FEATURES.sport) return;
     setPersonaState(next);
   }, []);
 

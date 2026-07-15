@@ -8,7 +8,7 @@
 
 // Flip to `true` to enable the Sports / Training area locally
 // without setting an environment variable.
-const SPORT_FALLBACK = true;
+const SPORT_FALLBACK = false;
 
 export const FEATURES = {
   /**
