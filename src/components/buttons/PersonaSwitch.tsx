@@ -1,4 +1,5 @@
 'use client';
+import { FEATURES } from '@/lib/config/features';
 import { usePersona, type Persona } from '@/lib/hooks/use-persona';
 
 import { tokens } from '@/locales/tokens';
@@ -9,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 type Option = { key: Persona; icon: string; token: string };
 
-const options: Option[] = [
+const allOptions: Option[] = [
   {
     key: 'engineer',
     icon: 'ph:code-bold',
@@ -26,6 +27,10 @@ const options: Option[] = [
     token: tokens.creativeSectionType.sport.switchLabel,
   },
 ];
+
+const options = FEATURES.sport
+  ? allOptions
+  : allOptions.filter((opt) => opt.key !== 'training');
 
 const PersonaSwitch = ({ className = '' }: { className?: string }) => {
   const { persona, setPersona } = usePersona();
