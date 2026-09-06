@@ -27,15 +27,6 @@ export const lightroomAlbumUrl =
  */
 export const creativePhotos: CreativePhoto[] = [
   {
-    id: 'p01',
-    src: '/gallery/grid/01.jpg',
-    full: '/gallery/full/01.jpg',
-    w: 2000,
-    h: 3000,
-    span: 'tall',
-    alt: 'Photograph by Gaston Genaud',
-  },
-  {
     id: 'p02',
     src: '/gallery/grid/02.jpg',
     full: '/gallery/full/02.jpg',
