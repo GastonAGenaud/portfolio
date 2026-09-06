@@ -387,15 +387,6 @@ export const creativePhotos: CreativePhoto[] = [
     alt: 'Photograph by Gaston Genaud',
   },
   {
-    id: 'p41',
-    src: '/gallery/grid/41.jpg',
-    full: '/gallery/full/41.jpg',
-    w: 6016,
-    h: 4016,
-    span: 'wide',
-    alt: 'Photograph by Gaston Genaud',
-  },
-  {
     id: 'p42',
     src: '/gallery/grid/42.jpg',
     full: '/gallery/full/42.jpg',
