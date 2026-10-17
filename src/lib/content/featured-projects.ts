@@ -33,6 +33,17 @@ export const useFeaturedProjectsSection = (): FeaturedProjectsSectionType => {
         img: '/projects/08.png',
         tags: ['Cypress', 'Cucumber', 'BDD', 'TDD', 'JavaScript'],
       },
+      {
+        id: getId(),
+        name: t(tokens.featuredProjectsSectionType.projects[2].name),
+        description: t(
+          tokens.featuredProjectsSectionType.projects[2].description
+        ),
+        tasks: t(tokens.featuredProjectsSectionType.projects[2].tasks),
+        url: 'https://tomasmercado.vercel.app/',
+        img: '/projects/09.png',
+        tags: ['Next.js', 'TypeScript', 'TailwindCSS', 'Neon', 'Vercel'],
+      },
     ],
   };
 

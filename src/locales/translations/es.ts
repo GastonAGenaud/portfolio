@@ -171,6 +171,13 @@ export const es = {
   [tokens.featuredProjectsSectionType.projects[1].tasks]:
     'Cypress es un framework de pruebas end-to-end moderno y eficiente, que prescinde de Selenium y ofrece una experiencia más ágil para la web actual.',
 
+  [tokens.featuredProjectsSectionType.projects[2].name]:
+    'Tomás Mercado · Personal Trainer',
+  [tokens.featuredProjectsSectionType.projects[2].description]:
+    'Sitio web de coaching y entrenamiento 1:1 para un entrenador personal',
+  [tokens.featuredProjectsSectionType.projects[2].tasks]:
+    'Landing a medida para un entrenador: reserva de asesorías y planes, testimonios, códigos de descuento y FAQ. Hecho con Next.js, TypeScript y Tailwind, base de datos Neon y desplegado en Vercel.',
+
   // Projects Section
   [tokens.projectsSectionType.title]: 'mis proyectos',
   [tokens.projectsSectionType.projects[0].name]:
@@ -190,7 +197,8 @@ export const es = {
   [tokens.lifeProjectsSectionType.title]: 'mis otros proyectos de vida',
 
   // Life Projects - Tab 0: Robótica y Domótica
-  [tokens.lifeProjectsSectionType.experiences[0].company]: 'Robótica y Domótica',
+  [tokens.lifeProjectsSectionType.experiences[0].company]:
+    'Robótica y Domótica',
   [tokens.lifeProjectsSectionType.experiences[0].role]:
     'Maker y Entusiasta de la Automatización del Hogar',
   [tokens.lifeProjectsSectionType.experiences[0].started]: '2020',
@@ -203,7 +211,8 @@ export const es = {
     'Automatización de procesos diarios en el hogar: desde iluminación programada hasta persianas automáticas, control de temperatura y rutinas basadas en presencia.',
 
   // Life Projects - Tab 1: Cultivo Inteligente e Irrigación
-  [tokens.lifeProjectsSectionType.experiences[1].company]: 'Cultivo Inteligente e Irrigación',
+  [tokens.lifeProjectsSectionType.experiences[1].company]:
+    'Cultivo Inteligente e Irrigación',
   [tokens.lifeProjectsSectionType.experiences[1].role]:
     'Diseñador de Sistemas Automatizados',
   [tokens.lifeProjectsSectionType.experiences[1].started]: '2021',
@@ -216,7 +225,8 @@ export const es = {
     'Automatización de ciclos de cultivo: programación de riego, fertilización e iluminación para un crecimiento óptimo con mínima intervención manual.',
 
   // Life Projects - Tab 2: Teclados Corne
-  [tokens.lifeProjectsSectionType.experiences[2].company]: 'Teclados Corne Personalizados',
+  [tokens.lifeProjectsSectionType.experiences[2].company]:
+    'Teclados Corne Personalizados',
   [tokens.lifeProjectsSectionType.experiences[2].role]:
     'Constructor de Teclados y Desarrollador de Firmware',
   [tokens.lifeProjectsSectionType.experiences[2].started]: '2022',
@@ -229,7 +239,8 @@ export const es = {
     'Diseño e impresión 3D de carcasas personalizadas y soluciones de tenting para configuraciones ergonómicas de teclados split.',
 
   // Life Projects - Tab 3: IA & Datos Personales
-  [tokens.lifeProjectsSectionType.experiences[3].company]: 'IA & Datos Personales',
+  [tokens.lifeProjectsSectionType.experiences[3].company]:
+    'IA & Datos Personales',
   [tokens.lifeProjectsSectionType.experiences[3].role]:
     'Quantified Self & Optimización Personal con IA',
   [tokens.lifeProjectsSectionType.experiences[3].started]: '2024',
@@ -307,7 +318,8 @@ export const es = {
   [tokens.fitnessSectionType.measures.arm]: 'Brazo',
   [tokens.fitnessSectionType.measures.thigh]: 'Muslo',
   [tokens.fitnessSectionType.measureTrend.title]: 'Medidas',
-  [tokens.fitnessSectionType.measureTrend.subtitle]: 'Cinta — el V-taper en centímetros',
+  [tokens.fitnessSectionType.measureTrend.subtitle]:
+    'Cinta — el V-taper en centímetros',
   [tokens.fitnessSectionType.activity.title]: 'Carga de entrenamiento',
   [tokens.fitnessSectionType.activity.subtitle]: 'Apple Watch · últimos 7 días',
   [tokens.fitnessSectionType.activity.strength]: 'entrenos de fuerza',
@@ -318,13 +330,15 @@ export const es = {
   [tokens.fitnessSectionType.activity.strengthLabel]: 'Fuerza',
   [tokens.fitnessSectionType.activity.cyclingLabel]: 'Ciclismo',
   [tokens.fitnessSectionType.routes.title]: 'Movimiento · Rutas GPS',
-  [tokens.fitnessSectionType.routes.subtitle]: 'Cada caminata y trote registrado desde abr 2024',
+  [tokens.fitnessSectionType.routes.subtitle]:
+    'Cada caminata y trote registrado desde abr 2024',
   [tokens.fitnessSectionType.routes.routes]: 'rutas',
   [tokens.fitnessSectionType.routes.km]: 'km total',
   [tokens.fitnessSectionType.routes.hours]: 'horas',
   [tokens.fitnessSectionType.routes.elev]: 'm de desnivel',
   [tokens.fitnessSectionType.ecg.title]: 'Corazón · ECG',
-  [tokens.fitnessSectionType.ecg.subtitle]: 'Apple Watch · Derivación I · 512 Hz',
+  [tokens.fitnessSectionType.ecg.subtitle]:
+    'Apple Watch · Derivación I · 512 Hz',
   [tokens.fitnessSectionType.ecg.rhythm]: 'Ritmo sinusal',
   [tokens.fitnessSectionType.ecg.recordings]: 'registros',
   [tokens.fitnessSectionType.hero.lost]: 'kg menos',
@@ -335,7 +349,8 @@ export const es = {
   [tokens.fitnessSectionType.trend.weight]: 'Peso (kg)',
   [tokens.fitnessSectionType.trend.bodyFat]: 'Grasa (%)',
   [tokens.fitnessSectionType.bp.title]: 'Presión arterial',
-  [tokens.fitnessSectionType.bp.subtitle]: 'Registro AM en ayunas — de elevada a óptima',
+  [tokens.fitnessSectionType.bp.subtitle]:
+    'Registro AM en ayunas — de elevada a óptima',
   [tokens.fitnessSectionType.bp.latest]: 'Última',
   [tokens.fitnessSectionType.bp.average]: 'Promedio',
   [tokens.fitnessSectionType.bp.restingHr]: 'FC reposo',
@@ -348,7 +363,8 @@ export const es = {
   [tokens.fitnessSectionType.nutrition.steps]: 'Pasos diarios',
   [tokens.fitnessSectionType.nutrition.logged]: 'Prom. registrado',
   [tokens.fitnessSectionType.blood.title]: 'Análisis de sangre',
-  [tokens.fitnessSectionType.blood.subtitle]: 'Extracción en ayunas · 01/06/2026',
+  [tokens.fitnessSectionType.blood.subtitle]:
+    'Extracción en ayunas · 01/06/2026',
   [tokens.fitnessSectionType.blood.disclaimer]:
     'Marcadores metabólicos, lipídicos, renales y vitaminas — el lado salud del trabajo.',
   [tokens.fitnessSectionType.compare.title]: 'Antes y ahora',
@@ -357,7 +373,8 @@ export const es = {
   [tokens.fitnessSectionType.compare.then]: 'Antes',
   [tokens.fitnessSectionType.compare.now]: 'Ahora',
   [tokens.fitnessSectionType.compare.gains]: 'Ganancias',
-  [tokens.fitnessSectionType.coach.label]: 'Entrenamiento · Nutrición · Acompañamiento',
+  [tokens.fitnessSectionType.coach.label]:
+    'Entrenamiento · Nutrición · Acompañamiento',
   [tokens.fitnessSectionType.coach.thanks]:
     'Cada número acá es fruto de un acompañamiento constante en entrenamiento y nutrición. Gracias, Sebastián.',
   [tokens.fitnessSectionType.coach.secondaryLabel]: 'Apoyo de la primera etapa',

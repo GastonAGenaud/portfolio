@@ -150,6 +150,11 @@ export const tokens = {
         description: 'featuredProjectsSectionType.projects.1.description',
         tasks: 'featuredProjectsSectionType.projects.1.tasks',
       },
+      2: {
+        name: 'featuredProjectsSectionType.projects.2.name',
+        description: 'featuredProjectsSectionType.projects.2.description',
+        tasks: 'featuredProjectsSectionType.projects.2.tasks',
+      },
     },
   },
   projectsSectionType: {

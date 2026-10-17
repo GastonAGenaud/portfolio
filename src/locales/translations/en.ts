@@ -171,6 +171,13 @@ export const en = {
   [tokens.featuredProjectsSectionType.projects[1].tasks]:
     'Cypress is a modern, efficient end-to-end testing framework that does not rely on Selenium, offering a more agile experience for the modern web.',
 
+  [tokens.featuredProjectsSectionType.projects[2].name]:
+    'Tomás Mercado · Personal Trainer',
+  [tokens.featuredProjectsSectionType.projects[2].description]:
+    '1:1 coaching & training website for a personal trainer',
+  [tokens.featuredProjectsSectionType.projects[2].tasks]:
+    'A bespoke landing for a personal trainer: booking for coaching and plans, testimonials, discount codes and an FAQ. Built with Next.js, TypeScript and Tailwind, a Neon database, and deployed on Vercel.',
+
   // Projects Section
   [tokens.projectsSectionType.title]: 'my projects',
   [tokens.projectsSectionType.projects[0].name]:
@@ -190,7 +197,8 @@ export const en = {
   [tokens.lifeProjectsSectionType.title]: 'my other life projects',
 
   // Life Projects - Tab 0: Robotics & Home Automation
-  [tokens.lifeProjectsSectionType.experiences[0].company]: 'Robotics & Home Automation',
+  [tokens.lifeProjectsSectionType.experiences[0].company]:
+    'Robotics & Home Automation',
   [tokens.lifeProjectsSectionType.experiences[0].role]:
     'Maker & Home Automation Enthusiast',
   [tokens.lifeProjectsSectionType.experiences[0].started]: '2020',
@@ -203,7 +211,8 @@ export const en = {
     'Automating daily processes at home: from smart lighting schedules to automated blinds, temperature control, and presence-based routines.',
 
   // Life Projects - Tab 1: Smart Cultivation & Irrigation
-  [tokens.lifeProjectsSectionType.experiences[1].company]: 'Smart Cultivation & Irrigation',
+  [tokens.lifeProjectsSectionType.experiences[1].company]:
+    'Smart Cultivation & Irrigation',
   [tokens.lifeProjectsSectionType.experiences[1].role]:
     'Automated Systems Designer',
   [tokens.lifeProjectsSectionType.experiences[1].started]: '2021',
@@ -216,7 +225,8 @@ export const en = {
     'Automating grow cycles: scheduling watering, fertilization, and lighting for optimal plant growth with minimal manual intervention.',
 
   // Life Projects - Tab 2: Corne Keyboards
-  [tokens.lifeProjectsSectionType.experiences[2].company]: 'Custom Corne Keyboards',
+  [tokens.lifeProjectsSectionType.experiences[2].company]:
+    'Custom Corne Keyboards',
   [tokens.lifeProjectsSectionType.experiences[2].role]:
     'Keyboard Builder & Firmware Developer',
   [tokens.lifeProjectsSectionType.experiences[2].started]: '2022',
@@ -307,7 +317,8 @@ export const en = {
   [tokens.fitnessSectionType.measures.arm]: 'Arm',
   [tokens.fitnessSectionType.measures.thigh]: 'Thigh',
   [tokens.fitnessSectionType.measureTrend.title]: 'Measurements',
-  [tokens.fitnessSectionType.measureTrend.subtitle]: 'Tape — the V-taper in centimetres',
+  [tokens.fitnessSectionType.measureTrend.subtitle]:
+    'Tape — the V-taper in centimetres',
   [tokens.fitnessSectionType.activity.title]: 'Training load',
   [tokens.fitnessSectionType.activity.subtitle]: 'Apple Watch · last 7 days',
   [tokens.fitnessSectionType.activity.strength]: 'strength sessions',
@@ -318,7 +329,8 @@ export const en = {
   [tokens.fitnessSectionType.activity.strengthLabel]: 'Strength',
   [tokens.fitnessSectionType.activity.cyclingLabel]: 'Cycling',
   [tokens.fitnessSectionType.routes.title]: 'Movement · GPS routes',
-  [tokens.fitnessSectionType.routes.subtitle]: 'Every tracked walk & run since Apr 2024',
+  [tokens.fitnessSectionType.routes.subtitle]:
+    'Every tracked walk & run since Apr 2024',
   [tokens.fitnessSectionType.routes.routes]: 'routes',
   [tokens.fitnessSectionType.routes.km]: 'km total',
   [tokens.fitnessSectionType.routes.hours]: 'hours',
@@ -335,7 +347,8 @@ export const en = {
   [tokens.fitnessSectionType.trend.weight]: 'Weight (kg)',
   [tokens.fitnessSectionType.trend.bodyFat]: 'Body fat (%)',
   [tokens.fitnessSectionType.bp.title]: 'Blood pressure',
-  [tokens.fitnessSectionType.bp.subtitle]: 'Fasted AM log — elevated to optimal',
+  [tokens.fitnessSectionType.bp.subtitle]:
+    'Fasted AM log — elevated to optimal',
   [tokens.fitnessSectionType.bp.latest]: 'Latest',
   [tokens.fitnessSectionType.bp.average]: 'Average',
   [tokens.fitnessSectionType.bp.restingHr]: 'Resting HR',
