@@ -11,6 +11,7 @@ import {
   Layout,
   LifeProjects,
   Projects,
+  Publications,
   Skills,
 } from '@/containers';
 import CreativeHome from '@/containers/creative/CreativeHome';
@@ -37,6 +38,7 @@ const EngineerHome = () => (
     <FeaturedProjects />
     <Projects />
     <LifeProjects />
+    <Publications />
     <Contact />
     <Courses />
   </>

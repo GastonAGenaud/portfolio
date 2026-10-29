@@ -10,6 +10,7 @@ export const en = {
   [tokens.header.experience]: 'experience',
   [tokens.header.projects]: 'projects',
   [tokens.header.lifeProjects]: 'life projects',
+  [tokens.header.publications]: 'guides',
   [tokens.header.contact]: 'contact',
   [tokens.header.resume]: 'Resume',
 
@@ -257,6 +258,14 @@ export const en = {
   [tokens.contactSectionType.ctaTitle]: 'Say Hello',
 
   // Courses Section
+  // Publications
+  [tokens.publicationsSectionType.title]: 'Guides & publications',
+  [tokens.publicationsSectionType.subtitle]: 'Things I built, explained step by step.',
+  [tokens.publicationsSectionType.read]: 'Read the guide',
+  [tokens.publicationsSectionType.minutes]: 'min read',
+  [tokens.publicationsSectionType.back]: 'Back',
+  [tokens.publicationsSectionType.notFound]: 'That publication does not exist.',
+
   [tokens.coursesSectionType.title]: 'Courses',
   [tokens.coursesSectionType.subtitle]: 'Projects',
   [tokens.coursesSectionType.paragraphs[0]]:

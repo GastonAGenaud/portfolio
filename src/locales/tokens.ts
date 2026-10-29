@@ -15,6 +15,7 @@ export const tokens = {
     about: 'header.about',
     projects: 'header.projects',
     lifeProjects: 'header.lifeProjects',
+    publications: 'header.publications',
     contact: 'header.contact',
     resume: 'header.resume',
     experience: 'header.experience',
@@ -235,6 +236,14 @@ export const tokens = {
       1: 'contactSectionType.paragraphs.1',
     },
     ctaTitle: 'contactSectionType.ctaTitle',
+  },
+  publicationsSectionType: {
+    title: 'publicationsSectionType.title',
+    subtitle: 'publicationsSectionType.subtitle',
+    read: 'publicationsSectionType.read',
+    minutes: 'publicationsSectionType.minutes',
+    back: 'publicationsSectionType.back',
+    notFound: 'publicationsSectionType.notFound',
   },
   coursesSectionType: {
     title: 'coursesSectionType.title',
