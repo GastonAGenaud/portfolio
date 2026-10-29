@@ -22,6 +22,11 @@ const allOptions: Option[] = [
     token: tokens.creativeSectionType.personaStudio,
   },
   {
+    key: 'services',
+    icon: 'ph:rocket-launch-bold',
+    token: tokens.servicesSectionType.switchLabel,
+  },
+  {
     key: 'training',
     icon: 'ph:crown-fill',
     token: tokens.creativeSectionType.sport.switchLabel,

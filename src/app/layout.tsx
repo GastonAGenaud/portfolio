@@ -82,6 +82,8 @@ export default function RootLayout({
   const initialPersona: Persona =
     cookiePersona === 'creative'
       ? 'creative'
+      : cookiePersona === 'services'
+      ? 'services'
       : cookiePersona === 'training' && FEATURES.sport
       ? 'training'
       : 'engineer';

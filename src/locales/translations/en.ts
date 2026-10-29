@@ -363,4 +363,86 @@ export const en = {
   [tokens.fitnessSectionType.coach.secondaryLabel]: 'Early-stage support',
   [tokens.fitnessSectionType.coach.secondaryThanks]:
     'And thanks to Matías Rosakesque for the training support and padel coaching in the early days.',
+
+  // Services (third persona in the switch)
+  [tokens.servicesSectionType.switchLabel]: 'Services',
+  [tokens.servicesSectionType.eyebrow]:
+    'Services · Websites · Ads · Automation',
+  [tokens.servicesSectionType.title]: 'Your brand online,',
+  [tokens.servicesSectionType.titleAccent]: 'working for you.',
+  [tokens.servicesSectionType.intro]:
+    'I design and build personal websites, plan the ad strategy that fills them with leads, and automate the repetitive work so you can focus on yours. With the same engineering I bring to enterprise projects.',
+  [tokens.servicesSectionType.ctaPrimary]: 'Tell me about your project',
+  [tokens.servicesSectionType.ctaSecondary]: 'See a real case',
+  [tokens.servicesSectionType.offerEyebrow]: 'What I do',
+  [tokens.servicesSectionType.offerTitle]:
+    'Three services, one goal: your growth.',
+  [tokens.servicesSectionType.items.web.title]: 'Personal websites',
+  [tokens.servicesSectionType.items.web.description]:
+    'Your professional site, custom-built, with your own admin panel so you never depend on anyone to update it.',
+  [tokens.servicesSectionType.items.web.bullets[0]]:
+    'Custom, mobile-first design',
+  [tokens.servicesSectionType.items.web.bullets[1]]:
+    'Admin panel for your services',
+  [tokens.servicesSectionType.items.web.bullets[2]]:
+    'Contact form and lead management',
+  [tokens.servicesSectionType.items.web.bullets[3]]:
+    'Domain, SEO and ES / EN versions',
+  [tokens.servicesSectionType.items.ads.title]: 'Ad strategy',
+  [tokens.servicesSectionType.items.ads.description]:
+    'Campaigns built to turn visits into clients, measured end to end.',
+  [tokens.servicesSectionType.items.ads.bullets[0]]:
+    'Meta Ads (Instagram / Facebook) and Google Ads',
+  [tokens.servicesSectionType.items.ads.bullets[1]]:
+    'Audience, funnel and messaging per goal',
+  [tokens.servicesSectionType.items.ads.bullets[2]]:
+    'Pixel, events and conversions tracked right',
+  [tokens.servicesSectionType.items.ads.bullets[3]]: 'Clear results reporting',
+  [tokens.servicesSectionType.items.automation.title]: 'Custom automation',
+  [tokens.servicesSectionType.items.automation.description]:
+    'Solutions that do the repetitive work for you: fewer manual tasks, more time.',
+  [tokens.servicesSectionType.items.automation.bullets[0]]:
+    'Client replies and follow-ups',
+  [tokens.servicesSectionType.items.automation.bullets[1]]:
+    'Integrations between your tools',
+  [tokens.servicesSectionType.items.automation.bullets[2]]:
+    'AI agents for specific tasks',
+  [tokens.servicesSectionType.items.automation.bullets[3]]:
+    'Automatic reports and alerts',
+  [tokens.servicesSectionType.caseEyebrow]: 'Real case',
+  [tokens.servicesSectionType.caseTitle]: 'Tomás Mercado — Personal Trainer',
+  [tokens.servicesSectionType.caseDescription]:
+    'From Instagram to a site of his own: bilingual landing, editable coaching catalog and a mobile panel to manage every request.',
+  [tokens.servicesSectionType.caseBullets[0]]:
+    'ES / EN landing with its own identity',
+  [tokens.servicesSectionType.caseBullets[1]]:
+    'Admin panel to manage plans and prices',
+  [tokens.servicesSectionType.caseBullets[2]]:
+    'Requests with statuses and follow-ups',
+  [tokens.servicesSectionType.caseBullets[3]]:
+    'User manual to run it on his own',
+  [tokens.servicesSectionType.caseCta]: 'Visit the site',
+  [tokens.servicesSectionType.processEyebrow]: 'How I work',
+  [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',
+  [tokens.servicesSectionType.steps[0].title]: 'Talk',
+  [tokens.servicesSectionType.steps[0].description]:
+    'I learn your business, your audience and what you want to achieve.',
+  [tokens.servicesSectionType.steps[1].title]: 'Proposal',
+  [tokens.servicesSectionType.steps[1].description]:
+    'Clear scope, timeline and cost before we start.',
+  [tokens.servicesSectionType.steps[2].title]: 'Build',
+  [tokens.servicesSectionType.steps[2].description]:
+    'Visible progress, with your feedback at every stage.',
+  [tokens.servicesSectionType.steps[3].title]: 'Launch',
+  [tokens.servicesSectionType.steps[3].description]:
+    'We go live, I show you how to use it and stay around after.',
+  [tokens.servicesSectionType.edgeTitle]: 'Engineering behind every delivery',
+  [tokens.servicesSectionType.edgeDescription]:
+    'My background is QA, automation and DevOps: what I build is tested, deploys itself and is made to last.',
+  [tokens.servicesSectionType.finalTitle]: 'Shall we start?',
+  [tokens.servicesSectionType.finalDescription]:
+    "Tell me what you have in mind and I'll reply with a concrete proposal.",
+  [tokens.servicesSectionType.mailSubject]: 'Services inquiry',
+  [tokens.servicesSectionType.whatsappMessage]:
+    "Hi Gaston! I saw your website and I'd like to ask about a project.",
 };

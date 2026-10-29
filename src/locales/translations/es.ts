@@ -277,6 +277,89 @@ export const es = {
     'Acompaño a personas a alcanzar sus metas físicas con planes personalizados, seguimiento de datos y un enfoque sostenible.',
   [tokens.creativeSectionType.sport.cta]: 'Quiero entrenar',
 
+  // Servicios (tercera persona de la botonera)
+  [tokens.servicesSectionType.switchLabel]: 'Servicios',
+  [tokens.servicesSectionType.eyebrow]:
+    'Servicios · Webs · Ads · Automatización',
+  [tokens.servicesSectionType.title]: 'Tu marca online,',
+  [tokens.servicesSectionType.titleAccent]: 'trabajando por vos.',
+  [tokens.servicesSectionType.intro]:
+    'Diseño y desarrollo sitios personales, armo la estrategia de anuncios que los llena de consultas y automatizo lo repetitivo para que te enfoques en tu trabajo. Con la misma ingeniería que uso en proyectos enterprise.',
+  [tokens.servicesSectionType.ctaPrimary]: 'Contame tu proyecto',
+  [tokens.servicesSectionType.ctaSecondary]: 'Ver un caso real',
+  [tokens.servicesSectionType.offerEyebrow]: 'Qué hago',
+  [tokens.servicesSectionType.offerTitle]:
+    'Tres servicios, un mismo objetivo: que crezcas.',
+  [tokens.servicesSectionType.items.web.title]: 'Sitios personales',
+  [tokens.servicesSectionType.items.web.description]:
+    'Tu web profesional, a medida y con panel propio para que la actualices sin depender de nadie.',
+  [tokens.servicesSectionType.items.web.bullets[0]]:
+    'Diseño a medida, mobile-first',
+  [tokens.servicesSectionType.items.web.bullets[1]]:
+    'Panel de administración para tus servicios',
+  [tokens.servicesSectionType.items.web.bullets[2]]:
+    'Formulario de contacto y gestión de consultas',
+  [tokens.servicesSectionType.items.web.bullets[3]]:
+    'Dominio, SEO y versión ES / EN',
+  [tokens.servicesSectionType.items.ads.title]: 'Estrategia de ads',
+  [tokens.servicesSectionType.items.ads.description]:
+    'Campañas pensadas para convertir visitas en clientes, medidas de punta a punta.',
+  [tokens.servicesSectionType.items.ads.bullets[0]]:
+    'Meta Ads (Instagram / Facebook) y Google Ads',
+  [tokens.servicesSectionType.items.ads.bullets[1]]:
+    'Público, embudo y mensajes por objetivo',
+  [tokens.servicesSectionType.items.ads.bullets[2]]:
+    'Píxel, eventos y conversiones bien medidos',
+  [tokens.servicesSectionType.items.ads.bullets[3]]:
+    'Reporte claro de resultados',
+  [tokens.servicesSectionType.items.automation.title]:
+    'Automatizaciones a medida',
+  [tokens.servicesSectionType.items.automation.description]:
+    'Soluciones que hacen el trabajo repetitivo por vos: menos tareas manuales, más tiempo.',
+  [tokens.servicesSectionType.items.automation.bullets[0]]:
+    'Respuestas y seguimiento de clientes',
+  [tokens.servicesSectionType.items.automation.bullets[1]]:
+    'Integraciones entre tus herramientas',
+  [tokens.servicesSectionType.items.automation.bullets[2]]:
+    'Agentes con IA para tareas concretas',
+  [tokens.servicesSectionType.items.automation.bullets[3]]:
+    'Reportes y alertas automáticas',
+  [tokens.servicesSectionType.caseEyebrow]: 'Caso real',
+  [tokens.servicesSectionType.caseTitle]: 'Tomás Mercado — Personal Trainer',
+  [tokens.servicesSectionType.caseDescription]:
+    'Del Instagram a una web propia: landing bilingüe, catálogo de asesorías editable y un panel mobile para gestionar cada solicitud.',
+  [tokens.servicesSectionType.caseBullets[0]]:
+    'Landing ES / EN con identidad propia',
+  [tokens.servicesSectionType.caseBullets[1]]:
+    'Panel admin para cargar asesorías y precios',
+  [tokens.servicesSectionType.caseBullets[2]]:
+    'Solicitudes con estados y seguimientos',
+  [tokens.servicesSectionType.caseBullets[3]]:
+    'Manual de usuario para manejarlo solo',
+  [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
+  [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
+  [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',
+  [tokens.servicesSectionType.steps[0].title]: 'Charla',
+  [tokens.servicesSectionType.steps[0].description]:
+    'Entiendo tu negocio, tu público y qué querés lograr.',
+  [tokens.servicesSectionType.steps[1].title]: 'Propuesta',
+  [tokens.servicesSectionType.steps[1].description]:
+    'Alcance, tiempos y costo claros antes de arrancar.',
+  [tokens.servicesSectionType.steps[2].title]: 'Construcción',
+  [tokens.servicesSectionType.steps[2].description]:
+    'Avances visibles, con tu feedback en cada etapa.',
+  [tokens.servicesSectionType.steps[3].title]: 'Lanzamiento',
+  [tokens.servicesSectionType.steps[3].description]:
+    'Publicamos, te enseño a usarlo y te acompaño después.',
+  [tokens.servicesSectionType.edgeTitle]: 'Ingeniería detrás de cada entrega',
+  [tokens.servicesSectionType.edgeDescription]:
+    'Vengo de QA, automatización y DevOps: lo que construyo está testeado, se despliega solo y está pensado para durar.',
+  [tokens.servicesSectionType.finalTitle]: '¿Arrancamos?',
+  [tokens.servicesSectionType.finalDescription]:
+    'Contame qué tenés en mente y te respondo con una propuesta concreta.',
+  [tokens.servicesSectionType.mailSubject]: 'Consulta por servicios',
+  [tokens.servicesSectionType.whatsappMessage]:
+    'Hola Gaston! Vi tu web y quiero consultarte por un proyecto.',
   // Sección Fitness / Entrenamiento (Creative → Sport)
   [tokens.fitnessSectionType.eyebrow]: 'Cuerpo · Bitácora',
   [tokens.fitnessSectionType.title]: 'Transformación Atlética',
