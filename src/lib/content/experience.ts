@@ -23,6 +23,7 @@ export const useExperienceSection = (): ExperienceSectionType => {
           t(tokens.experienceSectionType.experiences[0].tasks[2]),
           t(tokens.experienceSectionType.experiences[0].tasks[3]),
           t(tokens.experienceSectionType.experiences[0].tasks[4]),
+          t(tokens.experienceSectionType.experiences[0].tasks[5]),
         ],
       },
       {

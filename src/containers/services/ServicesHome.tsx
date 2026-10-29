@@ -16,7 +16,20 @@ const services = [
   { key: 'automation', icon: 'ph:robot-bold', ...t$.items.automation },
 ];
 
-const CASE_URL = 'https://tomasmercado.vercel.app';
+const cases = [
+  {
+    url: 'https://tomasmercado.vercel.app',
+    image: '/services/tomasmercado-hero.jpg',
+    alt: 'Tomás Mercado — sitio web',
+    ...t$.cases[0],
+  },
+  {
+    url: 'https://multirubro-anisacate.vercel.app',
+    image: '/services/multirubro-anisacate-hero.jpg',
+    alt: 'Multirubro Anisacate — tienda online',
+    ...t$.cases[1],
+  },
+];
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -140,59 +153,68 @@ const ServicesHome = () => {
         <motion.div {...fadeUp}>
           <Eyebrow>{t(t$.caseEyebrow)}</Eyebrow>
         </motion.div>
-        <div className="grid items-center gap-10 lg:grid-cols-[1.35fr_1fr]">
-          <motion.a
-            {...fadeUp}
-            href={CASE_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="block overflow-hidden rounded-xl border border-dark-3/60 bg-bg-secondary shadow-2xl shadow-black/40 transition-transform hover:-translate-y-1"
-          >
-            <div className="flex items-center gap-2 border-b border-dark-3/60 px-4 py-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-dark-3" />
-              <span className="h-2.5 w-2.5 rounded-full bg-dark-3" />
-              <span className="h-2.5 w-2.5 rounded-full bg-dark-3" />
-              <span className="ml-3 truncate font-mono text-[11px] text-text">
-                tomasmercado.vercel.app
-              </span>
-            </div>
-            <Image
-              src="/services/tomasmercado-hero.jpg"
-              alt="Tomás Mercado — sitio web"
-              width={2160}
-              height={1350}
-              className="h-auto w-full"
-              sizes="(min-width: 1024px) 580px, 100vw"
-            />
-          </motion.a>
-          <motion.div {...fadeUp}>
-            <h2 className="text-3xl font-bold tracking-tight text-dark-1">
-              {t(t$.caseTitle)}
-            </h2>
-            <p className="mt-4 leading-relaxed text-text">
-              {t(t$.caseDescription)}
-            </p>
-            <ul className="mt-6 space-y-2.5">
-              {t$.caseBullets.map((b) => (
-                <li key={b} className="flex gap-2.5 text-sm text-dark-2">
-                  <Icon
-                    icon="ph:check-bold"
-                    className="mt-0.5 shrink-0 text-accent"
-                  />
-                  {t(b)}
-                </li>
-              ))}
-            </ul>
-            <a
-              href={CASE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline"
+        <div className="space-y-20">
+          {cases.map((c, i) => (
+            <div
+              key={c.url}
+              className="grid items-center gap-10 lg:grid-cols-[1.35fr_1fr]"
             >
-              {t(t$.caseCta)}
-              <Icon icon="ph:arrow-up-right-bold" />
-            </a>
-          </motion.div>
+              <motion.a
+                {...fadeUp}
+                href={c.url}
+                target="_blank"
+                rel="noreferrer"
+                className={`block overflow-hidden rounded-xl border border-dark-3/60 bg-bg-secondary shadow-2xl shadow-black/40 transition-transform hover:-translate-y-1 ${
+                  i % 2 ? 'lg:order-2' : ''
+                }`}
+              >
+                <div className="flex items-center gap-2 border-b border-dark-3/60 px-4 py-3">
+                  <span className="h-2.5 w-2.5 rounded-full bg-dark-3" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-dark-3" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-dark-3" />
+                  <span className="ml-3 truncate font-mono text-[11px] text-text">
+                    {c.url.replace('https://', '')}
+                  </span>
+                </div>
+                <Image
+                  src={c.image}
+                  alt={c.alt}
+                  width={2160}
+                  height={1350}
+                  className="h-auto w-full"
+                  sizes="(min-width: 1024px) 580px, 100vw"
+                />
+              </motion.a>
+              <motion.div {...fadeUp}>
+                <h2 className="text-3xl font-bold tracking-tight text-dark-1">
+                  {t(c.title)}
+                </h2>
+                <p className="mt-4 leading-relaxed text-text">
+                  {t(c.description)}
+                </p>
+                <ul className="mt-6 space-y-2.5">
+                  {c.bullets.map((b) => (
+                    <li key={b} className="flex gap-2.5 text-sm text-dark-2">
+                      <Icon
+                        icon="ph:check-bold"
+                        className="mt-0.5 shrink-0 text-accent"
+                      />
+                      {t(b)}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={c.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent hover:underline"
+                >
+                  {t(t$.caseCta)}
+                  <Icon icon="ph:arrow-up-right-bold" />
+                </a>
+              </motion.div>
+            </div>
+          ))}
         </div>
       </section>
 

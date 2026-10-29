@@ -66,6 +66,8 @@ export const useLifeProjectsSection = (): LifeProjectsSectionType => {
           t(tokens.lifeProjectsSectionType.experiences[3].tasks[0]),
           t(tokens.lifeProjectsSectionType.experiences[3].tasks[1]),
           t(tokens.lifeProjectsSectionType.experiences[3].tasks[2]),
+          t(tokens.lifeProjectsSectionType.experiences[3].tasks[3]),
+          t(tokens.lifeProjectsSectionType.experiences[3].tasks[4]),
         ],
       },
     ],

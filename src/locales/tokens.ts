@@ -87,6 +87,7 @@ export const tokens = {
           2: 'experienceSectionType.experiences.0.tasks.2',
           3: 'experienceSectionType.experiences.0.tasks.3',
           4: 'experienceSectionType.experiences.0.tasks.4',
+          5: 'experienceSectionType.experiences.0.tasks.5',
         },
       },
       1: {
@@ -220,6 +221,8 @@ export const tokens = {
           0: 'lifeProjectsSectionType.experiences.3.tasks.0',
           1: 'lifeProjectsSectionType.experiences.3.tasks.1',
           2: 'lifeProjectsSectionType.experiences.3.tasks.2',
+          3: 'lifeProjectsSectionType.experiences.3.tasks.3',
+          4: 'lifeProjectsSectionType.experiences.3.tasks.4',
         },
       },
     },
@@ -293,11 +296,13 @@ export const tokens = {
       },
     },
     caseEyebrow: 'servicesSectionType.caseEyebrow',
-    caseTitle: 'servicesSectionType.caseTitle',
-    caseDescription: 'servicesSectionType.caseDescription',
-    caseBullets: [0, 1, 2, 3].map(
-      (i) => `servicesSectionType.caseBullets.${i}`
-    ),
+    cases: [0, 1].map((c) => ({
+      title: `servicesSectionType.cases.${c}.title`,
+      description: `servicesSectionType.cases.${c}.description`,
+      bullets: [0, 1, 2, 3].map(
+        (i) => `servicesSectionType.cases.${c}.bullets.${i}`
+      ),
+    })),
     caseCta: 'servicesSectionType.caseCta',
     processEyebrow: 'servicesSectionType.processEyebrow',
     processTitle: 'servicesSectionType.processTitle',

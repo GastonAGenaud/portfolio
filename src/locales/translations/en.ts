@@ -97,6 +97,8 @@ export const en = {
     'Leading a multidisciplinary team, fostering collaboration and internal talent growth.',
   [tokens.experienceSectionType.experiences[0].tasks[4]]:
     'Implementing Lambdas (Python), managing DynamoDB, RDS, configuring CloudWatch, and using Taurus for AWS load testing.',
+  [tokens.experienceSectionType.experiences[0].tasks[5]]:
+    'Configuring AI agent harnesses (Claude Code, hooks and MCP servers) operated remotely with Moshi over Tailscale and mosh, to launch and supervise agents from the phone.',
 
   // Experience 1: Coderio
   [tokens.experienceSectionType.experiences[1].company]:
@@ -240,6 +242,10 @@ export const en = {
     'Using AI and language models to analyze my data, surface patterns, and get actionable recommendations toward my personal goals.',
   [tokens.lifeProjectsSectionType.experiences[3].tasks[2]]:
     'Creating dashboards and automations that centralize the information and continuously measure progress.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[3]]:
+    'Personal AI-agent homelab: Moshi on the iPhone connected through Tailscale and mosh to WSL2 servers running Claude Code, herdr and moshi-hook, to control agent sessions from anywhere.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[4]]:
+    'Setting up and running Qwen models locally with Ollama, to experiment with private LLMs without relying on the cloud.',
 
   // Contact Section
   [tokens.contactSectionType.title]: "let's get in touch",
@@ -409,18 +415,21 @@ export const en = {
     'AI agents for specific tasks',
   [tokens.servicesSectionType.items.automation.bullets[3]]:
     'Automatic reports and alerts',
-  [tokens.servicesSectionType.caseEyebrow]: 'Real case',
-  [tokens.servicesSectionType.caseTitle]: 'Tomás Mercado — Personal Trainer',
-  [tokens.servicesSectionType.caseDescription]:
+  [tokens.servicesSectionType.caseEyebrow]: 'Real cases',
+  [tokens.servicesSectionType.cases[0].title]: 'Tomás Mercado — Personal Trainer',
+  [tokens.servicesSectionType.cases[0].description]:
     'From Instagram to a site of his own: bilingual landing, editable coaching catalog and a mobile panel to manage every request.',
-  [tokens.servicesSectionType.caseBullets[0]]:
-    'ES / EN landing with its own identity',
-  [tokens.servicesSectionType.caseBullets[1]]:
-    'Admin panel to manage plans and prices',
-  [tokens.servicesSectionType.caseBullets[2]]:
-    'Requests with statuses and follow-ups',
-  [tokens.servicesSectionType.caseBullets[3]]:
-    'User manual to run it on his own',
+  [tokens.servicesSectionType.cases[0].bullets[0]]: 'ES / EN landing with its own identity',
+  [tokens.servicesSectionType.cases[0].bullets[1]]: 'Admin panel to manage plans and prices',
+  [tokens.servicesSectionType.cases[0].bullets[2]]: 'Requests with statuses and follow-ups',
+  [tokens.servicesSectionType.cases[0].bullets[3]]: 'User manual to run it on his own',
+  [tokens.servicesSectionType.cases[1].title]: 'Multirubro Anisacate — Online store',
+  [tokens.servicesSectionType.cases[1].description]:
+    'A neighborhood store with an online catalog: customers build their order and close it on WhatsApp, while products and prices are managed from its own admin panel.',
+  [tokens.servicesSectionType.cases[1].bullets[0]]: 'Catalog with deals and shopping cart',
+  [tokens.servicesSectionType.cases[1].bullets[1]]: 'Orders sent straight to WhatsApp',
+  [tokens.servicesSectionType.cases[1].bullets[2]]: 'Admin panel with prices and global margin',
+  [tokens.servicesSectionType.cases[1].bullets[3]]: 'Automated catalog loading',
   [tokens.servicesSectionType.caseCta]: 'Visit the site',
   [tokens.servicesSectionType.processEyebrow]: 'How I work',
   [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',

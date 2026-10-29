@@ -97,6 +97,8 @@ export const es = {
     'Liderazgo de un equipo multidisciplinario, impulsando la colaboración y el crecimiento del talento interno.',
   [tokens.experienceSectionType.experiences[0].tasks[4]]:
     'Implementación de Lambdas (Python), gestión de DynamoDB, RDS, configuración de CloudWatch y uso de Taurus para pruebas de carga en AWS.',
+  [tokens.experienceSectionType.experiences[0].tasks[5]]:
+    'Configuración de harnesses de agentes de IA (Claude Code, hooks y servidores MCP) operados de forma remota con Moshi sobre Tailscale y mosh, para lanzar y supervisar agentes desde el teléfono.',
 
   // Experience 1: Coderio
   [tokens.experienceSectionType.experiences[1].company]:
@@ -240,6 +242,10 @@ export const es = {
     'Uso de IA y modelos de lenguaje para analizar mis datos, detectar patrones y obtener recomendaciones accionables hacia mis metas personales.',
   [tokens.lifeProjectsSectionType.experiences[3].tasks[2]]:
     'Construcción de dashboards y automatizaciones que centralizan la información y miden el progreso de forma continua.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[3]]:
+    'Homelab propio para agentes de IA: Moshi en el iPhone conectado por Tailscale y mosh a servidores WSL2 con Claude Code, herdr y moshi-hook, para controlar sesiones de agentes desde cualquier lugar.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[4]]:
+    'Configuración y ejecución de modelos Qwen en local con Ollama, para experimentar con LLMs privados, sin depender de la nube.',
 
   // Contact Section
   [tokens.contactSectionType.title]: 'pongámonos en contacto',
@@ -324,18 +330,21 @@ export const es = {
     'Agentes con IA para tareas concretas',
   [tokens.servicesSectionType.items.automation.bullets[3]]:
     'Reportes y alertas automáticas',
-  [tokens.servicesSectionType.caseEyebrow]: 'Caso real',
-  [tokens.servicesSectionType.caseTitle]: 'Tomás Mercado — Personal Trainer',
-  [tokens.servicesSectionType.caseDescription]:
+  [tokens.servicesSectionType.caseEyebrow]: 'Casos reales',
+  [tokens.servicesSectionType.cases[0].title]: 'Tomás Mercado — Personal Trainer',
+  [tokens.servicesSectionType.cases[0].description]:
     'Del Instagram a una web propia: landing bilingüe, catálogo de asesorías editable y un panel mobile para gestionar cada solicitud.',
-  [tokens.servicesSectionType.caseBullets[0]]:
-    'Landing ES / EN con identidad propia',
-  [tokens.servicesSectionType.caseBullets[1]]:
-    'Panel admin para cargar asesorías y precios',
-  [tokens.servicesSectionType.caseBullets[2]]:
-    'Solicitudes con estados y seguimientos',
-  [tokens.servicesSectionType.caseBullets[3]]:
-    'Manual de usuario para manejarlo solo',
+  [tokens.servicesSectionType.cases[0].bullets[0]]: 'Landing ES / EN con identidad propia',
+  [tokens.servicesSectionType.cases[0].bullets[1]]: 'Panel admin para cargar asesorías y precios',
+  [tokens.servicesSectionType.cases[0].bullets[2]]: 'Solicitudes con estados y seguimientos',
+  [tokens.servicesSectionType.cases[0].bullets[3]]: 'Manual de usuario para manejarlo solo',
+  [tokens.servicesSectionType.cases[1].title]: 'Multirubro Anisacate — Tienda online',
+  [tokens.servicesSectionType.cases[1].description]:
+    'Un comercio de barrio con catálogo online: los clientes arman su pedido y lo cierran por WhatsApp, y productos y precios se gestionan desde un panel propio.',
+  [tokens.servicesSectionType.cases[1].bullets[0]]: 'Catálogo con ofertas y carrito de compras',
+  [tokens.servicesSectionType.cases[1].bullets[1]]: 'Pedido enviado directo por WhatsApp',
+  [tokens.servicesSectionType.cases[1].bullets[2]]: 'Panel admin con precios y margen global',
+  [tokens.servicesSectionType.cases[1].bullets[3]]: 'Carga del catálogo automatizada',
   [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
   [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
   [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',
