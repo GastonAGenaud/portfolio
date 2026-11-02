@@ -109,7 +109,21 @@ const Gallery = () => {
                   : `${placeholderRatio[photo.span]} border border-white/[0.06]`
               }`}
             >
-              {photo.src ? (
+              {photo.gridVideo ? (
+                <video
+                  src={photo.gridVideo}
+                  poster={photo.src}
+                  width={photo.w}
+                  height={photo.h}
+                  aria-label={photo.alt}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ) : photo.src ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={photo.src}
@@ -156,17 +170,35 @@ const Gallery = () => {
                 >
                   <Icon icon="tabler:chevron-left" width="36" height="36" />
                 </button>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <motion.img
-                  key={real[active].id}
-                  src={real[active].full}
-                  alt={real[active].alt}
-                  className="max-h-[85vh] max-w-[90vw] object-contain"
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={(e) => e.stopPropagation()}
-                />
+                {real[active].fullVideo ? (
+                  <motion.video
+                    key={real[active].id}
+                    src={real[active].fullVideo}
+                    poster={real[active].src}
+                    aria-label={real[active].alt}
+                    autoPlay
+                    controls
+                    loop
+                    playsInline
+                    className="max-h-[85vh] max-w-[90vw] object-contain"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <motion.img
+                    key={real[active].id}
+                    src={real[active].full}
+                    alt={real[active].alt}
+                    className="max-h-[85vh] max-w-[90vw] object-contain"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                )}
                 <button
                   className="absolute right-3 text-white/60 transition-colors hover:text-white sm:right-6"
                   onClick={(e) => {

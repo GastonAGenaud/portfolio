@@ -13,6 +13,10 @@ export type CreativePhoto = {
   h: number;
   span: PhotoSpan;
   alt: string;
+  /** Muted loop shown in the grid; `src` is its poster. */
+  gridVideo?: string;
+  /** Video with sound shown in the lightbox instead of `full`. */
+  fullVideo?: string;
 };
 
 /** Full photography portfolio — opened from the gallery CTA. */
@@ -26,6 +30,17 @@ export const lightroomAlbumUrl =
  * To refresh: re-export from Lightroom and replace the files, keeping names.
  */
 export const creativePhotos: CreativePhoto[] = [
+  {
+    id: 'v01',
+    src: '/gallery/video/reel-01-poster.jpg',
+    full: '/gallery/video/reel-01-poster.jpg',
+    gridVideo: '/gallery/video/reel-01-grid.mp4',
+    fullVideo: '/gallery/video/reel-01.mp4',
+    w: 1080,
+    h: 1920,
+    span: 'tall',
+    alt: 'Video by Gaston Genaud',
+  },
   {
     id: 'p02',
     src: '/gallery/grid/02.jpg',
