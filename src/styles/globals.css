@@ -152,3 +152,20 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Firma: se dibuja de izquierda a derecha al entrar en pantalla */
+@keyframes sign-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@supports (animation-timeline: view()) {
+  .signature {
+    animation: sign-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 90%;
+  }
+}

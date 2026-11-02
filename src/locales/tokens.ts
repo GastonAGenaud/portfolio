@@ -325,6 +325,11 @@ export const tokens = {
     finalDescription: 'servicesSectionType.finalDescription',
     mailSubject: 'servicesSectionType.mailSubject',
     whatsappMessage: 'servicesSectionType.whatsappMessage',
+    prototypeEyebrow: 'servicesSectionType.prototypeEyebrow',
+    prototypeTitle: 'servicesSectionType.prototypeTitle',
+    prototypeDescription: 'servicesSectionType.prototypeDescription',
+    prototypeCta: 'servicesSectionType.prototypeCta',
+    prototypeWhatsappMessage: 'servicesSectionType.prototypeWhatsappMessage',
   },
   fitnessSectionType: {
     eyebrow: 'fitnessSectionType.eyebrow',

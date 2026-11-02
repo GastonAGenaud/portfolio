@@ -52,6 +52,9 @@ const ServicesHome = () => {
   const whatsapp = `${socialLinks.whatsapp}?text=${encodeURIComponent(
     t(t$.whatsappMessage)
   )}`;
+  const prototypeWhatsapp = `${socialLinks.whatsapp}?text=${encodeURIComponent(
+    t(t$.prototypeWhatsappMessage)
+  )}`;
 
   return (
     <div className="pb-24">
@@ -106,6 +109,34 @@ const ServicesHome = () => {
           </a>
         </motion.div>
       </section>
+
+      {/* Free prototype */}
+      <motion.section
+        {...fadeUp}
+        id="prototipo"
+        className="scroll-mt-24 rounded-3xl border border-accent/30 bg-bg-secondary p-8 sm:p-10"
+      >
+        <Eyebrow>{t(t$.prototypeEyebrow)}</Eyebrow>
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl font-bold tracking-tight text-dark-1 sm:text-4xl">
+              {t(t$.prototypeTitle)}
+            </h2>
+            <p className="mt-4 leading-relaxed text-text">
+              {t(t$.prototypeDescription)}
+            </p>
+          </div>
+          <a
+            href={prototypeWhatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg transition-transform hover:-translate-y-0.5"
+          >
+            <Icon icon="mdi:whatsapp" width="18" height="18" />
+            {t(t$.prototypeCta)}
+          </a>
+        </div>
+      </motion.section>
 
       {/* Services */}
       <section className="py-16">

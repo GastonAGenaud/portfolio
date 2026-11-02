@@ -463,4 +463,12 @@ export const en = {
   [tokens.servicesSectionType.mailSubject]: 'Services inquiry',
   [tokens.servicesSectionType.whatsappMessage]:
     "Hi Gaston! I saw your website and I'd like to ask about a project.",
+  [tokens.servicesSectionType.prototypeEyebrow]: 'Free · 14 days',
+  [tokens.servicesSectionType.prototypeTitle]:
+    'Try your portfolio or online store before you decide.',
+  [tokens.servicesSectionType.prototypeDescription]:
+    "I'll build you a free 14-day prototype so you can see your portfolio or online store working. Message me directly on WhatsApp and we'll get started.",
+  [tokens.servicesSectionType.prototypeCta]: 'I want my prototype',
+  [tokens.servicesSectionType.prototypeWhatsappMessage]:
+    "Hi Gaston! I'd like the free 14-day prototype for my portfolio or online store.",
 };

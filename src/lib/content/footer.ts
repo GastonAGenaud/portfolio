@@ -1,6 +1,6 @@
 import { FooterSectionType } from '@/lib/types/sections';
 
 export const footerSection: FooterSectionType = {
-  title: 'Built by Gaston Genaud',
+  title: 'Developed by',
   link: 'https://github.com/GastonAGenaud/portfolio',
 };

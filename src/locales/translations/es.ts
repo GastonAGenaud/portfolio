@@ -378,6 +378,14 @@ export const es = {
   [tokens.servicesSectionType.mailSubject]: 'Consulta por servicios',
   [tokens.servicesSectionType.whatsappMessage]:
     'Hola Gaston! Vi tu web y quiero consultarte por un proyecto.',
+  [tokens.servicesSectionType.prototypeEyebrow]: 'Sin costo · 14 días',
+  [tokens.servicesSectionType.prototypeTitle]:
+    'Probá tu portfolio o tienda online antes de decidir.',
+  [tokens.servicesSectionType.prototypeDescription]:
+    'Te creo un prototipo de 14 días sin costo, para que veas tu portfolio o tu tienda online funcionando. Escribime directo por WhatsApp y lo arrancamos.',
+  [tokens.servicesSectionType.prototypeCta]: 'Quiero mi prototipo',
+  [tokens.servicesSectionType.prototypeWhatsappMessage]:
+    'Hola Gaston! Quiero el prototipo sin costo de 14 días para mi portfolio o tienda online.',
   // Sección Fitness / Entrenamiento (Creative → Sport)
   [tokens.fitnessSectionType.eyebrow]: 'Cuerpo · Bitácora',
   [tokens.fitnessSectionType.title]: 'Transformación Atlética',
