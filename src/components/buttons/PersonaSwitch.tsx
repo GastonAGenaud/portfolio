@@ -71,6 +71,16 @@ const PersonaSwitch = ({ className = '' }: { className?: string }) => {
           </button>
         );
       })}
+      <a
+        href="https://www.gastongenaudfitness.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Gaston Genaud Fitness"
+        title="Gaston Genaud Fitness"
+        className="relative z-10 flex items-center rounded-full px-3 py-1.5 text-text transition-colors duration-300 hover:text-accent"
+      >
+        <Icon icon="ph:barbell-bold" width="15" height="15" />
+      </a>
     </div>
   );
 };
