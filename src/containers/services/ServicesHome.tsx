@@ -29,6 +29,18 @@ const cases = [
     alt: 'Multirubro Anisacate — tienda online',
     ...t$.cases[1],
   },
+  {
+    url: 'https://www.gastongenaudfitness.com',
+    image: '/services/gastongenaudfitness-hero.jpg',
+    alt: 'Gaston Genaud Fitness — asesorías online',
+    ...t$.cases[2],
+  },
+  {
+    url: 'https://academy-frontend-kappa.vercel.app',
+    image: '/services/virginia-academy-hero.jpg',
+    alt: 'Virginia Academy — plataforma de cursos',
+    ...t$.cases[3],
+  },
 ];
 
 const fadeUp = {
