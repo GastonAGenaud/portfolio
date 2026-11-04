@@ -15,6 +15,7 @@ import {
 
 import { fadeIn, slideIn } from '@/styles/animations';
 
+import { Icon } from '@iconify/react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { motion } from 'framer-motion';
@@ -108,8 +109,8 @@ const Navbar = () => {
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
 
   const windowWidth = useWindowWidth();
-  const md = getBreakpointsWidth('md');
-  const ANIMATION_DELAY = windowWidth <= md ? 0 : 0.8;
+  const lg = getBreakpointsWidth('lg');
+  const ANIMATION_DELAY = windowWidth <= lg ? 0 : 0.8;
 
   const { i18n, t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -137,7 +138,7 @@ const Navbar = () => {
     return cleanup;
   }, [navbarCollapsed]);
 
-  const showDevNav = isEngineer && (navbarCollapsed || windowWidth > md);
+  const showDevNav = isEngineer && (navbarCollapsed || windowWidth > lg);
 
   return (
     <motion.header
@@ -145,9 +146,9 @@ const Navbar = () => {
       initial="hidden"
       animate="show"
       id="navbar"
-      className="fixed inset-x-0 top-0 right-0 z-50 flex items-center justify-between px-4 py-4 duration-500 md:px-6 xl:px-12 backdrop-blur-lg"
+      className="fixed inset-x-0 top-0 right-0 z-50 flex items-center justify-between gap-2 px-3 min-[360px]:px-4 py-4 duration-500 md:px-6 xl:px-12 backdrop-blur-lg"
     >
-      <h1 className="relative text-2xl capitalize font-signature text-accent group top-1">
+      <h1 className="relative shrink-0 whitespace-nowrap text-base min-[360px]:text-xl sm:text-2xl capitalize font-signature text-accent group top-1">
         <Link href="/#hero" className="block">
           {author.name}
           <div className="absolute bottom-1.5 left-0 h-[1px] w-0 group-hover:w-full bg-accent duration-300"></div>
@@ -155,11 +156,11 @@ const Navbar = () => {
       </h1>
 
       {/* Right cluster */}
-      <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
+      <div className="flex min-w-0 items-center gap-1 min-[360px]:gap-1.5 sm:gap-3 xl:gap-4">
         {/* Developer nav links (engineer persona only) */}
         {showDevNav && (
-          <nav className="capitalize absolute text-sm duration-200 md:bg-transparent z-50 w-[90%] left-1/2 -translate-x-1/2 top-full h-max rounded-xl shadow-xl p-6 bg-bg-secondary md:block md:static md:w-auto md:left-auto md:translate-x-0 md:top-auto md:rounded-none md:shadow-none md:p-0 md:h-auto">
-            <ul className="flex flex-col items-stretch gap-3 list-style-none lg:gap-5 xl:gap-6 md:flex-row md:items-center">
+          <nav className="whitespace-nowrap capitalize absolute text-sm duration-200 lg:bg-transparent z-50 w-[90%] left-1/2 -translate-x-1/2 top-full h-max rounded-xl shadow-xl p-6 bg-bg-secondary lg:block lg:static lg:w-auto lg:left-auto lg:translate-x-0 lg:top-auto lg:rounded-none lg:shadow-none lg:p-0 lg:h-auto">
+            <ul className="flex flex-col items-stretch gap-3 list-style-none lg:gap-2 xl:gap-4 lg:flex-row lg:items-center">
               {navLinks.map(({ name, url }, i) => (
                 <NavItem
                   key={i}
@@ -172,7 +173,7 @@ const Navbar = () => {
                 </NavItem>
               ))}
 
-              <div className="flex items-center justify-between gap-5 xl:gap-6">
+              <div className="flex items-center justify-between gap-5 lg:gap-3 xl:gap-4">
                 {cta && (
                   <Button
                     type="link"
@@ -212,8 +213,16 @@ const Navbar = () => {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             onClick={handleClick}
+            className="!px-1.5 min-[360px]:!px-2 2xl:!px-4"
           >
-            {t('Language')}
+            <Icon
+              icon="ph:globe-bold"
+              width="18"
+              height="18"
+              className="2xl:hidden"
+              aria-label={t('Language')}
+            />
+            <span className="hidden 2xl:inline">{t('Language')}</span>
           </Button>
           <Menu
             id="language-menu"
@@ -240,7 +249,7 @@ const Navbar = () => {
               setNavbarCollapsed((prev) => !prev);
             }}
             navbarCollapsed={navbarCollapsed}
-            className="md:hidden"
+            className="shrink-0 lg:hidden"
           />
         )}
       </div>
