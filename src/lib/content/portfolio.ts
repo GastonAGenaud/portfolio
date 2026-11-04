@@ -20,9 +20,9 @@ export const author = {
 };
 
 export const seoData = {
-  title: 'Gaston Genaud | SDET & DevOps Engineer',
+  title: 'Gaston Genaud | SDET, DevOps Engineer & Photographer',
   description:
-    'Gaston Genaud is a SDET who specializes in building and designing exceptional automation projects.',
+    'Gaston Genaud is a SDET, DevOps engineer and photographer who specializes in building and designing exceptional automation projects.',
   author: author.name,
   image: 'https://gastongenaud.com/og.png?v=2',
   url: 'https://gastongenaud.com/',
@@ -34,5 +34,8 @@ export const seoData = {
     'Portfolio',
     'Gaston Portfolio ',
     'Gaston Alejandro Genaud Portfolio',
+    'SDET',
+    'DevOps',
+    'Photographer',
   ],
 };
