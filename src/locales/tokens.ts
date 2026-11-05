@@ -51,6 +51,13 @@ export const tokens = {
     intro: 'aboutSectionType.intro',
     history: 'aboutSectionType.history',
     focus: 'aboutSectionType.focus',
+    tools: 'aboutSectionType.tools',
+    stats: {
+      years: 'aboutSectionType.stats.years',
+      clients: 'aboutSectionType.stats.clients',
+      sectors: 'aboutSectionType.stats.sectors',
+      location: 'aboutSectionType.stats.location',
+    },
   },
   skillsSectionType: {
     title: 'skillsSectionType.title',

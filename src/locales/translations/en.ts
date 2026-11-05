@@ -58,6 +58,12 @@ export const en = {
     
     'Today I lead QA strategy for several clients as a contractor: test execution on Kubernetes, more reliable CI/CD pipelines and AI agents (Claude Code, MCP) to design and maintain tests faster.',
 
+  [tokens.aboutSectionType.tools]: 'Tools & frameworks',
+  [tokens.aboutSectionType.stats.years]: 'years in QA & DevOps',
+  [tokens.aboutSectionType.stats.clients]: 'clients and companies',
+  [tokens.aboutSectionType.stats.sectors]: 'industries',
+  [tokens.aboutSectionType.stats.location]: 'Buenos Aires, Argentina',
+
   // Skills Section
   [tokens.skillsSectionType.title]: 'what i do',
   [tokens.skillsSectionType.skill1.title]: 'Software Development in Testing',
