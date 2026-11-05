@@ -12,7 +12,6 @@ const Player = dynamic(
 type Props = {
   src: string;
   alt: string;
-  caption?: string;
   lottie?: string;
 };
 
@@ -22,12 +21,7 @@ const spring = { stiffness: 150, damping: 20 };
  * Portrait card: tilts toward the cursor, sits on a soft accent glow, keeps
  * the offset accent frame and floats a small Lottie badge over one corner.
  */
-const AuthorImage = ({
-  src,
-  alt,
-  caption,
-  lottie = '/lotties/coding.json',
-}: Props) => {
+const AuthorImage = ({ src, alt, lottie = '/lotties/coding.json' }: Props) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), spring);
@@ -73,12 +67,6 @@ const AuthorImage = ({
             className="aspect-square w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/0 to-transparent" />
-          {caption && (
-            <p className="absolute bottom-3 right-3 max-w-[80%] rounded-full bg-slate-900/60 px-3 py-1.5 font-mono text-[11px] text-slate-100 backdrop-blur-sm sm:text-xs">
-              <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-accent align-middle" />
-              {caption}
-            </p>
-          )}
         </div>
 
         <motion.div

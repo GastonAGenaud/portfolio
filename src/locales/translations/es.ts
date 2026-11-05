@@ -62,7 +62,6 @@ export const es = {
   [tokens.aboutSectionType.stats.years]: 'años en QA y DevOps',
   [tokens.aboutSectionType.stats.clients]: 'clientes y empresas',
   [tokens.aboutSectionType.stats.sectors]: 'industrias',
-  [tokens.aboutSectionType.stats.location]: 'Buenos Aires, Argentina',
 
   // Skills Section
   [tokens.skillsSectionType.title]: 'lo que hago',

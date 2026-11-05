@@ -46,41 +46,48 @@ const stagger: Variants = {
   show: { transition: { staggerChildren: 0.04, delayChildren: 0.1 } },
 };
 
-const chip: Variants = {
-  hidden: { opacity: 0, y: 8, scale: 0.95 },
+const item: Variants = {
+  hidden: { opacity: 0, x: -8 },
   show: {
     opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { type: 'spring', stiffness: 300, damping: 20 },
+    x: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 22 },
   },
 };
 
-const chipClass =
-  'inline-flex items-center gap-1.5 rounded-full border border-dark-3/50 bg-bg-secondary px-3 py-1 font-mono text-xs text-dark-2 transition-colors duration-200 hover:border-accent hover:text-accent';
-
-const Chips = ({ items }: { items: { name: string; url?: string }[] }) => (
+/** The site's ▹ list, in columns, each entry sliding in on scroll. */
+const ItemGrid = ({
+  items,
+  columns = 'grid-cols-2 sm:grid-cols-3',
+}: {
+  items: { name: string; url?: string }[];
+  columns?: string;
+}) => (
   <motion.ul
     variants={stagger}
     initial="hidden"
     whileInView="show"
     viewport={{ once: true, margin: '-40px' }}
-    className="flex flex-wrap gap-2"
+    className={`grid gap-x-6 gap-y-1.5 text-sm ${columns}`}
   >
     {items.map(({ name, url }) => (
-      <motion.li key={name} variants={chip}>
+      <motion.li
+        key={name}
+        variants={item}
+        className="flex before:mr-3 before:block before:text-accent before:content-['▹']"
+      >
         {url ? (
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className={chipClass}
+            className="group relative text-accent"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             {name}
+            <span className="absolute -bottom-0.5 left-0 h-[1px] w-0 bg-accent duration-300 group-hover:w-full group-focus:w-full" />
           </a>
         ) : (
-          <span className={chipClass}>{name}</span>
+          name
         )}
       </motion.li>
     ))}
@@ -112,16 +119,12 @@ const Stat = ({
   }, [inView, value]);
 
   return (
-    <motion.div
-      ref={ref}
-      variants={chip}
-      className="rounded-xl border border-dark-3/40 bg-bg-secondary px-4 py-3"
-    >
-      <p className="text-2xl font-bold tracking-tight text-accent sm:text-3xl">
+    <motion.div ref={ref} variants={item} className="flex items-baseline gap-2">
+      <span className="text-3xl font-bold tracking-tight text-accent sm:text-4xl">
         {n}
         {suffix}
-      </p>
-      <p className="mt-0.5 text-xs leading-snug text-dark-2">{label}</p>
+      </span>
+      <span className="font-mono text-xs text-dark-2">{label}</span>
     </motion.div>
   );
 };
@@ -154,7 +157,7 @@ const About = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-40px' }}
-            className="grid grid-cols-3 gap-3"
+            className="flex flex-wrap gap-x-10 gap-y-3"
           >
             <Stat
               value={8}
@@ -170,33 +173,28 @@ const About = () => {
           </motion.div>
 
           <div className="space-y-3">
-            <p className="text-sm text-dark-2">
-              {t(tokens.aboutSectionType.history)}
-            </p>
-            <Chips items={organizations} />
+            <p>{t(tokens.aboutSectionType.history)}</p>
+            <ItemGrid
+              items={organizations}
+              columns="grid-cols-1 sm:grid-cols-2"
+            />
           </div>
 
           {list && (
             <div className="space-y-3">
-              <p className="text-sm text-dark-2">{list.title}</p>
-              <Chips items={list.items.map((name) => ({ name }))} />
+              <p>{list.title}</p>
+              <ItemGrid items={list.items.map((name) => ({ name }))} />
             </div>
           )}
 
           <div className="space-y-3">
-            <p className="text-sm text-dark-2">
-              {t(tokens.aboutSectionType.tools)}
-            </p>
-            <Chips items={tools.map((name) => ({ name }))} />
+            <p>{t(tokens.aboutSectionType.tools)}</p>
+            <ItemGrid items={tools.map((name) => ({ name }))} />
           </div>
         </div>
 
         <div className="order-first pt-6 lg:order-none lg:pt-10">
-          <AuthorImage
-            src={img}
-            alt={author.name}
-            caption={t(tokens.aboutSectionType.stats.location)}
-          />
+          <AuthorImage src={img} alt={author.name} />
         </div>
       </main>
     </Wrapper>
