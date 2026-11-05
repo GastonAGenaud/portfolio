@@ -76,7 +76,7 @@ const TabList = ({ experiences }: Props) => {
                   @{company}
                 </Link>
               ) : (
-                <span className="text-accent">{company}</span>
+                <span className="text-accent">· {company}</span>
               )}
             </h3>
             <p className="font-mono text-xs capitalize">
@@ -84,7 +84,7 @@ const TabList = ({ experiences }: Props) => {
             </p>
           </div>
 
-          <ul className="space-y-2">
+          <ul className="space-y-3 leading-relaxed">
             {tasks.map((task) => (
               <ListItem key={getId()}>{task}</ListItem>
             ))}

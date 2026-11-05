@@ -18,11 +18,12 @@ export const en = {
   [tokens.heroSectionType.subtitle]: 'Hello, I am',
   [tokens.heroSectionType.title]: 'Gaston Genaud.',
   [tokens.heroSectionType.tagline]:
-    'DevOps and Testing: The perfect blend for software innovation.',
+    'Quality, CI/CD and infrastructure that scale, with AI in the loop.',
   [tokens.heroSectionType.description]:
-    'As a Sr QA Automation Engineer and DevOps Engineer, I specialize in creating robust, scalable, and efficient software solutions. My expertise includes AWS for reliable infrastructure, as well as languages such as JavaScript, TypeScript, and Python to optimize automation and backend development. With a strong focus on quality and innovation, I help each project reach high standards of excellence, both in automated testing and DevOps practices.',
+    
+    'Senior SDET, DevOps Engineer and QA Lead. 8+ years automating tests and CI/CD in healthcare, banking, e-commerce and gaming. I set QA strategy, mentor teams and run test execution on Kubernetes over AWS. I work with AI agents every day.',
   [tokens.heroSectionType.specialText]:
-    'I am ready to take on new challenges and opportunities that allow me to continue growing in test automation and infrastructure.',
+    'Open to QA Lead, SDET or DevOps roles where quality and AI-driven automation are part of the product.',
   [tokens.heroSectionType.ctaTitle]: 'View My Resume',
 
   // About Section (Skills list)
@@ -54,7 +55,8 @@ export const en = {
   [tokens.aboutSectionType.history]:
     "Throughout my career, I've had the privilege to collaborate with organizations such as",
   [tokens.aboutSectionType.focus]:
-    "Currently, I'm focusing on strengthening my QA Automation skills and deepening my knowledge of AWS to provide even more robust and efficient solutions.",
+    
+    'Today I lead QA strategy for several clients as a contractor: test execution on Kubernetes, more reliable CI/CD pipelines and AI agents (Claude Code, MCP) to design and maintain tests faster.',
 
   // Skills Section
   [tokens.skillsSectionType.title]: 'what i do',
@@ -83,23 +85,31 @@ export const en = {
   [tokens.experienceSectionType.title]: "where i've worked",
 
   // Experience 0: Darwoft
-  [tokens.experienceSectionType.experiences[0].company]: 'Darwoft',
+  [tokens.experienceSectionType.experiences[0].company]: 
+    'Contractor',
   [tokens.experienceSectionType.experiences[0].role]:
-    'Software Developer Engineer in Tests & Tech Lead / DevOps Engineer',
+    
+    'Senior SDET, DevOps Engineer & QA Lead',
   [tokens.experienceSectionType.experiences[0].started]: 'August 2022',
-  [tokens.experienceSectionType.experiences[0].upto]: 'NaN',
+  [tokens.experienceSectionType.experiences[0].upto]: 'Present',
   [tokens.experienceSectionType.experiences[0].tasks[0]]:
-    'Mobile automation with Appium, Python, Pytest, and Behave, optimizing test coverage in mobile environments.',
+    
+    'QA Lead for several clients: test strategy, CI/CD standards and mentoring of QA engineers.',
   [tokens.experienceSectionType.experiences[0].tasks[1]]:
-    'Continuous integration with CircleCI and parallel test execution with CypressIO, improving pipeline efficiency.',
+    
+    'Moved end-to-end tests to Kubernetes with Testkube: scalable parallel execution and more reliable CI.',
   [tokens.experienceSectionType.experiences[0].tasks[2]]:
-    'Load testing with Artillery and JMeter, ensuring high-performance under heavy demand.',
+    
+    'Restored CI/CD reliability on GitHub Actions: fixed a Node.js toolchain regression that was blocking pipelines for hours.',
   [tokens.experienceSectionType.experiences[0].tasks[3]]:
-    'Leading a multidisciplinary team, fostering collaboration and internal talent growth.',
+    
+    'Web and API automation (Playwright, Nx, TypeScript) for an AI-powered contracts product, with SSO/SCIM coverage (Entra ID).',
   [tokens.experienceSectionType.experiences[0].tasks[4]]:
-    'Implementing Lambdas (Python), managing DynamoDB, RDS, configuring CloudWatch, and using Taurus for AWS load testing.',
+    
+    'Mobile and performance automation for banking and e-commerce: dockerized Android emulators and login performance.',
   [tokens.experienceSectionType.experiences[0].tasks[5]]:
-    'Configuring AI agent harnesses (Claude Code, hooks and MCP servers) operated remotely with Moshi over Tailscale and mosh, to launch and supervise agents from the phone.',
+    
+    'AI agents (Claude Code, hooks, MCP servers) launched and supervised from my phone with Moshi over Tailscale and mosh.',
 
   // Experience 1: Coderio
   [tokens.experienceSectionType.experiences[1].company]:

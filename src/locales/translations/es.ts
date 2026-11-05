@@ -18,11 +18,12 @@ export const es = {
   [tokens.heroSectionType.subtitle]: 'Hola, soy',
   [tokens.heroSectionType.title]: 'Gaston Genaud.',
   [tokens.heroSectionType.tagline]:
-    'DevOps y Testing: Una fusión perfecta para la innovación en software.',
+    'Calidad, CI/CD e infraestructura que escalan, con IA en el flujo.',
   [tokens.heroSectionType.description]:
-    'Como SR QA Automation Engineer y DevOps Engineer, me dedico a crear soluciones de software sólidas, escalables y eficientes. Mi experiencia abarca AWS para una infraestructura confiable, además de lenguajes como JavaScript, TypeScript y Python para optimizar la automatización y el desarrollo backend. Con un profundo enfoque en la calidad y la innovación, contribuyo a que cada proyecto alcance estándares de excelencia, tanto en pruebas automatizadas como en prácticas DevOps.',
+    
+    'Senior SDET, DevOps Engineer y QA Lead. Más de 8 años automatizando pruebas y CI/CD en salud, banca, e-commerce y gaming. Defino la estrategia de QA, mentoreo equipos y llevo la ejecución de pruebas a Kubernetes sobre AWS. Trabajo con agentes de IA todos los días.',
   [tokens.heroSectionType.specialText]:
-    'Estoy listo para asumir nuevos retos y oportunidades que me permitan seguir creciendo en el ámbito de la automatización de pruebas e infraestructura.',
+    'Abierto a roles de QA Lead, SDET o DevOps donde la calidad y la automatización con IA sean parte del producto.',
   [tokens.heroSectionType.ctaTitle]: 'Ver Mi Currículum',
 
   // About Section
@@ -54,7 +55,8 @@ export const es = {
   [tokens.aboutSectionType.history]:
     'A lo largo de mi carrera, he tenido el privilegio de colaborar con organizaciones como',
   [tokens.aboutSectionType.focus]:
-    'Actualmente, me enfoco en fortalecer mis habilidades en QA Automation y en profundizar el uso de AWS, para ofrecer soluciones aún más robustas y eficientes.',
+    
+    'Hoy lidero la estrategia de QA de varios clientes como contractor: ejecución de pruebas sobre Kubernetes, pipelines de CI/CD más confiables y agentes de IA (Claude Code, MCP) para diseñar y mantener pruebas más rápido.',
 
   // Skills Section
   [tokens.skillsSectionType.title]: 'lo que hago',
@@ -83,23 +85,31 @@ export const es = {
   [tokens.experienceSectionType.title]: 'donde he trabajado',
 
   // Experience 0: Darwoft
-  [tokens.experienceSectionType.experiences[0].company]: 'Darwoft',
+  [tokens.experienceSectionType.experiences[0].company]: 
+    'Contractor',
   [tokens.experienceSectionType.experiences[0].role]:
-    'Software Developer Engineer in Tests & Tech Lead / DevOps Engineer',
+    
+    'Senior SDET, DevOps Engineer & QA Lead',
   [tokens.experienceSectionType.experiences[0].started]: 'Agosto 2022',
-  [tokens.experienceSectionType.experiences[0].upto]: 'NaN',
+  [tokens.experienceSectionType.experiences[0].upto]: 'Actualidad',
   [tokens.experienceSectionType.experiences[0].tasks[0]]:
-    'Automatización móvil con Appium, Python, Pytest y Behave, optimizando la cobertura de pruebas en entornos móviles.',
+    
+    'QA Lead para varios clientes: estrategia de pruebas, estándares de CI/CD y mentoría de ingenieros QA.',
   [tokens.experienceSectionType.experiences[0].tasks[1]]:
-    'Integración continua con CircleCI y ejecución de pruebas en paralelo con CypressIO, mejorando la eficiencia del pipeline.',
+    
+    'Migré las pruebas end-to-end a Kubernetes con Testkube: ejecución paralela escalable y CI más confiable.',
   [tokens.experienceSectionType.experiences[0].tasks[2]]:
-    'Pruebas de carga con Artillery y JMeter, garantizando el rendimiento bajo alta demanda.',
+    
+    'Recuperé la confiabilidad de CI/CD en GitHub Actions: resolví una regresión del toolchain de Node.js que bloqueaba pipelines por horas.',
   [tokens.experienceSectionType.experiences[0].tasks[3]]:
-    'Liderazgo de un equipo multidisciplinario, impulsando la colaboración y el crecimiento del talento interno.',
+    
+    'Automatización web y API (Playwright, Nx, TypeScript) para un producto de contratos con IA, con cobertura de SSO/SCIM (Entra ID).',
   [tokens.experienceSectionType.experiences[0].tasks[4]]:
-    'Implementación de Lambdas (Python), gestión de DynamoDB, RDS, configuración de CloudWatch y uso de Taurus para pruebas de carga en AWS.',
+    
+    'Automatización mobile y de performance para banca y e-commerce: emuladores Android dockerizados y performance de login.',
   [tokens.experienceSectionType.experiences[0].tasks[5]]:
-    'Configuración de harnesses de agentes de IA (Claude Code, hooks y servidores MCP) operados de forma remota con Moshi sobre Tailscale y mosh, para lanzar y supervisar agentes desde el teléfono.',
+    
+    'Agentes de IA (Claude Code, hooks, servidores MCP) lanzados y supervisados desde el teléfono con Moshi sobre Tailscale y mosh.',
 
   // Experience 1: Coderio
   [tokens.experienceSectionType.experiences[1].company]:

@@ -13,7 +13,7 @@ export const useExperienceSection = (): ExperienceSectionType => {
     experiences: [
       {
         company: t(tokens.experienceSectionType.experiences[0].company),
-        companyUrl: 'https://www.darwoft.com/',
+        companyUrl: '',
         role: t(tokens.experienceSectionType.experiences[0].role),
         started: t(tokens.experienceSectionType.experiences[0].started),
         upto: t(tokens.experienceSectionType.experiences[0].upto),
