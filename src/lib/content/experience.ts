@@ -13,7 +13,7 @@ export const useExperienceSection = (): ExperienceSectionType => {
     experiences: [
       {
         company: t(tokens.experienceSectionType.experiences[0].company),
-        companyUrl: 'https://www.darwoft.com/',
+        companyUrl: '',
         role: t(tokens.experienceSectionType.experiences[0].role),
         started: t(tokens.experienceSectionType.experiences[0].started),
         upto: t(tokens.experienceSectionType.experiences[0].upto),
@@ -23,6 +23,7 @@ export const useExperienceSection = (): ExperienceSectionType => {
           t(tokens.experienceSectionType.experiences[0].tasks[2]),
           t(tokens.experienceSectionType.experiences[0].tasks[3]),
           t(tokens.experienceSectionType.experiences[0].tasks[4]),
+          t(tokens.experienceSectionType.experiences[0].tasks[5]),
         ],
       },
       {

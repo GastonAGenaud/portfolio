@@ -10,6 +10,7 @@ export const en = {
   [tokens.header.experience]: 'experience',
   [tokens.header.projects]: 'projects',
   [tokens.header.lifeProjects]: 'life projects',
+  [tokens.header.publications]: 'guides',
   [tokens.header.contact]: 'contact',
   [tokens.header.resume]: 'Resume',
 
@@ -17,11 +18,12 @@ export const en = {
   [tokens.heroSectionType.subtitle]: 'Hello, I am',
   [tokens.heroSectionType.title]: 'Gaston Genaud.',
   [tokens.heroSectionType.tagline]:
-    'DevOps and Testing: The perfect blend for software innovation.',
+    'Quality, CI/CD and infrastructure that scale, with AI in the loop.',
   [tokens.heroSectionType.description]:
-    'As a Sr QA Automation Engineer and DevOps Engineer, I specialize in creating robust, scalable, and efficient software solutions. My expertise includes AWS for reliable infrastructure, as well as languages such as JavaScript, TypeScript, and Python to optimize automation and backend development. With a strong focus on quality and innovation, I help each project reach high standards of excellence, both in automated testing and DevOps practices.',
+    
+    'Senior SDET, DevOps Engineer and QA Lead. 8+ years automating tests and CI/CD in healthcare, banking, e-commerce and gaming. I set QA strategy, mentor teams and run test execution on Kubernetes over AWS. I work with AI agents every day.',
   [tokens.heroSectionType.specialText]:
-    'I am ready to take on new challenges and opportunities that allow me to continue growing in test automation and infrastructure.',
+    'Open to QA Lead, SDET or DevOps roles where quality and AI-driven automation are part of the product.',
   [tokens.heroSectionType.ctaTitle]: 'View My Resume',
 
   // About Section (Skills list)
@@ -53,7 +55,13 @@ export const en = {
   [tokens.aboutSectionType.history]:
     "Throughout my career, I've had the privilege to collaborate with organizations such as",
   [tokens.aboutSectionType.focus]:
-    "Currently, I'm focusing on strengthening my QA Automation skills and deepening my knowledge of AWS to provide even more robust and efficient solutions.",
+    
+    'Today I lead QA strategy for several clients as a contractor: test execution on Kubernetes, more reliable CI/CD pipelines and AI agents (Claude Code, MCP) to design and maintain tests faster.',
+
+  [tokens.aboutSectionType.tools]: 'Tools & frameworks',
+  [tokens.aboutSectionType.stats.years]: 'years in QA & DevOps',
+  [tokens.aboutSectionType.stats.clients]: 'clients and companies',
+  [tokens.aboutSectionType.stats.sectors]: 'industries',
 
   // Skills Section
   [tokens.skillsSectionType.title]: 'what i do',
@@ -82,21 +90,31 @@ export const en = {
   [tokens.experienceSectionType.title]: "where i've worked",
 
   // Experience 0: Darwoft
-  [tokens.experienceSectionType.experiences[0].company]: 'Darwoft',
+  [tokens.experienceSectionType.experiences[0].company]: 
+    'Contractor',
   [tokens.experienceSectionType.experiences[0].role]:
-    'Software Developer Engineer in Tests & Tech Lead / DevOps Engineer',
+    
+    'Senior SDET, DevOps Engineer & QA Lead',
   [tokens.experienceSectionType.experiences[0].started]: 'August 2022',
-  [tokens.experienceSectionType.experiences[0].upto]: 'NaN',
+  [tokens.experienceSectionType.experiences[0].upto]: 'Present',
   [tokens.experienceSectionType.experiences[0].tasks[0]]:
-    'Mobile automation with Appium, Python, Pytest, and Behave, optimizing test coverage in mobile environments.',
+    
+    'QA Lead for several clients: test strategy, CI/CD standards and mentoring of QA engineers.',
   [tokens.experienceSectionType.experiences[0].tasks[1]]:
-    'Continuous integration with CircleCI and parallel test execution with CypressIO, improving pipeline efficiency.',
+    
+    'Moved end-to-end tests to Kubernetes with Testkube: scalable parallel execution and more reliable CI.',
   [tokens.experienceSectionType.experiences[0].tasks[2]]:
-    'Load testing with Artillery and JMeter, ensuring high-performance under heavy demand.',
+    
+    'Restored CI/CD reliability on GitHub Actions: fixed a Node.js toolchain regression that was blocking pipelines for hours.',
   [tokens.experienceSectionType.experiences[0].tasks[3]]:
-    'Leading a multidisciplinary team, fostering collaboration and internal talent growth.',
+    
+    'Web and API automation (Playwright, Nx, TypeScript) for an AI-powered contracts product, with SSO/SCIM coverage (Entra ID).',
   [tokens.experienceSectionType.experiences[0].tasks[4]]:
-    'Implementing Lambdas (Python), managing DynamoDB, RDS, configuring CloudWatch, and using Taurus for AWS load testing.',
+    
+    'Mobile and performance automation for banking and e-commerce: dockerized Android emulators and login performance.',
+  [tokens.experienceSectionType.experiences[0].tasks[5]]:
+    
+    'AI agents (Claude Code, hooks, MCP servers) launched and supervised from my phone with Moshi over Tailscale and mosh.',
 
   // Experience 1: Coderio
   [tokens.experienceSectionType.experiences[1].company]:
@@ -240,6 +258,10 @@ export const en = {
     'Using AI and language models to analyze my data, surface patterns, and get actionable recommendations toward my personal goals.',
   [tokens.lifeProjectsSectionType.experiences[3].tasks[2]]:
     'Creating dashboards and automations that centralize the information and continuously measure progress.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[3]]:
+    'Personal AI-agent homelab: Moshi on the iPhone connected through Tailscale and mosh to WSL2 servers running Claude Code, herdr and moshi-hook, to control agent sessions from anywhere.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[4]]:
+    'Setting up and running Qwen models locally with Ollama, to experiment with private LLMs without relying on the cloud.',
 
   // Contact Section
   [tokens.contactSectionType.title]: "let's get in touch",
@@ -251,6 +273,14 @@ export const en = {
   [tokens.contactSectionType.ctaTitle]: 'Say Hello',
 
   // Courses Section
+  // Publications
+  [tokens.publicationsSectionType.title]: 'Guides & publications',
+  [tokens.publicationsSectionType.subtitle]: 'Things I built, explained step by step.',
+  [tokens.publicationsSectionType.read]: 'Read the guide',
+  [tokens.publicationsSectionType.minutes]: 'min read',
+  [tokens.publicationsSectionType.back]: 'Back',
+  [tokens.publicationsSectionType.notFound]: 'That publication does not exist.',
+
   [tokens.coursesSectionType.title]: 'Courses',
   [tokens.coursesSectionType.subtitle]: 'Projects',
   [tokens.coursesSectionType.paragraphs[0]]:
@@ -363,4 +393,111 @@ export const en = {
   [tokens.fitnessSectionType.coach.secondaryLabel]: 'Early-stage support',
   [tokens.fitnessSectionType.coach.secondaryThanks]:
     'And thanks to Matías Rosakesque for the training support and padel coaching in the early days.',
+
+  // Services (third persona in the switch)
+  [tokens.servicesSectionType.switchLabel]: 'Services',
+  [tokens.servicesSectionType.eyebrow]:
+    'Services · Websites · Ads · Automation',
+  [tokens.servicesSectionType.title]: 'Your brand online,',
+  [tokens.servicesSectionType.titleAccent]: 'working for you.',
+  [tokens.servicesSectionType.intro]:
+    'I design and build personal websites, plan the ad strategy that fills them with leads, and automate the repetitive work so you can focus on yours. With the same engineering I bring to enterprise projects.',
+  [tokens.servicesSectionType.ctaPrimary]: 'Tell me about your project',
+  [tokens.servicesSectionType.ctaSecondary]: 'See a real case',
+  [tokens.servicesSectionType.offerEyebrow]: 'What I do',
+  [tokens.servicesSectionType.offerTitle]:
+    'Three services, one goal: your growth.',
+  [tokens.servicesSectionType.items.web.title]: 'Personal websites',
+  [tokens.servicesSectionType.items.web.description]:
+    'Your professional site, custom-built, with your own admin panel so you never depend on anyone to update it.',
+  [tokens.servicesSectionType.items.web.bullets[0]]:
+    'Custom, mobile-first design',
+  [tokens.servicesSectionType.items.web.bullets[1]]:
+    'Admin panel for your services',
+  [tokens.servicesSectionType.items.web.bullets[2]]:
+    'Contact form and lead management',
+  [tokens.servicesSectionType.items.web.bullets[3]]:
+    'Domain, SEO and ES / EN versions',
+  [tokens.servicesSectionType.items.ads.title]: 'Ad strategy',
+  [tokens.servicesSectionType.items.ads.description]:
+    'Campaigns built to turn visits into clients, measured end to end.',
+  [tokens.servicesSectionType.items.ads.bullets[0]]:
+    'Meta Ads (Instagram / Facebook) and Google Ads',
+  [tokens.servicesSectionType.items.ads.bullets[1]]:
+    'Audience, funnel and messaging per goal',
+  [tokens.servicesSectionType.items.ads.bullets[2]]:
+    'Pixel, events and conversions tracked right',
+  [tokens.servicesSectionType.items.ads.bullets[3]]: 'Clear results reporting',
+  [tokens.servicesSectionType.items.automation.title]: 'Custom automation',
+  [tokens.servicesSectionType.items.automation.description]:
+    'Solutions that do the repetitive work for you: fewer manual tasks, more time.',
+  [tokens.servicesSectionType.items.automation.bullets[0]]:
+    'Client replies and follow-ups',
+  [tokens.servicesSectionType.items.automation.bullets[1]]:
+    'Integrations between your tools',
+  [tokens.servicesSectionType.items.automation.bullets[2]]:
+    'AI agents for specific tasks',
+  [tokens.servicesSectionType.items.automation.bullets[3]]:
+    'Automatic reports and alerts',
+  [tokens.servicesSectionType.caseEyebrow]: 'Real cases',
+  [tokens.servicesSectionType.cases[0].title]: 'Tomás Mercado — Personal Trainer',
+  [tokens.servicesSectionType.cases[0].description]:
+    'From Instagram to a site of his own: bilingual landing, editable coaching catalog and a mobile panel to manage every request.',
+  [tokens.servicesSectionType.cases[0].bullets[0]]: 'ES / EN landing with its own identity',
+  [tokens.servicesSectionType.cases[0].bullets[1]]: 'Admin panel to manage plans and prices',
+  [tokens.servicesSectionType.cases[0].bullets[2]]: 'Requests with statuses and follow-ups',
+  [tokens.servicesSectionType.cases[0].bullets[3]]: 'User manual to run it on his own',
+  [tokens.servicesSectionType.cases[1].title]: 'Multirubro Anisacate — Online store',
+  [tokens.servicesSectionType.cases[1].description]:
+    'A neighborhood store with an online catalog: customers build their order and close it on WhatsApp, while products and prices are managed from its own admin panel.',
+  [tokens.servicesSectionType.cases[1].bullets[0]]: 'Catalog with deals and shopping cart',
+  [tokens.servicesSectionType.cases[1].bullets[1]]: 'Orders sent straight to WhatsApp',
+  [tokens.servicesSectionType.cases[1].bullets[2]]: 'Admin panel with prices and global margin',
+  [tokens.servicesSectionType.cases[1].bullets[3]]: 'Automated catalog loading',
+  [tokens.servicesSectionType.cases[2].title]: 'Gaston Genaud Fitness — Online coaching',
+  [tokens.servicesSectionType.cases[2].description]:
+    'My own training brand: a high-impact landing with plans and prices, plus an app where each client logs their routine, loads and meals.',
+  [tokens.servicesSectionType.cases[2].bullets[0]]: 'Landing with plans, prices and FAQ',
+  [tokens.servicesSectionType.cases[2].bullets[1]]: 'Contact and sign-ups straight to WhatsApp',
+  [tokens.servicesSectionType.cases[2].bullets[2]]: 'Client app with routine and tracking',
+  [tokens.servicesSectionType.cases[2].bullets[3]]: 'Weekly data-driven check-ins',
+  [tokens.servicesSectionType.cases[3].title]: 'Virginia Academy — Course platform',
+  [tokens.servicesSectionType.cases[3].description]:
+    'An online QA and automation academy: course catalog, student sign-up and pricing, built to train SDETs from zero to professional.',
+  [tokens.servicesSectionType.cases[3].bullets[0]]: 'Course catalog and search',
+  [tokens.servicesSectionType.cases[3].bullets[1]]: 'Student sign-up and plans',
+  [tokens.servicesSectionType.cases[3].bullets[2]]: 'Technical content with code examples',
+  [tokens.servicesSectionType.cases[3].bullets[3]]: 'Bilingual ES / EN site',
+  [tokens.servicesSectionType.caseCta]: 'Visit the site',
+  [tokens.servicesSectionType.processEyebrow]: 'How I work',
+  [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',
+  [tokens.servicesSectionType.steps[0].title]: 'Talk',
+  [tokens.servicesSectionType.steps[0].description]:
+    'I learn your business, your audience and what you want to achieve.',
+  [tokens.servicesSectionType.steps[1].title]: 'Proposal',
+  [tokens.servicesSectionType.steps[1].description]:
+    'Clear scope, timeline and cost before we start.',
+  [tokens.servicesSectionType.steps[2].title]: 'Build',
+  [tokens.servicesSectionType.steps[2].description]:
+    'Visible progress, with your feedback at every stage.',
+  [tokens.servicesSectionType.steps[3].title]: 'Launch',
+  [tokens.servicesSectionType.steps[3].description]:
+    'We go live, I show you how to use it and stay around after.',
+  [tokens.servicesSectionType.edgeTitle]: 'Engineering behind every delivery',
+  [tokens.servicesSectionType.edgeDescription]:
+    'My background is QA, automation and DevOps: what I build is tested, deploys itself and is made to last.',
+  [tokens.servicesSectionType.finalTitle]: 'Shall we start?',
+  [tokens.servicesSectionType.finalDescription]:
+    "Tell me what you have in mind and I'll reply with a concrete proposal.",
+  [tokens.servicesSectionType.mailSubject]: 'Services inquiry',
+  [tokens.servicesSectionType.whatsappMessage]:
+    "Hi Gaston! I saw your website and I'd like to ask about a project.",
+  [tokens.servicesSectionType.prototypeEyebrow]: 'Free · 14 days',
+  [tokens.servicesSectionType.prototypeTitle]:
+    'Try your portfolio or online store before you decide.',
+  [tokens.servicesSectionType.prototypeDescription]:
+    "I'll build you a free 14-day prototype so you can see your portfolio or online store working. Message me directly on WhatsApp and we'll get started.",
+  [tokens.servicesSectionType.prototypeCta]: 'I want my prototype',
+  [tokens.servicesSectionType.prototypeWhatsappMessage]:
+    "Hi Gaston! I'd like the free 14-day prototype for my portfolio or online store.",
 };

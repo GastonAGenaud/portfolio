@@ -15,6 +15,7 @@ export const tokens = {
     about: 'header.about',
     projects: 'header.projects',
     lifeProjects: 'header.lifeProjects',
+    publications: 'header.publications',
     contact: 'header.contact',
     resume: 'header.resume',
     experience: 'header.experience',
@@ -50,6 +51,12 @@ export const tokens = {
     intro: 'aboutSectionType.intro',
     history: 'aboutSectionType.history',
     focus: 'aboutSectionType.focus',
+    tools: 'aboutSectionType.tools',
+    stats: {
+      years: 'aboutSectionType.stats.years',
+      clients: 'aboutSectionType.stats.clients',
+      sectors: 'aboutSectionType.stats.sectors',
+    },
   },
   skillsSectionType: {
     title: 'skillsSectionType.title',
@@ -87,6 +94,7 @@ export const tokens = {
           2: 'experienceSectionType.experiences.0.tasks.2',
           3: 'experienceSectionType.experiences.0.tasks.3',
           4: 'experienceSectionType.experiences.0.tasks.4',
+          5: 'experienceSectionType.experiences.0.tasks.5',
         },
       },
       1: {
@@ -220,6 +228,8 @@ export const tokens = {
           0: 'lifeProjectsSectionType.experiences.3.tasks.0',
           1: 'lifeProjectsSectionType.experiences.3.tasks.1',
           2: 'lifeProjectsSectionType.experiences.3.tasks.2',
+          3: 'lifeProjectsSectionType.experiences.3.tasks.3',
+          4: 'lifeProjectsSectionType.experiences.3.tasks.4',
         },
       },
     },
@@ -232,6 +242,14 @@ export const tokens = {
       1: 'contactSectionType.paragraphs.1',
     },
     ctaTitle: 'contactSectionType.ctaTitle',
+  },
+  publicationsSectionType: {
+    title: 'publicationsSectionType.title',
+    subtitle: 'publicationsSectionType.subtitle',
+    read: 'publicationsSectionType.read',
+    minutes: 'publicationsSectionType.minutes',
+    back: 'publicationsSectionType.back',
+    notFound: 'publicationsSectionType.notFound',
   },
   coursesSectionType: {
     title: 'coursesSectionType.title',
@@ -258,6 +276,66 @@ export const tokens = {
       description: 'creativeSectionType.sport.description',
       cta: 'creativeSectionType.sport.cta',
     },
+  },
+  servicesSectionType: {
+    switchLabel: 'servicesSectionType.switchLabel',
+    eyebrow: 'servicesSectionType.eyebrow',
+    title: 'servicesSectionType.title',
+    titleAccent: 'servicesSectionType.titleAccent',
+    intro: 'servicesSectionType.intro',
+    ctaPrimary: 'servicesSectionType.ctaPrimary',
+    ctaSecondary: 'servicesSectionType.ctaSecondary',
+    offerEyebrow: 'servicesSectionType.offerEyebrow',
+    offerTitle: 'servicesSectionType.offerTitle',
+    items: {
+      web: {
+        title: 'servicesSectionType.items.web.title',
+        description: 'servicesSectionType.items.web.description',
+        bullets: [0, 1, 2, 3].map(
+          (i) => `servicesSectionType.items.web.bullets.${i}`
+        ),
+      },
+      ads: {
+        title: 'servicesSectionType.items.ads.title',
+        description: 'servicesSectionType.items.ads.description',
+        bullets: [0, 1, 2, 3].map(
+          (i) => `servicesSectionType.items.ads.bullets.${i}`
+        ),
+      },
+      automation: {
+        title: 'servicesSectionType.items.automation.title',
+        description: 'servicesSectionType.items.automation.description',
+        bullets: [0, 1, 2, 3].map(
+          (i) => `servicesSectionType.items.automation.bullets.${i}`
+        ),
+      },
+    },
+    caseEyebrow: 'servicesSectionType.caseEyebrow',
+    cases: [0, 1, 2, 3].map((c) => ({
+      title: `servicesSectionType.cases.${c}.title`,
+      description: `servicesSectionType.cases.${c}.description`,
+      bullets: [0, 1, 2, 3].map(
+        (i) => `servicesSectionType.cases.${c}.bullets.${i}`
+      ),
+    })),
+    caseCta: 'servicesSectionType.caseCta',
+    processEyebrow: 'servicesSectionType.processEyebrow',
+    processTitle: 'servicesSectionType.processTitle',
+    steps: [0, 1, 2, 3].map((i) => ({
+      title: `servicesSectionType.steps.${i}.title`,
+      description: `servicesSectionType.steps.${i}.description`,
+    })),
+    edgeTitle: 'servicesSectionType.edgeTitle',
+    edgeDescription: 'servicesSectionType.edgeDescription',
+    finalTitle: 'servicesSectionType.finalTitle',
+    finalDescription: 'servicesSectionType.finalDescription',
+    mailSubject: 'servicesSectionType.mailSubject',
+    whatsappMessage: 'servicesSectionType.whatsappMessage',
+    prototypeEyebrow: 'servicesSectionType.prototypeEyebrow',
+    prototypeTitle: 'servicesSectionType.prototypeTitle',
+    prototypeDescription: 'servicesSectionType.prototypeDescription',
+    prototypeCta: 'servicesSectionType.prototypeCta',
+    prototypeWhatsappMessage: 'servicesSectionType.prototypeWhatsappMessage',
   },
   fitnessSectionType: {
     eyebrow: 'fitnessSectionType.eyebrow',

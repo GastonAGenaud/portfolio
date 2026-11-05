@@ -11,9 +11,11 @@ import {
   Layout,
   LifeProjects,
   Projects,
+  Publications,
   Skills,
 } from '@/containers';
 import CreativeHome from '@/containers/creative/CreativeHome';
+import ServicesHome from '@/containers/services/ServicesHome';
 import TrainingHome from '@/containers/training/TrainingHome';
 
 import '../locales/i18n';
@@ -36,6 +38,7 @@ const EngineerHome = () => (
     <FeaturedProjects />
     <Projects />
     <LifeProjects />
+    <Publications />
     <Contact />
     <Courses />
   </>
@@ -67,6 +70,8 @@ const Home: NextPage = () => {
             <TrainingHome />
           ) : persona === 'creative' ? (
             <CreativeHome />
+          ) : persona === 'services' ? (
+            <ServicesHome />
           ) : (
             <EngineerHome />
           )}

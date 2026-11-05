@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 
-export type Persona = 'engineer' | 'creative' | 'training';
+export type Persona = 'engineer' | 'creative' | 'services' | 'training';
 
 export const PERSONA_COOKIE = 'persona';
 // One year — refreshed on every change.

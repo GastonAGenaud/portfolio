@@ -13,6 +13,10 @@ export type CreativePhoto = {
   h: number;
   span: PhotoSpan;
   alt: string;
+  /** Muted loop shown in the grid; `src` is its poster. */
+  gridVideo?: string;
+  /** Video with sound shown in the lightbox instead of `full`. */
+  fullVideo?: string;
 };
 
 /** Full photography portfolio — opened from the gallery CTA. */
@@ -27,13 +31,15 @@ export const lightroomAlbumUrl =
  */
 export const creativePhotos: CreativePhoto[] = [
   {
-    id: 'p01',
-    src: '/gallery/grid/01.jpg',
-    full: '/gallery/full/01.jpg',
-    w: 2000,
-    h: 3000,
+    id: 'v01',
+    src: '/gallery/video/reel-01-poster.jpg',
+    full: '/gallery/video/reel-01-poster.jpg',
+    gridVideo: '/gallery/video/reel-01-grid.mp4',
+    fullVideo: '/gallery/video/reel-01.mp4',
+    w: 1080,
+    h: 1920,
     span: 'tall',
-    alt: 'Photograph by Gaston Genaud',
+    alt: 'Video by Gaston Genaud',
   },
   {
     id: 'p02',
@@ -381,15 +387,6 @@ export const creativePhotos: CreativePhoto[] = [
     id: 'p40',
     src: '/gallery/grid/40.jpg',
     full: '/gallery/full/40.jpg',
-    w: 6016,
-    h: 4016,
-    span: 'wide',
-    alt: 'Photograph by Gaston Genaud',
-  },
-  {
-    id: 'p41',
-    src: '/gallery/grid/41.jpg',
-    full: '/gallery/full/41.jpg',
     w: 6016,
     h: 4016,
     span: 'wide',

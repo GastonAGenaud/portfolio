@@ -10,6 +10,7 @@ export const es = {
   [tokens.header.experience]: 'experiencia',
   [tokens.header.projects]: 'proyectos',
   [tokens.header.lifeProjects]: 'otros proyectos',
+  [tokens.header.publications]: 'guías',
   [tokens.header.contact]: 'contacto',
   [tokens.header.resume]: 'Currículum vitae',
 
@@ -17,11 +18,12 @@ export const es = {
   [tokens.heroSectionType.subtitle]: 'Hola, soy',
   [tokens.heroSectionType.title]: 'Gaston Genaud.',
   [tokens.heroSectionType.tagline]:
-    'DevOps y Testing: Una fusión perfecta para la innovación en software.',
+    'Calidad, CI/CD e infraestructura que escalan, con IA en el flujo.',
   [tokens.heroSectionType.description]:
-    'Como SR QA Automation Engineer y DevOps Engineer, me dedico a crear soluciones de software sólidas, escalables y eficientes. Mi experiencia abarca AWS para una infraestructura confiable, además de lenguajes como JavaScript, TypeScript y Python para optimizar la automatización y el desarrollo backend. Con un profundo enfoque en la calidad y la innovación, contribuyo a que cada proyecto alcance estándares de excelencia, tanto en pruebas automatizadas como en prácticas DevOps.',
+    
+    'Senior SDET, DevOps Engineer y QA Lead. Más de 8 años automatizando pruebas y CI/CD en salud, banca, e-commerce y gaming. Defino la estrategia de QA, mentoreo equipos y llevo la ejecución de pruebas a Kubernetes sobre AWS. Trabajo con agentes de IA todos los días.',
   [tokens.heroSectionType.specialText]:
-    'Estoy listo para asumir nuevos retos y oportunidades que me permitan seguir creciendo en el ámbito de la automatización de pruebas e infraestructura.',
+    'Abierto a roles de QA Lead, SDET o DevOps donde la calidad y la automatización con IA sean parte del producto.',
   [tokens.heroSectionType.ctaTitle]: 'Ver Mi Currículum',
 
   // About Section
@@ -53,7 +55,13 @@ export const es = {
   [tokens.aboutSectionType.history]:
     'A lo largo de mi carrera, he tenido el privilegio de colaborar con organizaciones como',
   [tokens.aboutSectionType.focus]:
-    'Actualmente, me enfoco en fortalecer mis habilidades en QA Automation y en profundizar el uso de AWS, para ofrecer soluciones aún más robustas y eficientes.',
+    
+    'Hoy lidero la estrategia de QA de varios clientes como contractor: ejecución de pruebas sobre Kubernetes, pipelines de CI/CD más confiables y agentes de IA (Claude Code, MCP) para diseñar y mantener pruebas más rápido.',
+
+  [tokens.aboutSectionType.tools]: 'Herramientas y frameworks',
+  [tokens.aboutSectionType.stats.years]: 'años en QA y DevOps',
+  [tokens.aboutSectionType.stats.clients]: 'clientes y empresas',
+  [tokens.aboutSectionType.stats.sectors]: 'industrias',
 
   // Skills Section
   [tokens.skillsSectionType.title]: 'lo que hago',
@@ -82,21 +90,31 @@ export const es = {
   [tokens.experienceSectionType.title]: 'donde he trabajado',
 
   // Experience 0: Darwoft
-  [tokens.experienceSectionType.experiences[0].company]: 'Darwoft',
+  [tokens.experienceSectionType.experiences[0].company]: 
+    'Contractor',
   [tokens.experienceSectionType.experiences[0].role]:
-    'Software Developer Engineer in Tests & Tech Lead / DevOps Engineer',
+    
+    'Senior SDET, DevOps Engineer & QA Lead',
   [tokens.experienceSectionType.experiences[0].started]: 'Agosto 2022',
-  [tokens.experienceSectionType.experiences[0].upto]: 'NaN',
+  [tokens.experienceSectionType.experiences[0].upto]: 'Actualidad',
   [tokens.experienceSectionType.experiences[0].tasks[0]]:
-    'Automatización móvil con Appium, Python, Pytest y Behave, optimizando la cobertura de pruebas en entornos móviles.',
+    
+    'QA Lead para varios clientes: estrategia de pruebas, estándares de CI/CD y mentoría de ingenieros QA.',
   [tokens.experienceSectionType.experiences[0].tasks[1]]:
-    'Integración continua con CircleCI y ejecución de pruebas en paralelo con CypressIO, mejorando la eficiencia del pipeline.',
+    
+    'Migré las pruebas end-to-end a Kubernetes con Testkube: ejecución paralela escalable y CI más confiable.',
   [tokens.experienceSectionType.experiences[0].tasks[2]]:
-    'Pruebas de carga con Artillery y JMeter, garantizando el rendimiento bajo alta demanda.',
+    
+    'Recuperé la confiabilidad de CI/CD en GitHub Actions: resolví una regresión del toolchain de Node.js que bloqueaba pipelines por horas.',
   [tokens.experienceSectionType.experiences[0].tasks[3]]:
-    'Liderazgo de un equipo multidisciplinario, impulsando la colaboración y el crecimiento del talento interno.',
+    
+    'Automatización web y API (Playwright, Nx, TypeScript) para un producto de contratos con IA, con cobertura de SSO/SCIM (Entra ID).',
   [tokens.experienceSectionType.experiences[0].tasks[4]]:
-    'Implementación de Lambdas (Python), gestión de DynamoDB, RDS, configuración de CloudWatch y uso de Taurus para pruebas de carga en AWS.',
+    
+    'Automatización mobile y de performance para banca y e-commerce: emuladores Android dockerizados y performance de login.',
+  [tokens.experienceSectionType.experiences[0].tasks[5]]:
+    
+    'Agentes de IA (Claude Code, hooks, servidores MCP) lanzados y supervisados desde el teléfono con Moshi sobre Tailscale y mosh.',
 
   // Experience 1: Coderio
   [tokens.experienceSectionType.experiences[1].company]:
@@ -240,6 +258,10 @@ export const es = {
     'Uso de IA y modelos de lenguaje para analizar mis datos, detectar patrones y obtener recomendaciones accionables hacia mis metas personales.',
   [tokens.lifeProjectsSectionType.experiences[3].tasks[2]]:
     'Construcción de dashboards y automatizaciones que centralizan la información y miden el progreso de forma continua.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[3]]:
+    'Homelab propio para agentes de IA: Moshi en el iPhone conectado por Tailscale y mosh a servidores WSL2 con Claude Code, herdr y moshi-hook, para controlar sesiones de agentes desde cualquier lugar.',
+  [tokens.lifeProjectsSectionType.experiences[3].tasks[4]]:
+    'Configuración y ejecución de modelos Qwen en local con Ollama, para experimentar con LLMs privados, sin depender de la nube.',
 
   // Contact Section
   [tokens.contactSectionType.title]: 'pongámonos en contacto',
@@ -251,6 +273,14 @@ export const es = {
   [tokens.contactSectionType.ctaTitle]: 'Hablame!',
 
   // Courses Section
+  // Publications
+  [tokens.publicationsSectionType.title]: 'Guías y publicaciones',
+  [tokens.publicationsSectionType.subtitle]: 'Lo que fui armando, explicado paso a paso.',
+  [tokens.publicationsSectionType.read]: 'Leer guía',
+  [tokens.publicationsSectionType.minutes]: 'min de lectura',
+  [tokens.publicationsSectionType.back]: 'Volver',
+  [tokens.publicationsSectionType.notFound]: 'No encontré esa publicación.',
+
   [tokens.coursesSectionType.title]: 'Cursos',
   [tokens.coursesSectionType.subtitle]: 'Proyectos',
   [tokens.coursesSectionType.paragraphs[0]]:
@@ -277,6 +307,114 @@ export const es = {
     'Acompaño a personas a alcanzar sus metas físicas con planes personalizados, seguimiento de datos y un enfoque sostenible.',
   [tokens.creativeSectionType.sport.cta]: 'Quiero entrenar',
 
+  // Servicios (tercera persona de la botonera)
+  [tokens.servicesSectionType.switchLabel]: 'Servicios',
+  [tokens.servicesSectionType.eyebrow]:
+    'Servicios · Webs · Ads · Automatización',
+  [tokens.servicesSectionType.title]: 'Tu marca online,',
+  [tokens.servicesSectionType.titleAccent]: 'trabajando por vos.',
+  [tokens.servicesSectionType.intro]:
+    'Diseño y desarrollo sitios personales, armo la estrategia de anuncios que los llena de consultas y automatizo lo repetitivo para que te enfoques en tu trabajo. Con la misma ingeniería que uso en proyectos enterprise.',
+  [tokens.servicesSectionType.ctaPrimary]: 'Contame tu proyecto',
+  [tokens.servicesSectionType.ctaSecondary]: 'Ver un caso real',
+  [tokens.servicesSectionType.offerEyebrow]: 'Qué hago',
+  [tokens.servicesSectionType.offerTitle]:
+    'Tres servicios, un mismo objetivo: que crezcas.',
+  [tokens.servicesSectionType.items.web.title]: 'Sitios personales',
+  [tokens.servicesSectionType.items.web.description]:
+    'Tu web profesional, a medida y con panel propio para que la actualices sin depender de nadie.',
+  [tokens.servicesSectionType.items.web.bullets[0]]:
+    'Diseño a medida, mobile-first',
+  [tokens.servicesSectionType.items.web.bullets[1]]:
+    'Panel de administración para tus servicios',
+  [tokens.servicesSectionType.items.web.bullets[2]]:
+    'Formulario de contacto y gestión de consultas',
+  [tokens.servicesSectionType.items.web.bullets[3]]:
+    'Dominio, SEO y versión ES / EN',
+  [tokens.servicesSectionType.items.ads.title]: 'Estrategia de ads',
+  [tokens.servicesSectionType.items.ads.description]:
+    'Campañas pensadas para convertir visitas en clientes, medidas de punta a punta.',
+  [tokens.servicesSectionType.items.ads.bullets[0]]:
+    'Meta Ads (Instagram / Facebook) y Google Ads',
+  [tokens.servicesSectionType.items.ads.bullets[1]]:
+    'Público, embudo y mensajes por objetivo',
+  [tokens.servicesSectionType.items.ads.bullets[2]]:
+    'Píxel, eventos y conversiones bien medidos',
+  [tokens.servicesSectionType.items.ads.bullets[3]]:
+    'Reporte claro de resultados',
+  [tokens.servicesSectionType.items.automation.title]:
+    'Automatizaciones a medida',
+  [tokens.servicesSectionType.items.automation.description]:
+    'Soluciones que hacen el trabajo repetitivo por vos: menos tareas manuales, más tiempo.',
+  [tokens.servicesSectionType.items.automation.bullets[0]]:
+    'Respuestas y seguimiento de clientes',
+  [tokens.servicesSectionType.items.automation.bullets[1]]:
+    'Integraciones entre tus herramientas',
+  [tokens.servicesSectionType.items.automation.bullets[2]]:
+    'Agentes con IA para tareas concretas',
+  [tokens.servicesSectionType.items.automation.bullets[3]]:
+    'Reportes y alertas automáticas',
+  [tokens.servicesSectionType.caseEyebrow]: 'Casos reales',
+  [tokens.servicesSectionType.cases[0].title]: 'Tomás Mercado — Personal Trainer',
+  [tokens.servicesSectionType.cases[0].description]:
+    'Del Instagram a una web propia: landing bilingüe, catálogo de asesorías editable y un panel mobile para gestionar cada solicitud.',
+  [tokens.servicesSectionType.cases[0].bullets[0]]: 'Landing ES / EN con identidad propia',
+  [tokens.servicesSectionType.cases[0].bullets[1]]: 'Panel admin para cargar asesorías y precios',
+  [tokens.servicesSectionType.cases[0].bullets[2]]: 'Solicitudes con estados y seguimientos',
+  [tokens.servicesSectionType.cases[0].bullets[3]]: 'Manual de usuario para manejarlo solo',
+  [tokens.servicesSectionType.cases[1].title]: 'Multirubro Anisacate — Tienda online',
+  [tokens.servicesSectionType.cases[1].description]:
+    'Un comercio de barrio con catálogo online: los clientes arman su pedido y lo cierran por WhatsApp, y productos y precios se gestionan desde un panel propio.',
+  [tokens.servicesSectionType.cases[1].bullets[0]]: 'Catálogo con ofertas y carrito de compras',
+  [tokens.servicesSectionType.cases[1].bullets[1]]: 'Pedido enviado directo por WhatsApp',
+  [tokens.servicesSectionType.cases[1].bullets[2]]: 'Panel admin con precios y margen global',
+  [tokens.servicesSectionType.cases[1].bullets[3]]: 'Carga del catálogo automatizada',
+  [tokens.servicesSectionType.cases[2].title]: 'Gaston Genaud Fitness — Asesorías online',
+  [tokens.servicesSectionType.cases[2].description]:
+    'Mi propia marca de entrenamiento: landing de alto impacto con planes y precios, y una app para que cada asesorado registre rutina, cargas y comidas.',
+  [tokens.servicesSectionType.cases[2].bullets[0]]: 'Landing con planes, precios y FAQ',
+  [tokens.servicesSectionType.cases[2].bullets[1]]: 'Contacto y altas directo por WhatsApp',
+  [tokens.servicesSectionType.cases[2].bullets[2]]: 'App de asesorados con rutina y registro',
+  [tokens.servicesSectionType.cases[2].bullets[3]]: 'Check-ins semanales con datos',
+  [tokens.servicesSectionType.cases[3].title]: 'Virginia Academy — Plataforma de cursos',
+  [tokens.servicesSectionType.cases[3].description]:
+    'Academia online de QA y automatización: catálogo de cursos, registro de alumnos y precios, pensada para formar SDETs de cero a profesional.',
+  [tokens.servicesSectionType.cases[3].bullets[0]]: 'Catálogo y buscador de cursos',
+  [tokens.servicesSectionType.cases[3].bullets[1]]: 'Registro de alumnos y planes',
+  [tokens.servicesSectionType.cases[3].bullets[2]]: 'Contenido técnico con ejemplos de código',
+  [tokens.servicesSectionType.cases[3].bullets[3]]: 'Sitio bilingüe ES / EN',
+  [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
+  [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
+  [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',
+  [tokens.servicesSectionType.steps[0].title]: 'Charla',
+  [tokens.servicesSectionType.steps[0].description]:
+    'Entiendo tu negocio, tu público y qué querés lograr.',
+  [tokens.servicesSectionType.steps[1].title]: 'Propuesta',
+  [tokens.servicesSectionType.steps[1].description]:
+    'Alcance, tiempos y costo claros antes de arrancar.',
+  [tokens.servicesSectionType.steps[2].title]: 'Construcción',
+  [tokens.servicesSectionType.steps[2].description]:
+    'Avances visibles, con tu feedback en cada etapa.',
+  [tokens.servicesSectionType.steps[3].title]: 'Lanzamiento',
+  [tokens.servicesSectionType.steps[3].description]:
+    'Publicamos, te enseño a usarlo y te acompaño después.',
+  [tokens.servicesSectionType.edgeTitle]: 'Ingeniería detrás de cada entrega',
+  [tokens.servicesSectionType.edgeDescription]:
+    'Vengo de QA, automatización y DevOps: lo que construyo está testeado, se despliega solo y está pensado para durar.',
+  [tokens.servicesSectionType.finalTitle]: '¿Arrancamos?',
+  [tokens.servicesSectionType.finalDescription]:
+    'Contame qué tenés en mente y te respondo con una propuesta concreta.',
+  [tokens.servicesSectionType.mailSubject]: 'Consulta por servicios',
+  [tokens.servicesSectionType.whatsappMessage]:
+    'Hola Gaston! Vi tu web y quiero consultarte por un proyecto.',
+  [tokens.servicesSectionType.prototypeEyebrow]: 'Sin costo · 14 días',
+  [tokens.servicesSectionType.prototypeTitle]:
+    'Probá tu portfolio o tienda online antes de decidir.',
+  [tokens.servicesSectionType.prototypeDescription]:
+    'Te creo un prototipo de 14 días sin costo, para que veas tu portfolio o tu tienda online funcionando. Escribime directo por WhatsApp y lo arrancamos.',
+  [tokens.servicesSectionType.prototypeCta]: 'Quiero mi prototipo',
+  [tokens.servicesSectionType.prototypeWhatsappMessage]:
+    'Hola Gaston! Quiero el prototipo sin costo de 14 días para mi portfolio o tienda online.',
   // Sección Fitness / Entrenamiento (Creative → Sport)
   [tokens.fitnessSectionType.eyebrow]: 'Cuerpo · Bitácora',
   [tokens.fitnessSectionType.title]: 'Transformación Atlética',

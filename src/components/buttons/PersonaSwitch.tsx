@@ -22,6 +22,11 @@ const allOptions: Option[] = [
     token: tokens.creativeSectionType.personaStudio,
   },
   {
+    key: 'services',
+    icon: 'ph:rocket-launch-bold',
+    token: tokens.servicesSectionType.switchLabel,
+  },
+  {
     key: 'training',
     icon: 'ph:crown-fill',
     token: tokens.creativeSectionType.sport.switchLabel,
@@ -40,7 +45,7 @@ const PersonaSwitch = ({ className = '' }: { className?: string }) => {
     <div
       role="tablist"
       aria-label="Persona"
-      className={`relative inline-flex items-center rounded-full border border-dark-3/40 bg-bg-secondary/60 p-1 backdrop-blur ${className}`}
+      className={`relative inline-flex items-center rounded-full border border-dark-3/40 bg-bg-secondary/60 p-0.5 sm:p-1 backdrop-blur ${className}`}
     >
       {options.map((opt) => {
         const active = persona === opt.key;
@@ -50,7 +55,7 @@ const PersonaSwitch = ({ className = '' }: { className?: string }) => {
             role="tab"
             aria-selected={active}
             onClick={() => setPersona(opt.key)}
-            className={`relative z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-colors duration-300 ${
+            className={`relative z-10 flex items-center gap-1.5 rounded-full px-1.5 min-[360px]:px-2 sm:px-3 py-1.5 text-xs font-medium capitalize transition-colors duration-300 ${
               active ? 'text-bg' : 'text-text hover:text-accent'
             }`}
           >
@@ -62,10 +67,22 @@ const PersonaSwitch = ({ className = '' }: { className?: string }) => {
               />
             )}
             <Icon icon={opt.icon} width="15" height="15" />
-            <span className="hidden sm:inline">{t(opt.token)}</span>
+            <span className="hidden sm:inline lg:hidden 2xl:inline">
+              {t(opt.token)}
+            </span>
           </button>
         );
       })}
+      <a
+        href="https://www.gastongenaudfitness.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Gaston Genaud Fitness"
+        title="Gaston Genaud Fitness"
+        className="relative z-10 flex items-center rounded-full px-1.5 min-[360px]:px-2 sm:px-3 py-1.5 text-text transition-colors duration-300 hover:text-accent"
+      >
+        <Icon icon="ph:barbell-bold" width="15" height="15" />
+      </a>
     </div>
   );
 };
