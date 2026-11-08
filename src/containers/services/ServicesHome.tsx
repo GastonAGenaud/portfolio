@@ -41,6 +41,12 @@ const cases = [
     alt: 'Virginia Academy — plataforma de cursos',
     ...t$.cases[3],
   },
+  {
+    url: 'https://control-insumos-bay.vercel.app',
+    image: '/services/control-insumos-hero.jpg',
+    alt: 'Control de Insumos — stock por sector para clínicas',
+    ...t$.cases[4],
+  },
 ];
 
 const fadeUp = {

@@ -468,6 +468,13 @@ export const en = {
   [tokens.servicesSectionType.cases[3].bullets[1]]: 'Student sign-up and plans',
   [tokens.servicesSectionType.cases[3].bullets[2]]: 'Technical content with code examples',
   [tokens.servicesSectionType.cases[3].bullets[3]]: 'Bilingual ES / EN site',
+  [tokens.servicesSectionType.cases[4].title]: 'Control de Insumos — Clinic supply tracking',
+  [tokens.servicesSectionType.cases[4].description]:
+    'Web app for clinics, medical centers and labs: each department logs what it uses from the phone, and Purchasing sees what to restock and the monthly spend without chasing every area.',
+  [tokens.servicesSectionType.cases[4].bullets[0]]: '"What to buy" dashboard with minimum-stock alerts',
+  [tokens.servicesSectionType.cases[4].bullets[1]]: 'Purchase order ready to send via WhatsApp',
+  [tokens.servicesSectionType.cases[4].bullets[2]]: 'Mobile usage logging with per-department access',
+  [tokens.servicesSectionType.cases[4].bullets[3]]: 'Monthly report in units and pesos, Excel export',
   [tokens.servicesSectionType.caseCta]: 'Visit the site',
   [tokens.servicesSectionType.processEyebrow]: 'How I work',
   [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',
