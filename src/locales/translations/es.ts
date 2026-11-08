@@ -383,6 +383,13 @@ export const es = {
   [tokens.servicesSectionType.cases[3].bullets[1]]: 'Registro de alumnos y planes',
   [tokens.servicesSectionType.cases[3].bullets[2]]: 'Contenido técnico con ejemplos de código',
   [tokens.servicesSectionType.cases[3].bullets[3]]: 'Sitio bilingüe ES / EN',
+  [tokens.servicesSectionType.cases[4].title]: 'Control de Insumos — Stock para clínicas',
+  [tokens.servicesSectionType.cases[4].description]:
+    'App web para clínicas, centros médicos y laboratorios: cada sector descuenta lo que usa desde el celular y Compras ve qué reponer y cuánto se gasta por mes, sin preguntar área por área.',
+  [tokens.servicesSectionType.cases[4].bullets[0]]: 'Panel "Qué comprar" con semáforo por stock mínimo',
+  [tokens.servicesSectionType.cases[4].bullets[1]]: 'Pedido listo para enviar por WhatsApp',
+  [tokens.servicesSectionType.cases[4].bullets[2]]: 'Consumo desde el celular, con acceso por sector',
+  [tokens.servicesSectionType.cases[4].bullets[3]]: 'Reporte mensual en cantidad y pesos, exportable a Excel',
   [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
   [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
   [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',
