@@ -390,6 +390,13 @@ export const es = {
   [tokens.servicesSectionType.cases[4].bullets[1]]: 'Pedido listo para enviar por WhatsApp',
   [tokens.servicesSectionType.cases[4].bullets[2]]: 'Consumo desde el celular, con acceso por sector',
   [tokens.servicesSectionType.cases[4].bullets[3]]: 'Reporte mensual en cantidad y pesos, exportable a Excel',
+  [tokens.servicesSectionType.cases[5].title]: "Cabañas Py'a Guapy — Alojamiento en Anisacate",
+  [tokens.servicesSectionType.cases[5].description]:
+    'Sitio para un complejo de cabañas en el Valle de Paravachasca: muestra cada cabaña con sus precios y servicios, y lleva las consultas directo a WhatsApp.',
+  [tokens.servicesSectionType.cases[5].bullets[0]]: 'Carrusel de cabañas con capacidad, precio y disponibilidad',
+  [tokens.servicesSectionType.cases[5].bullets[1]]: 'Reservas y consultas directas por WhatsApp',
+  [tokens.servicesSectionType.cases[5].bullets[2]]: 'Bloque de promociones por temporada o evento',
+  [tokens.servicesSectionType.cases[5].bullets[3]]: 'Ubicación, distancias y preguntas frecuentes',
   [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
   [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
   [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',
