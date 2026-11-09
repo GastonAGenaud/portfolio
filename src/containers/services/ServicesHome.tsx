@@ -47,6 +47,12 @@ const cases = [
     alt: 'Control de Insumos — stock por sector para clínicas',
     ...t$.cases[4],
   },
+  {
+    url: 'https://pya-guapy-web.vercel.app',
+    image: '/services/pya-guapy-hero.jpg',
+    alt: "Cabañas Py'a Guapy — alojamiento en Anisacate",
+    ...t$.cases[5],
+  },
 ];
 
 const fadeUp = {

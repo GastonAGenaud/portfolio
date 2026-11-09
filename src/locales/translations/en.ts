@@ -475,6 +475,13 @@ export const en = {
   [tokens.servicesSectionType.cases[4].bullets[1]]: 'Purchase order ready to send via WhatsApp',
   [tokens.servicesSectionType.cases[4].bullets[2]]: 'Mobile usage logging with per-department access',
   [tokens.servicesSectionType.cases[4].bullets[3]]: 'Monthly report in units and pesos, Excel export',
+  [tokens.servicesSectionType.cases[5].title]: "Cabañas Py'a Guapy — Cabin rentals in Anisacate",
+  [tokens.servicesSectionType.cases[5].description]:
+    'Website for a cabin complex in the Paravachasca Valley, Córdoba: each cabin with its rates and amenities, and every inquiry routed straight to WhatsApp.',
+  [tokens.servicesSectionType.cases[5].bullets[0]]: 'Cabin carousel with capacity, rate and availability',
+  [tokens.servicesSectionType.cases[5].bullets[1]]: 'Bookings and inquiries straight to WhatsApp',
+  [tokens.servicesSectionType.cases[5].bullets[2]]: 'Seasonal or event-based promo block',
+  [tokens.servicesSectionType.cases[5].bullets[3]]: 'Location, travel times and FAQ',
   [tokens.servicesSectionType.caseCta]: 'Visit the site',
   [tokens.servicesSectionType.processEyebrow]: 'How I work',
   [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',

@@ -311,7 +311,7 @@ export const tokens = {
       },
     },
     caseEyebrow: 'servicesSectionType.caseEyebrow',
-    cases: [0, 1, 2, 3, 4].map((c) => ({
+    cases: [0, 1, 2, 3, 4, 5].map((c) => ({
       title: `servicesSectionType.cases.${c}.title`,
       description: `servicesSectionType.cases.${c}.description`,
       bullets: [0, 1, 2, 3].map(
