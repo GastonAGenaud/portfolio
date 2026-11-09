@@ -281,6 +281,12 @@ export const en = {
   [tokens.publicationsSectionType.back]: 'Back',
   [tokens.publicationsSectionType.notFound]: 'That publication does not exist.',
 
+  [tokens.newsletterSectionType.title]: 'Newsletter',
+  [tokens.newsletterSectionType.subtitle]: 'Useful updates, sorted by category.',
+  [tokens.newsletterSectionType.all]: 'All',
+  [tokens.newsletterSectionType.read]: 'Read issue',
+  [tokens.newsletterSectionType.spanishOnly]: 'Available in Spanish only',
+  [tokens.newsletterSectionType.notFound]: "I couldn't find that issue.",
   [tokens.coursesSectionType.title]: 'Courses',
   [tokens.coursesSectionType.subtitle]: 'Projects',
   [tokens.coursesSectionType.paragraphs[0]]:

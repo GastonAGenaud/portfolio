@@ -281,6 +281,12 @@ export const es = {
   [tokens.publicationsSectionType.back]: 'Volver',
   [tokens.publicationsSectionType.notFound]: 'No encontré esa publicación.',
 
+  [tokens.newsletterSectionType.title]: 'Newsletter',
+  [tokens.newsletterSectionType.subtitle]: 'Novedades útiles, ordenadas por categoría.',
+  [tokens.newsletterSectionType.all]: 'Todas',
+  [tokens.newsletterSectionType.read]: 'Leer edición',
+  [tokens.newsletterSectionType.spanishOnly]: 'Disponible sólo en español',
+  [tokens.newsletterSectionType.notFound]: 'No encontré esa edición.',
   [tokens.coursesSectionType.title]: 'Cursos',
   [tokens.coursesSectionType.subtitle]: 'Proyectos',
   [tokens.coursesSectionType.paragraphs[0]]:

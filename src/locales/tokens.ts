@@ -251,6 +251,14 @@ export const tokens = {
     back: 'publicationsSectionType.back',
     notFound: 'publicationsSectionType.notFound',
   },
+  newsletterSectionType: {
+    title: 'newsletterSectionType.title',
+    subtitle: 'newsletterSectionType.subtitle',
+    all: 'newsletterSectionType.all',
+    read: 'newsletterSectionType.read',
+    spanishOnly: 'newsletterSectionType.spanishOnly',
+    notFound: 'newsletterSectionType.notFound',
+  },
   coursesSectionType: {
     title: 'coursesSectionType.title',
     subtitle: 'coursesSectionType.subtitle',
