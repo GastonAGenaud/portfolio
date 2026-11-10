@@ -53,6 +53,12 @@ const cases = [
     alt: "Cabañas Py'a Guapy — alojamiento en Anisacate",
     ...t$.cases[5],
   },
+  {
+    url: 'https://souriana-ar.vercel.app',
+    image: '/services/souriana-hero.jpg',
+    alt: 'Souriana — comida árabe en Recoleta',
+    ...t$.cases[6],
+  },
 ];
 
 const fadeUp = {

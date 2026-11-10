@@ -281,6 +281,12 @@ export const en = {
   [tokens.publicationsSectionType.back]: 'Back',
   [tokens.publicationsSectionType.notFound]: 'That publication does not exist.',
 
+  [tokens.newsletterSectionType.title]: 'Newsletter',
+  [tokens.newsletterSectionType.subtitle]: 'Useful updates, sorted by category.',
+  [tokens.newsletterSectionType.all]: 'All',
+  [tokens.newsletterSectionType.read]: 'Read issue',
+  [tokens.newsletterSectionType.spanishOnly]: 'Available in Spanish only',
+  [tokens.newsletterSectionType.notFound]: "I couldn't find that issue.",
   [tokens.coursesSectionType.title]: 'Courses',
   [tokens.coursesSectionType.subtitle]: 'Projects',
   [tokens.coursesSectionType.paragraphs[0]]:
@@ -482,6 +488,13 @@ export const en = {
   [tokens.servicesSectionType.cases[5].bullets[1]]: 'Bookings and inquiries straight to WhatsApp',
   [tokens.servicesSectionType.cases[5].bullets[2]]: 'Seasonal or event-based promo block',
   [tokens.servicesSectionType.cases[5].bullets[3]]: 'Location, travel times and FAQ',
+  [tokens.servicesSectionType.cases[6].title]: 'Souriana — Middle Eastern food in Recoleta',
+  [tokens.servicesSectionType.cases[6].description]:
+    'Digital menu for a Middle Eastern takeaway in Buenos Aires: customers scan the counter QR, build their order and send it on WhatsApp.',
+  [tokens.servicesSectionType.cases[6].bullets[0]]: 'Menu and combos with order building on mobile',
+  [tokens.servicesSectionType.cases[6].bullets[1]]: 'WhatsApp checkout with pickup or delivery address',
+  [tokens.servicesSectionType.cases[6].bullets[2]]: 'Spanish, English and Portuguese for tourists',
+  [tokens.servicesSectionType.cases[6].bullets[3]]: 'Print-ready QR poster',
   [tokens.servicesSectionType.caseCta]: 'Visit the site',
   [tokens.servicesSectionType.processEyebrow]: 'How I work',
   [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',

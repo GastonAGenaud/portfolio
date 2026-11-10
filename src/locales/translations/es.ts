@@ -281,6 +281,12 @@ export const es = {
   [tokens.publicationsSectionType.back]: 'Volver',
   [tokens.publicationsSectionType.notFound]: 'No encontré esa publicación.',
 
+  [tokens.newsletterSectionType.title]: 'Newsletter',
+  [tokens.newsletterSectionType.subtitle]: 'Novedades útiles, ordenadas por categoría.',
+  [tokens.newsletterSectionType.all]: 'Todas',
+  [tokens.newsletterSectionType.read]: 'Leer edición',
+  [tokens.newsletterSectionType.spanishOnly]: 'Disponible sólo en español',
+  [tokens.newsletterSectionType.notFound]: 'No encontré esa edición.',
   [tokens.coursesSectionType.title]: 'Cursos',
   [tokens.coursesSectionType.subtitle]: 'Proyectos',
   [tokens.coursesSectionType.paragraphs[0]]:
@@ -397,6 +403,13 @@ export const es = {
   [tokens.servicesSectionType.cases[5].bullets[1]]: 'Reservas y consultas directas por WhatsApp',
   [tokens.servicesSectionType.cases[5].bullets[2]]: 'Bloque de promociones por temporada o evento',
   [tokens.servicesSectionType.cases[5].bullets[3]]: 'Ubicación, distancias y preguntas frecuentes',
+  [tokens.servicesSectionType.cases[6].title]: 'Souriana — Comida árabe en Recoleta',
+  [tokens.servicesSectionType.cases[6].description]:
+    'Carta digital para un local de comida árabe en Buenos Aires: el cliente escanea el QR del mostrador, arma el pedido y lo envía por WhatsApp.',
+  [tokens.servicesSectionType.cases[6].bullets[0]]: 'Carta y combos con pedido armado desde el celular',
+  [tokens.servicesSectionType.cases[6].bullets[1]]: 'Envío por WhatsApp con retiro o delivery y dirección',
+  [tokens.servicesSectionType.cases[6].bullets[2]]: 'Español, inglés y portugués para turistas',
+  [tokens.servicesSectionType.cases[6].bullets[3]]: 'Cartel con QR listo para imprimir',
   [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
   [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
   [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',

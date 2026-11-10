@@ -10,6 +10,7 @@ import {
   Hero,
   Layout,
   LifeProjects,
+  Newsletter,
   Projects,
   Publications,
   Skills,
@@ -41,6 +42,7 @@ const EngineerHome = () => (
     <Publications />
     <Contact />
     <Courses />
+    <Newsletter />
   </>
 );
 

@@ -10,6 +10,7 @@ import Layout from './layout/Layout';
 import Navbar from './layout/Navbar';
 import LifeProjects from './LifeProjects';
 import Projects from './Projects';
+import Newsletter from './Newsletter';
 import Publications from './Publications';
 import Skills from './Skills';
 import Social from './Social';
@@ -28,6 +29,7 @@ export {
   LifeProjects,
   Navbar,
   Projects,
+  Newsletter,
   Publications,
   Skills,
   Social,
