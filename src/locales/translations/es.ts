@@ -410,6 +410,13 @@ export const es = {
   [tokens.servicesSectionType.cases[6].bullets[1]]: 'Envío por WhatsApp con retiro o delivery y dirección',
   [tokens.servicesSectionType.cases[6].bullets[2]]: 'Español, inglés y portugués para turistas',
   [tokens.servicesSectionType.cases[6].bullets[3]]: 'Cartel con QR listo para imprimir',
+  [tokens.servicesSectionType.cases[7].title]: 'Fergus — Panchería en Recoleta',
+  [tokens.servicesSectionType.cases[7].description]:
+    'Menú digital para una panchería de Buenos Aires: el cliente recorre la carta, arma el pedido y lo envía por WhatsApp, con la mascota de la marca caminando por la pantalla.',
+  [tokens.servicesSectionType.cases[7].bullets[0]]: 'Carta con pedido armado desde el celular',
+  [tokens.servicesSectionType.cases[7].bullets[1]]: 'Mascota animada cuadro a cuadro y video del logo',
+  [tokens.servicesSectionType.cases[7].bullets[2]]: 'Opiniones de Google con foto, fecha y estrellas',
+  [tokens.servicesSectionType.cases[7].bullets[3]]: 'Español, inglés y portugués',
   [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
   [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
   [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',

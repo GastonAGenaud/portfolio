@@ -495,6 +495,13 @@ export const en = {
   [tokens.servicesSectionType.cases[6].bullets[1]]: 'WhatsApp checkout with pickup or delivery address',
   [tokens.servicesSectionType.cases[6].bullets[2]]: 'Spanish, English and Portuguese for tourists',
   [tokens.servicesSectionType.cases[6].bullets[3]]: 'Print-ready QR poster',
+  [tokens.servicesSectionType.cases[7].title]: 'Fergus — Hot dog shop in Recoleta',
+  [tokens.servicesSectionType.cases[7].description]:
+    'Digital menu for a hot dog shop in Buenos Aires: customers browse the menu, build their order and send it on WhatsApp, with the brand mascot walking across the screen.',
+  [tokens.servicesSectionType.cases[7].bullets[0]]: 'Menu with order building on mobile',
+  [tokens.servicesSectionType.cases[7].bullets[1]]: 'Frame-by-frame animated mascot and logo video',
+  [tokens.servicesSectionType.cases[7].bullets[2]]: 'Google reviews with photo, date and stars',
+  [tokens.servicesSectionType.cases[7].bullets[3]]: 'Spanish, English and Portuguese',
   [tokens.servicesSectionType.caseCta]: 'Visit the site',
   [tokens.servicesSectionType.processEyebrow]: 'How I work',
   [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',
