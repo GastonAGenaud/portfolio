@@ -59,6 +59,12 @@ const cases = [
     alt: 'Souriana — comida árabe en Recoleta',
     ...t$.cases[6],
   },
+  {
+    url: 'https://fergus-pancheria.vercel.app',
+    image: '/services/fergus-hero.jpg',
+    alt: 'Fergus — panchería en Recoleta',
+    ...t$.cases[7],
+  },
 ];
 
 const fadeUp = {
