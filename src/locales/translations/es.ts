@@ -417,6 +417,13 @@ export const es = {
   [tokens.servicesSectionType.cases[7].bullets[1]]: 'Mascota animada cuadro a cuadro y video del logo',
   [tokens.servicesSectionType.cases[7].bullets[2]]: 'Opiniones de Google con foto, fecha y estrellas',
   [tokens.servicesSectionType.cases[7].bullets[3]]: 'Español, inglés y portugués',
+  [tokens.servicesSectionType.cases[8].title]: 'The Virginia — Estudio de ingeniería de calidad',
+  [tokens.servicesSectionType.cases[8].description]:
+    'Sitio institucional para un estudio de automatización QA y su producto VERA: servicios, proceso en tres etapas, modalidades de trabajo y formulario para pedir una demo, con una estética cálida y minimalista.',
+  [tokens.servicesSectionType.cases[8].bullets[0]]: 'Hero con dashboard animado y contadores en vivo',
+  [tokens.servicesSectionType.cases[8].bullets[1]]: 'Secciones de servicios, proceso, resultados y FAQ',
+  [tokens.servicesSectionType.cases[8].bullets[2]]: 'Build estático con i18n y URL por idioma',
+  [tokens.servicesSectionType.cases[8].bullets[3]]: 'Español, inglés y portugués',
   [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
   [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
   [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',

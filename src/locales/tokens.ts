@@ -319,7 +319,7 @@ export const tokens = {
       },
     },
     caseEyebrow: 'servicesSectionType.caseEyebrow',
-    cases: [0, 1, 2, 3, 4, 5, 6, 7].map((c) => ({
+    cases: [0, 1, 2, 3, 4, 5, 6, 7, 8].map((c) => ({
       title: `servicesSectionType.cases.${c}.title`,
       description: `servicesSectionType.cases.${c}.description`,
       bullets: [0, 1, 2, 3].map(

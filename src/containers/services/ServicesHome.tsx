@@ -65,6 +65,12 @@ const cases = [
     alt: 'Fergus — panchería en Recoleta',
     ...t$.cases[7],
   },
+  {
+    url: 'https://thevirginia.site',
+    image: '/services/the-virginia-hero.jpg',
+    alt: 'The Virginia — estudio de ingeniería de calidad',
+    ...t$.cases[8],
+  },
 ];
 
 const fadeUp = {
