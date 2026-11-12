@@ -132,7 +132,7 @@ const Stat = ({
 };
 
 const About = () => {
-  const { title, img, list } = useAboutSection();
+  const { title, images, list } = useAboutSection();
   const { t } = useTranslation();
 
   // To avoid hydration error
@@ -196,7 +196,7 @@ const About = () => {
         </div>
 
         <div className="order-first pt-6 lg:order-none lg:pt-10">
-          <AuthorImage src={img} alt={author.name} />
+          <AuthorImage images={images} alt={author.name} />
         </div>
       </main>
     </Wrapper>

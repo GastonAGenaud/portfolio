@@ -34,7 +34,7 @@ export const useAboutSection = (): AboutSectionType => {
         t(tokens.aboutSectionType.list.items.item20),
       ],
     },
-    img: '/perfil.jpg',
+    images: [1, 2, 3, 4, 5].map((n) => `/about/profile-${n}.jpg`),
   };
 
   return aboutSection;
