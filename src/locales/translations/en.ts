@@ -502,6 +502,13 @@ export const en = {
   [tokens.servicesSectionType.cases[7].bullets[1]]: 'Frame-by-frame animated mascot and logo video',
   [tokens.servicesSectionType.cases[7].bullets[2]]: 'Google reviews with photo, date and stars',
   [tokens.servicesSectionType.cases[7].bullets[3]]: 'Spanish, English and Portuguese',
+  [tokens.servicesSectionType.cases[8].title]: 'The Virginia — Quality engineering studio',
+  [tokens.servicesSectionType.cases[8].description]:
+    'Marketing site for a QA automation studio and its product VERA: services, a three-stage process, engagement models and a demo request form, with a warm, minimal look.',
+  [tokens.servicesSectionType.cases[8].bullets[0]]: 'Animated dashboard hero with live counters',
+  [tokens.servicesSectionType.cases[8].bullets[1]]: 'Services, process, results and FAQ sections',
+  [tokens.servicesSectionType.cases[8].bullets[2]]: 'Static i18n build with per-language URLs',
+  [tokens.servicesSectionType.cases[8].bullets[3]]: 'Spanish, English and Portuguese',
   [tokens.servicesSectionType.caseCta]: 'Visit the site',
   [tokens.servicesSectionType.processEyebrow]: 'How I work',
   [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',
