@@ -282,6 +282,11 @@ export const en = {
   [tokens.publicationsSectionType.notFound]: 'That publication does not exist.',
   [tokens.publicationsSectionType.showAll]: 'Show all guides',
   [tokens.publicationsSectionType.showLess]: 'Show fewer',
+  [tokens.publicationsSectionType.search]: 'Search guides by topic, tool or tag',
+  [tokens.publicationsSectionType.clearSearch]: 'Clear search',
+  [tokens.publicationsSectionType.result]: 'guide found',
+  [tokens.publicationsSectionType.results]: 'guides found',
+  [tokens.publicationsSectionType.noResults]: 'No guides match that search.',
 
   [tokens.newsletterSectionType.title]: 'Newsletter',
   [tokens.newsletterSectionType.subtitle]: 'Useful updates, sorted by category.',

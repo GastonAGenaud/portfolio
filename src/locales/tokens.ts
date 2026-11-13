@@ -252,6 +252,11 @@ export const tokens = {
     notFound: 'publicationsSectionType.notFound',
     showAll: 'publicationsSectionType.showAll',
     showLess: 'publicationsSectionType.showLess',
+    search: 'publicationsSectionType.search',
+    clearSearch: 'publicationsSectionType.clearSearch',
+    result: 'publicationsSectionType.result',
+    results: 'publicationsSectionType.results',
+    noResults: 'publicationsSectionType.noResults',
   },
   newsletterSectionType: {
     title: 'newsletterSectionType.title',

@@ -1,5 +1,5 @@
 import { motion, MotionProps } from 'framer-motion';
-import { ElementType, HTMLAttributes, ReactNode } from 'react';
+import { ElementType, HTMLAttributes, ReactNode, useMemo } from 'react';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   as?: ElementType;
@@ -17,9 +17,11 @@ const Wrapper = ({
   animate = true,
   ...rest
 }: Props & MotionProps) => {
-  if (animate) {
-    const MotionTag = motion(as);
+  // Created once per tag: a new motion component on every render would remount
+  // the whole section, dropping the focus and state of anything inside it.
+  const MotionTag = useMemo(() => motion(as), [as]);
 
+  if (animate) {
     return (
       <MotionTag id={id} className={`py-24 md:py-32 ${className}`} {...rest}>
         {children}

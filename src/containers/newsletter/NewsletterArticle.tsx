@@ -3,7 +3,10 @@ import {
   getNewsletterIssue,
   newsletterCategories,
 } from '@/lib/content/newsletter';
-import { formatPublicationDate, toLang } from '@/lib/content/publications';
+import {
+  formatPublicationDate,
+  toLang,
+} from '@/lib/content/publications/format';
 
 import { Layout } from '@/containers';
 import { renderBlock } from '@/containers/publications/blocks';
