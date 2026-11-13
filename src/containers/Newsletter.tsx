@@ -1,10 +1,13 @@
 'use client';
 import {
-  type NewsletterCategory,
   newsletterCategories,
+  type NewsletterCategory,
   newsletterIssues,
 } from '@/lib/content/newsletter';
-import { formatPublicationDate, toLang } from '@/lib/content/publications';
+import {
+  formatPublicationDate,
+  toLang,
+} from '@/lib/content/publications/format';
 
 import { Wrapper } from '@/components';
 

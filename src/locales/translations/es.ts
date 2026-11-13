@@ -282,6 +282,11 @@ export const es = {
   [tokens.publicationsSectionType.notFound]: 'No encontré esa publicación.',
   [tokens.publicationsSectionType.showAll]: 'Ver todas las guías',
   [tokens.publicationsSectionType.showLess]: 'Ver menos',
+  [tokens.publicationsSectionType.search]: 'Buscar guías por tema, herramienta o etiqueta',
+  [tokens.publicationsSectionType.clearSearch]: 'Limpiar búsqueda',
+  [tokens.publicationsSectionType.result]: 'guía encontrada',
+  [tokens.publicationsSectionType.results]: 'guías encontradas',
+  [tokens.publicationsSectionType.noResults]: 'Ninguna guía coincide con esa búsqueda.',
 
   [tokens.newsletterSectionType.title]: 'Newsletter',
   [tokens.newsletterSectionType.subtitle]: 'Novedades útiles, ordenadas por categoría.',

@@ -22,13 +22,25 @@ export const generateMetadata = ({ params }: Props): Metadata => {
       title: publication.title.en,
       description: publication.summary.en,
       publishedTime: publication.date,
+      ...(publication.cover && {
+        images: [{ url: publication.cover.en, width: 1200, height: 630 }],
+      }),
     },
+    ...(publication.cover && {
+      twitter: {
+        card: 'summary_large_image',
+        title: publication.title.en,
+        description: publication.summary.en,
+        images: [publication.cover.en],
+      },
+    }),
   };
 };
 
 const Page = ({ params }: Props) => {
-  if (!getPublication(params.slug)) notFound();
-  return <PublicationArticle slug={params.slug} />;
+  const publication = getPublication(params.slug);
+  if (!publication) notFound();
+  return <PublicationArticle publication={publication} />;
 };
 
 export default Page;

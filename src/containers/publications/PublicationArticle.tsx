@@ -1,9 +1,9 @@
 'use client';
 import {
   formatPublicationDate,
-  getPublication,
   toLang,
-} from '@/lib/content/publications';
+} from '@/lib/content/publications/format';
+import type { Publication } from '@/lib/content/publications/types';
 
 import { Layout } from '@/containers';
 import { renderBlock } from '@/containers/publications/blocks';
@@ -11,13 +11,15 @@ import { renderBlock } from '@/containers/publications/blocks';
 import { tokens } from '@/locales/tokens';
 
 import '@/locales/i18n';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
-const PublicationArticle = ({ slug }: { slug: string }) => {
+// The publication comes from the server page, so the client bundle carries
+// only the article being read.
+const PublicationArticle = ({ publication }: { publication?: Publication }) => {
   const { t, i18n } = useTranslation();
   const lang = toLang(i18n.language);
-  const publication = getPublication(slug);
 
   return (
     <Layout>
@@ -55,6 +57,16 @@ const PublicationArticle = ({ slug }: { slug: string }) => {
                 ))}
               </div>
             </header>
+            {publication.cover && (
+              <Image
+                src={publication.cover[lang]}
+                alt=""
+                width={1200}
+                height={630}
+                priority
+                className="w-full h-auto mb-10 border rounded-md border-dark-3/30"
+              />
+            )}
             {publication.body[lang].map(renderBlock)}
           </>
         ) : (
