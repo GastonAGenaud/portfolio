@@ -1,10 +1,14 @@
 import { moshiPiHerdrTailscale } from './moshi-pi-herdr-tailscale';
+import { qaAiSeries } from './qa-ai-series';
 import type { Lang, Publication } from './types';
 
 export type { Block, Lang, Publication } from './types';
 
-// Newest first.
-export const publications: Publication[] = [moshiPiHerdrTailscale];
+// Newest first. The QA + AI series keeps its own reading order (day 1 to 31).
+export const publications: Publication[] = [
+  ...qaAiSeries,
+  moshiPiHerdrTailscale,
+];
 
 export const getPublication = (slug: string) =>
   publications.find((p) => p.slug === slug);

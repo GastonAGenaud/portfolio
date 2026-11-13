@@ -280,6 +280,8 @@ export const es = {
   [tokens.publicationsSectionType.minutes]: 'min de lectura',
   [tokens.publicationsSectionType.back]: 'Volver',
   [tokens.publicationsSectionType.notFound]: 'No encontré esa publicación.',
+  [tokens.publicationsSectionType.showAll]: 'Ver todas las guías',
+  [tokens.publicationsSectionType.showLess]: 'Ver menos',
 
   [tokens.newsletterSectionType.title]: 'Newsletter',
   [tokens.newsletterSectionType.subtitle]: 'Novedades útiles, ordenadas por categoría.',

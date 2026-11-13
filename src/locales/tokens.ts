@@ -250,6 +250,8 @@ export const tokens = {
     minutes: 'publicationsSectionType.minutes',
     back: 'publicationsSectionType.back',
     notFound: 'publicationsSectionType.notFound',
+    showAll: 'publicationsSectionType.showAll',
+    showLess: 'publicationsSectionType.showLess',
   },
   newsletterSectionType: {
     title: 'newsletterSectionType.title',
