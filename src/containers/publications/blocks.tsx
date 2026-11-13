@@ -1,10 +1,23 @@
-import type { Block } from '@/lib/content/publications';
+import type { Block } from '@/lib/content/publications/types';
 
+import Image from 'next/image';
+import Link from 'next/link';
 import { Fragment, type ReactNode } from 'react';
 
-// Inline markup used in the content files: `code` and **bold**.
+// Inline markup used in the content files: `code`, **bold** and [text](url).
 const inline = (text: string): ReactNode[] =>
-  text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, i) => {
+  text.split(/(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g).map((part, i) => {
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (link)
+      return (
+        <Link
+          key={i}
+          href={link[2]}
+          className="text-accent underline-offset-4 hover:underline"
+        >
+          {link[1]}
+        </Link>
+      );
     if (part.startsWith('`') && part.endsWith('`'))
       return (
         <code
@@ -70,6 +83,51 @@ export const renderBlock = (block: Block, i: number) => {
             </li>
           ))}
         </Tag>
+      );
+    }
+    case 'image': {
+      // Diagrams are rendered at 2x, so cap the display width at half.
+      const style = { maxWidth: Math.round(block.width / 2) };
+      return (
+        <figure key={i} className="my-6">
+          <div className="p-4 border rounded-md sm:p-6 bg-bg-secondary border-dark-3/30">
+            <Image
+              src={block.src}
+              alt={block.alt}
+              width={block.width}
+              height={block.height}
+              style={style}
+              className={`w-full h-auto mx-auto ${
+                block.darkSrc ? 'dark:hidden' : ''
+              }`}
+            />
+            {block.darkSrc && (
+              <Image
+                src={block.darkSrc}
+                alt={block.alt}
+                width={block.width}
+                height={block.height}
+                style={style}
+                className="hidden w-full h-auto mx-auto dark:block"
+              />
+            )}
+          </div>
+          {block.caption && (
+            <figcaption className="mt-2 font-mono text-xs text-center">
+              {block.caption}
+            </figcaption>
+          )}
+          {block.textVersion && (
+            <details className="mt-3">
+              <summary className="font-mono text-xs cursor-pointer text-accent">
+                {block.textVersion.label}
+              </summary>
+              <pre className="p-4 mt-2 overflow-x-auto font-mono text-xs leading-relaxed border rounded-md bg-bg-secondary border-dark-3/30 text-dark-2">
+                <code>{block.textVersion.text}</code>
+              </pre>
+            </details>
+          )}
+        </figure>
       );
     }
     case 'code':
