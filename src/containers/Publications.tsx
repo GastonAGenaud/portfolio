@@ -11,11 +11,17 @@ import { tokens } from '@/locales/tokens';
 import { getSectionAnimation } from '@/styles/animations';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+// Cards shown before the visitor asks for the full list.
+const INITIAL_COUNT = 6;
 
 const Publications = () => {
   const { t, i18n } = useTranslation();
   const lang = toLang(i18n.language);
+  const [showAll, setShowAll] = useState(false);
+  const visible = showAll ? publications : publications.slice(0, INITIAL_COUNT);
 
   return (
     <Wrapper
@@ -31,7 +37,7 @@ const Publications = () => {
       </p>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {publications.map((p) => (
+        {visible.map((p) => (
           <Link
             key={p.slug}
             href={`/publications/${p.slug}`}
@@ -61,6 +67,23 @@ const Publications = () => {
           </Link>
         ))}
       </div>
+
+      {publications.length > INITIAL_COUNT && (
+        <div className="flex justify-center mt-10">
+          <button
+            type="button"
+            onClick={() => setShowAll((value) => !value)}
+            aria-expanded={showAll}
+            className="px-5 py-2 font-mono text-sm duration-200 border rounded-md border-accent text-accent hover:bg-accent-light focus:bg-accent-light focus:outline-none"
+          >
+            {showAll
+              ? t(tokens.publicationsSectionType.showLess)
+              : `${t(tokens.publicationsSectionType.showAll)} (${
+                  publications.length
+                })`}
+          </button>
+        </div>
+      )}
     </Wrapper>
   );
 };
