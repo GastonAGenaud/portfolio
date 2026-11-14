@@ -66,6 +66,24 @@ const cases = [
     ...t$.cases[7],
   },
   {
+    url: 'https://pizzacalda.vercel.app',
+    image: '/services/pizza-calda-hero.jpg',
+    alt: 'Pizza Calda — pizzería y bodegón en Recoleta',
+    ...t$.cases[9],
+  },
+  {
+    url: 'https://la-morada-regional.vercel.app',
+    image: '/services/la-morada-hero.jpg',
+    alt: 'La Morada — cocina regional en Recoleta',
+    ...t$.cases[10],
+  },
+  {
+    url: 'https://miro-recoleta.vercel.app',
+    image: '/services/miro-hero.jpg',
+    alt: 'Miro — cafetín en Recoleta',
+    ...t$.cases[11],
+  },
+  {
     url: 'https://thevirginia.site',
     image: '/services/the-virginia-hero.jpg',
     alt: 'The Virginia — estudio de ingeniería de calidad',
