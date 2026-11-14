@@ -75,8 +75,18 @@ const Button = (props: Props & MotionProps) => {
   }
 
   if (type == 'button') {
+    // Forward aria-* / data-* so callers can label and target the button.
+    const passthrough = Object.fromEntries(
+      Object.entries(props).filter(([key]) => /^(aria|data)-/.test(key))
+    );
+
     return (
-      <button type={type} className={classes} onClick={props.onClick}>
+      <button
+        type={type}
+        className={classes}
+        onClick={props.onClick}
+        {...passthrough}
+      >
         {children}
       </button>
     );

@@ -54,6 +54,7 @@ const PersonaSwitch = ({ className = '' }: { className?: string }) => {
             key={opt.key}
             role="tab"
             aria-selected={active}
+            data-testid={`persona-${opt.key}`}
             onClick={() => setPersona(opt.key)}
             className={`relative z-10 flex items-center gap-1.5 rounded-full px-1.5 min-[360px]:px-2 sm:px-3 py-1.5 text-xs font-medium capitalize transition-colors duration-300 ${
               active ? 'text-bg' : 'text-text hover:text-accent'

@@ -1,4 +1,6 @@
 public/lotties/
 node_modules/
 .next/
-documents/
+documents/test-results/
+playwright-report/
+vendor/
