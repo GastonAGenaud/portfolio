@@ -464,6 +464,84 @@ export const es = {
   [tokens.servicesSectionType.cases[11].bullets[1]]: 'Reloj en vivo con estado abierto / cerrado',
   [tokens.servicesSectionType.cases[11].bullets[2]]: 'Horarios, ubicación y opiniones',
   [tokens.servicesSectionType.cases[11].bullets[3]]: 'Español e inglés',
+  [tokens.servicesSectionType.cases[12].title]:
+    'La Tolva — Cafetería en Av. Santa Fe',
+  [tokens.servicesSectionType.cases[12].description]:
+    'Sitio de Veni a Ver para una cafetería de Buenos Aires: carta por secciones, pedidos y reservas de mesa por WhatsApp y las reseñas de Google a la vista.',
+  [tokens.servicesSectionType.cases[12].bullets[0]]:
+    'Carta por secciones con platos destacados',
+  [tokens.servicesSectionType.cases[12].bullets[1]]:
+    'Pedidos y reservas de mesa por WhatsApp',
+  [tokens.servicesSectionType.cases[12].bullets[2]]:
+    'Horarios, mapa y reseñas de Google',
+  [tokens.servicesSectionType.cases[12].bullets[3]]: 'Español e inglés',
+  [tokens.servicesSectionType.cases[13].title]:
+    'Óptica La Rochelle — Óptica en Recoleta',
+  [tokens.servicesSectionType.cases[13].description]:
+    'Sitio de Veni a Ver para una óptica: catálogo de armazones y servicios, consultas de stock por WhatsApp y la ubicación en el mapa.',
+  [tokens.servicesSectionType.cases[13].bullets[0]]:
+    'Catálogo de armazones, cristales y servicios',
+  [tokens.servicesSectionType.cases[13].bullets[1]]:
+    'Consulta de stock por WhatsApp',
+  [tokens.servicesSectionType.cases[13].bullets[2]]:
+    'Horarios, mapa y reseñas de Google',
+  [tokens.servicesSectionType.cases[13].bullets[3]]: 'Español e inglés',
+  [tokens.servicesSectionType.cases[14].title]:
+    'Farmacia Vantage Franco Alemana — Farmacia 24 horas',
+  [tokens.servicesSectionType.cases[14].description]:
+    'Sitio de Veni a Ver para una farmacia abierta las 24 horas en la calle Beruti: catálogo de perfumería y dermocosmética, con consultas de stock por WhatsApp.',
+  [tokens.servicesSectionType.cases[14].bullets[0]]:
+    'Catálogo de perfumería y dermocosmética',
+  [tokens.servicesSectionType.cases[14].bullets[1]]:
+    'Consulta de stock por WhatsApp',
+  [tokens.servicesSectionType.cases[14].bullets[2]]:
+    'Horarios, mapa y reseñas de Google',
+  [tokens.servicesSectionType.cases[14].bullets[3]]: 'Español e inglés',
+  [tokens.servicesSectionType.cases[15].title]:
+    'Farmacia San Fernando — Farmacia en Av. Santa Fe',
+  [tokens.servicesSectionType.cases[15].description]:
+    'Sitio de Veni a Ver para una farmacia de barrio: catálogo por rubro, consulta de stock antes de ir, y horarios y mapa.',
+  [tokens.servicesSectionType.cases[15].bullets[0]]:
+    'Catálogo por rubro con productos destacados',
+  [tokens.servicesSectionType.cases[15].bullets[1]]:
+    'Consulta de stock por WhatsApp',
+  [tokens.servicesSectionType.cases[15].bullets[2]]:
+    'Horarios, mapa y reseñas de Google',
+  [tokens.servicesSectionType.cases[15].bullets[3]]: 'Español e inglés',
+  [tokens.servicesSectionType.veni.eyebrow]: 'Veni a Ver',
+  [tokens.servicesSectionType.veni.title]:
+    'El sitio de tu comercio, armado con tus datos reales.',
+  [tokens.servicesSectionType.veni.description]:
+    'Una línea pensada para cafeterías, restaurantes, farmacias, ópticas y ferreterías. Armo el sitio con los datos reales de tu negocio en Google Maps y queda online, listo para recibir clientes.',
+  [tokens.servicesSectionType.veni.sitesLabel]: 'Sitios publicados',
+  [tokens.servicesSectionType.veni.plansTitle]: 'Dos modalidades',
+  [tokens.servicesSectionType.veni.cta]: 'Quiero mi sitio',
+  [tokens.servicesSectionType.veni.whatsappMessage]:
+    'Hola Gastón, vi Veni a Ver y quiero un sitio para mi comercio.',
+  [tokens.servicesSectionType.veni.benefits[0].title]: 'Pedidos por WhatsApp',
+  [tokens.servicesSectionType.veni.benefits[0].text]:
+    'Botón directo con mensaje prearmado: el cliente te escribe en un toque.',
+  [tokens.servicesSectionType.veni.benefits[1].title]: 'Hecho para el celular',
+  [tokens.servicesSectionType.veni.benefits[1].text]:
+    'Sitio rápido, adaptado a celular y con tu ubicación en el mapa.',
+  [tokens.servicesSectionType.veni.benefits[2].title]: 'Tus reseñas a la vista',
+  [tokens.servicesSectionType.veni.benefits[2].text]:
+    'Tu puntaje de Google y lo que opinan tus clientes reales.',
+  [tokens.servicesSectionType.veni.benefits[3].title]: 'Bilingüe',
+  [tokens.servicesSectionType.veni.benefits[3].text]:
+    'Versión en inglés incluida para turistas.',
+  [tokens.servicesSectionType.veni.benefits[4].title]: 'Flyer con QR',
+  [tokens.servicesSectionType.veni.benefits[4].text]:
+    'Imprimible en A5 para el mostrador o la vidriera.',
+  [tokens.servicesSectionType.veni.benefits[5].title]: 'Sin complicaciones',
+  [tokens.servicesSectionType.veni.benefits[5].text]:
+    'Yo lo actualizo: precios, fotos y horarios.',
+  [tokens.servicesSectionType.veni.plans[0].name]: 'Pago único',
+  [tokens.servicesSectionType.veni.plans[0].detail]:
+    'Sitio + flyer + 1 mes de cambios',
+  [tokens.servicesSectionType.veni.plans[1].name]: 'Mensual',
+  [tokens.servicesSectionType.veni.plans[1].detail]:
+    'Sitio + dominio .com.ar + cambios ilimitados',
   [tokens.servicesSectionType.caseCta]: 'Visitar el sitio',
   [tokens.servicesSectionType.processEyebrow]: 'Cómo trabajo',
   [tokens.servicesSectionType.processTitle]: 'Simple, directo y sin sorpresas.',
