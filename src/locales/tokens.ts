@@ -317,6 +317,13 @@ export const tokens = {
           (i) => `servicesSectionType.items.ads.bullets.${i}`
         ),
       },
+      systems: {
+        title: 'servicesSectionType.items.systems.title',
+        description: 'servicesSectionType.items.systems.description',
+        bullets: [0, 1, 2, 3].map(
+          (i) => `servicesSectionType.items.systems.bullets.${i}`
+        ),
+      },
       automation: {
         title: 'servicesSectionType.items.automation.title',
         description: 'servicesSectionType.items.automation.description',
@@ -351,6 +358,53 @@ export const tokens = {
     prototypeDescription: 'servicesSectionType.prototypeDescription',
     prototypeCta: 'servicesSectionType.prototypeCta',
     prototypeWhatsappMessage: 'servicesSectionType.prototypeWhatsappMessage',
+    stats: {
+      projects: 'servicesSectionType.stats.projects',
+      sectors: 'servicesSectionType.stats.sectors',
+      prototype: 'servicesSectionType.stats.prototype',
+      languages: 'servicesSectionType.stats.languages',
+    },
+    problemEyebrow: 'servicesSectionType.problemEyebrow',
+    problemTitle: 'servicesSectionType.problemTitle',
+    problemClosing: 'servicesSectionType.problemClosing',
+    problems: [0, 1, 2].map((i) => ({
+      title: `servicesSectionType.problems.${i}.title`,
+      description: `servicesSectionType.problems.${i}.description`,
+    })),
+    examplesLabel: 'servicesSectionType.examplesLabel',
+    sectorsEyebrow: 'servicesSectionType.sectorsEyebrow',
+    sectorsTitle: 'servicesSectionType.sectorsTitle',
+    sectorsCta: 'servicesSectionType.sectorsCta',
+    sectors: {
+      gastro: {
+        title: 'servicesSectionType.sectors.gastro.title',
+        outcome: 'servicesSectionType.sectors.gastro.outcome',
+      },
+      commerce: {
+        title: 'servicesSectionType.sectors.commerce.title',
+        outcome: 'servicesSectionType.sectors.commerce.outcome',
+      },
+      tourism: {
+        title: 'servicesSectionType.sectors.tourism.title',
+        outcome: 'servicesSectionType.sectors.tourism.outcome',
+      },
+      health: {
+        title: 'servicesSectionType.sectors.health.title',
+        outcome: 'servicesSectionType.sectors.health.outcome',
+      },
+      pro: {
+        title: 'servicesSectionType.sectors.pro.title',
+        outcome: 'servicesSectionType.sectors.pro.outcome',
+      },
+    },
+    filterAll: 'servicesSectionType.filterAll',
+    filterLabel: 'servicesSectionType.filterLabel',
+    faqEyebrow: 'servicesSectionType.faqEyebrow',
+    faqTitle: 'servicesSectionType.faqTitle',
+    faq: [0, 1, 2, 3, 4, 5].map((i) => ({
+      question: `servicesSectionType.faq.${i}.question`,
+      answer: `servicesSectionType.faq.${i}.answer`,
+    })),
   },
   fitnessSectionType: {
     eyebrow: 'fitnessSectionType.eyebrow',

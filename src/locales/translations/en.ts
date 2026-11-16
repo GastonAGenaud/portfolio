@@ -410,19 +410,19 @@ export const en = {
   // Services (third persona in the switch)
   [tokens.servicesSectionType.switchLabel]: 'Services',
   [tokens.servicesSectionType.eyebrow]:
-    'Services · Websites · Ads · Automation',
+    'Services · Websites · Systems · Ads · AI',
   [tokens.servicesSectionType.title]: 'Your brand online,',
   [tokens.servicesSectionType.titleAccent]: 'working for you.',
   [tokens.servicesSectionType.intro]:
-    'I design and build personal websites, plan the ad strategy that fills them with leads, and automate the repetitive work so you can focus on yours. With the same engineering I bring to enterprise projects.',
+    'I build websites, online stores and custom management systems, plan the ad strategy that fills them with leads, and automate the repetitive work so you can focus on your business. With the same engineering I bring to enterprise projects.',
   [tokens.servicesSectionType.ctaPrimary]: 'Tell me about your project',
-  [tokens.servicesSectionType.ctaSecondary]: 'See a real case',
+  [tokens.servicesSectionType.ctaSecondary]: 'See real cases',
   [tokens.servicesSectionType.offerEyebrow]: 'What I do',
   [tokens.servicesSectionType.offerTitle]:
-    'Three services, one goal: your growth.',
-  [tokens.servicesSectionType.items.web.title]: 'Personal websites',
+    'Four services, one goal: growing your business.',
+  [tokens.servicesSectionType.items.web.title]: 'Websites & online stores',
   [tokens.servicesSectionType.items.web.description]:
-    'Your professional site, custom-built, with your own admin panel so you never depend on anyone to update it.',
+    'Your website or online store, custom-built, with your own admin panel so you never depend on anyone to update it.',
   [tokens.servicesSectionType.items.web.bullets[0]]:
     'Custom, mobile-first design',
   [tokens.servicesSectionType.items.web.bullets[1]]:
@@ -441,6 +441,17 @@ export const en = {
   [tokens.servicesSectionType.items.ads.bullets[2]]:
     'Pixel, events and conversions tracked right',
   [tokens.servicesSectionType.items.ads.bullets[3]]: 'Clear results reporting',
+  [tokens.servicesSectionType.items.systems.title]: 'Custom management systems',
+  [tokens.servicesSectionType.items.systems.description]:
+    'Stock, orders, bookings or students in an app built around how your business works, not the other way around.',
+  [tokens.servicesSectionType.items.systems.bullets[0]]:
+    'Dashboards with what matters: what to restock, what to charge',
+  [tokens.servicesSectionType.items.systems.bullets[1]]:
+    'Role or team-based access, from your phone',
+  [tokens.servicesSectionType.items.systems.bullets[2]]:
+    'Monthly reports you can export to Excel',
+  [tokens.servicesSectionType.items.systems.bullets[3]]:
+    'Works alongside the tools you already use',
   [tokens.servicesSectionType.items.automation.title]: 'Custom automation',
   [tokens.servicesSectionType.items.automation.description]:
     'Solutions that do the repetitive work for you: fewer manual tasks, more time.',
@@ -569,4 +580,70 @@ export const en = {
   [tokens.servicesSectionType.prototypeCta]: 'I want my prototype',
   [tokens.servicesSectionType.prototypeWhatsappMessage]:
     "Hi Gaston! I'd like the free 14-day prototype for my portfolio or online store.",
+  [tokens.servicesSectionType.stats.projects]: 'projects in production',
+  [tokens.servicesSectionType.stats.sectors]: 'different industries',
+  [tokens.servicesSectionType.stats.prototype]: 'days of free prototype',
+  [tokens.servicesSectionType.stats.languages]: 'languages on a single site',
+  [tokens.servicesSectionType.problemEyebrow]: 'The problem',
+  [tokens.servicesSectionType.problemTitle]:
+    'Your business works. But everything depends on you.',
+  [tokens.servicesSectionType.problems[0].title]: 'Orders written down by hand',
+  [tokens.servicesSectionType.problems[0].description]:
+    'You read the menu out over WhatsApp, copy addresses, and some order always gets lost.',
+  [tokens.servicesSectionType.problems[1].title]:
+    'Spreadsheets only one person understands',
+  [tokens.servicesSectionType.problems[1].description]:
+    'Stock, prices and bookings live in a spreadsheet with a dozen tabs, and if that person is out, nobody knows anything.',
+  [tokens.servicesSectionType.problems[2].title]:
+    "An Instagram that doesn't convert",
+  [tokens.servicesSectionType.problems[2].description]:
+    'People find you, ask the price and leave because nobody answered in time.',
+  [tokens.servicesSectionType.problemClosing]:
+    "That's what I solve: simple software, built around how your business works.",
+  [tokens.servicesSectionType.examplesLabel]: 'Examples',
+  [tokens.servicesSectionType.sectorsEyebrow]: 'By industry',
+  [tokens.servicesSectionType.sectorsTitle]:
+    'Solutions already working for businesses like yours.',
+  [tokens.servicesSectionType.sectorsCta]: 'See cases',
+  [tokens.servicesSectionType.sectors.gastro.title]: 'Food & drink',
+  [tokens.servicesSectionType.sectors.gastro.outcome]:
+    'Orders arrive ready on WhatsApp, no reading the menu out loud.',
+  [tokens.servicesSectionType.sectors.commerce.title]: 'Retail',
+  [tokens.servicesSectionType.sectors.commerce.outcome]:
+    'Customers build their own order and you just confirm it.',
+  [tokens.servicesSectionType.sectors.tourism.title]: 'Tourism & lodging',
+  [tokens.servicesSectionType.sectors.tourism.outcome]:
+    'Every inquiry arrives knowing which cabin, when and at what price.',
+  [tokens.servicesSectionType.sectors.health.title]: 'Healthcare',
+  [tokens.servicesSectionType.sectors.health.outcome]:
+    'Purchasing knows what to restock without asking each team.',
+  [tokens.servicesSectionType.sectors.pro.title]: 'Professionals & education',
+  [tokens.servicesSectionType.sectors.pro.outcome]:
+    'A site that showcases your work and organizes every inquiry, without depending on Instagram.',
+  [tokens.servicesSectionType.filterAll]: 'All',
+  [tokens.servicesSectionType.filterLabel]: 'Filter cases by industry',
+  [tokens.servicesSectionType.faqEyebrow]: 'FAQ',
+  [tokens.servicesSectionType.faqTitle]: 'What people usually ask me.',
+  [tokens.servicesSectionType.faq[0].question]: 'Do I need to know tech?',
+  [tokens.servicesSectionType.faq[0].answer]:
+    'No. I handle the domain, hosting and launch. You tell me how you work and I turn it into software.',
+  [tokens.servicesSectionType.faq[1].question]:
+    'Can I update prices and content myself?',
+  [tokens.servicesSectionType.faq[1].answer]:
+    'Yes. Every project that needs it comes with its own admin panel for products, prices or services, plus a manual so you never depend on me.',
+  [tokens.servicesSectionType.faq[2].question]:
+    'Does it work with WhatsApp and Excel?',
+  [tokens.servicesSectionType.faq[2].answer]:
+    'Yes, and you keep using them. If your customers message you on WhatsApp or your team lives in Excel, I integrate with that: orders arrive on WhatsApp and reports come out in Excel.',
+  [tokens.servicesSectionType.faq[3].question]:
+    'How long does it take and how much does it cost?',
+  [tokens.servicesSectionType.faq[3].answer]:
+    'It depends on the scope. After our first call I send you scope, timeline and cost in writing, before we start. No surprises.',
+  [tokens.servicesSectionType.faq[4].question]:
+    'How does the free prototype work?',
+  [tokens.servicesSectionType.faq[4].answer]:
+    "I build a first version of your site or store and you use it for 14 days. If it works for you, we keep going; if not, you don't pay anything.",
+  [tokens.servicesSectionType.faq[5].question]: 'What happens after launch?',
+  [tokens.servicesSectionType.faq[5].answer]:
+    'I show you how to use it and stay available. What I ship is tested and deploys itself, so changes go out fast without breaking anything.',
 };
