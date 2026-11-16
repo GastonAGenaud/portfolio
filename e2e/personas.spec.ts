@@ -29,6 +29,26 @@ test.describe('persona switch', () => {
     }
   });
 
+  test('services shows the Veni a Ver sites and offer', async ({ page }) => {
+    await open(page);
+    await page.getByTestId('persona-services').click();
+
+    for (const site of ['La Tolva', 'Óptica La Rochelle']) {
+      await expect(
+        page.getByRole('heading', { name: new RegExp(site) })
+      ).toBeVisible();
+    }
+    const offer = page.locator('#veni-a-ver');
+    await expect(
+      offer.getByRole('heading', { name: /built from your real data/ })
+    ).toBeVisible();
+    await expect(
+      offer.getByRole('link', { name: 'I want my site' })
+    ).toHaveAttribute('href', /^https:\/\/wa\.me\//);
+    // Rates only go in the proposal PDF.
+    await expect(offer).not.toContainText('$');
+  });
+
   test('services filters cases by industry', async ({ page }) => {
     await open(page);
     await page.getByTestId('persona-services').click();
