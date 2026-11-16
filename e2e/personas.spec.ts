@@ -45,6 +45,17 @@ test.describe('persona switch', () => {
     await expect(
       offer.getByRole('link', { name: 'I want my site' })
     ).toHaveAttribute('href', /^https:\/\/wa\.me\//);
+    // Miro moved to veniaver.com; Fergus keeps its own URL and has a copy there.
+    await expect(
+      page.locator('#case-miro').getByRole('link').first()
+    ).toHaveAttribute('href', 'https://miro.veniaver.com');
+    await expect(
+      page.locator('#case-fergus').getByRole('link').first()
+    ).toHaveAttribute('href', 'https://fergus-pancheria.vercel.app');
+    await expect(offer.getByRole('link', { name: 'Fergus' })).toHaveAttribute(
+      'href',
+      'https://fergus.veniaver.com'
+    );
     // Rates only go in the proposal PDF.
     await expect(offer).not.toContainText('$');
   });
