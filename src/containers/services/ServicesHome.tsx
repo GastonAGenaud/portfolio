@@ -111,7 +111,7 @@ const cases: Case[] = [
   },
   {
     slug: 'la-morada',
-    url: 'https://la-morada-regional.vercel.app',
+    url: 'https://la-morada.veniaver.com',
     image: '/services/la-morada-hero.jpg',
     alt: 'La Morada — cocina regional en Recoleta',
     sector: 'gastro',
@@ -119,7 +119,7 @@ const cases: Case[] = [
   },
   {
     slug: 'miro',
-    url: 'https://miro-recoleta.vercel.app',
+    url: 'https://miro.veniaver.com',
     image: '/services/miro-hero.jpg',
     alt: 'Miro — cafetín en Recoleta',
     sector: 'gastro',
@@ -191,12 +191,16 @@ const services = [
   },
 ];
 
-// Published Veni a Ver sites, linked from the offer block.
-const veniSites = [
-  'la-tolva',
-  'optica-la-rochelle',
-  'farmacia-vantage',
-  'farmacia-san-fernando',
+// Published Veni a Ver sites, linked from the offer block. `copyUrl`: the case
+// keeps its own URL and Veni a Ver serves a copy, so the link goes to the copy.
+const veniSites: { slug: string; copyUrl?: string }[] = [
+  { slug: 'miro' },
+  { slug: 'la-morada' },
+  { slug: 'fergus', copyUrl: 'https://fergus.veniaver.com' },
+  { slug: 'la-tolva' },
+  { slug: 'optica-la-rochelle' },
+  { slug: 'farmacia-vantage' },
+  { slug: 'farmacia-san-fernando' },
 ];
 
 const sectorKeys = Object.keys(t$.sectors) as SectorKey[];
@@ -634,12 +638,16 @@ const ServicesHome = () => {
             <span className="font-mono uppercase tracking-wider">
               {t(t$.veni.sitesLabel)}:
             </span>{' '}
-            {veniSites.map((slug, j) => (
+            {veniSites.map(({ slug, copyUrl }, j) => (
               <span key={slug}>
                 {j > 0 && ' · '}
                 <a
-                  href={`#case-${slug}`}
-                  onClick={() => setSector('all')}
+                  {...(copyUrl
+                    ? { href: copyUrl, target: '_blank', rel: 'noreferrer' }
+                    : {
+                        href: `#case-${slug}`,
+                        onClick: () => setSector('all'),
+                      })}
                   className="text-dark-2 underline decoration-dark-3 underline-offset-4 hover:text-accent hover:decoration-accent"
                 >
                   {shortName(t(caseBySlug[slug].title))}
