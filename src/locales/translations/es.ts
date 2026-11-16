@@ -323,19 +323,19 @@ export const es = {
   // Servicios (tercera persona de la botonera)
   [tokens.servicesSectionType.switchLabel]: 'Servicios',
   [tokens.servicesSectionType.eyebrow]:
-    'Servicios · Webs · Ads · Automatización',
+    'Servicios · Webs · Sistemas · Ads · IA',
   [tokens.servicesSectionType.title]: 'Tu marca online,',
   [tokens.servicesSectionType.titleAccent]: 'trabajando por vos.',
   [tokens.servicesSectionType.intro]:
-    'Diseño y desarrollo sitios personales, armo la estrategia de anuncios que los llena de consultas y automatizo lo repetitivo para que te enfoques en tu trabajo. Con la misma ingeniería que uso en proyectos enterprise.',
+    'Diseño webs, tiendas y sistemas de gestión a medida, armo la estrategia de anuncios que los llena de consultas y automatizo lo repetitivo para que te enfoques en tu negocio. Con la misma ingeniería que uso en proyectos enterprise.',
   [tokens.servicesSectionType.ctaPrimary]: 'Contame tu proyecto',
-  [tokens.servicesSectionType.ctaSecondary]: 'Ver un caso real',
+  [tokens.servicesSectionType.ctaSecondary]: 'Ver casos reales',
   [tokens.servicesSectionType.offerEyebrow]: 'Qué hago',
   [tokens.servicesSectionType.offerTitle]:
-    'Tres servicios, un mismo objetivo: que crezcas.',
-  [tokens.servicesSectionType.items.web.title]: 'Sitios personales',
+    'Cuatro servicios, un mismo objetivo: que tu negocio crezca.',
+  [tokens.servicesSectionType.items.web.title]: 'Webs y tiendas online',
   [tokens.servicesSectionType.items.web.description]:
-    'Tu web profesional, a medida y con panel propio para que la actualices sin depender de nadie.',
+    'Tu web o tienda online, a medida y con panel propio para que la actualices sin depender de nadie.',
   [tokens.servicesSectionType.items.web.bullets[0]]:
     'Diseño a medida, mobile-first',
   [tokens.servicesSectionType.items.web.bullets[1]]:
@@ -355,6 +355,18 @@ export const es = {
     'Píxel, eventos y conversiones bien medidos',
   [tokens.servicesSectionType.items.ads.bullets[3]]:
     'Reporte claro de resultados',
+  [tokens.servicesSectionType.items.systems.title]:
+    'Sistemas de gestión a medida',
+  [tokens.servicesSectionType.items.systems.description]:
+    'Stock, pedidos, turnos o alumnos en una app hecha sobre cómo trabaja tu negocio, no al revés.',
+  [tokens.servicesSectionType.items.systems.bullets[0]]:
+    'Paneles con lo que importa: qué reponer, qué cobrar',
+  [tokens.servicesSectionType.items.systems.bullets[1]]:
+    'Acceso por rol o sector, desde el celular',
+  [tokens.servicesSectionType.items.systems.bullets[2]]:
+    'Reportes mensuales exportables a Excel',
+  [tokens.servicesSectionType.items.systems.bullets[3]]:
+    'Convive con las herramientas que ya usás',
   [tokens.servicesSectionType.items.automation.title]:
     'Automatizaciones a medida',
   [tokens.servicesSectionType.items.automation.description]:
@@ -484,6 +496,74 @@ export const es = {
   [tokens.servicesSectionType.prototypeCta]: 'Quiero mi prototipo',
   [tokens.servicesSectionType.prototypeWhatsappMessage]:
     'Hola Gaston! Quiero el prototipo sin costo de 14 días para mi portfolio o tienda online.',
+  [tokens.servicesSectionType.stats.projects]: 'proyectos en producción',
+  [tokens.servicesSectionType.stats.sectors]: 'rubros distintos',
+  [tokens.servicesSectionType.stats.prototype]: 'días de prototipo sin costo',
+  [tokens.servicesSectionType.stats.languages]: 'idiomas en un mismo sitio',
+  [tokens.servicesSectionType.problemEyebrow]: 'El problema',
+  [tokens.servicesSectionType.problemTitle]:
+    'Tu negocio funciona. Pero depende de vos para todo.',
+  [tokens.servicesSectionType.problems[0].title]: 'Pedidos anotados a mano',
+  [tokens.servicesSectionType.problems[0].description]:
+    'Dictás la carta por WhatsApp, copiás direcciones y algún pedido siempre se pierde.',
+  [tokens.servicesSectionType.problems[1].title]:
+    'Planillas que solo entiende una persona',
+  [tokens.servicesSectionType.problems[1].description]:
+    'Stock, precios y turnos viven en un Excel con mil pestañas, y si esa persona falta, nadie sabe nada.',
+  [tokens.servicesSectionType.problems[2].title]:
+    'Un Instagram que no convierte',
+  [tokens.servicesSectionType.problems[2].description]:
+    'Te encuentran, preguntan el precio y se van porque nadie respondió a tiempo.',
+  [tokens.servicesSectionType.problemClosing]:
+    'Eso es lo que resuelvo: software simple, hecho para cómo trabaja tu negocio.',
+  [tokens.servicesSectionType.examplesLabel]: 'Ejemplos',
+  [tokens.servicesSectionType.sectorsEyebrow]: 'Por rubro',
+  [tokens.servicesSectionType.sectorsTitle]:
+    'Soluciones que ya funcionan en negocios como el tuyo.',
+  [tokens.servicesSectionType.sectorsCta]: 'Ver casos',
+  [tokens.servicesSectionType.sectors.gastro.title]: 'Gastronomía',
+  [tokens.servicesSectionType.sectors.gastro.outcome]:
+    'Que el pedido llegue armado por WhatsApp, sin dictar la carta.',
+  [tokens.servicesSectionType.sectors.commerce.title]: 'Comercios',
+  [tokens.servicesSectionType.sectors.commerce.outcome]:
+    'Que tus clientes armen el pedido solos y vos solo lo confirmes.',
+  [tokens.servicesSectionType.sectors.tourism.title]: 'Turismo y alojamiento',
+  [tokens.servicesSectionType.sectors.tourism.outcome]:
+    'Que cada consulta llegue sabiendo qué cabaña, cuándo y a qué precio.',
+  [tokens.servicesSectionType.sectors.health.title]: 'Salud',
+  [tokens.servicesSectionType.sectors.health.outcome]:
+    'Que Compras sepa qué reponer sin preguntar sector por sector.',
+  [tokens.servicesSectionType.sectors.pro.title]: 'Profesionales y educación',
+  [tokens.servicesSectionType.sectors.pro.outcome]:
+    'Una web que muestra tu trabajo y ordena cada consulta, sin depender de Instagram.',
+  [tokens.servicesSectionType.filterAll]: 'Todos',
+  [tokens.servicesSectionType.filterLabel]: 'Filtrar casos por rubro',
+  [tokens.servicesSectionType.faqEyebrow]: 'Preguntas frecuentes',
+  [tokens.servicesSectionType.faqTitle]: 'Lo que suelen preguntarme.',
+  [tokens.servicesSectionType.faq[0].question]:
+    '¿Necesito saber de tecnología?',
+  [tokens.servicesSectionType.faq[0].answer]:
+    'No. Me encargo del dominio, el hosting y la puesta en marcha. Vos me contás cómo trabajás y yo lo traduzco a software.',
+  [tokens.servicesSectionType.faq[1].question]:
+    '¿Puedo actualizar precios y contenido yo mismo?',
+  [tokens.servicesSectionType.faq[1].answer]:
+    'Sí. Cada proyecto que lo necesita trae un panel propio para cargar productos, precios o servicios, y un manual para manejarlo sin depender de mí.',
+  [tokens.servicesSectionType.faq[2].question]:
+    '¿Funciona con WhatsApp y Excel?',
+  [tokens.servicesSectionType.faq[2].answer]:
+    'Sí, y no tenés que dejarlos. Si tus clientes te escriben por WhatsApp o tu equipo vive en Excel, lo integro: los pedidos llegan por WhatsApp y los reportes salen en Excel.',
+  [tokens.servicesSectionType.faq[3].question]:
+    '¿Cuánto tarda y cuánto cuesta?',
+  [tokens.servicesSectionType.faq[3].answer]:
+    'Depende del alcance. Después de la primera charla te paso alcance, tiempos y costo por escrito, antes de arrancar. Sin sorpresas.',
+  [tokens.servicesSectionType.faq[4].question]:
+    '¿Cómo funciona el prototipo sin costo?',
+  [tokens.servicesSectionType.faq[4].answer]:
+    'Te armo una primera versión de tu sitio o tienda y la usás 14 días. Si te sirve, seguimos; si no, no pagás nada.',
+  [tokens.servicesSectionType.faq[5].question]:
+    '¿Qué pasa después del lanzamiento?',
+  [tokens.servicesSectionType.faq[5].answer]:
+    'Te enseño a usarlo y sigo disponible. Lo que entrego está testeado y se despliega solo, así que los cambios salen rápido y sin romper nada.',
   // Sección Fitness / Entrenamiento (Creative → Sport)
   [tokens.fitnessSectionType.eyebrow]: 'Cuerpo · Bitácora',
   [tokens.fitnessSectionType.title]: 'Transformación Atlética',

@@ -209,6 +209,7 @@ const Navbar = () => {
         {/* Language menu — available in every persona */}
         <div>
           <Button
+            data-testid="language-button"
             aria-controls={open ? 'language-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
