@@ -126,6 +126,38 @@ const cases: Case[] = [
     ...t$.cases[11],
   },
   {
+    slug: 'la-tolva',
+    url: 'https://la-tolva.veniaver.com',
+    image: '/services/veniaver-la-tolva-hero.jpg',
+    alt: 'La Tolva — cafetería en Av. Santa Fe',
+    sector: 'gastro',
+    ...t$.cases[12],
+  },
+  {
+    slug: 'optica-la-rochelle',
+    url: 'https://optica-la-rochelle.veniaver.com',
+    image: '/services/veniaver-optica-la-rochelle-hero.jpg',
+    alt: 'Óptica La Rochelle — óptica en Recoleta',
+    sector: 'commerce',
+    ...t$.cases[13],
+  },
+  {
+    slug: 'farmacia-vantage',
+    url: 'https://farmacia-vantage-franco-alemana.veniaver.com',
+    image: '/services/veniaver-farmacia-vantage-hero.jpg',
+    alt: 'Farmacia Vantage Franco Alemana — farmacia 24 horas',
+    sector: 'commerce',
+    ...t$.cases[14],
+  },
+  {
+    slug: 'farmacia-san-fernando',
+    url: 'https://farmacia-san-fernando-cabrera-3161-scs.veniaver.com',
+    image: '/services/veniaver-farmacia-san-fernando-hero.jpg',
+    alt: 'Farmacia San Fernando — farmacia en Av. Santa Fe',
+    sector: 'commerce',
+    ...t$.cases[15],
+  },
+  {
     slug: 'the-virginia',
     url: 'https://thevirginia.site',
     image: '/services/the-virginia-hero.jpg',
@@ -157,6 +189,14 @@ const services = [
     examples: [],
     ...t$.items.automation,
   },
+];
+
+// Published Veni a Ver sites, linked from the offer block.
+const veniSites = [
+  'la-tolva',
+  'optica-la-rochelle',
+  'farmacia-vantage',
+  'farmacia-san-fernando',
 ];
 
 const sectorKeys = Object.keys(t$.sectors) as SectorKey[];
@@ -291,7 +331,7 @@ const CaseCard = ({ c }: { c: Case }) => {
     <motion.article
       {...fadeUp}
       id={`case-${c.slug}`}
-      className="flex scroll-mt-24 flex-col"
+      className="flex min-w-0 scroll-mt-24 flex-col"
     >
       <BrowserFrame
         c={c}
@@ -322,6 +362,9 @@ const ServicesHome = () => {
   )}`;
   const prototypeWhatsapp = `${socialLinks.whatsapp}?text=${encodeURIComponent(
     t(t$.prototypeWhatsappMessage)
+  )}`;
+  const veniWhatsapp = `${socialLinks.whatsapp}?text=${encodeURIComponent(
+    t(t$.veni.whatsappMessage)
   )}`;
 
   const visible = cases.filter((c) => sector === 'all' || c.sector === sector);
@@ -575,6 +618,76 @@ const ServicesHome = () => {
             ))}
           </div>
         )}
+      </section>
+
+      {/* Veni a Ver: the offer, without prices (they only go in the proposal) */}
+      <section id="veni-a-ver" className="scroll-mt-24 py-16">
+        <motion.div {...fadeUp}>
+          <Eyebrow>{t(t$.veni.eyebrow)}</Eyebrow>
+          <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-dark-1 sm:text-4xl">
+            {t(t$.veni.title)}
+          </h2>
+          <p className="mt-4 max-w-2xl leading-relaxed text-text">
+            {t(t$.veni.description)}
+          </p>
+          <p className="mt-6 text-xs text-text">
+            <span className="font-mono uppercase tracking-wider">
+              {t(t$.veni.sitesLabel)}:
+            </span>{' '}
+            {veniSites.map((slug, j) => (
+              <span key={slug}>
+                {j > 0 && ' · '}
+                <a
+                  href={`#case-${slug}`}
+                  onClick={() => setSector('all')}
+                  className="text-dark-2 underline decoration-dark-3 underline-offset-4 hover:text-accent hover:decoration-accent"
+                >
+                  {shortName(t(caseBySlug[slug].title))}
+                </a>
+              </span>
+            ))}
+          </p>
+        </motion.div>
+        <div className="mt-10 grid gap-5 lg:grid-cols-[2fr_1fr]">
+          <motion.ul
+            {...fadeUp}
+            className="grid gap-px overflow-hidden rounded-2xl border border-dark-3/60 bg-dark-3/60 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {t$.veni.benefits.map((b) => (
+              <li key={b.title} className="bg-bg p-6">
+                <h3 className="font-semibold text-dark-1">{t(b.title)}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-text">
+                  {t(b.text)}
+                </p>
+              </li>
+            ))}
+          </motion.ul>
+          <motion.div
+            {...fadeUp}
+            className="flex flex-col rounded-2xl border border-accent/30 bg-bg-secondary p-7"
+          >
+            <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
+              {t(t$.veni.plansTitle)}
+            </h3>
+            <dl className="mt-4 flex-1 divide-y divide-dark-3/60">
+              {t$.veni.plans.map((plan) => (
+                <div key={plan.name} className="py-4">
+                  <dt className="font-semibold text-dark-1">{t(plan.name)}</dt>
+                  <dd className="mt-1 text-sm text-text">{t(plan.detail)}</dd>
+                </div>
+              ))}
+            </dl>
+            <a
+              href={veniWhatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-bg transition-transform hover:-translate-y-0.5"
+            >
+              <Icon icon="mdi:whatsapp" width="18" height="18" />
+              {t(t$.veni.cta)}
+            </a>
+          </motion.div>
+        </div>
       </section>
 
       {/* Free prototype */}

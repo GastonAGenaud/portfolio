@@ -548,6 +548,85 @@ export const en = {
   [tokens.servicesSectionType.cases[11].bullets[1]]: 'Live clock with open / closed status',
   [tokens.servicesSectionType.cases[11].bullets[2]]: 'Opening hours, location and reviews',
   [tokens.servicesSectionType.cases[11].bullets[3]]: 'Spanish and English',
+  [tokens.servicesSectionType.cases[12].title]:
+    'La Tolva — Café on Av. Santa Fe',
+  [tokens.servicesSectionType.cases[12].description]:
+    'Veni a Ver site for a café in Buenos Aires: menu by section, orders and table bookings over WhatsApp, and Google reviews in plain sight.',
+  [tokens.servicesSectionType.cases[12].bullets[0]]:
+    'Menu by section with featured dishes',
+  [tokens.servicesSectionType.cases[12].bullets[1]]:
+    'Orders and table bookings over WhatsApp',
+  [tokens.servicesSectionType.cases[12].bullets[2]]:
+    'Opening hours, map and Google reviews',
+  [tokens.servicesSectionType.cases[12].bullets[3]]: 'Spanish and English',
+  [tokens.servicesSectionType.cases[13].title]:
+    'Óptica La Rochelle — Optician in Recoleta',
+  [tokens.servicesSectionType.cases[13].description]:
+    'Veni a Ver site for an optician: frames and services catalog, stock enquiries over WhatsApp and the shop on the map.',
+  [tokens.servicesSectionType.cases[13].bullets[0]]:
+    'Catalog of frames, lenses and services',
+  [tokens.servicesSectionType.cases[13].bullets[1]]:
+    'Stock enquiries over WhatsApp',
+  [tokens.servicesSectionType.cases[13].bullets[2]]:
+    'Opening hours, map and Google reviews',
+  [tokens.servicesSectionType.cases[13].bullets[3]]: 'Spanish and English',
+  [tokens.servicesSectionType.cases[14].title]:
+    'Farmacia Vantage Franco Alemana — 24-hour pharmacy',
+  [tokens.servicesSectionType.cases[14].description]:
+    'Veni a Ver site for a pharmacy open around the clock on Beruti street: perfumery and skincare catalog, with stock enquiries over WhatsApp.',
+  [tokens.servicesSectionType.cases[14].bullets[0]]:
+    'Perfumery and skincare catalog',
+  [tokens.servicesSectionType.cases[14].bullets[1]]:
+    'Stock enquiries over WhatsApp',
+  [tokens.servicesSectionType.cases[14].bullets[2]]:
+    'Opening hours, map and Google reviews',
+  [tokens.servicesSectionType.cases[14].bullets[3]]: 'Spanish and English',
+  [tokens.servicesSectionType.cases[15].title]:
+    'Farmacia San Fernando — Pharmacy on Av. Santa Fe',
+  [tokens.servicesSectionType.cases[15].description]:
+    'Veni a Ver site for a neighborhood pharmacy: catalog by category, a stock check before the visit, and opening hours and map.',
+  [tokens.servicesSectionType.cases[15].bullets[0]]:
+    'Catalog by category with featured products',
+  [tokens.servicesSectionType.cases[15].bullets[1]]:
+    'Stock enquiries over WhatsApp',
+  [tokens.servicesSectionType.cases[15].bullets[2]]:
+    'Opening hours, map and Google reviews',
+  [tokens.servicesSectionType.cases[15].bullets[3]]: 'Spanish and English',
+  [tokens.servicesSectionType.veni.eyebrow]: 'Veni a Ver',
+  [tokens.servicesSectionType.veni.title]:
+    'Your shop\'s website, built from your real data.',
+  [tokens.servicesSectionType.veni.description]:
+    'A line made for cafés, restaurants, pharmacies, opticians and hardware stores. I build the site from your business\'s real Google Maps data and it goes online, ready to welcome customers.',
+  [tokens.servicesSectionType.veni.sitesLabel]: 'Live sites',
+  [tokens.servicesSectionType.veni.plansTitle]: 'Two options',
+  [tokens.servicesSectionType.veni.cta]: 'I want my site',
+  [tokens.servicesSectionType.veni.whatsappMessage]:
+    'Hi Gastón, I saw Veni a Ver and I want a site for my business.',
+  [tokens.servicesSectionType.veni.benefits[0].title]: 'Orders over WhatsApp',
+  [tokens.servicesSectionType.veni.benefits[0].text]:
+    'A direct button with a pre-written message: customers reach you in one tap.',
+  [tokens.servicesSectionType.veni.benefits[1].title]: 'Built for mobile',
+  [tokens.servicesSectionType.veni.benefits[1].text]:
+    'A fast site, made for phones, with your location on the map.',
+  [tokens.servicesSectionType.veni.benefits[2].title]:
+    'Your reviews in plain sight',
+  [tokens.servicesSectionType.veni.benefits[2].text]:
+    'Your Google rating and what your real customers say.',
+  [tokens.servicesSectionType.veni.benefits[3].title]: 'Bilingual',
+  [tokens.servicesSectionType.veni.benefits[3].text]:
+    'English version included for tourists.',
+  [tokens.servicesSectionType.veni.benefits[4].title]: 'QR flyer',
+  [tokens.servicesSectionType.veni.benefits[4].text]:
+    'Printable in A5 for the counter or the shop window.',
+  [tokens.servicesSectionType.veni.benefits[5].title]: 'No hassle',
+  [tokens.servicesSectionType.veni.benefits[5].text]:
+    'I keep it updated: prices, photos and opening hours.',
+  [tokens.servicesSectionType.veni.plans[0].name]: 'One-off payment',
+  [tokens.servicesSectionType.veni.plans[0].detail]:
+    'Site + flyer + 1 month of changes',
+  [tokens.servicesSectionType.veni.plans[1].name]: 'Monthly',
+  [tokens.servicesSectionType.veni.plans[1].detail]:
+    'Site + .com.ar domain + unlimited changes',
   [tokens.servicesSectionType.caseCta]: 'Visit the site',
   [tokens.servicesSectionType.processEyebrow]: 'How I work',
   [tokens.servicesSectionType.processTitle]: 'Simple, direct, no surprises.',
