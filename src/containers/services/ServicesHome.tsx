@@ -642,10 +642,10 @@ const ServicesHome = () => {
             target="_blank"
             rel="noreferrer"
             aria-label={VENI_DOMAIN}
-            className="mt-5 inline-flex items-baseline gap-2 font-bold text-dark-1 transition-opacity hover:opacity-70"
+            className="mt-5 inline-flex items-center gap-3 font-bold text-dark-1 transition-opacity hover:opacity-70"
           >
-            <VeniLogo className="text-2xl" />
-            <span aria-hidden>↗</span>
+            <VeniLogo className="h-8" />
+            <span>{VENI_DOMAIN} ↗</span>
           </a>
           <p className="mt-6 text-xs text-text">
             <span className="font-mono uppercase tracking-wider">
