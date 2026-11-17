@@ -112,7 +112,8 @@ const AuthorImage = ({ src, alt, stats = [] }: Props) => {
   return (
     <div
       ref={ref}
-      className="relative aspect-square w-72 shrink-0 sm:w-80 lg:w-[22rem]"
+      // Capped at 72vw so the chips in orbit stay on screen on narrow phones.
+      className="relative aspect-square w-[min(18rem,72vw)] shrink-0 sm:w-80 lg:w-[22rem]"
     >
       <motion.div
         aria-hidden
