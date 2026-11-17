@@ -30,6 +30,28 @@ test.describe('persona switch', () => {
     ).toHaveAttribute('href', /^mailto:/);
   });
 
+  test('studio drops a photo on every tap on touch screens', async ({
+    page,
+    hasTouch,
+  }) => {
+    test.skip(!hasTouch, 'Tap-to-drop only applies to touch screens.');
+    await open(page);
+    await page.getByTestId('persona-creative').click();
+    await expect(page.locator('[data-split-reveal-overlay]')).toHaveCount(0);
+
+    const droppedPhotos = () =>
+      page.evaluate(
+        () =>
+          Array.from(
+            document.querySelectorAll<HTMLImageElement>('img[src*="/trail-"]')
+          ).filter((img) => Number(getComputedStyle(img).opacity) > 0.5).length
+      );
+    expect(await droppedPhotos()).toBe(0);
+
+    await page.getByRole('region', { name: 'Photo stack' }).tap();
+    await expect.poll(droppedPhotos).toBe(1);
+  });
+
   test('services shows the offer and client cases', async ({ page }) => {
     await open(page);
 
