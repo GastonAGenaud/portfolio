@@ -284,6 +284,23 @@ export const tokens = {
     gallerySubtitle: 'creativeSectionType.gallerySubtitle',
     albumCta: 'creativeSectionType.albumCta',
     scrollHint: 'creativeSectionType.scrollHint',
+    hero: {
+      hi: 'creativeSectionType.hero.hi',
+      name: 'creativeSectionType.hero.name',
+      shoot: 'creativeSectionType.hero.shoot',
+      subjects: 'creativeSectionType.hero.subjects',
+      in: 'creativeSectionType.hero.in',
+      location: 'creativeSectionType.hero.location',
+      outro: 'creativeSectionType.hero.outro',
+      ask: 'creativeSectionType.hero.ask',
+      cta: 'creativeSectionType.hero.cta',
+      stackLabel: 'creativeSectionType.hero.stackLabel',
+      next: 'creativeSectionType.hero.next',
+      frames: [0, 1, 2, 3, 4, 5].map((i) => ({
+        title: `creativeSectionType.hero.frames.${i}.title`,
+        tagline: `creativeSectionType.hero.frames.${i}.tagline`,
+      })),
+    },
     sport: {
       switchLabel: 'creativeSectionType.sport.switchLabel',
       subtitle: 'creativeSectionType.sport.subtitle',
