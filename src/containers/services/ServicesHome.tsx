@@ -1,5 +1,8 @@
 'use client';
+import { VENI_DOMAIN, VENI_URL } from '@/lib/config/veni';
 import { author, socialLinks } from '@/lib/content/portfolio';
+
+import VeniLogo from '@/components/ui/VeniLogo';
 
 import { tokens } from '@/locales/tokens';
 
@@ -634,6 +637,16 @@ const ServicesHome = () => {
           <p className="mt-4 max-w-2xl leading-relaxed text-text">
             {t(t$.veni.description)}
           </p>
+          <a
+            href={VENI_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={VENI_DOMAIN}
+            className="mt-5 inline-flex items-baseline gap-2 font-bold text-dark-1 transition-opacity hover:opacity-70"
+          >
+            <VeniLogo className="text-2xl" />
+            <span aria-hidden>↗</span>
+          </a>
           <p className="mt-6 text-xs text-text">
             <span className="font-mono uppercase tracking-wider">
               {t(t$.veni.sitesLabel)}:
