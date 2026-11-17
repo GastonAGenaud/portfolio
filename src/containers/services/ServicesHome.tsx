@@ -145,11 +145,11 @@ const cases: Case[] = [
     ...t$.cases[13],
   },
   {
-    slug: 'farmacia-vantage',
-    url: 'https://farmacia-vantage-franco-alemana.veniaver.com',
-    image: '/services/veniaver-farmacia-vantage-hero.jpg',
-    alt: 'Farmacia Vantage Franco Alemana — farmacia 24 horas',
-    sector: 'commerce',
+    slug: 'republica-del-fuego',
+    url: 'https://republica-del-fuego.veniaver.com',
+    image: '/services/veniaver-republica-del-fuego-hero.jpg',
+    alt: 'República del Fuego — parrilla en Recoleta',
+    sector: 'gastro',
     ...t$.cases[14],
   },
   {
@@ -159,6 +159,14 @@ const cases: Case[] = [
     alt: 'Farmacia San Fernando — farmacia en Av. Santa Fe',
     sector: 'commerce',
     ...t$.cases[15],
+  },
+  {
+    slug: 'ferreteria-juncal',
+    url: 'https://ferreteria-juncal.veniaver.com',
+    image: '/services/veniaver-ferreteria-juncal-hero.jpg',
+    alt: 'Ferretería Juncal — ferretería en Recoleta',
+    sector: 'commerce',
+    ...t$.cases[16],
   },
   {
     slug: 'the-virginia',
@@ -194,16 +202,101 @@ const services = [
   },
 ];
 
-// Published Veni a Ver sites, linked from the offer block. `copyUrl`: the case
-// keeps its own URL and Veni a Ver serves a copy, so the link goes to the copy.
-const veniSites: { slug: string; copyUrl?: string }[] = [
-  { slug: 'miro' },
-  { slug: 'la-morada' },
-  { slug: 'fergus', copyUrl: 'https://fergus.veniaver.com' },
-  { slug: 'la-tolva' },
-  { slug: 'optica-la-rochelle' },
-  { slug: 'farmacia-vantage' },
-  { slug: 'farmacia-san-fernando' },
+// Every site published on veniaver.com (the same list as its showcase), linked
+// from the offer block. With `caseSlug` the link jumps to the case card above;
+// otherwise it opens the live site. Fergus has no `caseSlug` on purpose: its
+// card keeps its own URL and Veni a Ver serves a copy.
+const veniSites: { name: string; url: string; caseSlug?: string }[] = [
+  { name: 'Miro', url: 'https://miro.veniaver.com', caseSlug: 'miro' },
+  {
+    name: 'La Morada',
+    url: 'https://la-morada.veniaver.com',
+    caseSlug: 'la-morada',
+  },
+  { name: 'Fergus', url: 'https://fergus.veniaver.com' },
+  {
+    name: 'De Palma Laboratorio Óptico',
+    url: 'https://de-palma-laboratorio-optico.veniaver.com',
+  },
+  { name: 'El Trébol', url: 'https://el-trebol.veniaver.com' },
+  { name: 'Farmacia Prema', url: 'https://farmacia-prema.veniaver.com' },
+  {
+    name: 'Farmacia San Fernando',
+    url: 'https://farmacia-san-fernando-cabrera-3161-scs.veniaver.com',
+    caseSlug: 'farmacia-san-fernando',
+  },
+  {
+    name: 'Ferretería Mariana',
+    url: 'https://ferreteria-mariana.veniaver.com',
+  },
+  {
+    name: 'Ferretería Mercurio',
+    url: 'https://ferreteria-mercurio.veniaver.com',
+  },
+  {
+    name: 'Ferretería y Cerrajería Postay Service',
+    url: 'https://ferreteria-y-cerrajeria-postay-service.veniaver.com',
+  },
+  {
+    name: 'La Mística Ferretería',
+    url: 'https://la-mistica-ferreteria.veniaver.com',
+  },
+  { name: 'La Molinera', url: 'https://la-molinera.veniaver.com' },
+  {
+    name: 'La Nueva Ferretería Pueyrredón',
+    url: 'https://la-nueva-ferreteria-pueyrredon.veniaver.com',
+  },
+  {
+    name: 'La Tolva',
+    url: 'https://la-tolva.veniaver.com',
+    caseSlug: 'la-tolva',
+  },
+  { name: 'Los Pinos', url: 'https://los-pinos.veniaver.com' },
+  { name: 'Moire Cafetería', url: 'https://moire-cafeteria.veniaver.com' },
+  { name: 'Óptica Alemana', url: 'https://optica-alemana.veniaver.com' },
+  { name: 'Optica Concalvo', url: 'https://optica-concalvo.veniaver.com' },
+  {
+    name: 'Óptica del Carmelo',
+    url: 'https://optica-del-carmelo.veniaver.com',
+  },
+  {
+    name: 'Óptica La Rochelle',
+    url: 'https://optica-la-rochelle.veniaver.com',
+    caseSlug: 'optica-la-rochelle',
+  },
+  { name: 'Óptica mil 24', url: 'https://optica-mil-24.veniaver.com' },
+  { name: 'Óptica Norte', url: 'https://optica-norte.veniaver.com' },
+  { name: 'Optica Optivision', url: 'https://optica-optivision.veniaver.com' },
+  {
+    name: 'Óptica Vision Center',
+    url: 'https://optica-vision-center.veniaver.com',
+  },
+  {
+    name: '1640 Café Resto',
+    url: 'https://1640-cafe-resto-recoleta.veniaver.com',
+  },
+  { name: 'Toro Café', url: 'https://toro-cafe.veniaver.com' },
+  {
+    name: 'República del Fuego',
+    url: 'https://republica-del-fuego.veniaver.com',
+    caseSlug: 'republica-del-fuego',
+  },
+  {
+    name: 'Restaurante Instituto del Diagnóstico',
+    url: 'https://restaurante-instituto-del-diagnostico.veniaver.com',
+  },
+  {
+    name: 'Ferretería Juncal',
+    url: 'https://ferreteria-juncal.veniaver.com',
+    caseSlug: 'ferreteria-juncal',
+  },
+  {
+    name: 'Ferretería Tornados',
+    url: 'https://ferreteria-tornados.veniaver.com',
+  },
+  { name: 'Óptica Alvear', url: 'https://optica-alvear.veniaver.com' },
+  { name: 'Óptica Ios', url: 'https://optica-ios.veniaver.com' },
+  { name: 'Óptica Verona', url: 'https://optica-verona.veniaver.com' },
 ];
 
 const sectorKeys = Object.keys(t$.sectors) as SectorKey[];
@@ -642,28 +735,28 @@ const ServicesHome = () => {
             target="_blank"
             rel="noreferrer"
             aria-label={VENI_DOMAIN}
-            className="mt-5 inline-flex items-baseline gap-2 font-bold text-dark-1 transition-opacity hover:opacity-70"
+            className="mt-5 inline-flex items-center gap-3 font-bold text-dark-1 transition-opacity hover:opacity-70"
           >
-            <VeniLogo className="text-2xl" />
-            <span aria-hidden>↗</span>
+            <VeniLogo className="h-8" />
+            <span>{VENI_DOMAIN} ↗</span>
           </a>
           <p className="mt-6 text-xs text-text">
             <span className="font-mono uppercase tracking-wider">
               {t(t$.veni.sitesLabel)}:
             </span>{' '}
-            {veniSites.map(({ slug, copyUrl }, j) => (
-              <span key={slug}>
+            {veniSites.map(({ name, url, caseSlug }, j) => (
+              <span key={url}>
                 {j > 0 && ' · '}
                 <a
-                  {...(copyUrl
-                    ? { href: copyUrl, target: '_blank', rel: 'noreferrer' }
-                    : {
-                        href: `#case-${slug}`,
+                  {...(caseSlug
+                    ? {
+                        href: `#case-${caseSlug}`,
                         onClick: () => setSector('all'),
-                      })}
+                      }
+                    : { href: url, target: '_blank', rel: 'noreferrer' })}
                   className="text-dark-2 underline decoration-dark-3 underline-offset-4 hover:text-accent hover:decoration-accent"
                 >
-                  {shortName(t(caseBySlug[slug].title))}
+                  {name}
                 </a>
               </span>
             ))}
