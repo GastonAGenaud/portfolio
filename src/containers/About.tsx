@@ -7,8 +7,8 @@ import { AuthorImage, Wrapper } from '@/components';
 import { tokens } from '@/locales/tokens';
 import { getSectionAnimation } from '@/styles/animations';
 
-import { animate, motion, useInView, Variants } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { motion, Variants } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const organizations = [
@@ -96,41 +96,6 @@ const ItemGrid = ({
   </motion.ul>
 );
 
-/** Counts from 0 to `value` the first time it scrolls into view. */
-const Stat = ({
-  value,
-  suffix = '',
-  label,
-}: {
-  value: number;
-  suffix?: string;
-  label: string;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-40px' });
-  const [n, setN] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    const controls = animate(0, value, {
-      duration: 1.2,
-      ease: 'easeOut',
-      onUpdate: (v) => setN(Math.round(v)),
-    });
-    return () => controls.stop();
-  }, [inView, value]);
-
-  return (
-    <motion.div ref={ref} variants={item} className="flex items-baseline gap-2">
-      <span className="text-3xl font-bold tracking-tight text-accent sm:text-4xl">
-        {n}
-        {suffix}
-      </span>
-      <span className="font-mono text-xs text-dark-2">{label}</span>
-    </motion.div>
-  );
-};
-
 const About = () => {
   const { title, img, list } = useAboutSection();
   const { t } = useTranslation();
@@ -154,26 +119,6 @@ const About = () => {
             <p>{t(tokens.aboutSectionType.focus)}</p>
           </div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-40px' }}
-            className="flex flex-wrap gap-x-10 gap-y-3"
-          >
-            <Stat
-              value={8}
-              suffix="+"
-              label={t(tokens.aboutSectionType.stats.years)}
-            />
-            <Stat
-              value={10}
-              suffix="+"
-              label={t(tokens.aboutSectionType.stats.clients)}
-            />
-            <Stat value={4} label={t(tokens.aboutSectionType.stats.sectors)} />
-          </motion.div>
-
           <div className="space-y-3">
             <p>{t(tokens.aboutSectionType.history)}</p>
             <ItemGrid
@@ -196,7 +141,23 @@ const About = () => {
         </div>
 
         <div className="order-first pt-6 lg:order-none lg:pt-10">
-          <AuthorImage src={img} alt={author.name} />
+          <AuthorImage
+            src={img}
+            alt={author.name}
+            stats={[
+              {
+                value: 8,
+                suffix: '+',
+                label: t(tokens.aboutSectionType.stats.years),
+              },
+              {
+                value: 10,
+                suffix: '+',
+                label: t(tokens.aboutSectionType.stats.clients),
+              },
+              { value: 4, label: t(tokens.aboutSectionType.stats.sectors) },
+            ]}
+          />
         </div>
       </main>
     </Wrapper>

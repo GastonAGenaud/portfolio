@@ -547,4 +547,12 @@ export const tokens = {
       secondaryThanks: 'fitnessSectionType.coach.secondaryThanks',
     },
   },
+  veniPromo: {
+    label: 'veniPromo.label',
+    eyebrow: 'veniPromo.eyebrow',
+    title: 'veniPromo.title',
+    text: 'veniPromo.text',
+    cta: 'veniPromo.cta',
+    close: 'veniPromo.close',
+  },
 };
