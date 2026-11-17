@@ -1,41 +1,26 @@
-import { Cormorant_Garamond, Inter, Roboto_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-  weight: [
-    '400', // Regular
-    '500', // Medium
-    '700', // Bold
-  ],
-});
-
-const robotoMono = Roboto_Mono({
-  variable: '--font-roboto-mono',
-  subsets: ['latin'],
-  display: 'swap',
-  weight: [
-    '400', // Regular
-    '500', // Medium
-    '600', // Semibold
-    '700', // Bold
-  ],
-});
-
-// Editorial serif used by the Creative persona (display headings)
-const cormorant = Cormorant_Garamond({
+// Editorial serif for display headings (the `font-serif` utility).
+//
+// Self-hosted on purpose: `next/font/google` downloads the files from Google
+// while building, and its loader failed at random on Vercel
+// ("An error occured in `next/font`"), which broke deploys of unrelated
+// changes. The file is the variable latin subset Google Fonts serves, weights
+// 400–700; its license sits next to it.
+//
+// Inter and Roboto Mono used to be loaded here too, but nothing consumed their
+// CSS variables (Tailwind names the system fonts directly), so they were only
+// downloaded and preloaded. To use them for real, add them here with
+// `localFont` and point `fontFamily` in tailwind.config.js at their variables.
+const cormorant = localFont({
+  src: '../fonts/cormorant-garamond/CormorantGaramond-latin.woff2',
   variable: '--font-serif',
-  subsets: ['latin'],
   display: 'swap',
-  style: ['normal', 'italic'],
-  weight: [
-    '400', // Regular
-    '500', // Medium
-    '600', // Semibold
-    '700', // Bold
-  ],
+  weight: '400 700',
+  style: 'normal',
+  adjustFontFallback: 'Times New Roman',
 });
 
-const fontVariables = `${inter.variable} ${robotoMono.variable} ${cormorant.variable}`;
+const fontVariables = cormorant.variable;
 
 export default fontVariables;
