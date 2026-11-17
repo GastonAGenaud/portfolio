@@ -597,13 +597,13 @@ export const en = {
     'Opening hours, map and Google reviews',
   [tokens.servicesSectionType.cases[13].bullets[3]]: 'Spanish and English',
   [tokens.servicesSectionType.cases[14].title]:
-    'Farmacia Vantage Franco Alemana — 24-hour pharmacy',
+    'República del Fuego — Grill in Recoleta',
   [tokens.servicesSectionType.cases[14].description]:
-    'Veni a Ver site for a pharmacy open around the clock on Beruti street: perfumery and skincare catalog, with stock enquiries over WhatsApp.',
+    'Veni a Ver site for a parrilla: menu of grilled cuts and dishes to share, orders and table bookings over WhatsApp, and Google reviews in plain sight.',
   [tokens.servicesSectionType.cases[14].bullets[0]]:
-    'Perfumery and skincare catalog',
+    'Menu by section with featured dishes',
   [tokens.servicesSectionType.cases[14].bullets[1]]:
-    'Stock enquiries over WhatsApp',
+    'Orders and table bookings over WhatsApp',
   [tokens.servicesSectionType.cases[14].bullets[2]]:
     'Opening hours, map and Google reviews',
   [tokens.servicesSectionType.cases[14].bullets[3]]: 'Spanish and English',
@@ -618,6 +618,17 @@ export const en = {
   [tokens.servicesSectionType.cases[15].bullets[2]]:
     'Opening hours, map and Google reviews',
   [tokens.servicesSectionType.cases[15].bullets[3]]: 'Spanish and English',
+  [tokens.servicesSectionType.cases[16].title]:
+    'Ferretería Juncal — Hardware store in Recoleta',
+  [tokens.servicesSectionType.cases[16].description]:
+    'Veni a Ver site for a neighborhood hardware store: catalog by category, stock enquiries over WhatsApp, and opening hours and location in plain sight.',
+  [tokens.servicesSectionType.cases[16].bullets[0]]:
+    'Catalog by category with featured products',
+  [tokens.servicesSectionType.cases[16].bullets[1]]:
+    'Stock enquiries over WhatsApp',
+  [tokens.servicesSectionType.cases[16].bullets[2]]:
+    'Opening hours, map and Google reviews',
+  [tokens.servicesSectionType.cases[16].bullets[3]]: 'Spanish and English',
   [tokens.servicesSectionType.veni.eyebrow]: 'Veni a Ver',
   [tokens.servicesSectionType.veni.title]:
     'Your shop\'s website, built from your real data.',

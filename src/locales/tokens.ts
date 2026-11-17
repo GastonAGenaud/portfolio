@@ -350,7 +350,7 @@ export const tokens = {
       },
     },
     caseEyebrow: 'servicesSectionType.caseEyebrow',
-    cases: Array.from({ length: 16 }, (_, c) => ({
+    cases: Array.from({ length: 17 }, (_, c) => ({
       title: `servicesSectionType.cases.${c}.title`,
       description: `servicesSectionType.cases.${c}.description`,
       bullets: [0, 1, 2, 3].map(
