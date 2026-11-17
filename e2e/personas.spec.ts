@@ -14,6 +14,22 @@ test.describe('persona switch', () => {
     await expect(page.locator('#about')).toHaveCount(0);
   });
 
+  test('studio opens with the photographer hero', async ({ page }) => {
+    await open(page);
+    await page.getByTestId('persona-creative').click();
+
+    await expect(
+      page.getByRole('heading', { level: 1, name: /I shoot/ })
+    ).toBeVisible();
+    const stack = page.getByRole('region', { name: 'Photo stack' });
+    await expect(stack.getByRole('img').first()).toBeVisible();
+    // The preloader releases the page once the photos are in.
+    await expect(page.locator('[data-split-reveal-overlay]')).toHaveCount(0);
+    await expect(
+      page.getByRole('link', { name: 'Write to me.' })
+    ).toHaveAttribute('href', /^mailto:/);
+  });
+
   test('services shows the offer and client cases', async ({ page }) => {
     await open(page);
 

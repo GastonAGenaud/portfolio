@@ -1,0 +1,115 @@
+'use client';
+
+import { cn } from '@/components/animata/utils';
+
+import { motion, useAnimation, type Variants } from 'framer-motion';
+import type { HTMLAttributes } from 'react';
+import { useCallback, useImperativeHandle, useRef } from 'react';
+
+export interface SwitchCameraIconHandle {
+  startAnimation: () => void;
+  stopAnimation: () => void;
+}
+
+interface SwitchCameraIconProps extends HTMLAttributes<HTMLDivElement> {
+  size?: number;
+}
+
+const PATH_VARIANTS: Variants = {
+  normal: { pathLength: 1 },
+  animate: {
+    pathLength: [0, 1],
+    transition: { duration: 0.4, ease: 'linear' },
+  },
+};
+
+function SwitchCameraIcon({
+  onMouseEnter,
+  onMouseLeave,
+  className,
+  size = 28,
+  ref,
+  ...props
+}: SwitchCameraIconProps & { ref?: React.Ref<SwitchCameraIconHandle> }) {
+  const controls = useAnimation();
+  const isControlledRef = useRef(false);
+
+  useImperativeHandle(ref, () => {
+    isControlledRef.current = true;
+    return {
+      startAnimation: () => controls.start('animate'),
+      stopAnimation: () => controls.start('normal'),
+    };
+  });
+
+  const handleMouseEnter = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      onMouseEnter?.(event);
+      if (!isControlledRef.current) {
+        controls.start('animate');
+      }
+    },
+    [controls, onMouseEnter]
+  );
+
+  const handleMouseLeave = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      onMouseLeave?.(event);
+      if (!isControlledRef.current) {
+        controls.start('normal');
+      }
+    },
+    [controls, onMouseLeave]
+  );
+
+  return (
+    <div
+      className={cn(className)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...props}
+    >
+      <motion.svg
+        animate={controls}
+        fill="none"
+        height={size}
+        initial="normal"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+        width={size}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <motion.path
+          animate={controls}
+          d="M11 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"
+          initial="normal"
+          variants={PATH_VARIANTS}
+        />
+        <motion.path
+          animate={controls}
+          d="M13 5h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-5"
+          initial="normal"
+          variants={PATH_VARIANTS}
+        />
+        <circle cx="12" cy="12" r="3" />
+        <motion.path
+          animate={controls}
+          d="m18 22-3-3 3-3"
+          initial="normal"
+          variants={PATH_VARIANTS}
+        />
+        <motion.path
+          animate={controls}
+          d="m6 2 3 3-3 3"
+          initial="normal"
+          variants={PATH_VARIANTS}
+        />
+      </motion.svg>
+    </div>
+  );
+}
+
+export { SwitchCameraIcon };
