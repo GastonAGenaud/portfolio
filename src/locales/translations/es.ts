@@ -754,4 +754,11 @@ export const es = {
   [tokens.fitnessSectionType.coach.secondaryLabel]: 'Apoyo de la primera etapa',
   [tokens.fitnessSectionType.coach.secondaryThanks]:
     'Y gracias a Matías Rosakesque por el acompañamiento de entrenamiento y el pádel en los inicios.',
+  [tokens.veniPromo.label]: 'Novedad: Veni a Ver',
+  [tokens.veniPromo.eyebrow]: 'Nuevo proyecto',
+  [tokens.veniPromo.title]: 'Veni a Ver ya tiene su propio sitio',
+  [tokens.veniPromo.text]:
+    'Sitios para comercios de barrio, armados con sus datos de Google Maps y listos para recibir pedidos por WhatsApp.',
+  [tokens.veniPromo.cta]: 'Vení a ver',
+  [tokens.veniPromo.close]: 'Cerrar',
 };

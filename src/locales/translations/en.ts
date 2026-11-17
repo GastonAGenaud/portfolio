@@ -751,4 +751,11 @@ export const en = {
   [tokens.servicesSectionType.faq[5].question]: 'What happens after launch?',
   [tokens.servicesSectionType.faq[5].answer]:
     'I show you how to use it and stay available. What I ship is tested and deploys itself, so changes go out fast without breaking anything.',
+  [tokens.veniPromo.label]: 'New: Veni a Ver',
+  [tokens.veniPromo.eyebrow]: 'New project',
+  [tokens.veniPromo.title]: 'Veni a Ver now has its own site',
+  [tokens.veniPromo.text]:
+    'Websites for neighborhood businesses, built from their Google Maps data and ready to take orders over WhatsApp.',
+  [tokens.veniPromo.cta]: 'Come and see',
+  [tokens.veniPromo.close]: 'Close',
 };

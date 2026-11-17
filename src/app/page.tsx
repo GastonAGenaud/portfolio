@@ -1,6 +1,7 @@
 'use client';
 import { usePersona } from '@/lib/hooks/use-persona';
 
+import VeniPromo from '@/components/Modals/VeniPromo';
 import {
   About,
   Contact,
@@ -79,6 +80,7 @@ const Home: NextPage = () => {
           )}
         </motion.div>
       </AnimatePresence>
+      <VeniPromo />
     </Layout>
   );
 };
