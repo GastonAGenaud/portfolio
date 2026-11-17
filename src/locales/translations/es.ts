@@ -513,15 +513,15 @@ export const es = {
     'Horarios, mapa y reseñas de Google',
   [tokens.servicesSectionType.cases[13].bullets[3]]: 'Español e inglés',
   [tokens.servicesSectionType.cases[14].title]:
-    'Farmacia Vantage Franco Alemana — Farmacia 24 horas',
+    'República del Fuego — Parrilla en Recoleta',
   [tokens.servicesSectionType.cases[14].description]:
-    'Sitio de Veni a Ver para una farmacia abierta las 24 horas en la calle Beruti: catálogo de perfumería y dermocosmética, con consultas de stock por WhatsApp.',
+    'Sitio de Veni a Ver para una parrilla: carta con cortes a las brasas y platos para compartir, pedidos y reservas de mesa por WhatsApp y las opiniones de Google a la vista.',
   [tokens.servicesSectionType.cases[14].bullets[0]]:
-    'Catálogo de perfumería y dermocosmética',
+    'Carta por secciones con platos destacados',
   [tokens.servicesSectionType.cases[14].bullets[1]]:
-    'Consulta de stock por WhatsApp',
+    'Pedidos y reservas de mesa por WhatsApp',
   [tokens.servicesSectionType.cases[14].bullets[2]]:
-    'Horarios, mapa y reseñas de Google',
+    'Horarios, mapa y opiniones de Google',
   [tokens.servicesSectionType.cases[14].bullets[3]]: 'Español e inglés',
   [tokens.servicesSectionType.cases[15].title]:
     'Farmacia San Fernando — Farmacia en Av. Santa Fe',
@@ -534,6 +534,17 @@ export const es = {
   [tokens.servicesSectionType.cases[15].bullets[2]]:
     'Horarios, mapa y reseñas de Google',
   [tokens.servicesSectionType.cases[15].bullets[3]]: 'Español e inglés',
+  [tokens.servicesSectionType.cases[16].title]:
+    'Ferretería Juncal — Ferretería en Recoleta',
+  [tokens.servicesSectionType.cases[16].description]:
+    'Sitio de Veni a Ver para una ferretería de barrio: catálogo por rubro, consultas de stock por WhatsApp y horarios y ubicación a la vista.',
+  [tokens.servicesSectionType.cases[16].bullets[0]]:
+    'Catálogo por rubro con productos destacados',
+  [tokens.servicesSectionType.cases[16].bullets[1]]:
+    'Consulta de stock por WhatsApp',
+  [tokens.servicesSectionType.cases[16].bullets[2]]:
+    'Horarios, mapa y opiniones de Google',
+  [tokens.servicesSectionType.cases[16].bullets[3]]: 'Español e inglés',
   [tokens.servicesSectionType.veni.eyebrow]: 'Veni a Ver',
   [tokens.servicesSectionType.veni.title]:
     'El sitio de tu comercio, armado con tus datos reales.',

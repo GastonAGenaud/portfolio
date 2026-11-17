@@ -94,6 +94,10 @@ test.describe('persona switch', () => {
       'href',
       'https://fergus.veniaver.com'
     );
+    // Sites without a case card open the live site.
+    await expect(
+      offer.getByRole('link', { name: 'Toro Café' })
+    ).toHaveAttribute('href', 'https://toro-cafe.veniaver.com');
     // Rates only go in the proposal PDF.
     await expect(offer).not.toContainText('$');
   });
