@@ -56,7 +56,7 @@ const PersonaSwitch = ({ className = '' }: { className?: string }) => {
             aria-selected={active}
             data-testid={`persona-${opt.key}`}
             onClick={() => setPersona(opt.key)}
-            className={`relative z-10 flex items-center gap-1.5 rounded-full px-1.5 min-[360px]:px-2 sm:px-3 py-1.5 text-xs font-medium capitalize transition-colors duration-300 ${
+            className={`relative z-10 flex items-center gap-1.5 rounded-full px-1 min-[390px]:px-1.5 min-[412px]:px-2 sm:px-3 py-1.5 text-xs font-medium capitalize transition-colors duration-300 ${
               active ? 'text-bg' : 'text-text hover:text-accent'
             }`}
           >
@@ -75,14 +75,24 @@ const PersonaSwitch = ({ className = '' }: { className?: string }) => {
         );
       })}
       <a
-        href="https://www.gastongenaudfitness.com/"
+        href="https://veniaver.com/"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Gaston Genaud Fitness"
-        title="Gaston Genaud Fitness"
-        className="relative z-10 flex items-center rounded-full px-1.5 min-[360px]:px-2 sm:px-3 py-1.5 text-text transition-colors duration-300 hover:text-accent"
+        aria-label="Veni a Ver"
+        title="Veni a Ver"
+        className="relative z-10 flex items-center rounded-full px-1 min-[390px]:px-1.5 min-[412px]:px-2 sm:px-3 py-1.5 text-text transition-colors duration-300 hover:text-accent"
       >
-        <Icon icon="ph:barbell-bold" width="15" height="15" />
+        <Icon icon="ph:storefront-bold" width="15" height="15" />
+      </a>
+      <a
+        href="https://thevirginia.site/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="The Virginia"
+        title="The Virginia"
+        className="relative z-10 flex items-center rounded-full px-1 min-[390px]:px-1.5 min-[412px]:px-2 sm:px-3 py-1.5 text-text transition-colors duration-300 hover:text-accent"
+      >
+        <Icon icon="ph:shield-check-bold" width="15" height="15" />
       </a>
     </div>
   );
