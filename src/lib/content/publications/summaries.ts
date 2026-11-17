@@ -2,6 +2,7 @@ import { moshiPiHerdrTailscale } from './moshi-pi-herdr-tailscale';
 import { seriesMeta } from './qa-ai-series/meta';
 import { toSummary } from './qa-ai-series/summary';
 import type { Publication, PublicationSummary } from './types';
+import { veraPlaywrightTestAnalytics } from './vera-playwright-test-analytics';
 
 const withoutBody = ({
   body: _body,
@@ -13,5 +14,6 @@ const withoutBody = ({
 // the body of every guide in the series.
 export const publicationSummaries: PublicationSummary[] = [
   ...seriesMeta.map(toSummary),
+  withoutBody(veraPlaywrightTestAnalytics),
   withoutBody(moshiPiHerdrTailscale),
 ];
