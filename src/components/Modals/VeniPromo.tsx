@@ -1,5 +1,8 @@
 'use client';
+import { VENI_DOMAIN, VENI_URL } from '@/lib/config/veni';
+
 import ShowLottie from '@/components/ui/ShowLottie';
+import VeniLogo from '@/components/ui/VeniLogo';
 
 import { tokens } from '@/locales/tokens';
 
@@ -7,7 +10,6 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const VENI_URL = 'https://veniaver.vercel.app/';
 const STORAGE_KEY = 'veni-promo-dismissed';
 const SHOW_DELAY_MS = 3500;
 
@@ -79,6 +81,16 @@ const VeniPromo = () => {
             <ShowLottie path="/lotties/veni.json" className="mx-auto" />
           </div>
           <div className="flex flex-col items-start gap-2 p-5 pr-12 sm:pr-5">
+            <a
+              href={VENI_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={VENI_DOMAIN}
+              onClick={rememberDismissal}
+              className="transition-opacity hover:opacity-70"
+            >
+              <VeniLogo className="text-xl" />
+            </a>
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
               {t(t$.eyebrow)}
             </p>
