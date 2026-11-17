@@ -300,7 +300,10 @@ export default function PhotographerHero() {
           edgeToEdge
           layerOnly
           contained
-          className="isolate z-10"
+          tapToDrop
+          // Mouse trails run under the content; on touch screens the dropped
+          // photo has to land on top of it to be seen.
+          className="isolate z-10 [@media(hover:none)_and_(pointer:coarse)]:z-30"
           images={TRAIL_IMAGES}
           threshold={88}
           maxTrailZIndex={12}

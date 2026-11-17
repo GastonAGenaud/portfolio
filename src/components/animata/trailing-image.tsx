@@ -142,7 +142,26 @@ export interface TrailingImageProps {
   excludeRefs?: RefObject<HTMLElement | null>[];
   /** Cap inline z-index so trails stay under foreground UI (e.g. z-20 content). */
   maxTrailZIndex?: number;
+  /**
+   * Touch screens: drop one image per tap instead of trailing the finger, so
+   * scrolling does not scatter images. Mouse behaviour is unchanged.
+   */
+  tapToDrop?: boolean;
 }
+
+/** A touch counts as a tap when it barely moves and ends quickly. */
+const TAP_SLOP_PX = 10;
+const TAP_MAX_MS = 500;
+/** The dropped image starts this far above the tap and settles onto it. */
+const TAP_DROP_OFFSET_PX = 48;
+/** Browsers replay a tap as mouse events; those are ignored for this long. */
+const TAP_MOUSE_REPLAY_MS = 1000;
+/**
+ * Half of the trail image (`h-56 w-44`). Motion writes `transform`, which
+ * replaces Tailwind v3's translate classes, so an image sits with its top-left
+ * corner on the point it is given; taps subtract this to land centred.
+ */
+const TRAIL_IMAGE_HALF = { x: 88, y: 112 };
 
 function isPointInRect(clientX: number, clientY: number, rect: DOMRect) {
   return (
@@ -249,6 +268,7 @@ export default function TrailingImage({
   contentClassName,
   excludeRefs,
   maxTrailZIndex,
+  tapToDrop = false,
 }: TrailingImageProps) {
   const resolvedImages = images.length > 0 ? images : DEFAULT_IMAGES;
   const resolvedExcludeRefs = excludeRefs ?? EMPTY_EXCLUDE_REFS;
@@ -379,12 +399,99 @@ export default function TrailingImage({
 
   useMousePosition(containerRef, edgeToEdge ? undefined : runUpdate);
 
+  /** Shows the next image at a point given in the container's own coordinates. */
+  const dropAt = useCallback((point: { x: number; y: number }) => {
+    if (activeTrailCountRef.current === 0) {
+      zIndex.current = 1;
+    }
+    imageIndex.current =
+      (imageIndex.current + 1) % (trailsRef.current?.length ?? 1);
+    const nextZ = zIndex.current + 1;
+    zIndex.current =
+      maxTrailZIndexRef.current !== undefined
+        ? Math.min(nextZ, maxTrailZIndexRef.current)
+        : nextZ;
+    const x = point.x - TRAIL_IMAGE_HALF.x;
+    const y = point.y - TRAIL_IMAGE_HALF.y;
+    trailsRef.current?.[imageIndex.current]?.current?.show?.({
+      x,
+      y: y - TAP_DROP_OFFSET_PX,
+      zIndex: zIndex.current,
+      newX: x,
+      newY: y,
+    });
+  }, []);
+  const lastTouchAtRef = useRef(Number.NEGATIVE_INFINITY);
+
+  useEffect(() => {
+    if (!tapToDrop) {
+      return;
+    }
+
+    let start: { id: number; x: number; y: number; time: number } | null = null;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.pointerType === 'mouse') {
+        return;
+      }
+      lastTouchAtRef.current = event.timeStamp;
+      start = {
+        id: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+        time: event.timeStamp,
+      };
+    };
+
+    const handlePointerUp = (event: PointerEvent) => {
+      const began = start;
+      start = null;
+      if (!began || began.id !== event.pointerId) {
+        return;
+      }
+      lastTouchAtRef.current = event.timeStamp;
+      const moved = getDistance(began.x, began.y, event.clientX, event.clientY);
+      if (moved > TAP_SLOP_PX || event.timeStamp - began.time > TAP_MAX_MS) {
+        return;
+      }
+      // The layer can be scrolled, so taps are mapped to its own coordinates.
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect || !isPointInRect(event.clientX, event.clientY, rect)) {
+        return;
+      }
+      dropAt({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+    };
+
+    // The browser cancels the pointer when the touch turns into a scroll.
+    const handlePointerCancel = () => {
+      start = null;
+    };
+
+    window.addEventListener('pointerdown', handlePointerDown, {
+      passive: true,
+    });
+    window.addEventListener('pointerup', handlePointerUp, { passive: true });
+    window.addEventListener('pointercancel', handlePointerCancel, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerCancel);
+    };
+  }, [tapToDrop, dropAt]);
+
   useEffect(() => {
     if (!edgeToEdge) {
       return;
     }
 
     const handleMouseMove = (event: MouseEvent) => {
+      // A tap already dropped its image; skip the mouse events replayed for it.
+      if (event.timeStamp - lastTouchAtRef.current < TAP_MOUSE_REPLAY_MS) {
+        return;
+      }
       scheduleUpdate({ x: event.clientX, y: event.clientY }, event.target);
     };
 
@@ -398,13 +505,16 @@ export default function TrailingImage({
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    // With tap-to-drop, touches only drop on tap (see the effect above).
+    if (!tapToDrop) {
+      window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
     };
-  }, [edgeToEdge, scheduleUpdate]);
+  }, [edgeToEdge, scheduleUpdate, tapToDrop]);
 
   const trailLayer = (
     <div
