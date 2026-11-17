@@ -1,6 +1,6 @@
 'use client';
 import { FEATURES } from '@/lib/config/features';
-import { type Persona,usePersona } from '@/lib/hooks/use-persona';
+import { type Persona, usePersona } from '@/lib/hooks/use-persona';
 
 import { tokens } from '@/locales/tokens';
 
