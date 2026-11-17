@@ -207,7 +207,7 @@ const Navbar = () => {
         <PersonaSwitch />
 
         {/* Language menu — available in every persona */}
-        <div>
+        <div className="shrink-0">
           <Button
             data-testid="language-button"
             aria-controls={open ? 'language-menu' : undefined}
