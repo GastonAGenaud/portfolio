@@ -89,7 +89,7 @@ const VeniPromo = () => {
               onClick={rememberDismissal}
               className="transition-opacity hover:opacity-70"
             >
-              <VeniLogo className="text-xl" />
+              <VeniLogo className="h-6" />
             </a>
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
               {t(t$.eyebrow)}
