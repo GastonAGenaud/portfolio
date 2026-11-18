@@ -1,958 +1,1197 @@
 [
   {
     "name": "Miro",
-    "url": "https://miro.veniaver.com"
+    "url": "https://miro.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "La Morada",
-    "url": "https://la-morada.veniaver.com"
+    "url": "https://la-morada.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Fergus",
-    "url": "https://fergus.veniaver.com"
+    "url": "https://fergus.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "De Palma. Laboratorio Óptico.",
-    "url": "https://de-palma-laboratorio-optico.veniaver.com"
+    "url": "https://de-palma-laboratorio-optico.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "El Trébol",
-    "url": "https://el-trebol.veniaver.com"
+    "url": "https://el-trebol.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Farmacia Prema",
-    "url": "https://farmacia-prema.veniaver.com"
+    "url": "https://farmacia-prema.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia San Fernando (Cabrera 3161 SCS)",
-    "url": "https://farmacia-san-fernando-cabrera-3161-scs.veniaver.com"
+    "url": "https://farmacia-san-fernando-cabrera-3161-scs.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Ferretería Mariana",
-    "url": "https://ferreteria-mariana.veniaver.com"
+    "url": "https://ferreteria-mariana.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Mercurio",
-    "url": "https://ferreteria-mercurio.veniaver.com"
+    "url": "https://ferreteria-mercurio.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería y Cerrajería Postay Service",
-    "url": "https://ferreteria-y-cerrajeria-postay-service.veniaver.com"
+    "url": "https://ferreteria-y-cerrajeria-postay-service.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "La Mística Ferretería",
-    "url": "https://la-mistica-ferreteria.veniaver.com"
+    "url": "https://la-mistica-ferreteria.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "La Molinera",
-    "url": "https://la-molinera.veniaver.com"
+    "url": "https://la-molinera.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "La Nueva Ferretería Pueyrredón",
-    "url": "https://la-nueva-ferreteria-pueyrredon.veniaver.com"
+    "url": "https://la-nueva-ferreteria-pueyrredon.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "La Tolva",
-    "url": "https://la-tolva.veniaver.com"
+    "url": "https://la-tolva.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Los Pinos",
-    "url": "https://los-pinos.veniaver.com"
+    "url": "https://los-pinos.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "MOIRE CAFETERIA",
-    "url": "https://moire-cafeteria.veniaver.com"
+    "url": "https://moire-cafeteria.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Óptica Alemana",
-    "url": "https://optica-alemana.veniaver.com"
+    "url": "https://optica-alemana.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Optica Concalvo",
-    "url": "https://optica-concalvo.veniaver.com"
+    "url": "https://optica-concalvo.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica del Carmelo",
-    "url": "https://optica-del-carmelo.veniaver.com"
+    "url": "https://optica-del-carmelo.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica La Rochelle",
-    "url": "https://optica-la-rochelle.veniaver.com"
+    "url": "https://optica-la-rochelle.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica mil 24",
-    "url": "https://optica-mil-24.veniaver.com"
+    "url": "https://optica-mil-24.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Norte",
-    "url": "https://optica-norte.veniaver.com"
+    "url": "https://optica-norte.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Optica Optivision",
-    "url": "https://optica-optivision.veniaver.com"
+    "url": "https://optica-optivision.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Vision Center",
-    "url": "https://optica-vision-center.veniaver.com"
+    "url": "https://optica-vision-center.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "1640 Café Resto",
-    "url": "https://1640-cafe-resto-recoleta.veniaver.com"
+    "url": "https://1640-cafe-resto-recoleta.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Toro Café",
-    "url": "https://toro-cafe.veniaver.com"
+    "url": "https://toro-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "República del Fuego",
-    "url": "https://republica-del-fuego.veniaver.com"
+    "url": "https://republica-del-fuego.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Restaurante Instituto del Diagnóstico",
-    "url": "https://restaurante-instituto-del-diagnostico.veniaver.com"
+    "url": "https://restaurante-instituto-del-diagnostico.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Ferretería Juncal",
-    "url": "https://ferreteria-juncal.veniaver.com"
+    "url": "https://ferreteria-juncal.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Tornados",
-    "url": "https://ferreteria-tornados.veniaver.com"
+    "url": "https://ferreteria-tornados.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Óptica Alvear",
-    "url": "https://optica-alvear.veniaver.com"
+    "url": "https://optica-alvear.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Ios",
-    "url": "https://optica-ios.veniaver.com"
+    "url": "https://optica-ios.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "1021 Café",
-    "url": "https://1021-cafe.veniaver.com"
+    "url": "https://1021-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "1175 Bodegón Oriental",
-    "url": "https://1175-bodegon-oriental.veniaver.com"
+    "url": "https://1175-bodegon-oriental.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "A La Vuelta Ferretería",
-    "url": "https://a-la-vuelta-ferreteria.veniaver.com"
+    "url": "https://a-la-vuelta-ferreteria.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Acuña Bar",
-    "url": "https://acuna-bar.veniaver.com"
+    "url": "https://acuna-bar.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "ANDRA Bakery",
-    "url": "https://andra-bakery.veniaver.com"
+    "url": "https://andra-bakery.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Arineta - Panadería & Cafetería",
-    "url": "https://arineta-panaderia-y-cafeteria.veniaver.com"
+    "url": "https://arineta-panaderia-y-cafeteria.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Auténtico Bodegón Español",
-    "url": "https://autentico-bodegon-espanol.veniaver.com"
+    "url": "https://autentico-bodegon-espanol.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Ávila",
-    "url": "https://avila.veniaver.com"
+    "url": "https://avila.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bar Grill Lavalle",
-    "url": "https://bar-grill-lavalle.veniaver.com"
+    "url": "https://bar-grill-lavalle.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bar San Martín",
-    "url": "https://bar-san-martin.veniaver.com"
+    "url": "https://bar-san-martin.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Bar & Restaurant El Correo",
-    "url": "https://bar-y-restaurant-el-correo.veniaver.com"
+    "url": "https://bar-y-restaurant-el-correo.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bazar Ferretería Arenales",
-    "url": "https://bazar-ferreteria-arenales.veniaver.com"
+    "url": "https://bazar-ferreteria-arenales.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Bellagamba Restorán Palermo",
-    "url": "https://bellagamba-restoran-palermo.veniaver.com"
+    "url": "https://bellagamba-restoran-palermo.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Biblos Palermo (BULNES)",
-    "url": "https://biblos-palermo-bulnes.veniaver.com"
+    "url": "https://biblos-palermo-bulnes.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bicho Café de Especialidad Recoleta",
-    "url": "https://bicho-cafe-de-especialidad-recoleta.veniaver.com"
+    "url": "https://bicho-cafe-de-especialidad-recoleta.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Bodegon",
-    "url": "https://bodegon.veniaver.com"
+    "url": "https://bodegon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegon",
-    "url": "https://bodegon-2.veniaver.com"
+    "url": "https://bodegon-2.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón",
-    "url": "https://bodegon-3.veniaver.com"
+    "url": "https://bodegon-3.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegon Arturo y hermanos",
-    "url": "https://bodegon-arturo-y-hermanos.veniaver.com"
+    "url": "https://bodegon-arturo-y-hermanos.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón caballito",
-    "url": "https://bodegon-caballito.veniaver.com"
+    "url": "https://bodegon-caballito.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón Caravaggio",
-    "url": "https://bodegon-caravaggio.veniaver.com"
+    "url": "https://bodegon-caravaggio.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón Cervantes",
-    "url": "https://bodegon-cervantes.veniaver.com"
+    "url": "https://bodegon-cervantes.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón de Buenos Aires Ex Suipacha",
-    "url": "https://bodegon-de-buenos-aires-ex-suipache.veniaver.com"
+    "url": "https://bodegon-de-buenos-aires-ex-suipache.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón de la 12",
-    "url": "https://bodegon-de-la-12.veniaver.com"
+    "url": "https://bodegon-de-la-12.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón Español",
-    "url": "https://bodegon-espanol.veniaver.com"
+    "url": "https://bodegon-espanol.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón Núñez en Palermo",
-    "url": "https://bodegon-nunez-en-palermo.veniaver.com"
+    "url": "https://bodegon-nunez-en-palermo.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Bodegón Ramón y Cajal",
-    "url": "https://bodegon-ramon-y-cajal.veniaver.com"
+    "url": "https://bodegon-ramon-y-cajal.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "BORRA caffè",
-    "url": "https://borra-caffe.veniaver.com"
+    "url": "https://borra-caffe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Brut Nature",
-    "url": "https://brut-nature.veniaver.com"
+    "url": "https://brut-nature.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Buga.ar",
-    "url": "https://buga-ar.veniaver.com"
+    "url": "https://buga-ar.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Café Nómada Villa Crespo",
-    "url": "https://cafe-nomada-villa-crespo.veniaver.com"
+    "url": "https://cafe-nomada-villa-crespo.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Café San José",
-    "url": "https://cafe-san-jose.veniaver.com"
+    "url": "https://cafe-san-jose.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Casa Óptica Recoleta",
-    "url": "https://casa-optica-recoleta.veniaver.com"
+    "url": "https://casa-optica-recoleta.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Casa Veltri Restaurante",
-    "url": "https://casa-veltri-restaurante.veniaver.com"
+    "url": "https://casa-veltri-restaurante.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Centro Óptico Boutique",
-    "url": "https://centro-optico-boutique.veniaver.com"
+    "url": "https://centro-optico-boutique.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Centro Optico Funes",
-    "url": "https://centro-optico-funes.veniaver.com"
+    "url": "https://centro-optico-funes.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Centro Óptico Larrea",
-    "url": "https://centro-optico-larrea.veniaver.com"
+    "url": "https://centro-optico-larrea.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Cervantes",
-    "url": "https://cervantes.veniaver.com"
+    "url": "https://cervantes.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Clark´s Parrilla Argentina",
-    "url": "https://clark-s-parrilla-argentina.veniaver.com"
+    "url": "https://clark-s-parrilla-argentina.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Claudio Tunez Estilista Unisex",
-    "url": "https://claudio-tunez-estilista-unisex.veniaver.com"
+    "url": "https://claudio-tunez-estilista-unisex.veniaver.com",
+    "category": "peluquerias"
   },
   {
     "name": "Club Defensores de Almagro",
-    "url": "https://club-defensores-de-almagro.veniaver.com"
+    "url": "https://club-defensores-de-almagro.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Club Social Gral Alvear",
-    "url": "https://club-social-gral-alvear-restaurante.veniaver.com"
+    "url": "https://club-social-gral-alvear-restaurante.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Costanzo Cocina & Café",
-    "url": "https://costanzo-cocina-y-cafe.veniaver.com"
+    "url": "https://costanzo-cocina-y-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Covadonga",
-    "url": "https://covadonga.veniaver.com"
+    "url": "https://covadonga.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Cuento",
-    "url": "https://cuento.veniaver.com"
+    "url": "https://cuento.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Curia Bodegon",
-    "url": "https://curia-bodegon.veniaver.com"
+    "url": "https://curia-bodegon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Dejavu Restaurante",
-    "url": "https://dejavu-restaurante.veniaver.com"
+    "url": "https://dejavu-restaurante.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Delicious Café",
-    "url": "https://delicious-cafe.veniaver.com"
+    "url": "https://delicious-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Doña Tota",
-    "url": "https://dona-tota.veniaver.com"
+    "url": "https://dona-tota.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "DSM Refrigeración y Ferretería",
-    "url": "https://dsm-refrigeracion-y-ferreteria.veniaver.com"
+    "url": "https://dsm-refrigeracion-y-ferreteria.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "El Banderín",
-    "url": "https://el-banderin.veniaver.com"
+    "url": "https://el-banderin.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Bodegón de La Calle Ayacucho",
-    "url": "https://el-bodegon-de-la-calle-ayacucho.veniaver.com"
+    "url": "https://el-bodegon-de-la-calle-ayacucho.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Bodegon De Luly",
-    "url": "https://el-bodegon-de-luly.veniaver.com"
+    "url": "https://el-bodegon-de-luly.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Bodegón de Madero",
-    "url": "https://el-bodegon-de-madero.veniaver.com"
+    "url": "https://el-bodegon-de-madero.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Bodegón Manuel Belgrano",
-    "url": "https://el-bodegon-manuel-belgrano.veniaver.com"
+    "url": "https://el-bodegon-manuel-belgrano.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Conjuro Bodegon",
-    "url": "https://el-conjuro-bodegon.veniaver.com"
+    "url": "https://el-conjuro-bodegon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Corralón",
-    "url": "https://el-corralon.veniaver.com"
+    "url": "https://el-corralon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Dorado Restaurant",
-    "url": "https://el-dorado-restaurant.veniaver.com"
+    "url": "https://el-dorado-restaurant.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Español Restaurante",
-    "url": "https://el-espanol-restaurante.veniaver.com"
+    "url": "https://el-espanol-restaurante.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Garage Café",
-    "url": "https://el-garage-cafe.veniaver.com"
+    "url": "https://el-garage-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "El Globo",
-    "url": "https://el-globo.veniaver.com"
+    "url": "https://el-globo.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Rincón",
-    "url": "https://el-rincon.veniaver.com"
+    "url": "https://el-rincon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "El Viejo José Martín",
-    "url": "https://el-viejo-jose-martin.veniaver.com"
+    "url": "https://el-viejo-jose-martin.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Farmacia Agüerman",
-    "url": "https://farmacia-aguerman.veniaver.com"
+    "url": "https://farmacia-aguerman.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Center",
-    "url": "https://farmacia-center.veniaver.com"
+    "url": "https://farmacia-center.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Chagall",
-    "url": "https://farmacia-chagall.veniaver.com"
+    "url": "https://farmacia-chagall.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Clifford Melo",
-    "url": "https://farmacia-clifford-melo.veniaver.com"
+    "url": "https://farmacia-clifford-melo.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia CMD",
-    "url": "https://farmacia-cmd.veniaver.com"
+    "url": "https://farmacia-cmd.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia del Carmen",
-    "url": "https://farmacia-del-carmen.veniaver.com"
+    "url": "https://farmacia-del-carmen.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Duran",
-    "url": "https://farmacia-duran.veniaver.com"
+    "url": "https://farmacia-duran.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Farsico",
-    "url": "https://farmacia-farsico.veniaver.com"
+    "url": "https://farmacia-farsico.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Galénica",
-    "url": "https://farmacia-galenica.veniaver.com"
+    "url": "https://farmacia-galenica.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Galeno",
-    "url": "https://farmacia-galeno.veniaver.com"
+    "url": "https://farmacia-galeno.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Gran Callao",
-    "url": "https://farmacia-gran-callao.veniaver.com"
+    "url": "https://farmacia-gran-callao.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia La Botica De Beruti",
-    "url": "https://farmacia-la-botica-de-beruti.veniaver.com"
+    "url": "https://farmacia-la-botica-de-beruti.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia La Botica del Pilar",
-    "url": "https://farmacia-la-botica-del-pilar-48040115.veniaver.com"
+    "url": "https://farmacia-la-botica-del-pilar-48040115.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia M.Juncal",
-    "url": "https://farmacia-m-juncal.veniaver.com"
+    "url": "https://farmacia-m-juncal.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Politi - Polifarm SRL",
-    "url": "https://farmacia-politi-polifarm-srl.veniaver.com"
+    "url": "https://farmacia-politi-polifarm-srl.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Recipe",
-    "url": "https://farmacia-recipe.veniaver.com"
+    "url": "https://farmacia-recipe.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Roma",
-    "url": "https://farmacia-roma.veniaver.com"
+    "url": "https://farmacia-roma.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Rp/Callao",
-    "url": "https://farmacia-rp-callao.veniaver.com"
+    "url": "https://farmacia-rp-callao.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Salvador",
-    "url": "https://farmacia-salvador.veniaver.com"
+    "url": "https://farmacia-salvador.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Viena del Norte",
-    "url": "https://farmacia-viena-del-norte.veniaver.com"
+    "url": "https://farmacia-viena-del-norte.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacia Vip de la Plaza",
-    "url": "https://farmacia-vip-de-la-plaza.veniaver.com"
+    "url": "https://farmacia-vip-de-la-plaza.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Farmacias ABC Suc. Av. Callao",
-    "url": "https://farmacias-abc-suc-av-callao.veniaver.com"
+    "url": "https://farmacias-abc-suc-av-callao.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "fea | café de especialidad",
-    "url": "https://fea-cafe-de-especialidad.veniaver.com"
+    "url": "https://fea-cafe-de-especialidad.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Ferrecar III",
-    "url": "https://ferrecar-iii.veniaver.com"
+    "url": "https://ferrecar-iii.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería",
-    "url": "https://ferreteria.veniaver.com"
+    "url": "https://ferreteria.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería A&G",
-    "url": "https://ferreteria-a-y-g.veniaver.com"
+    "url": "https://ferreteria-a-y-g.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Adriferret",
-    "url": "https://ferreteria-adriferret.veniaver.com"
+    "url": "https://ferreteria-adriferret.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Agüero",
-    "url": "https://ferreteria-aguero.veniaver.com"
+    "url": "https://ferreteria-aguero.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Aguero Norte",
-    "url": "https://ferreteria-aguero-norte.veniaver.com"
+    "url": "https://ferreteria-aguero-norte.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Alfa",
-    "url": "https://ferreteria-alfa.veniaver.com"
+    "url": "https://ferreteria-alfa.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Alvarez SRL",
-    "url": "https://ferreteria-alvarez-srl.veniaver.com"
+    "url": "https://ferreteria-alvarez-srl.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Atenas",
-    "url": "https://ferreteria-atenas.veniaver.com"
+    "url": "https://ferreteria-atenas.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Bolt",
-    "url": "https://ferreteria-bolt.veniaver.com"
+    "url": "https://ferreteria-bolt.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Bulnes",
-    "url": "https://ferreteria-bulnes.veniaver.com"
+    "url": "https://ferreteria-bulnes.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Callao",
-    "url": "https://ferreteria-callao.veniaver.com"
+    "url": "https://ferreteria-callao.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Casa Pérez",
-    "url": "https://ferreteria-casa-perez.veniaver.com"
+    "url": "https://ferreteria-casa-perez.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Coronel Díaz",
-    "url": "https://ferreteria-coronel-diaz.veniaver.com"
+    "url": "https://ferreteria-coronel-diaz.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería del Norte",
-    "url": "https://ferreteria-del-norte.veniaver.com"
+    "url": "https://ferreteria-del-norte.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Distor",
-    "url": "https://ferreteria-distor.veniaver.com"
+    "url": "https://ferreteria-distor.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Due",
-    "url": "https://ferreteria-due.veniaver.com"
+    "url": "https://ferreteria-due.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería El Maiten",
-    "url": "https://ferreteria-el-maiten.veniaver.com"
+    "url": "https://ferreteria-el-maiten.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería FACTORY",
-    "url": "https://ferreteria-factory.veniaver.com"
+    "url": "https://ferreteria-factory.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Ferrelectric",
-    "url": "https://ferreteria-ferrelectric.veniaver.com"
+    "url": "https://ferreteria-ferrelectric.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Ferremak",
-    "url": "https://ferreteria-ferremak.veniaver.com"
+    "url": "https://ferreteria-ferremak.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Ferrepedia",
-    "url": "https://ferreteria-ferrepedia.veniaver.com"
+    "url": "https://ferreteria-ferrepedia.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Ferret Market",
-    "url": "https://ferreteria-ferret-market.veniaver.com"
+    "url": "https://ferreteria-ferret-market.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería G y C",
-    "url": "https://ferreteria-g-y-c.veniaver.com"
+    "url": "https://ferreteria-g-y-c.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Gallo",
-    "url": "https://ferreteria-gallo.veniaver.com"
+    "url": "https://ferreteria-gallo.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Juncal Suc. Barrio Norte",
-    "url": "https://ferreteria-juncal-suc-barrio-norte.veniaver.com"
+    "url": "https://ferreteria-juncal-suc-barrio-norte.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería La de Guise",
-    "url": "https://ferreteria-la-de-guise.veniaver.com"
+    "url": "https://ferreteria-la-de-guise.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería La Esquina",
-    "url": "https://ferreteria-la-esquina.veniaver.com"
+    "url": "https://ferreteria-la-esquina.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería La Isabel",
-    "url": "https://ferreteria-la-isabel.veniaver.com"
+    "url": "https://ferreteria-la-isabel.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Magoo",
-    "url": "https://ferreteria-magoo.veniaver.com"
+    "url": "https://ferreteria-magoo.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Mani Store",
-    "url": "https://ferreteria-mani-store.veniaver.com"
+    "url": "https://ferreteria-mani-store.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Me Falta Un Tornillo",
-    "url": "https://ferreteria-me-falta-un-tornillo.veniaver.com"
+    "url": "https://ferreteria-me-falta-un-tornillo.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Medrano",
-    "url": "https://ferreteria-medrano.veniaver.com"
+    "url": "https://ferreteria-medrano.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Rey Hnos.",
-    "url": "https://ferreteria-rey-hnos.veniaver.com"
+    "url": "https://ferreteria-rey-hnos.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Rosario",
-    "url": "https://ferreteria-rosario.veniaver.com"
+    "url": "https://ferreteria-rosario.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Siro",
-    "url": "https://ferreteria-siro.veniaver.com"
+    "url": "https://ferreteria-siro.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Soluciones Integrales",
-    "url": "https://ferreteria-soluciones-integrales.veniaver.com"
+    "url": "https://ferreteria-soluciones-integrales.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería Trasandina",
-    "url": "https://ferreteria-trasandina.veniaver.com"
+    "url": "https://ferreteria-trasandina.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferretería y Cerrajería Imperio",
-    "url": "https://ferreteria-y-cerrajeria-imperio.veniaver.com"
+    "url": "https://ferreteria-y-cerrajeria-imperio.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Ferreterías",
-    "url": "https://ferreterias.veniaver.com"
+    "url": "https://ferreterias.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "Fez Restaurante",
-    "url": "https://fez-restaurante.veniaver.com"
+    "url": "https://fez-restaurante.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Filo Peluquerías",
-    "url": "https://filo-peluquerias.veniaver.com"
+    "url": "https://filo-peluquerias.veniaver.com",
+    "category": "peluquerias"
   },
   {
     "name": "Fraga Bodegón",
-    "url": "https://fraga-bodegon.veniaver.com"
+    "url": "https://fraga-bodegon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "FRANCO trends & Beauty salon",
-    "url": "https://franco-trends-y-beauty-salon.veniaver.com"
+    "url": "https://franco-trends-y-beauty-salon.veniaver.com",
+    "category": "peluquerias"
   },
   {
     "name": "Gijón",
-    "url": "https://gijon.veniaver.com"
+    "url": "https://gijon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Green Apple (cocina buffet)",
-    "url": "https://green-apple-cocina-buffet.veniaver.com"
+    "url": "https://green-apple-cocina-buffet.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Grillo Café",
-    "url": "https://grillo-cafe.veniaver.com"
+    "url": "https://grillo-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Julio Pan",
-    "url": "https://julio-pan.veniaver.com"
+    "url": "https://julio-pan.veniaver.com",
+    "category": "peluquerias"
   },
   {
     "name": "Justa Cafe - Villa Crespo",
-    "url": "https://justa-cafe-villa-crespo.veniaver.com"
+    "url": "https://justa-cafe-villa-crespo.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Ke Bodegon by Nicanor",
-    "url": "https://ke-bodegon-by-nicanor.veniaver.com"
+    "url": "https://ke-bodegon-by-nicanor.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "La Aguada",
-    "url": "https://la-aguada.veniaver.com"
+    "url": "https://la-aguada.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "La Ferretería",
-    "url": "https://la-ferreteria.veniaver.com"
+    "url": "https://la-ferreteria.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "La Ferretería Cerrajería",
-    "url": "https://la-ferreteria-cerrajeria.veniaver.com"
+    "url": "https://la-ferreteria-cerrajeria.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "La Napo",
-    "url": "https://la-napo.veniaver.com"
+    "url": "https://la-napo.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "La Tana Bodegon",
-    "url": "https://la-tana-bodegon.veniaver.com"
+    "url": "https://la-tana-bodegon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "La Tolva",
-    "url": "https://la-tolva-2.veniaver.com"
+    "url": "https://la-tolva-2.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "La Trastienda Bodegón",
-    "url": "https://la-trastienda-bodegon.veniaver.com"
+    "url": "https://la-trastienda-bodegon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Lady Madrid Bar de Tapas",
-    "url": "https://lady-madrid-bar-de-tapas.veniaver.com"
+    "url": "https://lady-madrid-bar-de-tapas.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Lattente Cafe",
-    "url": "https://lattente-cafe.veniaver.com"
+    "url": "https://lattente-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Lo de Bebe",
-    "url": "https://lo-de-bebe.veniaver.com"
+    "url": "https://lo-de-bebe.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Lo de Fredy",
-    "url": "https://lo-de-fredy.veniaver.com"
+    "url": "https://lo-de-fredy.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Lo de Jaime cocina.",
-    "url": "https://lo-de-jaime-cocina.veniaver.com"
+    "url": "https://lo-de-jaime-cocina.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Los Bohemios",
-    "url": "https://los-bohemios.veniaver.com"
+    "url": "https://los-bohemios.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Los Orientales",
-    "url": "https://los-orientales.veniaver.com"
+    "url": "https://los-orientales.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Los Tíos Salteños",
-    "url": "https://los-tios-saltenos.veniaver.com"
+    "url": "https://los-tios-saltenos.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Lucila Café",
-    "url": "https://lucila-cafe.veniaver.com"
+    "url": "https://lucila-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Malambo",
-    "url": "https://malambo.veniaver.com"
+    "url": "https://malambo.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Manchado Cafetería",
-    "url": "https://manchado-cafeteria.veniaver.com"
+    "url": "https://manchado-cafeteria.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Mangi - Cafetería y Sandwichería",
-    "url": "https://mangi-cafeteria-y-sandwicheria.veniaver.com"
+    "url": "https://mangi-cafeteria-y-sandwicheria.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Mar Azul",
-    "url": "https://mar-azul.veniaver.com"
+    "url": "https://mar-azul.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Mario Escobar",
-    "url": "https://mario-escobar.veniaver.com"
+    "url": "https://mario-escobar.veniaver.com",
+    "category": "peluquerias"
   },
   {
     "name": "MELCHA CAFÉ",
-    "url": "https://melcha-cafe.veniaver.com"
+    "url": "https://melcha-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Melo",
-    "url": "https://melo.veniaver.com"
+    "url": "https://melo.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Miguel Machado - Hair Luxury",
-    "url": "https://miguel-machado-hair-luxury.veniaver.com"
+    "url": "https://miguel-machado-hair-luxury.veniaver.com",
+    "category": "peluquerias"
   },
   {
     "name": "Nueva Farmacia Solari",
-    "url": "https://nueva-farmacia-solari.veniaver.com"
+    "url": "https://nueva-farmacia-solari.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "Óptica Ars",
-    "url": "https://optica-ars.veniaver.com"
+    "url": "https://optica-ars.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Carri",
-    "url": "https://optica-carri.veniaver.com"
+    "url": "https://optica-carri.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Optica Citilent",
-    "url": "https://optica-citilent.veniaver.com"
+    "url": "https://optica-citilent.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Concorde",
-    "url": "https://optica-concorde.veniaver.com"
+    "url": "https://optica-concorde.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica del Valle",
-    "url": "https://optica-del-valle.veniaver.com"
+    "url": "https://optica-del-valle.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica en Red",
-    "url": "https://optica-en-red.veniaver.com"
+    "url": "https://optica-en-red.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "ÓPTICA Excimer Laser",
-    "url": "https://optica-excimer-laser.veniaver.com"
+    "url": "https://optica-excimer-laser.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica JIMENA LIVOTI. Expertos en MULTIFOCALES",
-    "url": "https://optica-jimena-livoti-expertos-en-multifocales.veniaver.com"
+    "url": "https://optica-jimena-livoti-expertos-en-multifocales.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Outlet Vision",
-    "url": "https://optica-outlet-vision-cita-previa.veniaver.com"
+    "url": "https://optica-outlet-vision-cita-previa.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Pueyrredón",
-    "url": "https://optica-pueyrredon.veniaver.com"
+    "url": "https://optica-pueyrredon.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Santa Fe",
-    "url": "https://optica-santa-fe.veniaver.com"
+    "url": "https://optica-santa-fe.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Óptica Savi",
-    "url": "https://optica-savi.veniaver.com"
+    "url": "https://optica-savi.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "ÓPTICA UNIVERSITARIA",
-    "url": "https://optica-universitaria.veniaver.com"
+    "url": "https://optica-universitaria.veniaver.com",
+    "category": "opticas"
   },
   {
     "name": "Ortiz Recoleta",
-    "url": "https://ortiz-recoleta.veniaver.com"
+    "url": "https://ortiz-recoleta.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "ÖSSkaffe Recoleta",
-    "url": "https://osskaffe-recoleta.veniaver.com"
+    "url": "https://osskaffe-recoleta.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Parrilla Bodegon NK ATENEO San Telmo",
-    "url": "https://parrilla-bodegon-nk-ateneo-san-telmo.veniaver.com"
+    "url": "https://parrilla-bodegon-nk-ateneo-san-telmo.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Parrilla Callao",
-    "url": "https://parrilla-callao.veniaver.com"
+    "url": "https://parrilla-callao.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Parrilla El Fortín Monumental",
-    "url": "https://parrilla-el-fortin-monumental.veniaver.com"
+    "url": "https://parrilla-el-fortin-monumental.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Parrilla \"La Barata\" de Palermo",
-    "url": "https://parrilla-la-barata-de-palermo-comidas-caseras.veniaver.com"
+    "url": "https://parrilla-la-barata-de-palermo-comidas-caseras.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Parrilla \"La Coqueta\"",
-    "url": "https://parrilla-la-coqueta.veniaver.com"
+    "url": "https://parrilla-la-coqueta.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Parrilla Lo De Mary",
-    "url": "https://parrilla-lo-de-mary-restaurante.veniaver.com"
+    "url": "https://parrilla-lo-de-mary-restaurante.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Parrilla Peña",
-    "url": "https://parrilla-pena.veniaver.com"
+    "url": "https://parrilla-pena.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Parrilla \"San Cayetano\"",
-    "url": "https://parrilla-san-cayetano.veniaver.com"
+    "url": "https://parrilla-san-cayetano.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Pasadena Café",
-    "url": "https://pasadena-cafe.veniaver.com"
+    "url": "https://pasadena-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Paula Roldán La Cafetería",
-    "url": "https://paula-roldan-la-cafeteria.veniaver.com"
+    "url": "https://paula-roldan-la-cafeteria.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Peluquería Gladys",
-    "url": "https://peluqueriagladys.veniaver.com"
+    "url": "https://peluqueriagladys.veniaver.com",
+    "category": "peluquerias"
   },
   {
     "name": "Ph Farmacia",
-    "url": "https://ph-farmacia.veniaver.com"
+    "url": "https://ph-farmacia.veniaver.com",
+    "category": "farmacias"
   },
   {
     "name": "PIÚ Café de Especialidad",
-    "url": "https://piu-cafe-de-especialidad.veniaver.com"
+    "url": "https://piu-cafe-de-especialidad.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Prida",
-    "url": "https://prida.veniaver.com"
+    "url": "https://prida.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Rigoletto Restaurant",
-    "url": "https://rigoletto-restaurant.veniaver.com"
+    "url": "https://rigoletto-restaurant.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Rito Cafetería Urbana",
-    "url": "https://rito-cafeteria-urbana.veniaver.com"
+    "url": "https://rito-cafeteria-urbana.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Roberto Iturria",
-    "url": "https://roberto-iturria.veniaver.com"
+    "url": "https://roberto-iturria.veniaver.com",
+    "category": "peluquerias"
   },
   {
     "name": "Rodi Bar",
-    "url": "https://rodi-bar.veniaver.com"
+    "url": "https://rodi-bar.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Rondó Cafe",
-    "url": "https://rondo-cafe.veniaver.com"
+    "url": "https://rondo-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Rosetta Cucina Italiana",
-    "url": "https://rosetta-cucina-italiana.veniaver.com"
+    "url": "https://rosetta-cucina-italiana.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Salma Café",
-    "url": "https://salma-cafe.veniaver.com"
+    "url": "https://salma-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "San Martín Restaurante",
-    "url": "https://san-martin-restaurante.veniaver.com"
+    "url": "https://san-martin-restaurante.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Sasha Pasteles",
-    "url": "https://sasha-pasteles.veniaver.com"
+    "url": "https://sasha-pasteles.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Satu Bar Bodegón",
-    "url": "https://satu-bar-bodegon.veniaver.com"
+    "url": "https://satu-bar-bodegon.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Stop & Coffee Café de Especialidad",
-    "url": "https://stop-y-coffee-cafe-de-especialidad.veniaver.com"
+    "url": "https://stop-y-coffee-cafe-de-especialidad.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Tamper Cafetería",
-    "url": "https://tamper-cafeteria.veniaver.com"
+    "url": "https://tamper-cafeteria.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Tolón",
-    "url": "https://tolon.veniaver.com"
+    "url": "https://tolon.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Tona Café",
-    "url": "https://tona-cafe.veniaver.com"
+    "url": "https://tona-cafe.veniaver.com",
+    "category": "cafeterias"
   },
   {
     "name": "Trabex Ferretería",
-    "url": "https://trabex-ferreteria.veniaver.com"
+    "url": "https://trabex-ferreteria.veniaver.com",
+    "category": "ferreterias"
   },
   {
     "name": "ULTIMO BODEGON AR",
-    "url": "https://ultimo-bodegon-ar.veniaver.com"
+    "url": "https://ultimo-bodegon-ar.veniaver.com",
+    "category": "restaurantes"
   },
   {
     "name": "Villa Crespo barbería",
-    "url": "https://villa-crespo-barberia.veniaver.com"
+    "url": "https://villa-crespo-barberia.veniaver.com",
+    "category": "peluquerias"
   }
 ]
