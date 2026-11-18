@@ -6,6 +6,7 @@ import VeniLogo from '@/components/ui/VeniLogo';
 
 import { tokens } from '@/locales/tokens';
 
+import veniSiteList from './veni-sites.json';
 import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -202,102 +203,22 @@ const services = [
   },
 ];
 
-// Every site published on veniaver.com (the same list as its showcase), linked
-// from the offer block. With `caseSlug` the link jumps to the case card above;
-// otherwise it opens the live site. Fergus has no `caseSlug` on purpose: its
-// card keeps its own URL and Veni a Ver serves a copy.
-const veniSites: { name: string; url: string; caseSlug?: string }[] = [
-  { name: 'Miro', url: 'https://miro.veniaver.com', caseSlug: 'miro' },
-  {
-    name: 'La Morada',
-    url: 'https://la-morada.veniaver.com',
-    caseSlug: 'la-morada',
-  },
-  { name: 'Fergus', url: 'https://fergus.veniaver.com' },
-  {
-    name: 'De Palma Laboratorio Óptico',
-    url: 'https://de-palma-laboratorio-optico.veniaver.com',
-  },
-  { name: 'El Trébol', url: 'https://el-trebol.veniaver.com' },
-  { name: 'Farmacia Prema', url: 'https://farmacia-prema.veniaver.com' },
-  {
-    name: 'Farmacia San Fernando',
-    url: 'https://farmacia-san-fernando-cabrera-3161-scs.veniaver.com',
-    caseSlug: 'farmacia-san-fernando',
-  },
-  {
-    name: 'Ferretería Mariana',
-    url: 'https://ferreteria-mariana.veniaver.com',
-  },
-  {
-    name: 'Ferretería Mercurio',
-    url: 'https://ferreteria-mercurio.veniaver.com',
-  },
-  {
-    name: 'Ferretería y Cerrajería Postay Service',
-    url: 'https://ferreteria-y-cerrajeria-postay-service.veniaver.com',
-  },
-  {
-    name: 'La Mística Ferretería',
-    url: 'https://la-mistica-ferreteria.veniaver.com',
-  },
-  { name: 'La Molinera', url: 'https://la-molinera.veniaver.com' },
-  {
-    name: 'La Nueva Ferretería Pueyrredón',
-    url: 'https://la-nueva-ferreteria-pueyrredon.veniaver.com',
-  },
-  {
-    name: 'La Tolva',
-    url: 'https://la-tolva.veniaver.com',
-    caseSlug: 'la-tolva',
-  },
-  { name: 'Los Pinos', url: 'https://los-pinos.veniaver.com' },
-  { name: 'Moire Cafetería', url: 'https://moire-cafeteria.veniaver.com' },
-  { name: 'Óptica Alemana', url: 'https://optica-alemana.veniaver.com' },
-  { name: 'Optica Concalvo', url: 'https://optica-concalvo.veniaver.com' },
-  {
-    name: 'Óptica del Carmelo',
-    url: 'https://optica-del-carmelo.veniaver.com',
-  },
-  {
-    name: 'Óptica La Rochelle',
-    url: 'https://optica-la-rochelle.veniaver.com',
-    caseSlug: 'optica-la-rochelle',
-  },
-  { name: 'Óptica mil 24', url: 'https://optica-mil-24.veniaver.com' },
-  { name: 'Óptica Norte', url: 'https://optica-norte.veniaver.com' },
-  { name: 'Optica Optivision', url: 'https://optica-optivision.veniaver.com' },
-  {
-    name: 'Óptica Vision Center',
-    url: 'https://optica-vision-center.veniaver.com',
-  },
-  {
-    name: '1640 Café Resto',
-    url: 'https://1640-cafe-resto-recoleta.veniaver.com',
-  },
-  { name: 'Toro Café', url: 'https://toro-cafe.veniaver.com' },
-  {
-    name: 'República del Fuego',
-    url: 'https://republica-del-fuego.veniaver.com',
-    caseSlug: 'republica-del-fuego',
-  },
-  {
-    name: 'Restaurante Instituto del Diagnóstico',
-    url: 'https://restaurante-instituto-del-diagnostico.veniaver.com',
-  },
-  {
-    name: 'Ferretería Juncal',
-    url: 'https://ferreteria-juncal.veniaver.com',
-    caseSlug: 'ferreteria-juncal',
-  },
-  {
-    name: 'Ferretería Tornados',
-    url: 'https://ferreteria-tornados.veniaver.com',
-  },
-  { name: 'Óptica Alvear', url: 'https://optica-alvear.veniaver.com' },
-  { name: 'Óptica Ios', url: 'https://optica-ios.veniaver.com' },
-  { name: 'Óptica Verona', url: 'https://optica-verona.veniaver.com' },
-];
+// Every site published on veniaver.com (copied from its data/sites.json), linked
+// from the offer block. Sites with a case card above jump to it; the rest open
+// the live site. Fergus is left out of the map on purpose: its card keeps its
+// own URL and Veni a Ver serves a copy.
+const caseSlugs: Record<string, string> = {
+  'https://miro.veniaver.com': 'miro',
+  'https://la-morada.veniaver.com': 'la-morada',
+  'https://farmacia-san-fernando-cabrera-3161-scs.veniaver.com':
+    'farmacia-san-fernando',
+  'https://la-tolva.veniaver.com': 'la-tolva',
+  'https://optica-la-rochelle.veniaver.com': 'optica-la-rochelle',
+  'https://republica-del-fuego.veniaver.com': 'republica-del-fuego',
+  'https://ferreteria-juncal.veniaver.com': 'ferreteria-juncal',
+};
+const veniSites: { name: string; url: string; caseSlug?: string }[] =
+  veniSiteList.map((site) => ({ ...site, caseSlug: caseSlugs[site.url] }));
 
 const sectorKeys = Object.keys(t$.sectors) as SectorKey[];
 const countBySector = (sector: SectorKey) =>
@@ -740,27 +661,32 @@ const ServicesHome = () => {
             <VeniLogo className="h-8" />
             <span>{VENI_DOMAIN} ↗</span>
           </a>
-          <p className="mt-6 text-xs text-text">
-            <span className="font-mono uppercase tracking-wider">
-              {t(t$.veni.sitesLabel)}:
-            </span>{' '}
-            {veniSites.map(({ name, url, caseSlug }, j) => (
-              <span key={url}>
-                {j > 0 && ' · '}
-                <a
-                  {...(caseSlug
-                    ? {
-                        href: `#case-${caseSlug}`,
-                        onClick: () => setSector('all'),
-                      }
-                    : { href: url, target: '_blank', rel: 'noreferrer' })}
-                  className="text-dark-2 underline decoration-dark-3 underline-offset-4 hover:text-accent hover:decoration-accent"
-                >
-                  {name}
-                </a>
+          <details className="group mt-6 text-xs text-text">
+            <summary className="cursor-pointer font-mono uppercase tracking-wider text-dark-2 hover:text-accent">
+              {t(t$.veni.sitesLabel)} ({veniSites.length})
+              <span className="ml-2 inline-block transition-transform group-open:rotate-45">
+                +
               </span>
-            ))}
-          </p>
+            </summary>
+            <p className="mt-3 leading-relaxed">
+              {veniSites.map(({ name, url, caseSlug }, j) => (
+                <span key={url}>
+                  {j > 0 && ' · '}
+                  <a
+                    {...(caseSlug
+                      ? {
+                          href: `#case-${caseSlug}`,
+                          onClick: () => setSector('all'),
+                        }
+                      : { href: url, target: '_blank', rel: 'noreferrer' })}
+                    className="text-dark-2 underline decoration-dark-3 underline-offset-4 hover:text-accent hover:decoration-accent"
+                  >
+                    {name}
+                  </a>
+                </span>
+              ))}
+            </p>
+          </details>
         </motion.div>
         <div className="mt-10 grid gap-5 lg:grid-cols-[2fr_1fr]">
           <motion.ul
