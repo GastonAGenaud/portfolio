@@ -549,7 +549,7 @@ export const es = {
   [tokens.servicesSectionType.veni.title]:
     'El sitio de tu comercio, armado con tus datos reales.',
   [tokens.servicesSectionType.veni.description]:
-    'Una línea pensada para cafeterías, restaurantes, farmacias, ópticas y ferreterías. Armo el sitio con los datos reales de tu negocio en Google Maps y queda online, listo para recibir clientes.',
+    'Una línea pensada para cafeterías, restaurantes, farmacias, ópticas, ferreterías y peluquerías. Armo el sitio con los datos reales de tu negocio en Google Maps y queda online, listo para recibir clientes.',
   [tokens.servicesSectionType.veni.sitesLabel]: 'Sitios publicados',
   [tokens.servicesSectionType.veni.plansTitle]: 'Dos modalidades',
   [tokens.servicesSectionType.veni.cta]: 'Quiero mi sitio',

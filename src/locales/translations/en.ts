@@ -633,7 +633,7 @@ export const en = {
   [tokens.servicesSectionType.veni.title]:
     'Your shop\'s website, built from your real data.',
   [tokens.servicesSectionType.veni.description]:
-    'A line made for cafés, restaurants, pharmacies, opticians and hardware stores. I build the site from your business\'s real Google Maps data and it goes online, ready to welcome customers.',
+    'A line made for cafés, restaurants, pharmacies, opticians, hardware stores and hair salons. I build the site from your business\'s real Google Maps data and it goes online, ready to welcome customers.',
   [tokens.servicesSectionType.veni.sitesLabel]: 'Live sites',
   [tokens.servicesSectionType.veni.plansTitle]: 'Two options',
   [tokens.servicesSectionType.veni.cta]: 'I want my site',
