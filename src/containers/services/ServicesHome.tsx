@@ -224,9 +224,31 @@ const sectorKeys = Object.keys(t$.sectors) as SectorKey[];
 const countBySector = (sector: SectorKey) =>
   cases.filter((c) => c.sector === sector).length;
 
+// Every live project counts once: the case cards plus the Veni a Ver sites that
+// have no card (Fergus's copy is the same project as its card).
+const projectCount =
+  cases.length +
+  veniSites.filter(
+    (s) => !s.caseSlug && s.url !== 'https://fergus.veniaver.com'
+  ).length;
+// Industries across both lists. Hair salons are the only Veni a Ver industry
+// without a sector of its own in the case filter.
+const veniIndustry: Record<string, string> = {
+  cafeterias: 'gastro',
+  restaurantes: 'gastro',
+  ferreterias: 'commerce',
+  farmacias: 'health',
+  opticas: 'health',
+  peluquerias: 'beauty',
+};
+const industryCount = new Set([
+  ...cases.map((c) => c.sector),
+  ...veniSiteList.map((s) => veniIndustry[s.category] ?? s.category),
+]).size;
+
 const stats = [
-  { value: String(cases.length), label: t$.stats.projects },
-  { value: String(sectorKeys.length), label: t$.stats.sectors },
+  { value: String(projectCount), label: t$.stats.projects },
+  { value: String(industryCount), label: t$.stats.sectors },
   { value: '14', label: t$.stats.prototype },
   { value: '3', label: t$.stats.languages },
 ];
@@ -451,13 +473,12 @@ const ServicesHome = () => {
           className="mt-14 grid max-w-3xl grid-cols-2 gap-6 border-t border-dark-3/60 pt-8 sm:grid-cols-4"
         >
           {stats.map((s) => (
-            <div key={s.label}>
-              <dt className="sr-only">{t(s.label)}</dt>
+            <div key={s.label} className="flex flex-col-reverse">
+              <dt className="mt-1 text-xs leading-snug text-text">
+                {t(s.label)}
+              </dt>
               <dd className="text-3xl font-bold tracking-tight text-dark-1">
                 {s.value}
-              </dd>
-              <dd className="mt-1 text-xs leading-snug text-text">
-                {t(s.label)}
               </dd>
             </div>
           ))}
