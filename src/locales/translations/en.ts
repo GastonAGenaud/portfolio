@@ -203,6 +203,8 @@ export const en = {
     'API Automation - Petstore REST Testing',
   [tokens.projectsSectionType.projects[5].name]:
     'Turborepo Monorepo - Full Stack Architecture',
+  [tokens.projectsSectionType.projects[6].name]:
+    'Poker Planning - Real-time Scrum Estimation',
 
   // Life Projects Section
   [tokens.lifeProjectsSectionType.title]: 'my other life projects',
