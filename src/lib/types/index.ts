@@ -30,7 +30,7 @@ export type ProjectType = {
   id: string;
   name: string;
   url: string;
-  year: number;
+  year?: number;
   img: string;
   tags: string[];
   repo?: string;

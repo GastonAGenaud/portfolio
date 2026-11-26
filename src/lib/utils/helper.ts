@@ -36,7 +36,10 @@ export const getId = () => `id${Math.random().toString(16).slice(2)}`;
  */
 
 export const sortByYear = (projects: ProjectType[]) => {
-  return projects.sort((a, b) => b.year - a.year);
+  // A project without a year counts as current, so it keeps its place among the newest.
+  const current = new Date().getFullYear();
+  const year = (p: ProjectType) => p.year ?? current;
+  return projects.sort((a, b) => year(b) - year(a));
 };
 
 /**
