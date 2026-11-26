@@ -260,6 +260,7 @@ export const tokens = {
     result: 'publicationsSectionType.result',
     results: 'publicationsSectionType.results',
     noResults: 'publicationsSectionType.noResults',
+    video: 'publicationsSectionType.video',
   },
   newsletterSectionType: {
     title: 'newsletterSectionType.title',

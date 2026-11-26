@@ -1,4 +1,4 @@
-import type { Block, Lang, Publication } from '../types';
+import type { Block, Lang, Publication, PublicationVideo } from '../types';
 import { SERIES_TOTAL, toSummary } from './summary';
 import type { SeriesGuide } from './types';
 
@@ -37,6 +37,19 @@ const labels = {
     footer: (day: number) =>
       `Day ${day} of ${SERIES_TOTAL} of the **31 days of QA + AI** series. Commands and versions reviewed in November 2026: rerun them before relying on them, AI tooling changes fast.`,
   },
+};
+
+// Built by scripts/guide-videos/build.mjs, which owns this naming.
+const video = (day: number, lang: Lang): PublicationVideo => {
+  const base = `/publications/qa-ai/videos/d${String(day).padStart(
+    2,
+    '0'
+  )}-${lang}`;
+  return {
+    src: `${base}.mp4`,
+    captions: `${base}.vtt`,
+    poster: `${base}.jpg`,
+  };
 };
 
 const paragraphs = (texts: string[]): Block[] =>
@@ -129,6 +142,7 @@ export const toPublication = (
   const next = all[index + 1];
   return {
     ...toSummary(guide),
+    video: { es: video(guide.day, 'es'), en: video(guide.day, 'en') },
     body: {
       es: body(guide, 'es', previous, next),
       en: body(guide, 'en', previous, next),
