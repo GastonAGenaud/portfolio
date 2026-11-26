@@ -205,6 +205,8 @@ export const es = {
     'Turborepo Monorepo - Arquitectura Full Stack',
   [tokens.projectsSectionType.projects[6].name]:
     'Poker Planning - Estimación Scrum en tiempo real',
+  [tokens.projectsSectionType.projects[7].name]:
+    'QA Harness - Agentes de IA con guardrails para QA',
 
   // Life Projects Section
   [tokens.lifeProjectsSectionType.title]: 'mis otros proyectos de vida',

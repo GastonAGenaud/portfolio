@@ -184,6 +184,9 @@ export const tokens = {
       6: {
         name: 'projectsSectionType.projects.6.name',
       },
+      7: {
+        name: 'projectsSectionType.projects.7.name',
+      },
     },
   },
   lifeProjectsSectionType: {
