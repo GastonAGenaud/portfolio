@@ -1,0 +1,373 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.730
+Día 18 de la serie 31 días de QA + IA.
+
+00:00:04.280 --> 00:00:07.568
+Cómo testear un modelo: accuracy, N corridas y rangos.
+
+00:00:08.119 --> 00:00:11.962
+Cómo medir un modelo que toma decisiones (un agente que mapea nombres desordenados
+
+00:00:11.962 --> 00:00:15.758
+contra un catálogo maestro) con corridas repetidas, rangos y métricas por tipo de
+
+00:00:15.758 --> 00:00:16.039
+error.
+
+00:00:17.339 --> 00:00:21.041
+"¿Qué modelo es mejor para esto?" es una pregunta que casi siempre se responde con
+
+00:00:21.041 --> 00:00:24.020
+un ranking público o con la impresión de quien lo probó una tarde.
+
+00:00:24.320 --> 00:00:28.406
+Ninguna de las dos cosas dice cómo se va a comportar en tu tarea, con tus datos y tu
+
+00:00:28.406 --> 00:00:28.746
+prompt.
+
+00:00:29.046 --> 00:00:32.909
+Y cuando alguien lo mide, suele hacerlo con una sola corrida y reportar un solo
+
+00:00:32.909 --> 00:00:33.252
+número.
+
+00:00:34.552 --> 00:00:38.026
+Probar un modelo en serio se parece más a un experimento que a un test.
+
+00:00:38.326 --> 00:00:42.951
+Hay una tarea definida, un conjunto fijo, varias repeticiones y un resultado con su
+
+00:00:42.951 --> 00:00:43.286
+rango.
+
+00:00:43.586 --> 00:00:47.408
+Esta guía usa un caso de mapeo de registros para mostrar el método completo: qué
+
+00:00:47.408 --> 00:00:51.182
+medir además del accuracy, cómo distinguir una diferencia real del ruido y cómo
+
+00:00:51.182 --> 00:00:54.049
+decidir cuando el modelo más caro no es claramente el mejor.
+
+00:00:54.349 --> 00:00:56.848
+Las cifras que aparecen son ilustrativas.
+
+00:00:58.148 --> 00:01:00.078
+Para seguir esta guía necesitás:
+
+00:01:00.628 --> 00:01:03.730
+El golden dataset del día 17 (unos 100 casos de test).
+
+00:01:04.280 --> 00:01:07.452
+Un eval harness con versión de modelo fija (días 8 y 15).
+
+00:01:08.752 --> 00:01:09.928
+Este es el setup.
+
+00:01:10.228 --> 00:01:13.574
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:14.874 --> 00:01:17.013
+Y este es el siguiente archivo del setup.
+
+00:01:18.313 --> 00:01:19.209
+Paso 1.
+
+00:01:19.509 --> 00:01:21.358
+Tarea y acciones definidas.
+
+00:01:21.908 --> 00:01:24.906
+Definí la tarea y las acciones posibles con precisión.
+
+00:01:25.206 --> 00:01:29.334
+En este caso: mapear a un registro existente, aprobar como nuevo o mandar a
+
+00:01:29.334 --> 00:01:29.829
+revisión.
+
+00:01:30.379 --> 00:01:34.457
+Escribí con precisión qué recibe el modelo y cuáles son las únicas salidas válidas.
+
+00:01:34.757 --> 00:01:38.685
+En el caso de ejemplo llega un registro nuevo y hay tres acciones posibles: mapearlo
+
+00:01:38.685 --> 00:01:41.819
+a uno existente, aprobarlo como nuevo o enviarlo a revisión humana.
+
+00:01:42.119 --> 00:01:45.523
+Definir las acciones como una lista cerrada vuelve medible la tarea.
+
+00:01:45.823 --> 00:01:49.053
+También obliga a decidir qué se espera en cada situación dudosa.
+
+00:01:49.353 --> 00:01:53.676
+Si la definición es vaga, vas a estar midiendo la interpretación del modelo y no su
+
+00:01:53.676 --> 00:01:54.197
+capacidad.
+
+00:01:55.497 --> 00:01:56.394
+Paso 2.
+
+00:01:56.694 --> 00:01:58.717
+Cinco corridas por configuración.
+
+00:01:59.267 --> 00:02:02.682
+Corré cada configuración 5 veces sobre el mismo set de test.
+
+00:02:02.982 --> 00:02:05.110
+Una sola corrida no es una medición.
+
+00:02:05.660 --> 00:02:09.824
+Corré cada configuración cinco veces sobre el mismo conjunto de test, sin cambiar
+
+00:02:09.824 --> 00:02:10.852
+nada entre corridas.
+
+00:02:11.152 --> 00:02:15.036
+El mismo modelo con la misma entrada puede moverse varios puntos de una corrida a
+
+00:02:15.036 --> 00:02:15.276
+otra.
+
+00:02:15.576 --> 00:02:20.025
+Si medís una sola vez, no sabés si viste su mejor día, el peor o uno típico.
+
+00:02:20.325 --> 00:02:24.264
+Cinco repeticiones es un compromiso razonable entre costo e información.
+
+00:02:24.564 --> 00:02:28.668
+Si los resultados quedan muy dispersos, esa dispersión ya es un hallazgo sobre la
+
+00:02:28.668 --> 00:02:30.441
+estabilidad del modelo en tu tarea.
+
+00:02:31.741 --> 00:02:32.638
+Paso 3.
+
+00:02:32.938 --> 00:02:34.032
+Media y rango.
+
+00:02:34.582 --> 00:02:36.837
+Reportá media y rango (mínimo y máximo).
+
+00:02:37.137 --> 00:02:40.982
+Si dos configuraciones se pisan en el rango, la diferencia es ruido.
+
+00:02:41.532 --> 00:02:45.273
+Reportá el promedio junto con el mínimo y el máximo de las cinco corridas.
+
+00:02:45.573 --> 00:02:49.960
+Después aplicá una regla simple: si los rangos de dos configuraciones se superponen,
+
+00:02:49.960 --> 00:02:51.787
+no podés afirmar que una sea mejor.
+
+00:02:52.087 --> 00:02:54.493
+Esa diferencia es compatible con el ruido.
+
+00:02:54.793 --> 00:02:58.574
+Muchas decisiones de cambiar de modelo o de prompt se toman sobre diferencias de uno
+
+00:02:58.574 --> 00:03:00.914
+o dos puntos que desaparecen al repetir la medición.
+
+00:03:01.214 --> 00:03:04.758
+Mostrar el rango en la tabla evita esa discusión antes de que empiece.
+
+00:03:06.058 --> 00:03:07.059
+Paso 4.
+
+00:03:07.359 --> 00:03:08.871
+Más allá del accuracy.
+
+00:03:09.421 --> 00:03:13.360
+Mirá más allá del accuracy: precisión por acción y cantidad de errores caros por
+
+00:03:13.360 --> 00:03:13.754
+corrida.
+
+00:03:14.054 --> 00:03:18.169
+Mapear mal a un registro existente ensucia datos; mandar a revisión de más solo
+
+00:03:18.169 --> 00:03:18.898
+cuesta tiempo.
+
+00:03:19.448 --> 00:03:22.864
+El accuracy trata todos los errores como iguales, y no lo son.
+
+00:03:23.164 --> 00:03:27.147
+En el ejemplo, mapear un registro a uno existente que no corresponde contamina los
+
+00:03:27.147 --> 00:03:29.041
+datos y es difícil de detectar después.
+
+00:03:29.341 --> 00:03:32.525
+Enviar de más a revisión solo cuesta tiempo de una persona.
+
+00:03:32.825 --> 00:03:36.726
+Por eso conviene mirar la precisión por acción y, sobre todo, contar los errores
+
+00:03:36.726 --> 00:03:37.750
+costosos por corrida.
+
+00:03:38.050 --> 00:03:42.094
+Un modelo con un poco menos de accuracy y la mitad de errores costosos puede ser la
+
+00:03:42.094 --> 00:03:42.825
+mejor elección.
+
+00:03:44.125 --> 00:03:45.126
+Paso 5.
+
+00:03:45.426 --> 00:03:47.913
+Mismas condiciones, calidad contra costo.
+
+00:03:48.463 --> 00:03:52.541
+Compará modelos con el mismo prompt y dataset, calidad contra costo por llamada.
+
+00:03:53.091 --> 00:03:57.113
+Para comparar modelos, mantené fijo todo lo demás: el mismo prompt, el mismo
+
+00:03:57.113 --> 00:04:00.129
+dataset, los mismos parámetros y el mismo juez si lo hay.
+
+00:04:00.429 --> 00:04:03.114
+Agregá a la tabla el costo por llamada y la latencia.
+
+00:04:03.414 --> 00:04:07.344
+La comparación útil no es qué modelo tiene el número más alto sino cuánta calidad
+
+00:04:07.344 --> 00:04:09.430
+adicional obtenés por cada unidad de costo.
+
+00:04:09.730 --> 00:04:14.026
+A veces esa calidad adicional existe, y a veces queda dentro del margen de ruido,
+
+00:04:14.026 --> 00:04:15.352
+pagando varias veces más.
+
+00:04:16.652 --> 00:04:17.618
+Paso 6.
+
+00:04:17.918 --> 00:04:19.755
+Decidir con la tabla completa.
+
+00:04:20.305 --> 00:04:22.049
+Decidí con la tabla completa.
+
+00:04:22.349 --> 00:04:26.125
+El modelo más caro no siempre gana, y a veces gana por menos que el ruido.
+
+00:04:26.675 --> 00:04:31.264
+La decisión sale de leer todas las columnas juntas: media, rango, errores costosos,
+
+00:04:31.264 --> 00:04:32.204
+costo y latencia.
+
+00:04:32.504 --> 00:04:36.315
+No siempre gana el más caro, y cuando gana puede hacerlo por menos que el ruido.
+
+00:04:36.615 --> 00:04:39.868
+Dejá la decisión escrita junto con la tabla y la ficha de corrida.
+
+00:04:40.168 --> 00:04:44.264
+Dentro de tres meses, cuando salga un modelo nuevo, vas a poder repetir exactamente
+
+00:04:44.264 --> 00:04:48.408
+el mismo experimento y comparar contra una referencia propia, en lugar de empezar la
+
+00:04:48.408 --> 00:04:49.297
+discusión de cero.
+
+00:04:50.597 --> 00:04:51.516
+Un ejemplo.
+
+00:04:52.066 --> 00:04:55.687
+Con cifras inventadas para ilustrar el método: un equipo compara tres
+
+00:04:55.687 --> 00:04:59.360
+configuraciones sobre cuarenta casos de test, cinco corridas cada una.
+
+00:04:59.660 --> 00:05:05.184
+El modelo chico promedia 71% con rango de 68 a 75 y seis errores costosos por
+
+00:05:05.184 --> 00:05:05.758
+corrida.
+
+00:05:06.058 --> 00:05:11.146
+El mediano, 84% con rango de 81 a 86 y dos errores costosos.
+
+00:05:11.446 --> 00:05:16.985
+El grande, 85% con rango de 82 a 88, también dos errores costosos y un costo cinco
+
+00:05:16.985 --> 00:05:18.809
+veces mayor que el mediano.
+
+00:05:19.109 --> 00:05:23.122
+Los rangos del mediano y del grande se superponen casi por completo, así que la
+
+00:05:23.122 --> 00:05:25.102
+diferencia de un punto no es evidencia.
+
+00:05:25.402 --> 00:05:29.445
+Eligen el mediano y documentan que el grande no justificó su costo en esta tarea.
+
+00:05:30.745 --> 00:05:32.269
+Los errores más comunes.
+
+00:05:32.819 --> 00:05:35.120
+Decidir con una sola corrida por modelo.
+
+00:05:35.670 --> 00:05:37.635
+Reportar un promedio sin su rango.
+
+00:05:38.185 --> 00:05:41.589
+Mirar solo accuracy cuando los errores tienen costos distintos.
+
+00:05:42.140 --> 00:05:45.021
+Comparar modelos con prompts o datasets diferentes.
+
+00:05:46.321 --> 00:05:48.588
+Para saber que quedó bien, revisá esto.
+
+00:05:49.138 --> 00:05:51.997
+La tarea tiene una lista cerrada de acciones válidas.
+
+00:05:52.547 --> 00:05:55.626
+Cada configuración corrió cinco veces sobre el mismo test.
+
+00:05:56.176 --> 00:05:59.998
+La tabla muestra media, rango, errores costosos, costo y latencia.
+
+00:06:00.548 --> 00:06:03.686
+La decisión quedó escrita junto a la tabla y la ficha de corrida.
+
+00:06:04.986 --> 00:06:06.556
+Y lo que la IA no hizo bien.
+
+00:06:07.106 --> 00:06:11.067
+El mismo modelo con la misma entrada varía varios puntos entre corridas, y algunos
+
+00:06:11.067 --> 00:06:13.482
+modelos fallan directamente con contextos grandes.
+
+00:06:13.782 --> 00:06:15.979
+Un número suelto no describe a un modelo.
+
+00:06:17.279 --> 00:06:18.896
+Eso fue el día 18.
+
+00:06:19.196 --> 00:06:23.828
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:23.828 --> 00:06:24.434
+frecuentes.
+
+00:06:24.984 --> 00:06:29.159
+Seguí con el día 19: Costo como métrica de calidad: prefiltro top-K antes del
+
+00:06:29.159 --> 00:06:29.538
+modelo.

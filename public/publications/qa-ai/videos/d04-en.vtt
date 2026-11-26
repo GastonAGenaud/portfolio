@@ -1,0 +1,352 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.009
+Day 4 of the 31 days of QA + AI series.
+
+00:00:04.559 --> 00:00:07.882
+Your AI QA lab: full setup in 30 minutes.
+
+00:00:08.432 --> 00:00:14.025
+The lab repo used for the rest of the series: local model, eval tool, Playwright and
+
+00:00:14.025 --> 00:00:15.157
+secrets handling.
+
+00:00:16.457 --> 00:00:20.583
+Most tutorials on AI applied to testing assume you already have a working
+
+00:00:20.583 --> 00:00:24.540
+environment, an API key with credit and time to wrestle with versions.
+
+00:00:24.840 --> 00:00:28.047
+In practice, that start is where many people give up.
+
+00:00:28.347 --> 00:00:33.358
+This guide solves the starting point: a small, reproducible, free repository you
+
+00:00:33.358 --> 00:00:35.675
+will reuse on every day that follows.
+
+00:00:36.975 --> 00:00:39.753
+The central decision is to work with a local model.
+
+00:00:40.053 --> 00:00:44.235
+It isn't the most capable, but it has three advantages for learning: it costs
+
+00:00:44.235 --> 00:00:48.798
+nothing, no data leaves your machine and its errors are frequent, which is ideal for
+
+00:00:48.798 --> 00:00:50.481
+practicing how to measure them.
+
+00:00:50.781 --> 00:00:55.707
+When you need more quality, switching to a cloud model is one configuration line.
+
+00:00:57.007 --> 00:00:58.704
+To follow this guide you need:
+
+00:00:59.254 --> 00:01:03.553
+Node.js 22+ and Python 3.10+.
+
+00:01:04.103 --> 00:01:04.779
+Git.
+
+00:01:05.329 --> 00:01:08.292
+Ollama, to run a local model at no cost.
+
+00:01:08.842 --> 00:01:11.352
+Optional: a provider API key.
+
+00:01:12.652 --> 00:01:13.932
+This is the setup.
+
+00:01:14.232 --> 00:01:18.449
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:19.749 --> 00:01:22.016
+And this is the next setup file.
+
+00:01:23.316 --> 00:01:25.582
+And this is the next setup file.
+
+00:01:26.882 --> 00:01:27.918
+Step 1.
+
+00:01:28.218 --> 00:01:29.800
+Versions first.
+
+00:01:30.350 --> 00:01:32.918
+Check Node, Python and Git versions.
+
+00:01:33.218 --> 00:01:36.332
+If Node is below 22, upgrade first.
+
+00:01:36.882 --> 00:01:40.031
+Run the three version commands before installing anything.
+
+00:01:40.331 --> 00:01:45.149
+Eval tools and coding agents ask for recent Node versions, and a good share of odd
+
+00:01:45.149 --> 00:01:47.323
+install errors come from an old Node.
+
+00:01:47.623 --> 00:01:52.939
+If you use a version manager, pin the version in a file such as .nvmrc so anyone
+
+00:01:52.939 --> 00:01:55.265
+cloning the repo uses the same one.
+
+00:01:55.565 --> 00:02:00.348
+You will need Python later for RAG evals and for measuring performance, so it's
+
+00:02:00.348 --> 00:02:01.558
+worth verifying now.
+
+00:02:02.858 --> 00:02:04.057
+Step 2.
+
+00:02:04.357 --> 00:02:05.520
+A local model.
+
+00:02:06.070 --> 00:02:10.764
+Install Ollama, pull llama3.2 and confirm it replies.
+
+00:02:11.064 --> 00:02:14.514
+You now have a free model with no data leaving your machine.
+
+00:02:15.064 --> 00:02:22.113
+Ollama runs models on your machine and exposes an OpenAI-compatible API on port
+
+00:02:22.113 --> 00:02:22.648
+11434.
+
+00:02:22.948 --> 00:02:27.998
+That means almost any tool that can talk to a cloud provider can talk to your local
+
+00:02:27.998 --> 00:02:29.580
+model by changing the URL.
+
+00:02:29.880 --> 00:02:34.980
+A small model is enough to start and runs without a dedicated graphics card, only
+
+00:02:34.980 --> 00:02:35.421
+slower.
+
+00:02:35.721 --> 00:02:40.360
+Confirm it replies from the terminal before moving on: if that step fails,
+
+00:02:40.360 --> 00:02:43.432
+everything else will fail with less clear errors.
+
+00:02:44.732 --> 00:02:45.815
+Step 3.
+
+00:02:46.115 --> 00:02:47.453
+Repo structure.
+
+00:02:48.003 --> 00:02:53.160
+Create the qa-ai-lab repo with evals, tests, data and prompts folders.
+
+00:02:53.710 --> 00:02:55.837
+Four folders with one purpose each.
+
+00:02:56.137 --> 00:02:58.659
+evals holds evaluation configs.
+
+00:02:58.959 --> 00:03:01.040
+tests, the Playwright tests.
+
+00:03:01.340 --> 00:03:03.700
+data, datasets and schemas.
+
+00:03:04.000 --> 00:03:07.183
+prompts, prompt templates as text files.
+
+00:03:07.483 --> 00:03:11.978
+Keeping prompts apart from code has a practical reason: they can be versioned,
+
+00:03:11.978 --> 00:03:16.472
+compared across versions and reviewed in a pull request like any other change.
+
+00:03:16.772 --> 00:03:20.502
+A prompt embedded in a string inside code never gets reviewed.
+
+00:03:21.802 --> 00:03:22.814
+Step 4.
+
+00:03:23.114 --> 00:03:24.951
+Development dependencies.
+
+00:03:25.501 --> 00:03:30.738
+Install promptfoo and Playwright as dev dependencies so versions travel with the
+
+00:03:30.738 --> 00:03:31.065
+repo.
+
+00:03:31.615 --> 00:03:36.738
+Install promptfoo and Playwright as project dev dependencies, not globally.
+
+00:03:37.038 --> 00:03:41.594
+That way versions are recorded in the lockfile and two people with the same repo get
+
+00:03:41.594 --> 00:03:42.462
+the same result.
+
+00:03:42.762 --> 00:03:47.414
+With tools that change every few weeks, a different global install on each machine
+
+00:03:47.414 --> 00:03:50.137
+is a constant source of unexplained differences.
+
+00:03:50.437 --> 00:03:54.802
+Install only Chromium for now: what follows doesn't need the other browsers and the
+
+00:03:54.802 --> 00:03:56.117
+download is much lighter.
+
+00:03:57.417 --> 00:03:58.546
+Step 5.
+
+00:03:58.846 --> 00:04:00.416
+Secrets out of the repo.
+
+00:04:00.966 --> 00:04:06.843
+Secrets: API keys go in .env, and .env goes in .gitignore before the first commit.
+
+00:04:07.393 --> 00:04:12.095
+Even if today you only work with a local model, settle secrets handling before the
+
+00:04:12.095 --> 00:04:12.841
+first commit.
+
+00:04:13.141 --> 00:04:17.114
+API keys go in a .env file listed in .gitignore.
+
+00:04:17.414 --> 00:04:23.098
+Commit a .env.example instead, with variable names and no values, to document what
+
+00:04:23.098 --> 00:04:23.791
+is needed.
+
+00:04:24.091 --> 00:04:29.288
+A key that reaches a repository, even a private one, must be considered compromised
+
+00:04:29.288 --> 00:04:31.918
+and rotated; preventing it costs one line.
+
+00:04:33.218 --> 00:04:34.405
+Step 6.
+
+00:04:34.705 --> 00:04:35.869
+The smoke eval.
+
+00:04:36.419 --> 00:04:37.745
+Run the smoke eval.
+
+00:04:38.045 --> 00:04:42.088
+One green case in the table and in the web viewer means the lab is ready.
+
+00:04:42.638 --> 00:04:47.490
+The sample file has a prompt with one variable, a local provider and a test with a
+
+00:04:47.490 --> 00:04:48.910
+case-insensitive assert.
+
+00:04:49.210 --> 00:04:54.031
+Running it verifies the whole chain: the tool installed, the model answering and the
+
+00:04:54.031 --> 00:04:55.064
+assert evaluating.
+
+00:04:55.364 --> 00:04:59.453
+The web viewer shows each case with its input, output and result.
+
+00:04:59.753 --> 00:05:04.416
+Keep it as the first step of any work session: if the smoke eval fails, the problem
+
+00:05:04.416 --> 00:05:07.337
+is the environment and not whatever you are testing.
+
+00:05:08.637 --> 00:05:09.743
+An example.
+
+00:05:10.293 --> 00:05:14.348
+A tester follows the steps on a work laptop with no graphics card.
+
+00:05:14.648 --> 00:05:20.302
+Node was on version 18 and the promptfoo install showed warnings; she upgrades to 22
+
+00:05:20.302 --> 00:05:21.581
+and they disappear.
+
+00:05:21.881 --> 00:05:26.099
+She pulls the local model and the first reply takes several seconds, which is
+
+00:05:26.099 --> 00:05:27.468
+expected on that machine.
+
+00:05:27.768 --> 00:05:33.966
+She creates the repo, adds .env to .gitignore and runs the smoke eval: one green
+
+00:05:33.966 --> 00:05:34.354
+case.
+
+00:05:34.654 --> 00:05:38.348
+Then she adds a second test with another country and runs it again.
+
+00:05:38.648 --> 00:05:43.215
+In half an hour she has an environment she can clone on another machine and get the
+
+00:05:43.215 --> 00:05:43.876
+same result.
+
+00:05:45.176 --> 00:05:46.838
+The most common mistakes.
+
+00:05:47.388 --> 00:05:50.920
+Installing tools globally and losing control of versions.
+
+00:05:51.471 --> 00:05:55.258
+Making the first commit before adding .env to .gitignore.
+
+00:05:55.808 --> 00:05:59.816
+Skipping the terminal check of the model and debugging confusing errors later.
+
+00:06:00.366 --> 00:06:03.039
+Leaving prompts as strings inside code.
+
+00:06:04.339 --> 00:06:06.582
+To know it is done, check this.
+
+00:06:07.132 --> 00:06:10.479
+Node 22 or later, Python and Git verified.
+
+00:06:11.029 --> 00:06:13.539
+The local model replies from the terminal.
+
+00:06:14.089 --> 00:06:17.343
+The repo has the four folders and .env ignored.
+
+00:06:17.893 --> 00:06:21.018
+The smoke eval shows two green cases in the viewer.
+
+00:06:22.318 --> 00:06:24.213
+And where AI fell short.
+
+00:06:24.763 --> 00:06:28.028
+Assistants suggest outdated flags and versions.
+
+00:06:28.328 --> 00:06:31.025
+A command you haven't run is a hypothesis.
+
+00:06:32.325 --> 00:06:33.651
+That was day 4.
+
+00:06:33.951 --> 00:06:38.925
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:38.925 --> 00:06:39.933
+asked questions.
+
+00:06:40.483 --> 00:06:45.919
+Continue with day 5: Test cases from user stories: the prompt that actually works.

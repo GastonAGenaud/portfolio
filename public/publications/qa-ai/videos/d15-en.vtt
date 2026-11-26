@@ -1,0 +1,364 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.334
+Day 15 of the 31 days of QA + AI series.
+
+00:00:04.884 --> 00:00:07.487
+How to set up models for quality testing.
+
+00:00:08.037 --> 00:00:13.187
+Configuring a model for testing reproducibly: pinned version, explicit parameters,
+
+00:00:13.187 --> 00:00:17.270
+structured output and a judge separate from the model under test.
+
+00:00:18.570 --> 00:00:23.137
+When a test involving a model gives different results from one day to the next, the
+
+00:00:23.137 --> 00:00:25.062
+first suspect is usually the model.
+
+00:00:25.362 --> 00:00:27.583
+The second should be the configuration.
+
+00:00:27.883 --> 00:00:32.503
+An alias pointing to the latest version, a temperature left at its default, a token
+
+00:00:32.503 --> 00:00:37.180
+limit that cuts the answer off or a judge that changed without notice explain a good
+
+00:00:37.180 --> 00:00:39.240
+share of the unexplained differences.
+
+00:00:40.540 --> 00:00:45.101
+Setting up a model for quality testing means treating it like any other dependency
+
+00:00:45.101 --> 00:00:49.774
+of a test environment: pinned version, explicit parameters and a record of what each
+
+00:00:49.774 --> 00:00:50.608
+thing ran with.
+
+00:00:50.908 --> 00:00:55.568
+This guide walks through the six decisions that make two runs comparable, and makes
+
+00:00:55.568 --> 00:01:00.060
+clear what reproducibility means when the system under test isn't deterministic.
+
+00:01:01.360 --> 00:01:03.057
+To follow this guide you need:
+
+00:01:03.607 --> 00:01:05.502
+The eval harness from day 8.
+
+00:01:06.052 --> 00:01:10.235
+Optional: a provider API key for the second model and the judge.
+
+00:01:11.535 --> 00:01:12.814
+This is the setup.
+
+00:01:13.114 --> 00:01:17.331
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:18.631 --> 00:01:19.667
+Step 1.
+
+00:01:19.967 --> 00:01:21.944
+The role defines the config.
+
+00:01:22.494 --> 00:01:27.773
+Define the model's role in the test: system under test, generator (data or tests) or
+
+00:01:27.773 --> 00:01:28.150
+judge.
+
+00:01:28.450 --> 00:01:30.682
+Each role is configured differently.
+
+00:01:31.232 --> 00:01:35.435
+The same model can play three roles in your process, and each asks for something
+
+00:01:35.435 --> 00:01:35.960
+different.
+
+00:01:36.260 --> 00:01:40.672
+As the system under test, it's configured the same as in production, because you
+
+00:01:40.672 --> 00:01:42.602
+want to measure what the user gets.
+
+00:01:42.902 --> 00:01:48.164
+As a generator of data or tests, it can use more temperature to produce variety.
+
+00:01:48.464 --> 00:01:52.483
+As a judge, it needs the most stable configuration possible.
+
+00:01:52.783 --> 00:01:57.414
+Mixing roles in a single config is a frequent mistake: you end up measuring the
+
+00:01:57.414 --> 00:02:00.228
+product with parameters the product doesn't use.
+
+00:02:01.528 --> 00:02:02.726
+Step 2.
+
+00:02:03.026 --> 00:02:05.537
+Exact version, no aliases.
+
+00:02:06.087 --> 00:02:07.738
+Pin the exact version.
+
+00:02:08.038 --> 00:02:12.932
+No "latest" aliases: if the provider updates the model, your results change without
+
+00:02:12.932 --> 00:02:14.229
+you touching anything.
+
+00:02:14.779 --> 00:02:18.706
+Providers offer aliases pointing to a model's most recent version.
+
+00:02:19.006 --> 00:02:23.425
+They're convenient for development and bad for measuring: the day the alias moves,
+
+00:02:23.425 --> 00:02:27.790
+your results change without you touching anything, and you have no way of knowing
+
+00:02:27.790 --> 00:02:28.006
+why.
+
+00:02:28.306 --> 00:02:31.768
+Always use the full identifier with its version or date.
+
+00:02:32.068 --> 00:02:36.887
+When you want to upgrade, do it as a deliberate change: run the eval with the old
+
+00:02:36.887 --> 00:02:40.813
+and the new version, compare, and only then change the identifier.
+
+00:02:42.113 --> 00:02:43.196
+Step 3.
+
+00:02:43.496 --> 00:02:45.379
+Parameters in plain sight.
+
+00:02:45.929 --> 00:02:50.566
+Explicit parameters: low temperature for classifying and judging, an output token
+
+00:02:50.566 --> 00:02:53.141
+limit and a seed if the provider supports it.
+
+00:02:53.441 --> 00:02:56.892
+If a model doesn't expose a parameter, write that down.
+
+00:02:57.442 --> 00:03:01.939
+Write into the config the parameters that affect the output, even when they match
+
+00:03:01.939 --> 00:03:06.547
+the defaults: temperature, output token limit and seed if the provider supports it.
+
+00:03:06.847 --> 00:03:09.613
+For classifying and judging, low temperature.
+
+00:03:09.913 --> 00:03:14.555
+The token limit deserves attention: an answer cut off halfway can look like a format
+
+00:03:14.555 --> 00:03:16.545
+failure when it's a badly set limit.
+
+00:03:16.845 --> 00:03:20.435
+Some models don't expose certain parameters or ignore them.
+
+00:03:20.735 --> 00:03:25.045
+Note that too, so you don't credit the config with control you don't have.
+
+00:03:26.345 --> 00:03:27.358
+Step 4.
+
+00:03:27.658 --> 00:03:29.135
+Structured output.
+
+00:03:29.685 --> 00:03:32.903
+Structured output: request JSON with a schema.
+
+00:03:33.203 --> 00:03:36.294
+It removes a good share of your format failures.
+
+00:03:36.844 --> 00:03:41.579
+If your code is going to parse the answer, request it as JSON with a schema, using
+
+00:03:41.579 --> 00:03:45.044
+the provider's structured output mechanism where one exists.
+
+00:03:45.344 --> 00:03:50.807
+It reduces a whole class of failures: text before or after the JSON, fields with
+
+00:03:50.807 --> 00:03:53.949
+another name, values outside the allowed list.
+
+00:03:54.249 --> 00:03:59.059
+It doesn't replace validation on your side, which is still necessary, but it changes
+
+00:03:59.059 --> 00:03:59.917
+the proportion.
+
+00:04:00.217 --> 00:04:04.839
+You'll spend evals measuring whether content is correct, instead of spending cases
+
+00:04:04.839 --> 00:04:07.093
+discovering the format came back broken.
+
+00:04:08.393 --> 00:04:09.522
+Step 5.
+
+00:04:09.822 --> 00:04:11.137
+A separate judge.
+
+00:04:11.687 --> 00:04:16.386
+Separate judge: the grading model shouldn't be the one being graded, and should be
+
+00:04:16.386 --> 00:04:17.761
+equally or more capable.
+
+00:04:18.311 --> 00:04:22.747
+The model that grades shouldn't be the one being graded, and it should be equally or
+
+00:04:22.747 --> 00:04:23.434
+more capable.
+
+00:04:23.734 --> 00:04:28.465
+A model evaluating its own output tends to find it reasonable, because it shares the
+
+00:04:28.465 --> 00:04:30.099
+same biases that produced it.
+
+00:04:30.399 --> 00:04:34.639
+Declare it as a separate provider, with its pinned version and its label.
+
+00:04:34.939 --> 00:04:39.686
+Changing the judge is changing the measuring instrument: after doing so, new metrics
+
+00:04:39.686 --> 00:04:42.964
+aren't comparable with earlier ones until you recalibrate.
+
+00:04:44.264 --> 00:04:45.451
+Step 6.
+
+00:04:45.751 --> 00:04:46.891
+The run card.
+
+00:04:47.441 --> 00:04:53.276
+Record a run card for each run: model and version, prompt version, parameters, date
+
+00:04:53.276 --> 00:04:54.120
+and dataset.
+
+00:04:54.420 --> 00:04:57.116
+No card, no valid comparison.
+
+00:04:57.666 --> 00:05:03.546
+Each run should leave a record with model and version, prompt version, parameters,
+
+00:05:03.546 --> 00:05:05.912
+date, dataset and, if any, judge.
+
+00:05:06.212 --> 00:05:08.896
+It's a small file stored next to the results.
+
+00:05:09.196 --> 00:05:13.970
+Without that card, a comparison between two runs says nothing, because you don't
+
+00:05:13.970 --> 00:05:16.118
+know what else changed between them.
+
+00:05:16.418 --> 00:05:20.988
+With it you can answer the question that always arrives: why it scored ninety last
+
+00:05:20.988 --> 00:05:22.493
+week and eighty-four today.
+
+00:05:23.793 --> 00:05:24.899
+An example.
+
+00:05:25.449 --> 00:05:29.877
+A team notices their classification eval dropped five points with nobody touching
+
+00:05:29.877 --> 00:05:30.478
+the prompt.
+
+00:05:30.778 --> 00:05:33.138
+They look for the run cards and there are none.
+
+00:05:33.438 --> 00:05:37.715
+They reconstruct what they can: the provider used an alias and the vendor had
+
+00:05:37.715 --> 00:05:39.547
+released a new version that week.
+
+00:05:39.847 --> 00:05:44.792
+They pin the previous version, run again and the result returns to its original
+
+00:05:44.792 --> 00:05:45.167
+value.
+
+00:05:45.467 --> 00:05:50.433
+Then they run the new version on purpose: it's better on ambiguous cases and worse
+
+00:05:50.433 --> 00:05:51.705
+on two critical ones.
+
+00:05:52.005 --> 00:05:54.039
+They decide not to upgrade yet.
+
+00:05:54.339 --> 00:05:59.415
+From then on, every run stores its card and the model identifier includes the date.
+
+00:06:00.715 --> 00:06:02.378
+The most common mistakes.
+
+00:06:02.928 --> 00:06:05.891
+Using a version alias in evals or in CI.
+
+00:06:06.441 --> 00:06:10.275
+Evaluating the product with parameters different from production.
+
+00:06:10.825 --> 00:06:14.090
+Using the model under evaluation as its own judge.
+
+00:06:14.640 --> 00:06:18.126
+Comparing two runs without knowing what changed between them.
+
+00:06:19.426 --> 00:06:21.669
+To know it is done, check this.
+
+00:06:22.219 --> 00:06:25.101
+Each provider has a role and a label that states it.
+
+00:06:25.651 --> 00:06:28.347
+Every model is pinned to an exact version.
+
+00:06:28.897 --> 00:06:32.209
+Temperature, token limit and seed are written down.
+
+00:06:32.759 --> 00:06:35.676
+Each run stores its card next to the results.
+
+00:06:36.976 --> 00:06:38.871
+And where AI fell short.
+
+00:06:39.421 --> 00:06:42.628
+Temperature zero doesn't guarantee the same answer.
+
+00:06:42.928 --> 00:06:47.922
+Reproducibility with LLMs is statistical: you measure it with repeated runs.
+
+00:06:49.222 --> 00:06:50.990
+That was day 15.
+
+00:06:51.290 --> 00:06:56.264
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:56.264 --> 00:06:57.272
+asked questions.
+
+00:06:57.822 --> 00:07:03.571
+Continue with day 16: LLM-as-a-judge: rubrics and calibration against humans.

@@ -1,0 +1,352 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.067
+Day 12 of the 31 days of QA + AI series.
+
+00:00:04.617 --> 00:00:09.356
+Failure triage with LLMs: from 40 red tests to 3 root causes.
+
+00:00:09.906 --> 00:00:14.560
+A triage step that groups a run's failures by probable cause, with evidence, and
+
+00:00:14.560 --> 00:00:16.829
+says "unknown" when there isn't enough.
+
+00:00:18.129 --> 00:00:22.137
+A pipeline with forty red tests almost never has forty problems.
+
+00:00:22.437 --> 00:00:27.930
+It has two or three: a service that's down, an interface change and, with luck, a
+
+00:00:27.930 --> 00:00:28.744
+real defect.
+
+00:00:29.044 --> 00:00:33.372
+The job of whoever does triage is to discover that grouping, and it's slow,
+
+00:00:33.372 --> 00:00:38.048
+repetitive work: opening failure after failure, reading the error and recognizing
+
+00:00:38.048 --> 00:00:40.703
+you've already seen it ten times that morning.
+
+00:00:42.003 --> 00:00:45.802
+Grouping similar text is something an LLM does well and fast.
+
+00:00:46.102 --> 00:00:48.717
+What it doesn't do well is admit it doesn't know.
+
+00:00:49.017 --> 00:00:53.724
+This guide builds an assisted triage that uses the former and guards against the
+
+00:00:53.724 --> 00:00:58.667
+latter: small, structured input, output with textual evidence, a mandatory "unknown"
+
+00:00:58.667 --> 00:01:02.138
+category and a person who confirms before closing anything.
+
+00:01:03.438 --> 00:01:05.136
+To follow this guide you need:
+
+00:01:05.686 --> 00:01:08.255
+A Playwright suite with some failures.
+
+00:01:08.805 --> 00:01:10.990
+Traces enabled on retries.
+
+00:01:12.290 --> 00:01:13.570
+This is the setup.
+
+00:01:13.870 --> 00:01:18.087
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:19.387 --> 00:01:21.653
+And this is the next setup file.
+
+00:01:22.953 --> 00:01:25.220
+And this is the next setup file.
+
+00:01:26.520 --> 00:01:27.556
+Step 1.
+
+00:01:27.856 --> 00:01:29.182
+Structured results.
+
+00:01:29.732 --> 00:01:34.637
+Emit results in a structured format with the JSON reporter and keep traces from
+
+00:01:34.637 --> 00:01:35.133
+retries.
+
+00:01:35.683 --> 00:01:40.240
+The starting point is having your runner emit results in a format a machine can
+
+00:01:40.240 --> 00:01:42.605
+read, not just an HTML report for people.
+
+00:01:42.905 --> 00:01:48.552
+Playwright's JSON reporter includes each test's title, file, status, error and
+
+00:01:48.552 --> 00:01:49.131
+retries.
+
+00:01:49.431 --> 00:01:54.038
+Also enable traces on first retry: they are the evidence you'll need to verify
+
+00:01:54.038 --> 00:01:55.691
+whatever the model proposes.
+
+00:01:55.991 --> 00:02:00.398
+Without structured data you end up pasting whole logs into a chat, which is
+
+00:02:00.398 --> 00:02:02.983
+expensive, slow and mixes noise with signal.
+
+00:02:04.283 --> 00:02:05.482
+Step 2.
+
+00:02:05.782 --> 00:02:07.642
+Extract only what's needed.
+
+00:02:08.192 --> 00:02:13.384
+Extract failures only: title, file and the first 400 characters of the error.
+
+00:02:13.684 --> 00:02:15.603
+Fewer tokens, better grouping.
+
+00:02:16.153 --> 00:02:21.133
+A short script walks the JSON and keeps the failed tests: title, file and the first
+
+00:02:21.133 --> 00:02:23.353
+four hundred characters of the error.
+
+00:02:23.653 --> 00:02:25.572
+That trimming has two effects.
+
+00:02:25.872 --> 00:02:30.425
+It lowers cost, because a full log can hold thousands of irrelevant lines.
+
+00:02:30.725 --> 00:02:35.858
+And it improves the result, because the first part of the message usually holds what
+
+00:02:35.858 --> 00:02:40.318
+tells one cause from another: the error type, the locator, the HTTP code.
+
+00:02:40.618 --> 00:02:45.404
+With full stack traces, the model tends to group by superficial stack matches.
+
+00:02:46.704 --> 00:02:47.786
+Step 3.
+
+00:02:48.086 --> 00:02:49.389
+The triage prompt.
+
+00:02:49.939 --> 00:02:51.590
+Run the triage prompt.
+
+00:02:51.890 --> 00:02:56.131
+Require category, tests in the group and the exact evidence line.
+
+00:02:56.681 --> 00:03:01.353
+Ask for three things per group: a category from a closed list, the tests in it and
+
+00:03:01.353 --> 00:03:03.916
+the exact error line justifying the grouping.
+
+00:03:04.216 --> 00:03:09.745
+The closed list matters: environment, data, interface change, probable defect and
+
+00:03:09.745 --> 00:03:10.291
+unknown.
+
+00:03:10.591 --> 00:03:15.075
+The evidence line must be a literal quote from the input, not an explanation.
+
+00:03:15.375 --> 00:03:19.631
+That way you can check in seconds whether the group makes sense, and a group whose
+
+00:03:19.631 --> 00:03:22.901
+evidence doesn't appear in the data gets discarded immediately.
+
+00:03:24.201 --> 00:03:25.214
+Step 4.
+
+00:03:25.514 --> 00:03:27.583
+Verify the largest group.
+
+00:03:28.133 --> 00:03:33.209
+Manually verify the largest group by opening a trace with npx playwright show-trace.
+
+00:03:33.759 --> 00:03:38.580
+Before acting on the result, open the trace of one test from the largest group.
+
+00:03:38.880 --> 00:03:43.352
+Look at the timeline, the network calls and the screenshot at the moment of failure.
+
+00:03:43.652 --> 00:03:47.990
+If the proposed cause matches what you see, the group is confirmed and you've
+
+00:03:47.990 --> 00:03:50.412
+probably resolved most of the red pipeline.
+
+00:03:50.712 --> 00:03:54.151
+If it doesn't match, treat the whole result with more caution.
+
+00:03:54.451 --> 00:03:59.318
+That check takes a few minutes and is what turns a suggestion into a diagnosis.
+
+00:04:00.618 --> 00:04:01.747
+Step 5.
+
+00:04:02.047 --> 00:04:03.594
+Save every triage.
+
+00:04:04.144 --> 00:04:06.747
+Save each triage with your final verdict.
+
+00:04:07.047 --> 00:04:10.324
+In a few weeks you have a dataset to evaluate the prompt.
+
+00:04:10.874 --> 00:04:15.753
+Save the input, the model's output and your final verdict in one file per run.
+
+00:04:16.053 --> 00:04:20.572
+It looks like bureaucracy and it's the most valuable part of the process.
+
+00:04:20.872 --> 00:04:25.080
+In a few weeks you have dozens of real cases labeled by someone who knows the
+
+00:04:25.080 --> 00:04:29.617
+system: exactly the dataset needed to evaluate the triage prompt with the day eight
+
+00:04:29.617 --> 00:04:30.000
+method.
+
+00:04:30.300 --> 00:04:35.030
+You'll also see patterns a single day doesn't show, such as a test that always lands
+
+00:04:35.030 --> 00:04:36.607
+in the environment category.
+
+00:04:37.907 --> 00:04:39.093
+Step 6.
+
+00:04:39.393 --> 00:04:40.754
+Closure is human.
+
+00:04:41.304 --> 00:04:46.776
+Don't automate closure: the model proposes, a person confirms before quarantining or
+
+00:04:46.776 --> 00:04:47.623
+filing a bug.
+
+00:04:48.173 --> 00:04:53.503
+The model proposes groups and causes; a person confirms before quarantining a test,
+
+00:04:53.503 --> 00:04:55.943
+filing a bug or retrying the pipeline.
+
+00:04:56.243 --> 00:04:58.149
+The reason is the cost of error.
+
+00:04:58.449 --> 00:05:02.601
+Wrongly quarantining a test that was catching a real defect lets that defect
+
+00:05:02.601 --> 00:05:03.038
+through.
+
+00:05:03.338 --> 00:05:06.998
+Filing twenty duplicate bugs costs QA its credibility.
+
+00:05:07.298 --> 00:05:11.761
+Automating the proposal saves the tedious part; automating the decision moves the
+
+00:05:11.761 --> 00:05:14.185
+risk to a system that doesn't answer for it.
+
+00:05:15.485 --> 00:05:16.591
+An example.
+
+00:05:17.141 --> 00:05:20.649
+On a Monday the nightly pipeline shows forty-two failures.
+
+00:05:20.949 --> 00:05:25.735
+The script extracts the forty-two trimmed errors and the prompt returns four groups.
+
+00:05:26.035 --> 00:05:30.744
+Thirty-one share the line of a 503 error from the authentication service:
+
+00:05:30.744 --> 00:05:31.518
+environment.
+
+00:05:31.818 --> 00:05:36.523
+Seven have a timeout waiting for a button whose name changed: interface change.
+
+00:05:36.823 --> 00:05:41.388
+Three show a cart total different from the expected one: probable defect.
+
+00:05:41.688 --> 00:05:43.339
+One stays as unknown.
+
+00:05:43.639 --> 00:05:48.413
+The QA opens a trace from the first group and confirms the 503.
+
+00:05:48.713 --> 00:05:53.608
+She retries the pipeline once the service is back, updates one locator and files a
+
+00:05:53.608 --> 00:05:55.996
+single bug with three tests as evidence.
+
+00:05:56.296 --> 00:05:59.456
+The unknown case turns out to be expired test data.
+
+00:06:00.756 --> 00:06:02.419
+The most common mistakes.
+
+00:06:02.969 --> 00:06:05.862
+Pasting the full log instead of the trimmed errors.
+
+00:06:06.413 --> 00:06:10.154
+Not offering the unknown category and getting invented causes.
+
+00:06:10.704 --> 00:06:14.340
+Accepting the model's explanation without opening any trace.
+
+00:06:14.890 --> 00:06:18.329
+Automating quarantine or bug filing without confirmation.
+
+00:06:19.629 --> 00:06:21.873
+To know it is done, check this.
+
+00:06:22.423 --> 00:06:25.885
+The runner emits JSON and keeps traces on retries.
+
+00:06:26.435 --> 00:06:30.699
+The script extracts title, file and trimmed error for each failure.
+
+00:06:31.249 --> 00:06:33.968
+Each group comes with a literal evidence line.
+
+00:06:34.518 --> 00:06:36.924
+The triage is saved with your final verdict.
+
+00:06:38.224 --> 00:06:40.119
+And where AI fell short.
+
+00:06:40.669 --> 00:06:44.793
+If you don't give it the "unknown" exit, it fabricates a plausible cause.
+
+00:06:45.093 --> 00:06:47.580
+An invented cause is worse than none.
+
+00:06:48.880 --> 00:06:50.450
+That was day 12.
+
+00:06:50.750 --> 00:06:55.725
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:55.725 --> 00:06:56.732
+asked questions.
+
+00:06:57.282 --> 00:07:03.334
+Continue with day 13: TDD with AI (1): red, green, refactor with an agent.

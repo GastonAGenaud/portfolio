@@ -35,7 +35,17 @@ export interface Publication {
   cover?: Localized<string>;
   // Extra terms the search matches on (section titles); never displayed.
   keywords?: Localized<string>;
+  // Narrated walkthrough of the article, one per language.
+  video?: Localized<PublicationVideo>;
 }
 
-// What listings need: everything except the article body.
-export type PublicationSummary = Omit<Publication, 'body'>;
+export interface PublicationVideo {
+  src: string;
+  // WebVTT captions of the narration.
+  captions: string;
+  // 16:9 frame shown before playback.
+  poster: string;
+}
+
+// What listings need: everything except the article body and its video.
+export type PublicationSummary = Omit<Publication, 'body' | 'video'>;

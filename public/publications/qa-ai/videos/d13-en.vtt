@@ -1,0 +1,373 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.183
+Day 13 of the 31 days of QA + AI series.
+
+00:00:04.733 --> 00:00:08.788
+TDD with AI (1): red, green, refactor with an agent.
+
+00:00:09.338 --> 00:00:13.457
+Three TDD cycles where you write the test and the agent writes the minimal
+
+00:00:13.457 --> 00:00:15.795
+implementation, without touching the test.
+
+00:00:17.095 --> 00:00:21.626
+TDD always had a discipline cost: writing the test first when the solution is
+
+00:00:21.626 --> 00:00:23.333
+already in your head is hard.
+
+00:00:23.633 --> 00:00:28.465
+With an agent that writes the implementation in seconds, the temptation flips.
+
+00:00:28.765 --> 00:00:33.136
+The easy thing is to ask "implement this function with its tests" and get everything
+
+00:00:33.136 --> 00:00:37.403
+together, with tests that pass because they were written while looking at the code
+
+00:00:37.403 --> 00:00:38.392
+they had to verify.
+
+00:00:39.692 --> 00:00:44.592
+The red, green, refactor cycle orders that relationship with an authorship rule: the
+
+00:00:44.592 --> 00:00:47.624
+test is yours and the implementation is the agent's.
+
+00:00:47.924 --> 00:00:53.208
+The test becomes the executable specification and also the quality control for what
+
+00:00:53.208 --> 00:00:54.417
+the agent produces.
+
+00:00:54.717 --> 00:00:58.989
+This guide walks the full cycle with a small function, so the habit sticks before
+
+00:00:58.989 --> 00:01:00.571
+you apply it to something big.
+
+00:01:01.871 --> 00:01:03.569
+To follow this guide you need:
+
+00:01:04.119 --> 00:01:08.347
+Node.js 22+, a coding agent and an empty repo.
+
+00:01:09.647 --> 00:01:10.927
+This is the setup.
+
+00:01:11.227 --> 00:01:15.444
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:16.744 --> 00:01:19.011
+And this is the next setup file.
+
+00:01:20.311 --> 00:01:22.577
+And this is the next setup file.
+
+00:01:23.877 --> 00:01:24.913
+Step 1.
+
+00:01:25.213 --> 00:01:28.177
+Red: one test, written by you.
+
+00:01:28.727 --> 00:01:30.958
+Red: you write a single test.
+
+00:01:31.258 --> 00:01:34.105
+The test is the specification and it's yours.
+
+00:01:34.655 --> 00:01:39.063
+Write a single test describing a concrete behavior, with a name that reads like a
+
+00:01:39.063 --> 00:01:39.824
+business rule.
+
+00:01:40.124 --> 00:01:42.170
+One only, not the full suite.
+
+00:01:42.470 --> 00:01:46.791
+While writing it you make design decisions that shouldn't be delegated: what the
+
+00:01:46.791 --> 00:01:51.112
+function is called, what it takes, what it returns and what happens with invalid
+
+00:01:51.112 --> 00:01:51.436
+input.
+
+00:01:51.736 --> 00:01:53.364
+That is the thinking work.
+
+00:01:53.664 --> 00:01:58.381
+If you ask the agent for the test, it makes those decisions, and afterwards you'll
+
+00:01:58.381 --> 00:02:01.027
+be reviewing a specification you didn't write.
+
+00:02:02.327 --> 00:02:03.526
+Step 2.
+
+00:02:03.826 --> 00:02:05.605
+Failing for the right reason.
+
+00:02:06.155 --> 00:02:10.930
+Run npx vitest run and confirm it fails for the right reason (the function doesn't
+
+00:02:10.930 --> 00:02:14.075
+exist or returns something else), not an import error.
+
+00:02:14.625 --> 00:02:16.729
+Run the test and read the message.
+
+00:02:17.029 --> 00:02:21.810
+It must fail because the function doesn't exist or returns something else, not
+
+00:02:21.810 --> 00:02:24.997
+because of an import, configuration or syntax error.
+
+00:02:25.297 --> 00:02:29.941
+It's a step often skipped and it prevents a classic problem: a test that could never
+
+00:02:29.941 --> 00:02:31.766
+fail for the reason that matters.
+
+00:02:32.066 --> 00:02:35.238
+If the error message is confusing, improve it now.
+
+00:02:35.538 --> 00:02:39.465
+That same message is what the agent will read to know what it has to build.
+
+00:02:40.765 --> 00:02:41.847
+Step 3.
+
+00:02:42.147 --> 00:02:45.087
+Green: the minimum, without touching tests.
+
+00:02:45.637 --> 00:02:50.821
+Green: ask the agent for the minimum code to pass that test, explicitly instructing
+
+00:02:50.821 --> 00:02:52.258
+it not to modify tests.
+
+00:02:52.808 --> 00:02:56.988
+Ask the agent for the minimum code to pass that test, with two explicit
+
+00:02:56.988 --> 00:03:01.758
+instructions: don't modify test files and don't add anything the test doesn't ask
+
+00:03:01.758 --> 00:03:01.994
+for.
+
+00:03:02.294 --> 00:03:04.166
+The word minimum matters.
+
+00:03:04.466 --> 00:03:09.014
+Without it you'll receive validations, cases and optional parameters nobody
+
+00:03:09.014 --> 00:03:10.772
+specified and no test covers.
+
+00:03:11.072 --> 00:03:15.712
+It's code that looks useful and ends up ownerless: nobody knows whether it works or
+
+00:03:15.712 --> 00:03:17.054
+whether it should exist.
+
+00:03:17.354 --> 00:03:20.863
+If it's needed later, you add it with its own test.
+
+00:03:22.163 --> 00:03:23.176
+Step 4.
+
+00:03:23.476 --> 00:03:25.348
+Verify the green yourself.
+
+00:03:25.898 --> 00:03:28.559
+Verify the green yourself by running the command.
+
+00:03:28.859 --> 00:03:33.424
+Review the diff: only src/discount.ts should have changed.
+
+00:03:33.974 --> 00:03:36.450
+Run the command yourself and look at the result.
+
+00:03:36.750 --> 00:03:38.285
+Then review the diff.
+
+00:03:38.585 --> 00:03:42.547
+In this exercise only the implementation file should have changed.
+
+00:03:42.847 --> 00:03:48.212
+If the test changed, or the config, or a new file appeared, ask yourself why before
+
+00:03:48.212 --> 00:03:48.794
+going on.
+
+00:03:49.094 --> 00:03:53.654
+Those thirty seconds hold up the whole method: the green counts because it came from
+
+00:03:53.654 --> 00:03:58.105
+a test the agent couldn't adjust and because you confirmed it outside its summary.
+
+00:03:59.405 --> 00:04:00.534
+Step 5.
+
+00:04:00.834 --> 00:04:02.799
+Refactor with the net in place.
+
+00:04:03.349 --> 00:04:07.694
+Refactor: ask for a readability improvement keeping tests green.
+
+00:04:07.994 --> 00:04:08.774
+Commit.
+
+00:04:09.324 --> 00:04:14.183
+With the test green, ask for a readability improvement with no change in behavior:
+
+00:04:14.183 --> 00:04:18.627
+clearer names, a constant instead of a loose number, an extracted function.
+
+00:04:18.927 --> 00:04:20.392
+Run the tests again.
+
+00:04:20.692 --> 00:04:25.078
+This is the step where the agent contributes the most with the least risk, because
+
+00:04:25.078 --> 00:04:27.324
+any error is caught by the test instantly.
+
+00:04:27.624 --> 00:04:29.008
+Commit when done.
+
+00:04:29.308 --> 00:04:34.339
+If the refactor breaks something and it isn't obvious why, discarding it costs one
+
+00:04:34.339 --> 00:04:36.915
+command, and you're back to a known state.
+
+00:04:38.215 --> 00:04:39.402
+Step 6.
+
+00:04:39.702 --> 00:04:41.632
+One cycle, one commit.
+
+00:04:42.182 --> 00:04:44.704
+Repeat with the second and third tests.
+
+00:04:45.004 --> 00:04:48.060
+One commit per cycle leaves an auditable history.
+
+00:04:48.610 --> 00:04:53.617
+Repeat the cycle with the second and third behaviors, and make one commit per cycle.
+
+00:04:53.917 --> 00:04:59.001
+The history becomes a sequence of rules added one at a time, each with its test and
+
+00:04:59.001 --> 00:05:00.165
+its implementation.
+
+00:05:00.465 --> 00:05:05.321
+That helps with reviewing and auditing: whoever reads the history can see what was
+
+00:05:05.321 --> 00:05:07.690
+asked, what was built and in what order.
+
+00:05:07.990 --> 00:05:12.480
+It also gives you cheap return points if a cycle goes wrong, something you don't
+
+00:05:12.480 --> 00:05:15.063
+have with large changes generated all at once.
+
+00:05:16.363 --> 00:05:17.468
+An example.
+
+00:05:18.018 --> 00:05:20.447
+The function to build applies discounts.
+
+00:05:20.747 --> 00:05:26.079
+First test, written by hand: a ten percent coupon on one hundred returns ninety.
+
+00:05:26.379 --> 00:05:29.214
+It fails because the function doesn't exist.
+
+00:05:29.514 --> 00:05:34.637
+The agent writes four lines and the test passes; the diff touches a single file.
+
+00:05:34.937 --> 00:05:38.434
+Refactor: it extracts the percentage calculation.
+
+00:05:38.734 --> 00:05:39.515
+Commit.
+
+00:05:39.815 --> 00:05:43.834
+Second test: a discount above one hundred percent throws an error.
+
+00:05:44.134 --> 00:05:46.215
+The agent adds the validation.
+
+00:05:46.515 --> 00:05:49.745
+Third test: the result is rounded to two decimals.
+
+00:05:50.045 --> 00:05:54.976
+In the second cycle the agent had also added support for fixed-amount coupons nobody
+
+00:05:54.976 --> 00:05:55.563
+asked for.
+
+00:05:55.863 --> 00:05:59.023
+It gets removed, because no test demands it.
+
+00:05:59.323 --> 00:06:01.451
+Three commits and three rules remain.
+
+00:06:02.751 --> 00:06:04.414
+The most common mistakes.
+
+00:06:04.964 --> 00:06:08.414
+Asking for implementation and tests in the same request.
+
+00:06:08.964 --> 00:06:12.218
+Not confirming the test fails before implementing.
+
+00:06:12.768 --> 00:06:15.150
+Leaving extra code no test demands.
+
+00:06:15.700 --> 00:06:18.408
+Squashing several cycles into a single commit.
+
+00:06:19.708 --> 00:06:21.952
+To know it is done, check this.
+
+00:06:22.502 --> 00:06:25.720
+Each test was written by you before its implementation.
+
+00:06:26.270 --> 00:06:29.036
+You saw each test fail for the expected reason.
+
+00:06:29.586 --> 00:06:32.561
+No implementation diff touched test files.
+
+00:06:33.111 --> 00:06:35.482
+The history has one commit per cycle.
+
+00:06:36.782 --> 00:06:38.677
+And where AI fell short.
+
+00:06:39.227 --> 00:06:43.723
+It tends to overbuild: functions and cases no test asks for.
+
+00:06:44.023 --> 00:06:46.870
+Code no test demands is code with no owner.
+
+00:06:48.170 --> 00:06:49.763
+That was day 13.
+
+00:06:50.063 --> 00:06:55.037
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:55.037 --> 00:06:56.045
+asked questions.
+
+00:06:56.595 --> 00:07:02.193
+Continue with day 14: TDD with AI (2): guardrails so the agent can't cheat.

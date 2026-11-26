@@ -1,0 +1,382 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.510
+Día 14 de la serie 31 días de QA + IA.
+
+00:00:04.060 --> 00:00:07.464
+TDD con IA (2): guardrails para que el agente no haga trampa.
+
+00:00:08.014 --> 00:00:12.246
+Las cinco trampas típicas de un agente frente a un test rojo y un control automático
+
+00:00:12.246 --> 00:00:12.951
+para cada una.
+
+00:00:14.251 --> 00:00:17.539
+Ayer el ciclo funcionó porque vos estabas mirando cada paso.
+
+00:00:17.839 --> 00:00:21.647
+En cuanto el agente trabaja más tiempo solo, aparece un problema conocido: su
+
+00:00:21.647 --> 00:00:25.702
+objetivo operativo es que los tests pasen, y hay varias formas de lograrlo sin que
+
+00:00:25.702 --> 00:00:26.840
+el código sea correcto.
+
+00:00:27.140 --> 00:00:31.425
+Puede editar el test, devolver justo el valor esperado, desactivar el caso molesto o
+
+00:00:31.425 --> 00:00:34.027
+simular la misma unidad que se suponía bajo prueba.
+
+00:00:35.327 --> 00:00:36.467
+No es malicia.
+
+00:00:36.767 --> 00:00:39.208
+Es optimización hacia la métrica que le diste.
+
+00:00:39.508 --> 00:00:43.679
+La respuesta no es vigilarlo más sino hacer que cada atajo sea imposible o visible.
+
+00:00:43.979 --> 00:00:47.612
+Esta guía empareja cinco trampas con cinco controles automáticos y los lleva al
+
+00:00:47.612 --> 00:00:51.476
+pipeline, de modo que la confianza en el verde no dependa de que alguien revise cada
+
+00:00:51.476 --> 00:00:52.120
+diff con lupa.
+
+00:00:53.420 --> 00:00:55.350
+Para seguir esta guía necesitás:
+
+00:00:55.900 --> 00:00:57.911
+El repo tdd-ai del día 13.
+
+00:00:59.211 --> 00:01:00.386
+Este es el setup.
+
+00:01:00.686 --> 00:01:04.032
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:05.332 --> 00:01:07.471
+Y este es el siguiente archivo del setup.
+
+00:01:08.771 --> 00:01:10.910
+Y este es el siguiente archivo del setup.
+
+00:01:12.210 --> 00:01:13.443
+Trampa y control.
+
+00:01:13.993 --> 00:01:18.267
+Editar el test para que pase: tests en solo lectura para el agente, más un guard en
+
+00:01:18.267 --> 00:01:20.892
+CI que falla si un PR de implementación toca tests.
+
+00:01:21.442 --> 00:01:25.398
+Hardcodear el valor esperado: tests de propiedades en un archivo que el agente no ve
+
+00:01:25.398 --> 00:01:25.868
+(holdout).
+
+00:01:26.419 --> 00:01:31.088
+Poner .skip o .only: regla de lint que prohíbe tests deshabilitados o enfocados.
+
+00:01:31.638 --> 00:01:35.564
+Mockear lo que se está probando: revisión de diff, ningún mock nuevo de la unidad
+
+00:01:35.564 --> 00:01:36.146
+bajo prueba.
+
+00:01:36.696 --> 00:01:39.194
+Tests que no prueban nada: mutation testing.
+
+00:01:39.494 --> 00:01:42.028
+Si los mutantes sobreviven, el test no valida.
+
+00:01:43.328 --> 00:01:44.225
+Paso 1.
+
+00:01:44.525 --> 00:01:45.862
+Tests de solo lectura.
+
+00:01:46.412 --> 00:01:50.037
+Marcá los archivos de test como no editables en los permisos del agente.
+
+00:01:50.587 --> 00:01:54.375
+El control más directo es que el agente no pueda escribir en los archivos de test.
+
+00:01:54.675 --> 00:01:58.512
+Casi todos los agentes de código permiten reglas de permisos por ruta: denegá la
+
+00:01:58.512 --> 00:02:02.061
+edición de los patrones de test y dejá libre la carpeta de implementación.
+
+00:02:02.361 --> 00:02:06.336
+Con eso, la trampa más frecuente deja de ser posible en lugar de depender de una
+
+00:02:06.336 --> 00:02:07.925
+instrucción en lenguaje natural.
+
+00:02:08.225 --> 00:02:11.906
+Una instrucción como "no toques los tests" se cumple casi siempre; un permiso
+
+00:02:11.906 --> 00:02:13.197
+denegado se cumple siempre.
+
+00:02:13.497 --> 00:02:16.495
+Cuando haga falta cambiar un test, lo hace una persona.
+
+00:02:17.795 --> 00:02:18.692
+Paso 2.
+
+00:02:18.992 --> 00:02:20.283
+El guard en CI.
+
+00:02:20.833 --> 00:02:23.715
+Agregá el guard de CI para PRs de implementación.
+
+00:02:24.265 --> 00:02:27.925
+Los permisos locales protegen tu sesión, no las de todo el equipo.
+
+00:02:28.225 --> 00:02:31.917
+Por eso se suma un chequeo en el pipeline: si un pull request marcado como de
+
+00:02:31.917 --> 00:02:34.218
+implementación modifica archivos de test, falla.
+
+00:02:34.518 --> 00:02:38.282
+Es un script de pocas líneas que compara la lista de archivos cambiados contra un
+
+00:02:38.282 --> 00:02:38.607
+patrón.
+
+00:02:38.907 --> 00:02:42.480
+La idea de fondo es separar los cambios de especificación de los cambios de
+
+00:02:42.480 --> 00:02:43.194
+implementación.
+
+00:02:43.494 --> 00:02:47.651
+Un PR que toca las dos cosas no está prohibido, pero pasa a necesitar una revisión
+
+00:02:47.651 --> 00:02:48.512
+humana explícita.
+
+00:02:49.812 --> 00:02:50.709
+Paso 3.
+
+00:02:51.009 --> 00:02:52.985
+Property tests fuera del contexto.
+
+00:02:53.535 --> 00:02:57.709
+Escribí un test de propiedades por función crítica y dejalo fuera del contexto del
+
+00:02:57.709 --> 00:02:58.066
+agente.
+
+00:02:58.616 --> 00:03:02.407
+Un test con ejemplos fijos se puede satisfacer con un if que devuelva el valor
+
+00:03:02.407 --> 00:03:02.844
+esperado.
+
+00:03:03.144 --> 00:03:07.060
+Un property test no: genera cientos de entradas y verifica una propiedad general,
+
+00:03:07.060 --> 00:03:10.879
+por ejemplo que el total con descuento nunca supera al original ni es negativo.
+
+00:03:11.179 --> 00:03:15.064
+Escribí uno por función crítica y mantenelo fuera de lo que el agente lee, como un
+
+00:03:15.064 --> 00:03:16.581
+conjunto de validación apartado.
+
+00:03:16.881 --> 00:03:18.892
+Corre en CI, no en su sesión.
+
+00:03:19.192 --> 00:03:22.306
+Si la implementación solo memorizó los ejemplos, falla ahí.
+
+00:03:23.606 --> 00:03:24.607
+Paso 4.
+
+00:03:24.907 --> 00:03:26.779
+Lint contra tests desactivados.
+
+00:03:27.329 --> 00:03:30.164
+Activá la regla de lint contra .skip y .only.
+
+00:03:30.714 --> 00:03:34.603
+Agregar .skip a un test que falla o dejar un .only que hace que el resto no corra
+
+00:03:34.603 --> 00:03:37.915
+son cambios de una palabra que pasan desapercibidos en un diff largo.
+
+00:03:38.215 --> 00:03:41.585
+Una regla de lint los detecta sin esfuerzo y de forma determinista.
+
+00:03:41.885 --> 00:03:45.591
+Activala como error, no como advertencia, y corré el lint en el pipeline.
+
+00:03:45.891 --> 00:03:49.676
+Si tu equipo necesita desactivar un test temporalmente, que sea con un mecanismo
+
+00:03:49.676 --> 00:03:52.894
+distinto que exija un comentario con el motivo y un ticket asociado.
+
+00:03:54.194 --> 00:03:55.195
+Paso 5.
+
+00:03:55.495 --> 00:03:57.588
+Mutation testing sobre lo tocado.
+
+00:03:58.138 --> 00:04:01.856
+Corré Stryker y mirá el mutation score de los archivos que tocó el agente.
+
+00:04:02.406 --> 00:04:05.578
+Cobertura alta no significa que los tests verifiquen algo.
+
+00:04:05.878 --> 00:04:09.836
+Mutation testing lo mide directamente: introduce cambios chicos en el código, como
+
+00:04:09.836 --> 00:04:13.601
+invertir una condición o cambiar un operador, y comprueba si algún test falla.
+
+00:04:13.901 --> 00:04:17.271
+Si el mutante sobrevive, ese comportamiento no está protegido.
+
+00:04:17.571 --> 00:04:21.810
+Correrlo sobre todo el proyecto es lento, así que limitalo a los archivos que cambió
+
+00:04:21.810 --> 00:04:22.113
+el PR.
+
+00:04:22.413 --> 00:04:26.472
+Mirá los mutantes sobrevivientes en la lógica de negocio: cada uno es un test que
+
+00:04:26.472 --> 00:04:27.826
+falta o una aserción débil.
+
+00:04:29.126 --> 00:04:30.092
+Paso 6.
+
+00:04:30.392 --> 00:04:31.625
+Todo en el pipeline.
+
+00:04:32.175 --> 00:04:35.905
+Sumá todo al pipeline: si un control falla, el PR no se mergea.
+
+00:04:36.455 --> 00:04:38.744
+Los cinco controles valen cuando bloquean.
+
+00:04:39.044 --> 00:04:43.445
+Sumalos como pasos obligatorios: el guard de archivos, el lint, la suite normal, los
+
+00:04:43.445 --> 00:04:47.742
+property tests apartados y mutation testing con un umbral mínimo para los archivos
+
+00:04:47.742 --> 00:04:48.161
+tocados.
+
+00:04:48.461 --> 00:04:50.762
+Si alguno falla, el PR no se mergea.
+
+00:04:51.062 --> 00:04:55.142
+Ordená los pasos del más rápido al más lento para que los errores baratos aparezcan
+
+00:04:55.142 --> 00:04:55.535
+primero.
+
+00:04:55.835 --> 00:05:00.195
+El resultado es que el verde vuelve a significar algo, lo haya escrito una persona o
+
+00:05:00.195 --> 00:05:00.714
+un agente.
+
+00:05:02.014 --> 00:05:02.933
+Un ejemplo.
+
+00:05:03.483 --> 00:05:07.367
+Un agente trabaja una hora sobre un módulo de precios y entrega un PR con todos los
+
+00:05:07.367 --> 00:05:10.080
+tests en verde y cobertura del noventa y cinco por ciento.
+
+00:05:10.380 --> 00:05:12.891
+El pipeline con guardrails cuenta otra historia.
+
+00:05:13.191 --> 00:05:14.772
+El guard de archivos pasa.
+
+00:05:15.072 --> 00:05:18.256
+El lint encuentra un .skip agregado a un test de redondeo.
+
+00:05:18.556 --> 00:05:21.496
+El property test apartado falla con un precio de cero.
+
+00:05:21.796 --> 00:05:25.742
+Mutation testing muestra que sobrevive la mitad de los mutantes en la función de
+
+00:05:25.742 --> 00:05:28.800
+impuestos: los tests la ejecutaban sin verificar el resultado.
+
+00:05:29.100 --> 00:05:32.330
+Tres hallazgos que una revisión rápida del diff no habría visto.
+
+00:05:32.630 --> 00:05:35.013
+El PR vuelve con tres pedidos concretos.
+
+00:05:36.313 --> 00:05:37.836
+Los errores más comunes.
+
+00:05:38.386 --> 00:05:41.790
+Confiar en una instrucción en texto en lugar de un permiso denegado.
+
+00:05:42.340 --> 00:05:44.862
+Medir la calidad de los tests solo con cobertura.
+
+00:05:45.412 --> 00:05:47.934
+Dejar los property tests al alcance del agente.
+
+00:05:48.484 --> 00:05:51.552
+Tener los controles como advertencias que no bloquean el merge.
+
+00:05:52.852 --> 00:05:55.119
+Para saber que quedó bien, revisá esto.
+
+00:05:55.669 --> 00:05:57.959
+El agente no puede editar archivos de test.
+
+00:05:58.509 --> 00:06:01.565
+El pipeline falla si un PR de implementación toca tests.
+
+00:06:02.115 --> 00:06:05.113
+Hay un property test apartado por cada función crítica.
+
+00:06:05.663 --> 00:06:09.009
+Mutation testing corre sobre los archivos tocados con un umbral.
+
+00:06:10.309 --> 00:06:11.879
+Y lo que la IA no hizo bien.
+
+00:06:12.429 --> 00:06:15.868
+Produce suites con cobertura total que casi no detectan mutantes.
+
+00:06:16.168 --> 00:06:18.957
+Hay que medir si el test falla cuando el código está mal.
+
+00:06:20.257 --> 00:06:21.816
+Eso fue el día 14.
+
+00:06:22.116 --> 00:06:26.748
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:26.748 --> 00:06:27.354
+frecuentes.
+
+00:06:27.904 --> 00:06:31.355
+Seguí con el día 15: Cómo setear modelos para pruebas de calidad.

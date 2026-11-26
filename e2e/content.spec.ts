@@ -14,6 +14,45 @@ test.describe('long-form content', () => {
     await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible();
   });
 
+  test('a series guide plays its video with captions', async ({
+    page,
+    request,
+  }) => {
+    await open(page, '/publications/qa-ai-01-llms-in-qa-map');
+
+    const video = page.locator('article video');
+    await expect(video).toBeVisible();
+    await expect(video).toHaveAttribute('poster', /d01-en\.jpg$/);
+
+    const src = await video.locator('source').getAttribute('src');
+    const captions = await video
+      .locator('track[kind="captions"]')
+      .getAttribute('src');
+    expect(src).toMatch(/d01-en\.mp4$/);
+
+    const media = await request.head(src ?? '');
+    expect(media.status()).toBe(200);
+    expect(media.headers()['content-type']).toContain('video/mp4');
+    expect(await (await request.get(captions ?? '')).text()).toMatch(/^WEBVTT/);
+  });
+
+  test('every series guide has its video in both languages', async ({
+    request,
+  }) => {
+    for (let day = 1; day <= 31; day += 1) {
+      for (const lang of ['es', 'en']) {
+        const base = `/publications/qa-ai/videos/d${String(day).padStart(
+          2,
+          '0'
+        )}-${lang}`;
+        for (const ext of ['mp4', 'vtt', 'jpg']) {
+          const response = await request.head(`${base}.${ext}`);
+          expect.soft(response.status(), `${base}.${ext}`).toBe(200);
+        }
+      }
+    }
+  });
+
   test('newsletter issue renders', async ({ page }) => {
     const response = await open(page, '/newsletter/arca-pymes-noviembre-2026');
 

@@ -1,0 +1,361 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.661
+Día 19 de la serie 31 días de QA + IA.
+
+00:00:04.211 --> 00:00:07.650
+Costo como métrica de calidad: prefiltro top-K antes del modelo.
+
+00:00:08.200 --> 00:00:11.957
+Cómo reducir los tokens de entrada de un agente con un prefiltro local de candidatos
+
+00:00:11.957 --> 00:00:14.193
+y demostrar con mediciones que la calidad no baja.
+
+00:00:15.493 --> 00:00:18.816
+En QA estamos acostumbrados a que la calidad se mida en defectos.
+
+00:00:19.116 --> 00:00:23.058
+Con sistemas que usan modelos, el costo se vuelve una dimensión de calidad igual de
+
+00:00:23.058 --> 00:00:26.810
+concreta: una funcionalidad que acierta pero cuesta demasiado por llamada no se
+
+00:00:26.810 --> 00:00:30.230
+puede sostener en producción, y una que es barata y falla tampoco sirve.
+
+00:00:30.530 --> 00:00:32.773
+Alguien tiene que medir las dos cosas juntas.
+
+00:00:34.073 --> 00:00:37.989
+El caso más común de costo innecesario es mandar al modelo todo el contexto
+
+00:00:37.989 --> 00:00:39.347
+disponible, por las dudas.
+
+00:00:39.647 --> 00:00:43.471
+Esta guía muestra una técnica para evitarlo: un prefiltro local que elige los K
+
+00:00:43.471 --> 00:00:45.988
+candidatos más relevantes antes de llamar al modelo.
+
+00:00:46.288 --> 00:00:50.200
+Y muestra cómo probarlo, porque un prefiltro mal medido baja el costo y también la
+
+00:00:50.200 --> 00:00:51.631
+calidad sin que nadie lo note.
+
+00:00:52.931 --> 00:00:54.861
+Para seguir esta guía necesitás:
+
+00:00:55.411 --> 00:00:58.909
+El caso del día 18: nombres a mapear contra un catálogo.
+
+00:00:59.459 --> 00:01:02.120
+Un set etiquetado con la respuesta correcta por nombre.
+
+00:01:03.420 --> 00:01:04.595
+Este es el setup.
+
+00:01:04.895 --> 00:01:08.241
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:09.541 --> 00:01:10.438
+Paso 1.
+
+00:01:10.738 --> 00:01:12.029
+La línea de base.
+
+00:01:12.579 --> 00:01:16.788
+Medí el punto de partida: tokens de entrada por llamada y qué parte es contexto fijo
+
+00:01:16.788 --> 00:01:18.492
+(por ejemplo, el catálogo entero).
+
+00:01:19.042 --> 00:01:20.786
+Antes de optimizar, medí.
+
+00:01:21.086 --> 00:01:24.795
+Para una muestra de llamadas, registrá cuántos tokens de entrada usa cada una y
+
+00:01:24.795 --> 00:01:28.692
+cuántos corresponden a contexto fijo que se repite siempre, como un catálogo entero
+
+00:01:28.692 --> 00:01:29.819
+o un documento completo.
+
+00:01:30.119 --> 00:01:33.407
+En muchos sistemas esa parte fija es la mayor parte del costo.
+
+00:01:33.707 --> 00:01:36.601
+Anotá también la calidad actual con el eval que ya tenés.
+
+00:01:36.901 --> 00:01:41.080
+Sin esos dos números, tokens y calidad, no vas a poder decir después si el cambio
+
+00:01:41.080 --> 00:01:42.732
+fue una mejora o solo un cambio.
+
+00:01:44.032 --> 00:01:44.928
+Paso 2.
+
+00:01:45.228 --> 00:01:46.914
+Un prefiltro local y simple.
+
+00:01:47.464 --> 00:01:51.043
+Armá un prefiltro local que elija los K candidatos más parecidos.
+
+00:01:51.343 --> 00:01:55.026
+Empezá por uno léxico simple: es gratis y no llama a ningún modelo.
+
+00:01:55.576 --> 00:01:59.892
+El prefiltro recibe la entrada y la lista completa de candidatos, y devuelve los K
+
+00:01:59.892 --> 00:02:00.629
+más parecidos.
+
+00:02:00.929 --> 00:02:04.921
+Empezá con un método léxico, por ejemplo similitud por trigramas de caracteres: se
+
+00:02:04.921 --> 00:02:08.524
+escribe en pocas líneas, corre en milisegundos y no llama a ningún modelo.
+
+00:02:08.824 --> 00:02:12.368
+Es además determinista, así que se puede probar con tests clásicos.
+
+00:02:12.668 --> 00:02:15.620
+La tentación es saltar directo a algo más sofisticado.
+
+00:02:15.920 --> 00:02:19.463
+Resistila hasta tener un número que muestre que lo simple no alcanza.
+
+00:02:20.763 --> 00:02:21.660
+Paso 3.
+
+00:02:21.960 --> 00:02:23.298
+Recall del prefiltro.
+
+00:02:23.848 --> 00:02:27.698
+Medí el recall del prefiltro: en cuántos casos etiquetados la respuesta correcta
+
+00:02:27.698 --> 00:02:28.564
+queda entre los K.
+
+00:02:28.864 --> 00:02:31.119
+Si no está ahí, el modelo no puede acertar.
+
+00:02:31.669 --> 00:02:33.401
+Esta es la medición central.
+
+00:02:33.701 --> 00:02:37.554
+Para cada caso etiquetado, verificá si la respuesta correcta está entre los K
+
+00:02:37.554 --> 00:02:39.405
+candidatos que devolvió el prefiltro.
+
+00:02:39.705 --> 00:02:42.285
+El porcentaje de casos donde está es el recall.
+
+00:02:42.585 --> 00:02:46.252
+Funciona como techo de todo el sistema: si la respuesta correcta no llega al
+
+00:02:46.252 --> 00:02:49.437
+contexto, el modelo no tiene forma de elegirla, por bueno que sea.
+
+00:02:49.737 --> 00:02:53.756
+Es un test determinista, barato y rápido, y te dice si el problema está antes del
+
+00:02:53.756 --> 00:02:54.848
+modelo o en el modelo.
+
+00:02:56.148 --> 00:02:57.149
+Paso 4.
+
+00:02:57.449 --> 00:02:59.321
+Comparar métodos y valores de K.
+
+00:02:59.871 --> 00:03:03.717
+Compará métodos (léxico contra embeddings) y valores de K con ese mismo recall.
+
+00:03:04.017 --> 00:03:05.877
+No des por hecho que embeddings gana.
+
+00:03:06.427 --> 00:03:10.379
+Con el recall como métrica podés comparar opciones de forma justa: método léxico
+
+00:03:10.379 --> 00:03:13.245
+contra embeddings, y distintos valores de K para cada uno.
+
+00:03:13.545 --> 00:03:14.766
+Armá una tabla.
+
+00:03:15.066 --> 00:03:16.938
+No asumas que los embeddings ganan.
+
+00:03:17.238 --> 00:03:21.631
+En tareas con nombres propios, códigos o abreviaturas, la similitud léxica suele
+
+00:03:21.631 --> 00:03:23.882
+rendir igual o mejor, y además es gratis.
+
+00:03:24.182 --> 00:03:28.004
+Los embeddings ayudan cuando la relación es de significado y no de escritura.
+
+00:03:28.304 --> 00:03:30.048
+Dejá que tus datos lo decidan.
+
+00:03:31.348 --> 00:03:32.349
+Paso 5.
+
+00:03:32.649 --> 00:03:34.417
+El eval completo con cada K.
+
+00:03:34.967 --> 00:03:38.580
+Corré el eval completo, 5 veces, con lista entera y con cada K.
+
+00:03:38.880 --> 00:03:41.773
+Compará accuracy, errores caros, tokens y costo.
+
+00:03:42.323 --> 00:03:45.170
+El recall mide el prefiltro, no el resultado final.
+
+00:03:45.470 --> 00:03:49.875
+Corré el eval de punta a punta, cinco veces, con la lista completa y con cada valor
+
+00:03:49.875 --> 00:03:50.140
+de K.
+
+00:03:50.440 --> 00:03:53.554
+Compará accuracy, errores costosos, tokens y costo.
+
+00:03:53.854 --> 00:03:58.025
+Vas a ver algo que suele sorprender: más contexto no siempre da mejor resultado.
+
+00:03:58.325 --> 00:04:02.089
+Con muchos candidatos parecidos en el prompt, el modelo se confunde más.
+
+00:04:02.389 --> 00:04:06.624
+Hay un punto a partir del cual agregar candidatos empeora la calidad y sube el costo
+
+00:04:06.624 --> 00:04:07.431
+al mismo tiempo.
+
+00:04:08.731 --> 00:04:09.697
+Paso 6.
+
+00:04:09.997 --> 00:04:12.043
+Elegir el K más chico que alcanza.
+
+00:04:12.593 --> 00:04:15.336
+Elegí el K más chico que mantiene recall y accuracy.
+
+00:04:15.636 --> 00:04:19.504
+Más candidatos parecidos pueden confundir al modelo y empeorar el resultado.
+
+00:04:20.054 --> 00:04:23.852
+La regla de decisión es elegir el menor K que mantiene el recall y el accuracy
+
+00:04:23.852 --> 00:04:25.653
+dentro del rango de la línea de base.
+
+00:04:25.953 --> 00:04:28.591
+Documentá la tabla completa y el valor elegido.
+
+00:04:28.891 --> 00:04:32.941
+Agregá el recall del prefiltro como test permanente en CI: si alguien cambia el
+
+00:04:32.941 --> 00:04:36.324
+método o el catálogo crece mucho, el recall puede bajar sin aviso.
+
+00:04:36.624 --> 00:04:40.804
+Ese test tarda segundos, y protege una pieza que, cuando falla, hace fallar a todo
+
+00:04:40.804 --> 00:04:41.874
+lo que viene después.
+
+00:04:43.174 --> 00:04:44.094
+Un ejemplo.
+
+00:04:44.644 --> 00:04:48.763
+Con números ilustrativos: un sistema envía en cada llamada un catálogo de dos mil
+
+00:04:48.763 --> 00:04:51.102
+registros, unos sesenta mil tokens de entrada.
+
+00:04:51.402 --> 00:04:55.510
+El equipo arma un prefiltro por trigramas y mide el recall sobre ochenta casos
+
+00:04:55.510 --> 00:04:56.141
+etiquetados.
+
+00:04:56.441 --> 00:05:01.932
+Con K igual a cinco, la respuesta correcta está en el 90% de los casos; con diez, en
+
+00:05:01.932 --> 00:05:06.115
+el 97%; con veinte, en el 99%; con cincuenta, también en el 99%.
+
+00:05:06.415 --> 00:05:10.574
+Prueban embeddings y con K igual a veinte obtienen 98%: no mejora.
+
+00:05:10.874 --> 00:05:14.835
+En el eval completo, K igual a veinte da el mismo accuracy que la lista entera, con
+
+00:05:14.835 --> 00:05:18.795
+un error costoso menos por corrida y alrededor de un tres por ciento de los tokens.
+
+00:05:19.095 --> 00:05:21.663
+Con cincuenta, el accuracy baja dos puntos.
+
+00:05:22.963 --> 00:05:24.487
+Los errores más comunes.
+
+00:05:25.037 --> 00:05:27.814
+Reducir el contexto sin medir el recall del prefiltro.
+
+00:05:28.364 --> 00:05:31.165
+Asumir que los embeddings superan a un método léxico.
+
+00:05:31.715 --> 00:05:34.632
+Evaluar solo el costo y no la calidad de punta a punta.
+
+00:05:35.182 --> 00:05:37.413
+Elegir un K grande "para estar seguros".
+
+00:05:38.713 --> 00:05:40.980
+Para saber que quedó bien, revisá esto.
+
+00:05:41.530 --> 00:05:44.284
+Tenés tokens de entrada y calidad de la línea de base.
+
+00:05:44.834 --> 00:05:47.995
+El recall del prefiltro está medido para varios valores de K.
+
+00:05:48.545 --> 00:05:51.531
+El eval completo corrió con la lista entera y con cada K.
+
+00:05:52.081 --> 00:05:54.812
+El recall del prefiltro corre como test en CI.
+
+00:05:56.112 --> 00:05:57.682
+Y lo que la IA no hizo bien.
+
+00:05:58.232 --> 00:06:02.635
+Con muchos candidatos parecidos en contexto, el modelo elige mal con más frecuencia.
+
+00:06:02.935 --> 00:06:05.689
+El contexto se diseña y se mide, no se acumula.
+
+00:06:06.989 --> 00:06:08.571
+Eso fue el día 19.
+
+00:06:08.871 --> 00:06:13.503
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:13.503 --> 00:06:14.110
+frecuentes.
+
+00:06:14.660 --> 00:06:18.862
+Seguí con el día 20: Regresión de prompts: versionar, comparar y no romper lo que
+
+00:06:18.862 --> 00:06:19.225
+andaba.

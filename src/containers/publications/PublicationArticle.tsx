@@ -15,11 +15,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
+// Each captions track is labelled in its own language.
+const captionsLabel = { es: 'Español', en: 'English' };
+
 // The publication comes from the server page, so the client bundle carries
 // only the article being read.
 const PublicationArticle = ({ publication }: { publication?: Publication }) => {
   const { t, i18n } = useTranslation();
   const lang = toLang(i18n.language);
+  const video = publication?.video?.[lang];
 
   return (
     <Layout>
@@ -57,7 +61,32 @@ const PublicationArticle = ({ publication }: { publication?: Publication }) => {
                 ))}
               </div>
             </header>
-            {publication.cover && (
+            {video && (
+              <figure className="mb-10">
+                {/* `key` reloads the sources when the language changes. */}
+                <video
+                  key={video.src}
+                  controls
+                  preload="none"
+                  poster={video.poster}
+                  width={1920}
+                  height={1080}
+                  className="w-full h-auto border rounded-md border-dark-3/30"
+                >
+                  <source src={video.src} type="video/mp4" />
+                  <track
+                    kind="captions"
+                    src={video.captions}
+                    srcLang={lang}
+                    label={captionsLabel[lang]}
+                  />
+                </video>
+                <figcaption className="mt-2 font-mono text-xs">
+                  {t(tokens.publicationsSectionType.video)}
+                </figcaption>
+              </figure>
+            )}
+            {!video && publication.cover && (
               <Image
                 src={publication.cover[lang]}
                 alt=""

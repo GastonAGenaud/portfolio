@@ -1,0 +1,370 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.357
+Day 26 of the 31 days of QA + AI series.
+
+00:00:04.907 --> 00:00:08.869
+Performance (2): load testing an LLM endpoint with k6.
+
+00:00:09.419 --> 00:00:14.285
+A staged load test against an LLM endpoint, with token and goodput metrics, to find
+
+00:00:14.285 --> 00:00:16.689
+the point where the system stops scaling.
+
+00:00:17.989 --> 00:00:22.473
+With yesterday's baseline and targets you can now ask the question that matters to
+
+00:00:22.473 --> 00:00:26.683
+whoever operates the system: how many users it supports before the experience
+
+00:00:26.683 --> 00:00:27.175
+degrades.
+
+00:00:27.475 --> 00:00:31.414
+The answer is a curve with a breaking point, and finding it requires loading
+
+00:00:31.414 --> 00:00:33.538
+gradually and watching the right metrics.
+
+00:00:34.838 --> 00:00:36.757
+k6 works well for this.
+
+00:00:37.057 --> 00:00:42.394
+Scripts are code, they run locally and in CI, and thresholds turn the test into a
+
+00:00:42.394 --> 00:00:43.909
+pass or fail criterion.
+
+00:00:44.209 --> 00:00:48.585
+But a load test against a model has traps of its own: caching that flatters the
+
+00:00:48.585 --> 00:00:53.126
+results, provider quota limits that look like saturation and default timeouts that
+
+00:00:53.126 --> 00:00:54.289
+cut long answers off.
+
+00:00:54.589 --> 00:00:57.889
+This guide builds the test while avoiding those three.
+
+00:00:59.189 --> 00:01:00.887
+To follow this guide you need:
+
+00:01:01.437 --> 00:01:03.030
+k6 installed.
+
+00:01:03.580 --> 00:01:07.321
+An OpenAI-compatible endpoint and the day 25 targets.
+
+00:01:07.871 --> 00:01:13.365
+Approved budget if the API is paid: cap max_tokens, duration and users.
+
+00:01:13.915 --> 00:01:19.633
+k6 doesn't natively measure streaming: TTFT under load needs an SSE extension or an
+
+00:01:19.633 --> 00:01:20.872
+LLM-specific tool.
+
+00:01:22.172 --> 00:01:23.452
+This is the setup.
+
+00:01:23.752 --> 00:01:27.969
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:29.269 --> 00:01:31.280
+The same file continues here.
+
+00:01:32.580 --> 00:01:34.847
+And this is the next setup file.
+
+00:01:36.147 --> 00:01:37.183
+Step 1.
+
+00:01:37.483 --> 00:01:39.273
+Thresholds from the targets.
+
+00:01:39.823 --> 00:01:43.332
+Start from the day 25 baseline and written targets.
+
+00:01:43.632 --> 00:01:45.980
+The script's thresholds come from there.
+
+00:01:46.530 --> 00:01:50.957
+The script's thresholds are the targets you wrote yesterday, translated into code:
+
+00:01:50.957 --> 00:01:55.329
+the ninety-fifth percentile of time to first token, that of total latency and the
+
+00:01:55.329 --> 00:01:56.355
+maximum error rate.
+
+00:01:56.655 --> 00:02:01.348
+Don't invent them while writing the script or accept whatever an example brings.
+
+00:02:01.648 --> 00:02:07.200
+A threshold with no origin is decoration: nobody knows what it means when it fails.
+
+00:02:07.500 --> 00:02:12.272
+With product targets as thresholds, a red result means users will have a worse
+
+00:02:12.272 --> 00:02:13.679
+experience than agreed.
+
+00:02:14.979 --> 00:02:16.178
+Step 2.
+
+00:02:16.478 --> 00:02:18.373
+A realistic prompt mix.
+
+00:02:18.923 --> 00:02:21.514
+Use a prompt mix similar to the real one.
+
+00:02:21.814 --> 00:02:26.171
+With a single repeated prompt, caching gives you numbers production won't see.
+
+00:02:26.721 --> 00:02:31.890
+Load prompts from a file with the workload profile's mix: types and proportions.
+
+00:02:32.190 --> 00:02:35.327
+If you repeat a single prompt, two things happen.
+
+00:02:35.627 --> 00:02:40.426
+The provider's cache or your own application's answers far faster than in real use,
+
+00:02:40.426 --> 00:02:43.490
+and numbers come out better than production will see.
+
+00:02:43.790 --> 00:02:49.074
+Also, all answers have the same length, and you lose the variability that stresses
+
+00:02:49.074 --> 00:02:49.783
+the system.
+
+00:02:50.083 --> 00:02:53.836
+Use enough different prompts that they don't repeat during the test.
+
+00:02:55.136 --> 00:02:56.218
+Step 3.
+
+00:02:56.518 --> 00:02:58.030
+Load in stages.
+
+00:02:58.580 --> 00:03:01.845
+Load in stages: ramp, hold, ramp again.
+
+00:03:02.145 --> 00:03:04.609
+Plateaus are where you read behavior.
+
+00:03:05.159 --> 00:03:10.479
+Raise load in steps: ramp to a level, hold it for a few minutes, ramp to the next.
+
+00:03:10.779 --> 00:03:15.368
+Plateaus are where you read behavior, because the system had time to stabilize.
+
+00:03:15.668 --> 00:03:18.422
+During ramps the numbers blend two states.
+
+00:03:18.722 --> 00:03:23.159
+Hold each plateau long enough to complete the profile's longest request several
+
+00:03:23.159 --> 00:03:23.496
+times.
+
+00:03:23.796 --> 00:03:28.552
+If a long answer takes forty seconds, a one-minute plateau barely manages to show
+
+00:03:28.552 --> 00:03:29.139
+one round.
+
+00:03:30.439 --> 00:03:31.452
+Step 4.
+
+00:03:31.752 --> 00:03:33.032
+Finding the knee.
+
+00:03:33.582 --> 00:03:38.295
+Look for the knee: the point where total tokens per second stop growing and latency
+
+00:03:38.295 --> 00:03:39.204
+starts climbing.
+
+00:03:39.504 --> 00:03:41.201
+That's your capacity.
+
+00:03:41.751 --> 00:03:45.469
+Plot total tokens per second and latency for each plateau.
+
+00:03:45.769 --> 00:03:50.323
+At first, more users produce more tokens per second with stable latency.
+
+00:03:50.623 --> 00:03:54.759
+At some point tokens per second stop growing and latency starts climbing.
+
+00:03:55.059 --> 00:03:58.452
+That's the knee, and it marks the system's real capacity.
+
+00:03:58.752 --> 00:04:02.945
+Beyond that point each additional user only makes the others wait longer.
+
+00:04:03.245 --> 00:04:07.300
+Your usable capacity sits a little below it, with headroom for peaks.
+
+00:04:08.600 --> 00:04:09.729
+Step 5.
+
+00:04:10.029 --> 00:04:11.332
+Separating errors.
+
+00:04:11.882 --> 00:04:18.188
+Separate errors: 429 is the provider's rate limit; 5xx and timeouts are saturation.
+
+00:04:18.488 --> 00:04:20.198
+They get fixed differently.
+
+00:04:20.748 --> 00:04:22.759
+Not all errors mean the same.
+
+00:04:23.059 --> 00:04:28.016
+A 429 is the provider's quota limit: you reached the maximum requests or tokens per
+
+00:04:28.016 --> 00:04:32.794
+minute your account allows, and it's solved by requesting more quota or adding a
+
+00:04:32.794 --> 00:04:33.929
+queue with retries.
+
+00:04:34.229 --> 00:04:39.775
+A 5xx or a timeout is saturation, of your infrastructure or the provider's, and it's
+
+00:04:39.775 --> 00:04:43.275
+solved with capacity or by reducing work per request.
+
+00:04:43.575 --> 00:04:45.424
+Count them separately in the script.
+
+00:04:45.724 --> 00:04:49.407
+Blended into a single error rate, they lead to the wrong fix.
+
+00:04:50.707 --> 00:04:51.894
+Step 6.
+
+00:04:52.194 --> 00:04:55.180
+Thresholds as the criterion and scheduled runs.
+
+00:04:55.730 --> 00:05:01.374
+Keep thresholds as the pass or fail criterion and run the test on a schedule, not on
+
+00:05:01.374 --> 00:05:01.979
+every PR.
+
+00:05:02.529 --> 00:05:07.543
+Keep thresholds as the automatic pass or fail criterion, so the test can run without
+
+00:05:07.543 --> 00:05:09.811
+someone interpreting charts each time.
+
+00:05:10.111 --> 00:05:15.112
+Schedule it periodically or before each release, not on every pull request: it's
+
+00:05:15.112 --> 00:05:19.863
+slow, costs money if you use a paid API and needs a stable environment to be
+
+00:05:19.863 --> 00:05:20.551
+comparable.
+
+00:05:20.851 --> 00:05:22.351
+Save each run's summary.
+
+00:05:22.651 --> 00:05:26.739
+The trend of the knee over time warns you of a degradation before it becomes an
+
+00:05:26.739 --> 00:05:27.205
+incident.
+
+00:05:28.505 --> 00:05:29.611
+An example.
+
+00:05:30.161 --> 00:05:34.941
+With illustrative figures: a team loads its assistant in plateaus of five, ten,
+
+00:05:34.941 --> 00:05:39.359
+twenty and forty users, three minutes each, with fifty different prompts.
+
+00:05:39.659 --> 00:05:44.047
+Up to twenty users, tokens per second grow almost proportionally and the
+
+00:05:44.047 --> 00:05:47.521
+ninety-fifth percentile of latency holds at nine seconds.
+
+00:05:47.821 --> 00:05:52.419
+With forty, tokens per second stay the same as with twenty and latency rises to
+
+00:05:52.419 --> 00:05:53.524
+twenty-two seconds.
+
+00:05:53.824 --> 00:05:55.313
+The knee is around twenty.
+
+00:05:55.613 --> 00:05:57.787
+In the last plateau errors appear.
+
+00:05:58.087 --> 00:06:01.526
+Separating them, almost all are 429s.
+
+00:06:01.826 --> 00:06:04.928
+It isn't model saturation but the account's quota limit.
+
+00:06:05.228 --> 00:06:09.631
+The right action is managing quota and adding a queue, not adding servers.
+
+00:06:10.931 --> 00:06:12.594
+The most common mistakes.
+
+00:06:13.144 --> 00:06:17.338
+Repeating a single prompt and measuring the cache instead of the system.
+
+00:06:17.888 --> 00:06:20.956
+Raising load in a single ramp with no plateaus.
+
+00:06:21.506 --> 00:06:25.850
+Adding 429s and 5xxs into a single error rate.
+
+00:06:26.400 --> 00:06:29.526
+Leaving the default timeout and cutting long answers off.
+
+00:06:30.826 --> 00:06:33.069
+To know it is done, check this.
+
+00:06:33.619 --> 00:06:36.443
+The script's thresholds match the written targets.
+
+00:06:36.993 --> 00:06:40.223
+Prompts come from a file with the profile's mix.
+
+00:06:40.774 --> 00:06:43.446
+The test has plateaus and you located the knee.
+
+00:06:43.996 --> 00:06:48.690
+429 errors are counted apart from 5xxs and timeouts.
+
+00:06:49.990 --> 00:06:51.885
+And where AI fell short.
+
+00:06:52.435 --> 00:06:58.242
+Generated scripts often come with no timeout, no prompt mix and made-up thresholds.
+
+00:06:58.542 --> 00:07:01.320
+Review them against your targets before running.
+
+00:07:02.620 --> 00:07:04.317
+That was day 26.
+
+00:07:04.617 --> 00:07:09.592
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:09.592 --> 00:07:10.599
+asked questions.
+
+00:07:11.149 --> 00:07:16.690
+Continue with day 27: Performance (3): AI generating and analyzing load tests.

@@ -1,0 +1,379 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.229
+Day 23 of the 31 days of QA + AI series.
+
+00:00:04.779 --> 00:00:08.451
+A model for security testing (2): automated red teaming.
+
+00:00:09.001 --> 00:00:13.664
+A three-model scheme (attacker, target and grader) that generates adversarial tests
+
+00:00:13.664 --> 00:00:17.316
+from your threat model and reports the success rate per category.
+
+00:00:18.616 --> 00:00:22.195
+With yesterday's threat model you have a list of abuse cases.
+
+00:00:22.495 --> 00:00:27.243
+Testing them by hand, writing attack variants one at a time, works for five cases
+
+00:00:27.243 --> 00:00:28.709
+and not for five hundred.
+
+00:00:29.009 --> 00:00:33.911
+And real attacks don't come one at a time: they come rephrased, translated, spread
+
+00:00:33.911 --> 00:00:37.080
+over several messages or disguised as something else.
+
+00:00:38.380 --> 00:00:43.046
+Automated red teaming uses a model to generate those variants in volume, sends them
+
+00:00:43.046 --> 00:00:47.318
+against your application and uses another model to decide whether the attack
+
+00:00:47.318 --> 00:00:47.880
+succeeded.
+
+00:00:48.180 --> 00:00:53.534
+It's powerful and has clear limits: it costs money, it generates adversarial content
+
+00:00:53.534 --> 00:00:56.019
+and its verdict is also wrong at times.
+
+00:00:56.319 --> 00:01:00.432
+This guide shows how to configure it from your threat model, how to read the report
+
+00:01:00.432 --> 00:01:03.950
+without taking it as truth and where to place it in your testing cycle.
+
+00:01:05.250 --> 00:01:06.947
+To follow this guide you need:
+
+00:01:07.497 --> 00:01:11.935
+Only against systems you own or have written authorization for, in test
+
+00:01:11.935 --> 00:01:12.748
+environments.
+
+00:01:13.298 --> 00:01:15.646
+The threat model from day 22.
+
+00:01:16.196 --> 00:01:20.262
+Your assistant running locally or in staging with an HTTP endpoint.
+
+00:01:20.812 --> 00:01:23.891
+Node.js 22+ and promptfoo.
+
+00:01:25.191 --> 00:01:26.471
+This is the setup.
+
+00:01:26.771 --> 00:01:30.988
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:32.288 --> 00:01:34.554
+And this is the next setup file.
+
+00:01:35.854 --> 00:01:36.890
+Step 1.
+
+00:01:37.190 --> 00:01:39.132
+Authorization and environment.
+
+00:01:39.682 --> 00:01:42.088
+Confirm authorization and environment.
+
+00:01:42.388 --> 00:01:47.499
+Red teaming generates adversarial content: it targets staging, with test data.
+
+00:01:48.049 --> 00:01:52.409
+Before running anything, confirm in writing that you're authorized to attack that
+
+00:01:52.409 --> 00:01:55.424
+system, and target a staging environment with test data.
+
+00:01:55.724 --> 00:02:00.899
+Red teaming generates adversarial content on purpose and can trigger real actions if
+
+00:02:00.899 --> 00:02:02.808
+the system has tools connected.
+
+00:02:03.108 --> 00:02:08.523
+Against production it can send messages, modify records or trip the provider's abuse
+
+00:02:08.523 --> 00:02:08.974
+alerts.
+
+00:02:09.274 --> 00:02:11.959
+Also tell the team operating the environment.
+
+00:02:12.259 --> 00:02:15.477
+A run nobody expected looks a lot like an incident.
+
+00:02:16.777 --> 00:02:17.976
+Step 2.
+
+00:02:18.276 --> 00:02:19.288
+Three roles.
+
+00:02:19.838 --> 00:02:24.653
+Understand the scheme: an attacker model generates adversarial inputs, your app is
+
+00:02:24.653 --> 00:02:28.293
+the target, and a grader decides whether the attack succeeded.
+
+00:02:28.843 --> 00:02:30.819
+The scheme has three pieces.
+
+00:02:31.119 --> 00:02:34.199
+An attacker model generates adversarial inputs.
+
+00:02:34.499 --> 00:02:38.774
+Your application is the target and receives them as if they came from a user.
+
+00:02:39.074 --> 00:02:43.813
+A grader decides, for each exchange, whether the attack achieved what it sought.
+
+00:02:44.113 --> 00:02:48.533
+Understanding this helps interpret results, because two of the three pieces are
+
+00:02:48.533 --> 00:02:50.211
+models, with their own errors.
+
+00:02:50.511 --> 00:02:54.957
+An attack success rate depends as much on your application as on how creative the
+
+00:02:54.957 --> 00:02:57.317
+attacker was and how strict the grader was.
+
+00:02:58.617 --> 00:02:59.700
+Step 3.
+
+00:03:00.000 --> 00:03:02.034
+The purpose, with its limits.
+
+00:03:02.584 --> 00:03:07.173
+Describe the system's purpose precisely, including what it must not do.
+
+00:03:07.473 --> 00:03:10.645
+Attacks are generated relative to that description.
+
+00:03:11.195 --> 00:03:14.030
+The config asks for a description of the system.
+
+00:03:14.330 --> 00:03:18.814
+Of the whole file, it's the field with the most influence on attack quality.
+
+00:03:19.114 --> 00:03:24.460
+Write what the application does, for whom and, above all, what it must never do:
+
+00:03:24.460 --> 00:03:29.405
+reveal other customers' data, give medical advice, execute actions without
+
+00:03:29.405 --> 00:03:30.274
+confirmation.
+
+00:03:30.574 --> 00:03:33.746
+Attacks are generated relative to that description.
+
+00:03:34.046 --> 00:03:38.372
+With a vague purpose you get generic attacks, and a report that says little about
+
+00:03:38.372 --> 00:03:38.960
+your risks.
+
+00:03:40.260 --> 00:03:41.273
+Step 4.
+
+00:03:41.573 --> 00:03:44.292
+Plugins and strategies from the threat model.
+
+00:03:44.842 --> 00:03:48.072
+Pick plugins from your threat model, not all of them.
+
+00:03:48.372 --> 00:03:53.425
+Each plugin is a risk category; each strategy, a way of delivering the attack.
+
+00:03:53.725 --> 00:03:58.070
+Names change between versions: redteam init offers the current ones.
+
+00:03:58.620 --> 00:04:03.581
+Each plugin represents a risk category and each strategy, a way of delivering the
+
+00:04:03.581 --> 00:04:04.010
+attack.
+
+00:04:04.310 --> 00:04:06.727
+The temptation is to enable everything.
+
+00:04:07.027 --> 00:04:10.849
+That's expensive, slow and produces an unreadable report.
+
+00:04:11.149 --> 00:04:15.535
+Choose the plugins matching the risks you marked as applicable yesterday, and two or
+
+00:04:15.535 --> 00:04:16.423
+three strategies.
+
+00:04:16.723 --> 00:04:20.949
+Names change between versions of the tool, so use the init command to see the
+
+00:04:20.949 --> 00:04:24.133
+current ones instead of copying them from an old tutorial.
+
+00:04:25.433 --> 00:04:26.562
+Step 5.
+
+00:04:26.862 --> 00:04:29.117
+Read the report and the conversations.
+
+00:04:29.667 --> 00:04:33.338
+Run and read the report per category: attack success rate.
+
+00:04:33.638 --> 00:04:38.122
+Then open the conversations: the grader produces false positives too.
+
+00:04:38.672 --> 00:04:41.879
+The report shows an attack success rate per category.
+
+00:04:42.179 --> 00:04:45.328
+It tells you where to look, not what to conclude.
+
+00:04:45.628 --> 00:04:48.974
+Open the conversations flagged as successful and read them.
+
+00:04:49.274 --> 00:04:53.810
+You'll find real findings, and false positives too: cases where the application
+
+00:04:53.810 --> 00:04:57.427
+refused correctly and the grader still counted it as a failure.
+
+00:04:57.727 --> 00:05:03.337
+Also review a sample of those flagged as resisted, because false negatives exist.
+
+00:05:03.637 --> 00:05:07.088
+A finding is a conversation a person read and confirmed.
+
+00:05:08.388 --> 00:05:09.575
+Step 6.
+
+00:05:09.875 --> 00:05:11.747
+Fix, repeat and schedule.
+
+00:05:12.297 --> 00:05:15.852
+Fix, rerun and schedule it: nightly or per release.
+
+00:05:16.152 --> 00:05:18.755
+Cost makes it a poor fit for every PR.
+
+00:05:19.305 --> 00:05:24.163
+For each confirmed finding, decide the fix, which may be a prompt change, a filter
+
+00:05:24.163 --> 00:05:26.947
+or a design control, and rerun the same config.
+
+00:05:27.247 --> 00:05:31.893
+Save the attacks that succeeded as deterministic regression cases, so you can test
+
+00:05:31.893 --> 00:05:34.669
+them on every change without generating anything.
+
+00:05:34.969 --> 00:05:38.907
+The full red teaming run goes on a schedule, nightly or per release.
+
+00:05:39.207 --> 00:05:43.343
+Because of cost and duration it isn't a good fit for every pull request.
+
+00:05:44.643 --> 00:05:45.749
+An example.
+
+00:05:46.299 --> 00:05:51.097
+A team runs red teaming against yesterday's support assistant, in staging, with four
+
+00:05:51.097 --> 00:05:53.325
+plugins chosen from their threat model.
+
+00:05:53.625 --> 00:05:57.378
+The report flags twelve successful attacks out of two hundred.
+
+00:05:57.678 --> 00:06:02.534
+Reading the conversations, five are false positives: the assistant refused and
+
+00:06:02.534 --> 00:06:04.589
+offered to hand over to a person.
+
+00:06:04.889 --> 00:06:06.726
+Seven real ones remain.
+
+00:06:07.026 --> 00:06:11.322
+Four get it to reveal part of its internal instructions and three obtain data from
+
+00:06:11.322 --> 00:06:14.203
+an order by changing the number in a rephrased message.
+
+00:06:14.503 --> 00:06:16.398
+The second group is serious.
+
+00:06:16.698 --> 00:06:21.142
+They fix it by validating in code that the order belongs to the user, not in the
+
+00:06:21.142 --> 00:06:21.531
+prompt.
+
+00:06:21.831 --> 00:06:24.353
+In the second run that group is at zero.
+
+00:06:25.653 --> 00:06:27.315
+The most common mistakes.
+
+00:06:27.865 --> 00:06:31.235
+Running against production or without written authorization.
+
+00:06:31.785 --> 00:06:35.236
+Enabling every plugin instead of those from the threat model.
+
+00:06:35.786 --> 00:06:39.434
+Reporting the success rate without having read the conversations.
+
+00:06:39.984 --> 00:06:43.783
+Fixing with a sentence in the prompt what requires a control in code.
+
+00:06:45.083 --> 00:06:47.326
+To know it is done, check this.
+
+00:06:47.876 --> 00:06:51.641
+There is written authorization and the target is staging with test data.
+
+00:06:52.191 --> 00:06:55.247
+The purpose describes what the system must not do.
+
+00:06:55.797 --> 00:06:58.981
+The plugins come from the previous day's applicable risks.
+
+00:06:59.531 --> 00:07:02.912
+Each reported finding was read and confirmed by a person.
+
+00:07:04.212 --> 00:07:06.107
+And where AI fell short.
+
+00:07:06.657 --> 00:07:10.247
+The grader model produces false positives and false negatives.
+
+00:07:10.547 --> 00:07:14.207
+A red teaming report with no human review isn't a finding.
+
+00:07:15.507 --> 00:07:17.239
+That was day 23.
+
+00:07:17.539 --> 00:07:22.514
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:22.514 --> 00:07:23.521
+asked questions.
+
+00:07:24.071 --> 00:07:29.676
+Continue with day 24: Security (3): prompt injection in tool-using agents and how to
+
+00:07:29.676 --> 00:07:30.877
+test the controls.

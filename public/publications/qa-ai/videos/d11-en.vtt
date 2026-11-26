@@ -1,0 +1,367 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.020
+Day 11 of the 31 days of QA + AI series.
+
+00:00:04.570 --> 00:00:08.671
+Playwright Test Agents: planner, generator and healer in action.
+
+00:00:09.221 --> 00:00:14.092
+The full planner, generator and healer cycle in a real repo, and the two points
+
+00:00:14.092 --> 00:00:15.819
+where a person must step in.
+
+00:00:17.119 --> 00:00:21.628
+Yesterday you built the explore, plan and generate flow by hand, with your own
+
+00:00:21.628 --> 00:00:22.090
+prompts.
+
+00:00:22.390 --> 00:00:26.737
+Playwright ships that same flow packaged as three agents with separate
+
+00:00:26.737 --> 00:00:30.276
+responsibilities: one plans, one generates and one heals.
+
+00:00:30.576 --> 00:00:35.091
+The advantage isn't that they're smarter, but that each has narrow instructions and
+
+00:00:35.091 --> 00:00:37.103
+leaves an artifact the next one uses.
+
+00:00:38.403 --> 00:00:40.484
+The risk comes packaged too.
+
+00:00:40.784 --> 00:00:45.133
+A system that repairs tests on its own can leave the suite green for the wrong
+
+00:00:45.133 --> 00:00:45.524
+reason.
+
+00:00:45.824 --> 00:00:50.051
+This guide walks through the three agents and marks the two points where a person
+
+00:00:50.051 --> 00:00:53.443
+must step in no matter what: before generating and after healing.
+
+00:00:53.743 --> 00:00:57.902
+Without those two reviews, what you gain in speed you lose in trust.
+
+00:00:59.202 --> 00:01:00.899
+To follow this guide you need:
+
+00:01:01.449 --> 00:01:05.376
+Up-to-date Playwright (agents ship since version 1.56).
+
+00:01:05.926 --> 00:01:10.619
+A coding agent: Claude Code, VS Code with Copilot or OpenCode.
+
+00:01:11.919 --> 00:01:13.199
+This is the setup.
+
+00:01:13.499 --> 00:01:17.716
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:19.016 --> 00:01:20.052
+Step 1.
+
+00:01:20.352 --> 00:01:22.003
+Initialize and commit.
+
+00:01:22.553 --> 00:01:26.213
+Upgrade Playwright and run init-agents with your agent's loop.
+
+00:01:26.513 --> 00:01:32.360
+It generates the three agent definitions, a seed.spec.ts, the specs/ folder and the
+
+00:01:32.360 --> 00:01:33.981
+test MCP server config.
+
+00:01:34.281 --> 00:01:35.584
+Commit everything.
+
+00:01:36.134 --> 00:01:41.101
+The init command generates the three agent definitions for the loop you use, a seed
+
+00:01:41.101 --> 00:01:44.333
+test, the plans folder and the test MCP server config.
+
+00:01:44.633 --> 00:01:46.354
+Commit all of that together.
+
+00:01:46.654 --> 00:01:51.388
+The definitions are instructions in text: it's worth reading them once to understand
+
+00:01:51.388 --> 00:01:53.924
+what each agent will do and with which tools.
+
+00:01:54.224 --> 00:01:59.052
+Being in the repo, the whole team uses the same ones, and any adjustment you make
+
+00:01:59.052 --> 00:02:01.495
+stays in history just like a code change.
+
+00:02:02.795 --> 00:02:03.993
+Step 2.
+
+00:02:04.293 --> 00:02:05.515
+The seed test.
+
+00:02:06.065 --> 00:02:10.908
+Write the seed test: it leaves the page in the initial state every flow needs (for
+
+00:02:10.908 --> 00:02:12.976
+example, logged in as a test user).
+
+00:02:13.526 --> 00:02:18.120
+The seed is an ordinary test that leaves the application in the state every flow
+
+00:02:18.120 --> 00:02:21.911
+starts from: session started, minimum data loaded, initial screen.
+
+00:02:22.211 --> 00:02:27.101
+The agents run it before exploring or generating, so it also serves as a style
+
+00:02:27.101 --> 00:02:29.922
+example: generated tests tend to resemble it.
+
+00:02:30.222 --> 00:02:33.000
+Write it with the same care as your best test.
+
+00:02:33.300 --> 00:02:38.598
+If it uses role-based locators and clear fixtures, whatever comes next inherits
+
+00:02:38.598 --> 00:02:38.933
+that.
+
+00:02:39.233 --> 00:02:41.210
+If it's sloppy, that too.
+
+00:02:42.510 --> 00:02:43.592
+Step 3.
+
+00:02:43.892 --> 00:02:45.880
+Planner and the first intervention.
+
+00:02:46.430 --> 00:02:50.287
+Planner: ask it to explore a flow and save the plan in specs/.
+
+00:02:50.587 --> 00:02:54.769
+Intervention 1: review the plan before generating anything.
+
+00:02:55.319 --> 00:03:00.016
+The planner explores the application starting from the seed and writes a Markdown
+
+00:03:00.016 --> 00:03:03.844
+plan into the plans folder: scenarios, steps and expected results.
+
+00:03:04.144 --> 00:03:08.361
+This is the first human intervention, and it's the cheapest in the whole chain.
+
+00:03:08.661 --> 00:03:11.276
+Read the plan before generating anything.
+
+00:03:11.576 --> 00:03:16.218
+Remove scenarios that add nothing, add the ones that depend on business rules and
+
+00:03:16.218 --> 00:03:18.567
+fix expected results the planner assumed.
+
+00:03:18.867 --> 00:03:21.935
+Every error you let through gets multiplied in code.
+
+00:03:23.235 --> 00:03:24.248
+Step 4.
+
+00:03:24.548 --> 00:03:25.514
+Generator.
+
+00:03:26.064 --> 00:03:29.619
+Generator: ask for the tests from the approved plan.
+
+00:03:29.919 --> 00:03:33.393
+It checks selectors against the live page while writing.
+
+00:03:33.943 --> 00:03:37.313
+The generator takes the approved plan and writes the tests.
+
+00:03:37.613 --> 00:03:41.941
+The difference from a classic generator is that it verifies against the live page:
+
+00:03:41.941 --> 00:03:46.323
+it executes the steps while writing and checks that each locator finds its element.
+
+00:03:46.623 --> 00:03:49.598
+That's why the result usually runs first time.
+
+00:03:49.898 --> 00:03:52.292
+Even so, review the assertions.
+
+00:03:52.592 --> 00:03:57.416
+A test can navigate the whole flow correctly and end up verifying something trivial,
+
+00:03:57.416 --> 00:04:02.010
+such as the URL having changed, instead of the rule the scenario meant to prove.
+
+00:04:03.310 --> 00:04:04.439
+Step 5.
+
+00:04:04.739 --> 00:04:06.866
+Healer and the second intervention.
+
+00:04:07.416 --> 00:04:10.925
+Healer: break a locator on purpose and run the healer.
+
+00:04:11.225 --> 00:04:13.608
+Intervention 2: review the diff.
+
+00:04:13.908 --> 00:04:17.637
+Fixing a locator is fine; changing an assertion is not.
+
+00:04:18.187 --> 00:04:22.939
+Break a locator on purpose, for example by renaming a button, and run the healer.
+
+00:04:23.239 --> 00:04:27.827
+It will run the test, see the failure, inspect the page and propose a fix.
+
+00:04:28.127 --> 00:04:31.369
+This is the second intervention: reviewing the diff.
+
+00:04:31.669 --> 00:04:33.587
+There are two kinds of change.
+
+00:04:33.887 --> 00:04:38.035
+Updating a locator because the interface changed is legitimate maintenance.
+
+00:04:38.335 --> 00:04:43.097
+Modifying or removing an assertion so the test passes is hiding a possible defect.
+
+00:04:43.397 --> 00:04:47.974
+The first gets accepted; the second gets rejected and investigated.
+
+00:04:49.274 --> 00:04:50.461
+Step 6.
+
+00:04:50.761 --> 00:04:52.912
+Regenerate on every upgrade.
+
+00:04:53.462 --> 00:04:58.251
+On every Playwright upgrade, rerun init-agents in the same PR to regenerate the
+
+00:04:58.251 --> 00:04:58.979
+definitions.
+
+00:04:59.529 --> 00:05:04.075
+The agent definitions are tied to the Playwright version: available tools and
+
+00:05:04.075 --> 00:05:05.255
+instructions change.
+
+00:05:05.555 --> 00:05:10.060
+When you upgrade, rerun the initialization in the same pull request and review what
+
+00:05:10.060 --> 00:05:11.525
+changed in the definitions.
+
+00:05:11.825 --> 00:05:16.207
+If you had made your own adjustments, you'll have to reapply them, so it's worth
+
+00:05:16.207 --> 00:05:18.179
+documenting them in a separate file.
+
+00:05:18.479 --> 00:05:23.055
+Leaving old definitions with a new version produces failures that are hard to
+
+00:05:23.055 --> 00:05:23.590
+diagnose.
+
+00:05:24.890 --> 00:05:25.995
+An example.
+
+00:05:26.545 --> 00:05:29.044
+A team tests the user sign-up flow.
+
+00:05:29.344 --> 00:05:31.704
+The planner proposes nine scenarios.
+
+00:05:32.004 --> 00:05:37.050
+In review they remove two repeated ones and add one it couldn't know: emails from a
+
+00:05:37.050 --> 00:05:38.995
+blocked domain must be rejected.
+
+00:05:39.295 --> 00:05:42.793
+The generator writes eight tests and seven pass first time.
+
+00:05:43.093 --> 00:05:46.950
+A week later a redesign changes a button's text and four fail.
+
+00:05:47.250 --> 00:05:49.516
+The healer fixes the four locators.
+
+00:05:49.816 --> 00:05:52.861
+In the diff, three changes are locator-only.
+
+00:05:53.161 --> 00:05:57.061
+The fourth also changed an assertion from "shows the error" to "the button is
+
+00:05:57.061 --> 00:05:57.517
+visible".
+
+00:05:57.817 --> 00:06:02.579
+They reject that change, investigate and discover the error message had disappeared
+
+00:06:02.579 --> 00:06:03.497
+in the redesign.
+
+00:06:04.797 --> 00:06:06.460
+The most common mistakes.
+
+00:06:07.010 --> 00:06:10.577
+Generating tests without having read and corrected the plan.
+
+00:06:11.127 --> 00:06:14.659
+Accepting the healer's result because the suite turned green.
+
+00:06:15.209 --> 00:06:19.020
+Writing a sloppy seed test that every later test imitates.
+
+00:06:19.570 --> 00:06:23.160
+Upgrading Playwright without regenerating the agent definitions.
+
+00:06:24.460 --> 00:06:26.703
+To know it is done, check this.
+
+00:06:27.253 --> 00:06:30.623
+The definitions, the seed and the config are committed.
+
+00:06:31.173 --> 00:06:34.310
+The plan was reviewed by a person before generating.
+
+00:06:34.860 --> 00:06:38.218
+Each generated test has an assertion that proves a rule.
+
+00:06:38.768 --> 00:06:42.625
+The healer's diff was reviewed separating locators from assertions.
+
+00:06:43.925 --> 00:06:45.820
+And where AI fell short.
+
+00:06:46.370 --> 00:06:49.809
+The healer can turn a test green by modifying the assertion.
+
+00:06:50.109 --> 00:06:53.572
+A healed test with an unreviewed diff is a false green.
+
+00:06:54.872 --> 00:06:56.221
+That was day 11.
+
+00:06:56.521 --> 00:07:01.496
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:01.496 --> 00:07:02.503
+asked questions.
+
+00:07:03.053 --> 00:07:09.267
+Continue with day 12: Failure triage with LLMs: from 40 red tests to 3 root causes.

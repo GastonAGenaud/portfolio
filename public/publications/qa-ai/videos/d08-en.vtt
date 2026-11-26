@@ -1,0 +1,367 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.800
+Day 8 of the 31 days of QA + AI series.
+
+00:00:04.350 --> 00:00:06.907
+Your first eval harness with promptfoo.
+
+00:00:07.457 --> 00:00:12.398
+A real eval harness for a bug classifier: versioned prompt, dataset, asserts,
+
+00:00:12.398 --> 00:00:15.029
+repeated runs and a two-model comparison.
+
+00:00:16.329 --> 00:00:19.130
+So far we've talked about evals as an idea.
+
+00:00:19.430 --> 00:00:24.884
+Today you build one that works, end to end, on a problem any QA team recognizes:
+
+00:00:24.884 --> 00:00:27.339
+classifying bug reports by severity.
+
+00:00:27.639 --> 00:00:32.483
+It's a good first case because the output is small, the criteria are debatable and
+
+00:00:32.483 --> 00:00:37.386
+mistakes have clear consequences: a critical bug classified as low gets lost in the
+
+00:00:37.386 --> 00:00:37.858
+backlog.
+
+00:00:39.158 --> 00:00:44.063
+You will write the prompt as a file, build the config, label ten cases with your own
+
+00:00:44.063 --> 00:00:47.624
+judgment, run everything several times and read the failures.
+
+00:00:47.924 --> 00:00:52.221
+The part that teaches the most isn't the tool but reading failures: that's where you
+
+00:00:52.221 --> 00:00:56.518
+find out whether the problem lies in the model, in the prompt or in your own labels.
+
+00:00:57.818 --> 00:00:59.516
+To follow this guide you need:
+
+00:01:00.066 --> 00:01:03.378
+The qa-ai-lab repo with promptfoo (day 4).
+
+00:01:03.928 --> 00:01:07.750
+Ollama with llama3.2; optionally a second model.
+
+00:01:09.050 --> 00:01:10.330
+This is the setup.
+
+00:01:10.630 --> 00:01:14.847
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:16.147 --> 00:01:18.413
+And this is the next setup file.
+
+00:01:19.713 --> 00:01:21.980
+And this is the next setup file.
+
+00:01:23.280 --> 00:01:24.316
+Step 1.
+
+00:01:24.616 --> 00:01:26.116
+The prompt as a file.
+
+00:01:26.666 --> 00:01:31.301
+Write the prompt in its own file, with classification rules and output format.
+
+00:01:31.601 --> 00:01:33.786
+The prompt is code: version it.
+
+00:01:34.337 --> 00:01:39.168
+Write the prompt under prompts/ in three parts: the role, the classification rules
+
+00:01:39.168 --> 00:01:40.818
+and the exact output format.
+
+00:01:41.118 --> 00:01:45.887
+The rules must be yours, written the way you'd explain them to someone new: what
+
+00:01:45.887 --> 00:01:48.272
+makes a bug critical, what makes it low.
+
+00:01:48.572 --> 00:01:51.953
+The more explicit they are, the less the model interprets.
+
+00:01:52.253 --> 00:01:56.087
+The output format is written down too, with the allowed values.
+
+00:01:56.387 --> 00:02:01.002
+Keeping it in a separate file lets you see in a diff which word changed when quality
+
+00:02:01.002 --> 00:02:01.881
+goes up or down.
+
+00:02:03.181 --> 00:02:04.380
+Step 2.
+
+00:02:04.680 --> 00:02:06.133
+The minimal config.
+
+00:02:06.683 --> 00:02:11.461
+Create the config: prompt, provider and a defaultTest with the format assert that
+
+00:02:11.461 --> 00:02:12.758
+applies to every case.
+
+00:02:13.308 --> 00:02:18.687
+The config joins three things: which prompt, against which provider and with which
+
+00:02:18.687 --> 00:02:19.081
+cases.
+
+00:02:19.381 --> 00:02:23.974
+The defaultTest block is the most useful piece to start with: it holds the format
+
+00:02:23.974 --> 00:02:27.093
+assert that applies to every case without repeating it.
+
+00:02:27.393 --> 00:02:32.053
+If the output isn't valid JSON with an allowed severity, the case fails there and
+
+00:02:32.053 --> 00:02:33.548
+nothing else is evaluated.
+
+00:02:33.848 --> 00:02:35.349
+Keep the config short.
+
+00:02:35.649 --> 00:02:40.735
+A file that fits on one screen gets read by the whole team; a three-hundred-line
+
+00:02:40.735 --> 00:02:41.689
+one, by nobody.
+
+00:02:42.989 --> 00:02:44.071
+Step 3.
+
+00:02:44.371 --> 00:02:46.371
+Ten cases labeled by you.
+
+00:02:46.921 --> 00:02:52.322
+Load at least 10 cases labeled by you: 3 critical, 3 low and 4 ambiguous.
+
+00:02:52.622 --> 00:02:55.063
+The ambiguous ones teach the most.
+
+00:02:55.613 --> 00:03:00.401
+Pick ten real or realistic reports and write the expected severity before running
+
+00:03:00.401 --> 00:03:00.933
+anything.
+
+00:03:01.233 --> 00:03:06.181
+The mix matters: three clearly critical, three clearly low and four ambiguous.
+
+00:03:06.481 --> 00:03:09.154
+The clear ones verify that the basics work.
+
+00:03:09.454 --> 00:03:14.352
+The ambiguous ones discriminate: a report saying "the app closes" without saying in
+
+00:03:14.352 --> 00:03:17.421
+which flow, or a cosmetic one on the payment screen.
+
+00:03:17.721 --> 00:03:20.382
+If labeling a case is hard, note why.
+
+00:03:20.682 --> 00:03:23.506
+That doubt is usually a rule missing from the prompt.
+
+00:03:24.806 --> 00:03:25.819
+Step 4.
+
+00:03:26.119 --> 00:03:27.631
+Three runs per case.
+
+00:03:28.181 --> 00:03:30.529
+Run with --repeat 3.
+
+00:03:30.829 --> 00:03:34.454
+A case that passes one out of three times is not passing.
+
+00:03:35.004 --> 00:03:38.292
+A single run says nothing about a system that varies.
+
+00:03:38.592 --> 00:03:44.090
+With three repetitions each case lands in one of three situations: always passes,
+
+00:03:44.090 --> 00:03:45.990
+always fails or is unstable.
+
+00:03:46.290 --> 00:03:50.388
+The unstable ones are the most interesting, because they show where the prompt
+
+00:03:50.388 --> 00:03:52.016
+leaves room for interpretation.
+
+00:03:52.316 --> 00:03:56.653
+Treat a case that passes one time in three as failed: in production that case will
+
+00:03:56.653 --> 00:03:58.821
+be misclassified a good part of the time.
+
+00:03:59.121 --> 00:04:02.931
+Note the total time and cost of the run, which you will need later.
+
+00:04:04.231 --> 00:04:05.360
+Step 5.
+
+00:04:05.660 --> 00:04:07.787
+Reading failures one by one.
+
+00:04:08.337 --> 00:04:11.266
+Open the viewer and read failures one by one.
+
+00:04:11.566 --> 00:04:15.748
+Classify them: model error, prompt error or labeling error.
+
+00:04:16.298 --> 00:04:20.353
+Open the viewer and read each failure with its full input and output.
+
+00:04:20.653 --> 00:04:23.093
+Classify it under one of three causes.
+
+00:04:23.393 --> 00:04:26.728
+Model error: the rules were clear and it didn't follow them.
+
+00:04:27.028 --> 00:04:30.142
+Prompt error: the rule was missing or ambiguous.
+
+00:04:30.442 --> 00:04:35.541
+Labeling error: on rereading, the model's answer is defensible and your label isn't.
+
+00:04:35.841 --> 00:04:40.116
+The third cause shows up more than you'd expect, and finding it improves your
+
+00:04:40.116 --> 00:04:40.616
+judgment.
+
+00:04:40.916 --> 00:04:45.377
+Fix the prompt and the labels first, and only then think about changing models.
+
+00:04:46.677 --> 00:04:47.864
+Step 6.
+
+00:04:48.164 --> 00:04:49.641
+A second provider.
+
+00:04:50.191 --> 00:04:55.186
+Add a second provider and compare quality, latency and cost side by side.
+
+00:04:55.736 --> 00:04:58.664
+Add another model to the providers list and run again.
+
+00:04:58.964 --> 00:05:02.275
+The viewer shows both side by side on the same cases.
+
+00:05:02.575 --> 00:05:06.676
+Compare three things: pass rate, latency and cost per run.
+
+00:05:06.976 --> 00:05:11.429
+Often the larger model wins by a little on quality and loses by a lot on the other
+
+00:05:11.429 --> 00:05:11.646
+two.
+
+00:05:11.946 --> 00:05:16.390
+Ten cases aren't enough for a final decision, but they are enough to rule options
+
+00:05:16.390 --> 00:05:20.833
+out and to have, for the first time, a comparison based on your data and not on a
+
+00:05:20.833 --> 00:05:21.875
+public leaderboard.
+
+00:05:23.175 --> 00:05:24.281
+An example.
+
+00:05:24.831 --> 00:05:28.711
+A QA lead builds the eval with ten reports from her backlog.
+
+00:05:29.011 --> 00:05:34.601
+In the first run, with three repetitions, seven cases always pass, one always fails
+
+00:05:34.601 --> 00:05:36.015
+and two are unstable.
+
+00:05:36.315 --> 00:05:40.851
+The one that always fails is a labeling error: she had marked it low, but it affects
+
+00:05:40.851 --> 00:05:43.876
+login and the model marked it critical with good reason.
+
+00:05:44.176 --> 00:05:48.393
+The two unstable ones are reports with no reproduction steps.
+
+00:05:48.693 --> 00:05:53.656
+She adds a rule to the prompt: "if data is missing to decide, classify as medium and
+
+00:05:53.656 --> 00:05:54.779
+ask for the steps".
+
+00:05:55.079 --> 00:05:58.750
+In the second run, all ten cases pass three times.
+
+00:05:59.050 --> 00:06:01.944
+The change was one prompt line and one label.
+
+00:06:03.244 --> 00:06:04.907
+The most common mistakes.
+
+00:06:05.457 --> 00:06:08.257
+Labeling cases after seeing the model's answer.
+
+00:06:08.807 --> 00:06:12.363
+Using only easy cases and concluding the prompt works.
+
+00:06:12.913 --> 00:06:16.456
+Evaluating content when the format already failed.
+
+00:06:17.006 --> 00:06:20.236
+Switching models before reviewing the prompt and the labels.
+
+00:06:21.536 --> 00:06:23.780
+To know it is done, check this.
+
+00:06:24.330 --> 00:06:27.490
+The prompt is in a file with rules and output format.
+
+00:06:28.040 --> 00:06:31.596
+There are ten labeled cases, four of them ambiguous.
+
+00:06:32.146 --> 00:06:35.713
+Each case ran three times and you know which are unstable.
+
+00:06:36.263 --> 00:06:40.259
+Each failure has an assigned cause: model, prompt or label.
+
+00:06:41.559 --> 00:06:43.454
+And where AI fell short.
+
+00:06:44.004 --> 00:06:46.874
+Small models wrap JSON in extra text.
+
+00:06:47.174 --> 00:06:50.811
+Validate format before content or you'll misdiagnose.
+
+00:06:52.111 --> 00:06:53.379
+That was day 8.
+
+00:06:53.679 --> 00:06:58.653
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:58.653 --> 00:06:59.661
+asked questions.
+
+00:07:00.211 --> 00:07:06.718
+Continue with day 9: Agent harness for QA: rules, skills and MCP in your automation
+
+00:07:06.718 --> 00:07:07.110
+repo.

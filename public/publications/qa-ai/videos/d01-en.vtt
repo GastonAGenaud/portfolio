@@ -1,0 +1,358 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.870
+Day 1 of the 31 days of QA + AI series.
+
+00:00:04.420 --> 00:00:09.426
+LLMs in QA: the 2026 map, where they help and where they don't.
+
+00:00:09.976 --> 00:00:15.160
+Six LLM uses in QA that work today, three that don't, and a simple rule to decide
+
+00:00:15.160 --> 00:00:16.248
+when to delegate.
+
+00:00:17.548 --> 00:00:23.208
+In 2026 almost every QA team uses some LLM, but few can say which tasks it really
+
+00:00:23.208 --> 00:00:26.142
+speeds up and which ones it makes riskier.
+
+00:00:26.442 --> 00:00:31.136
+The usual outcome is to use it for everything for two weeks, run into invented test
+
+00:00:31.136 --> 00:00:35.094
+cases and a couple of brittle tests, and go back to working as before.
+
+00:00:36.394 --> 00:00:38.684
+This guide sorts that ground out.
+
+00:00:38.984 --> 00:00:43.345
+It doesn't start from the tool but from your tasks: which are text to text, which
+
+00:00:43.345 --> 00:00:47.868
+have a source of truth to compare against, and which can be undone if they go wrong.
+
+00:00:48.168 --> 00:00:52.518
+That is enough to build your own map and a decision rule you will use for the whole
+
+00:00:52.518 --> 00:00:52.885
+series.
+
+00:00:54.185 --> 00:00:55.882
+To follow this guide you need:
+
+00:00:56.432 --> 00:00:59.024
+A real user story from your backlog.
+
+00:00:59.574 --> 00:01:04.197
+Any LLM: Claude, ChatGPT or a local model with Ollama.
+
+00:01:04.747 --> 00:01:06.085
+20 minutes.
+
+00:01:07.385 --> 00:01:08.421
+Step 1.
+
+00:01:08.721 --> 00:01:10.744
+Inventory of real tasks.
+
+00:01:11.294 --> 00:01:17.399
+List last week's QA tasks and flag the text-to-text ones: analyze, draft, classify,
+
+00:01:17.399 --> 00:01:18.135
+summarize.
+
+00:01:18.685 --> 00:01:24.110
+Open last week's calendar and board and write each task down with a verb: review a
+
+00:01:24.110 --> 00:01:29.402
+requirement, write cases, prepare data, automate a flow, analyze a red pipeline,
+
+00:01:29.402 --> 00:01:30.263
+report a bug.
+
+00:01:30.563 --> 00:01:33.619
+Don't list what you'd like to do, list what you did.
+
+00:01:33.919 --> 00:01:36.824
+Next to each one, note how long it took.
+
+00:01:37.124 --> 00:01:41.649
+Text-to-text tasks that also eat hours are the first candidates, because the model
+
+00:01:41.649 --> 00:01:45.346
+produces a draft in seconds and you move from writing to reviewing.
+
+00:01:46.646 --> 00:01:47.845
+Step 2.
+
+00:01:48.145 --> 00:01:50.249
+The six uses that pay off.
+
+00:01:50.799 --> 00:01:55.954
+Place them in the six uses that work: requirements and ambiguity analysis, test
+
+00:01:55.954 --> 00:02:01.435
+design from user stories, test data, writing and refactoring automation with agents,
+
+00:02:01.435 --> 00:02:06.068
+failure triage over logs and traces, and evals for AI-powered features.
+
+00:02:06.619 --> 00:02:10.743
+Each one works for the same reason: there is something to compare against.
+
+00:02:11.043 --> 00:02:14.598
+In requirements analysis you compare against the product owner.
+
+00:02:14.898 --> 00:02:17.873
+In test design, against the business rules.
+
+00:02:18.173 --> 00:02:20.404
+In test data, against a schema.
+
+00:02:20.704 --> 00:02:23.482
+In automation, against the test run.
+
+00:02:23.782 --> 00:02:26.141
+In triage, against the trace.
+
+00:02:26.441 --> 00:02:28.998
+In evals, against a labeled dataset.
+
+00:02:29.298 --> 00:02:33.789
+If you can't name that point of comparison for a task, it doesn't belong on this
+
+00:02:33.789 --> 00:02:36.035
+list yet, however neat the output looks.
+
+00:02:37.335 --> 00:02:38.417
+Step 3.
+
+00:02:38.717 --> 00:02:40.461
+The three uses that fail.
+
+00:02:41.011 --> 00:02:45.819
+Cross out the three that don't: release decisions with no human, the model as an
+
+00:02:45.819 --> 00:02:50.267
+oracle with no source of truth, and merging generated UI tests unreviewed.
+
+00:02:50.817 --> 00:02:55.018
+A release decision is a business risk judgment, and the model neither knows your
+
+00:02:55.018 --> 00:02:56.961
+context nor answers for the decision.
+
+00:02:57.261 --> 00:03:02.283
+Using it as an oracle with no source of truth produces confident and sometimes false
+
+00:03:02.283 --> 00:03:04.555
+answers, the worst combination for QA.
+
+00:03:04.855 --> 00:03:09.973
+And UI tests generated in bulk tend to pass once and fail a week later, because they
+
+00:03:09.973 --> 00:03:12.532
+rely on guessed selectors and fixed waits.
+
+00:03:12.832 --> 00:03:16.957
+They aren't forbidden: they need a person to look at the result before calling it
+
+00:03:16.957 --> 00:03:17.211
+good.
+
+00:03:18.511 --> 00:03:19.524
+Step 4.
+
+00:03:19.824 --> 00:03:21.336
+The three-question rule.
+
+00:03:21.886 --> 00:03:26.803
+Apply the rule: delegate only if the result is verifiable, cheap to review and
+
+00:03:26.803 --> 00:03:27.496
+reversible.
+
+00:03:28.046 --> 00:03:33.691
+Verifiable means an objective check exists: a test that runs, a schema, a written
+
+00:03:33.691 --> 00:03:34.040
+rule.
+
+00:03:34.340 --> 00:03:38.679
+Cheap to review means reading it costs you much less than doing it yourself; if
+
+00:03:38.679 --> 00:03:43.073
+reviewing forty generated cases takes longer than writing fifteen good ones, you
+
+00:03:43.073 --> 00:03:43.897
+gained nothing.
+
+00:03:44.197 --> 00:03:49.161
+Reversible means a mistake leaves no consequences: a draft gets discarded, a merge
+
+00:03:49.161 --> 00:03:50.493
+to production doesn't.
+
+00:03:50.793 --> 00:03:55.731
+If one of the three fails, AI can assist, but the decision and the signature are
+
+00:03:55.731 --> 00:03:56.101
+yours.
+
+00:03:57.401 --> 00:03:58.530
+Step 5.
+
+00:03:58.830 --> 00:04:00.992
+First trial with a user story.
+
+00:04:01.542 --> 00:04:07.159
+Try it: paste your user story and ask "before writing cases, list ambiguities and
+
+00:04:07.159 --> 00:04:08.685
+questions for the PO".
+
+00:04:09.235 --> 00:04:13.822
+Pick a story already in development, so you can compare with what the team found out
+
+00:04:13.822 --> 00:04:14.531
+the hard way.
+
+00:04:14.831 --> 00:04:20.098
+Paste the full text with its acceptance criteria and ask only for ambiguities and
+
+00:04:20.098 --> 00:04:21.463
+questions, not cases.
+
+00:04:21.763 --> 00:04:26.708
+Note how many questions are real, how many were already answered elsewhere and how
+
+00:04:26.708 --> 00:04:27.733
+many don't apply.
+
+00:04:28.033 --> 00:04:32.636
+That ratio tells you whether, in your domain, it's worth using in refinement or
+
+00:04:32.636 --> 00:04:35.199
+whether it first needs more written context.
+
+00:04:36.499 --> 00:04:37.686
+Step 6.
+
+00:04:37.986 --> 00:04:39.835
+The log of hits and misses.
+
+00:04:40.385 --> 00:04:43.128
+Write down what it got right and what it made up.
+
+00:04:43.428 --> 00:04:45.253
+That log is your first eval.
+
+00:04:45.803 --> 00:04:51.061
+Build a simple table with four columns: task, what you asked, what it got right and
+
+00:04:51.061 --> 00:04:52.075
+what it made up.
+
+00:04:52.375 --> 00:04:56.151
+Fill it in for two weeks every time you use a model for something in QA.
+
+00:04:56.451 --> 00:05:01.156
+Without that log, your opinion of the tool will depend on the last result you saw.
+
+00:05:01.456 --> 00:05:06.183
+With it you have evidence to decide where to keep using it, plus the first draft of
+
+00:05:06.183 --> 00:05:09.771
+an evaluation dataset, which is exactly what we build later on.
+
+00:05:11.071 --> 00:05:12.176
+An example.
+
+00:05:12.726 --> 00:05:16.351
+An analyst takes the story "apply a discount coupon at checkout".
+
+00:05:16.651 --> 00:05:20.392
+She asks the model for ambiguities and gets seven questions.
+
+00:05:20.692 --> 00:05:25.077
+Three are real and nobody had asked them: what happens if the coupon expires
+
+00:05:25.077 --> 00:05:29.461
+mid-purchase, whether it combines with free shipping and how rounding works.
+
+00:05:29.761 --> 00:05:32.317
+Two were already answered in the rules document.
+
+00:05:32.617 --> 00:05:36.591
+The other two assume a "one coupon per customer" rule that doesn't exist.
+
+00:05:36.891 --> 00:05:41.154
+Result in the table: three hits, two leftovers and two inventions.
+
+00:05:41.454 --> 00:05:45.230
+Ten minutes of work and three questions that prevented a production bug.
+
+00:05:45.530 --> 00:05:50.739
+That use passes the rule: verifiable with the PO, cheap to read and with no
+
+00:05:50.739 --> 00:05:52.545
+consequences if discarded.
+
+00:05:53.845 --> 00:05:55.508
+The most common mistakes.
+
+00:05:56.058 --> 00:06:01.169
+Judging the tool by a demo or the last result, with no log of hits and misses.
+
+00:06:01.719 --> 00:06:06.569
+Asking for the final deliverable (cases, tests) before asking for questions and
+
+00:06:06.569 --> 00:06:07.306
+ambiguities.
+
+00:06:07.856 --> 00:06:12.597
+Accepting a result because it reads well, without comparing it against a source of
+
+00:06:12.597 --> 00:06:12.944
+truth.
+
+00:06:13.494 --> 00:06:17.293
+Measuring savings only in writing time and forgetting review time.
+
+00:06:18.593 --> 00:06:20.836
+To know it is done, check this.
+
+00:06:21.386 --> 00:06:25.058
+You have ten real tasks classified as delegable or not.
+
+00:06:25.608 --> 00:06:29.268
+Each delegable task names what it gets verified against.
+
+00:06:29.818 --> 00:06:32.816
+You ran the ambiguity prompt on a real story.
+
+00:06:33.366 --> 00:06:36.538
+Your table has at least three hits and one error logged.
+
+00:06:37.838 --> 00:06:39.733
+And where AI fell short.
+
+00:06:40.283 --> 00:06:43.176
+It makes up business rules with full confidence.
+
+00:06:43.476 --> 00:06:46.892
+Without a source of truth next to it, it is not an oracle.
+
+00:06:48.192 --> 00:06:49.635
+That was day 1.
+
+00:06:49.935 --> 00:06:54.909
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:54.909 --> 00:06:55.916
+asked questions.
+
+00:06:56.466 --> 00:07:00.985
+Continue with day 2: How the SDET role is being reshaped by AI.
