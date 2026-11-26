@@ -26,7 +26,6 @@ export const useProjectsSection = (): ProjectsSectionType => {
         name: t(tokens.projectsSectionType.projects[6].name),
         url: 'https://poker-planning-ashen.vercel.app/',
         img: '/projects/09.png',
-        year: 2026,
         tags: ['React', 'Vite', 'Ably', 'Real-time'],
       },
       {
