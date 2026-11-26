@@ -1,0 +1,370 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.974
+Day 9 of the 31 days of QA + AI series.
+
+00:00:04.524 --> 00:00:09.740
+Agent harness for QA: rules, skills and MCP in your automation repo.
+
+00:00:10.290 --> 00:00:14.868
+How to prepare an automation repo so any coding agent writes tests following your
+
+00:00:14.868 --> 00:00:17.525
+conventions, with scoped tools and permissions.
+
+00:00:18.825 --> 00:00:23.508
+Giving a coding agent access to your automation repository without configuring it is
+
+00:00:23.508 --> 00:00:27.187
+like adding someone to the team without telling them how you work.
+
+00:00:27.487 --> 00:00:32.816
+It will write tests, but with brittle CSS selectors, without your Page Objects, with
+
+00:00:32.816 --> 00:00:35.164
+fixed waits and without running them.
+
+00:00:35.464 --> 00:00:40.192
+The conclusion afterwards is usually that "the agent is no good", when the problem
+
+00:00:40.192 --> 00:00:41.980
+is that nobody gave it context.
+
+00:00:43.280 --> 00:00:48.673
+This guide builds that context in five pieces: rules, skills, tools, permissions and
+
+00:00:48.673 --> 00:00:49.122
+a gate.
+
+00:00:49.422 --> 00:00:53.163
+Each one answers a concrete failure you'll see when it's missing.
+
+00:00:53.463 --> 00:00:57.247
+The result is a repo where an agent can produce a test that follows your
+
+00:00:57.247 --> 00:01:01.662
+conventions, and where you can confirm it with a command instead of taking its word.
+
+00:01:02.962 --> 00:01:04.660
+To follow this guide you need:
+
+00:01:05.210 --> 00:01:07.616
+A repo with Playwright (day 4).
+
+00:01:08.166 --> 00:01:12.627
+A coding agent: Claude Code, Copilot agent, Cursor or another.
+
+00:01:13.927 --> 00:01:15.207
+This is the setup.
+
+00:01:15.507 --> 00:01:19.724
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:21.024 --> 00:01:23.290
+And this is the next setup file.
+
+00:01:24.590 --> 00:01:25.626
+Step 1.
+
+00:01:25.926 --> 00:01:27.519
+Rules at the repo root.
+
+00:01:28.069 --> 00:01:33.645
+Rules: create AGENTS.md at the root with how to run, conventions and what "done"
+
+00:01:33.645 --> 00:01:34.063
+means.
+
+00:01:34.363 --> 00:01:38.174
+With Claude Code, the equivalent file is CLAUDE.md.
+
+00:01:38.724 --> 00:01:43.534
+The rules file is the first thing the agent reads in every session, so it has to be
+
+00:01:43.534 --> 00:01:44.636
+short and concrete.
+
+00:01:44.936 --> 00:01:49.553
+Three sections are enough: how to run the tests, which conventions to follow and
+
+00:01:49.553 --> 00:01:50.476
+what done means.
+
+00:01:50.776 --> 00:01:55.671
+Under conventions, write what you would flag to a person in a code review:
+
+00:01:55.671 --> 00:01:59.904
+role-based locators, no fixed waits, one Page Object per screen.
+
+00:02:00.204 --> 00:02:02.552
+Avoid paragraphs of philosophy.
+
+00:02:02.852 --> 00:02:07.329
+Each line should be verifiable by looking at a diff, and each new rule should come
+
+00:02:07.329 --> 00:02:09.240
+from a mistake you've already seen.
+
+00:02:10.540 --> 00:02:11.739
+Step 2.
+
+00:02:12.039 --> 00:02:13.760
+Skills for what repeats.
+
+00:02:14.310 --> 00:02:19.415
+Skills: move repeated procedures into a file, for example "how to write a new test"
+
+00:02:19.415 --> 00:02:21.383
+with your Page Object structure.
+
+00:02:21.933 --> 00:02:27.165
+Some procedures don't fit in a one-line rule: how to create a new test with its Page
+
+00:02:27.165 --> 00:02:31.026
+Object, how to add test data, how to investigate a CI failure.
+
+00:02:31.326 --> 00:02:36.216
+Write them as separate files, step by step, with a real example from the repo.
+
+00:02:36.516 --> 00:02:41.205
+The agent loads them when the task calls for it, without taking up context the rest
+
+00:02:41.205 --> 00:02:41.883
+of the time.
+
+00:02:42.183 --> 00:02:46.560
+A good sign that something deserves a skill is that you've already explained it
+
+00:02:46.560 --> 00:02:48.443
+twice, to a person or to an agent.
+
+00:02:49.743 --> 00:02:50.826
+Step 3.
+
+00:02:51.126 --> 00:02:53.172
+Tools to see the application.
+
+00:02:53.722 --> 00:02:59.223
+Tools: declare the Playwright MCP server in .mcp.json so the agent can open the app
+
+00:02:59.223 --> 00:03:00.946
+and look at the real page.
+
+00:03:01.496 --> 00:03:06.376
+Without access to a browser, the agent writes selectors from memory, guessing the
+
+00:03:06.376 --> 00:03:07.280
+page structure.
+
+00:03:07.580 --> 00:03:12.518
+With the Playwright MCP server it can open the application, read the real roles and
+
+00:03:12.518 --> 00:03:15.373
+names of elements and write locators that exist.
+
+00:03:15.673 --> 00:03:21.225
+Declaring it in .mcp.json inside the repo gives the whole team the same setup.
+
+00:03:21.525 --> 00:03:25.897
+Always point it at a test environment: the tool gives the agent the ability to
+
+00:03:25.897 --> 00:03:29.260
+click, and that includes buttons you don't want it to touch.
+
+00:03:30.560 --> 00:03:31.573
+Step 4.
+
+00:03:31.873 --> 00:03:34.163
+Permissions before first use.
+
+00:03:34.713 --> 00:03:40.044
+Permissions: deny destructive actions (delete, push, touching .env) and require
+
+00:03:40.044 --> 00:03:42.540
+confirmation to install dependencies.
+
+00:03:43.090 --> 00:03:46.112
+Define what it can't do before asking for anything.
+
+00:03:46.412 --> 00:03:51.674
+The minimum is denying destructive or irreversible actions: deleting files outside
+
+00:03:51.674 --> 00:03:55.075
+the tests folder, pushing, reading or modifying .env.
+
+00:03:55.375 --> 00:04:00.336
+Installing dependencies should ask for confirmation, because it changes the project
+
+00:04:00.336 --> 00:04:01.113
+for everyone.
+
+00:04:01.413 --> 00:04:06.199
+Permissions don't replace review, but they shrink the possible damage of a mistake.
+
+00:04:06.499 --> 00:04:11.023
+Think of it as the access of someone who just joined: free to propose anything and
+
+00:04:11.023 --> 00:04:13.561
+to execute few things without someone looking.
+
+00:04:14.861 --> 00:04:15.990
+Step 5.
+
+00:04:16.290 --> 00:04:17.801
+The gate is a command.
+
+00:04:18.351 --> 00:04:23.224
+Gate: "done" is verified with a command and its exit code, not with the agent's
+
+00:04:23.224 --> 00:04:23.718
+summary.
+
+00:04:24.268 --> 00:04:28.843
+Write in the rules which command defines that the work is done, for example running
+
+00:04:28.843 --> 00:04:31.655
+the new test three times in a row with no failures.
+
+00:04:31.955 --> 00:04:37.483
+And verify it yourself, or have your pipeline do it, by looking at the exit code.
+
+00:04:37.783 --> 00:04:42.328
+An agent can write "all tests pass" without having run them, or having run them with
+
+00:04:42.328 --> 00:04:44.439
+a filter that excludes the failing one.
+
+00:04:44.739 --> 00:04:47.911
+It isn't bad intent, it's an optimistic summary.
+
+00:04:48.211 --> 00:04:52.877
+The difference between a trustworthy flow and one that isn't lies in who runs the
+
+00:04:52.877 --> 00:04:53.972
+final verification.
+
+00:04:55.272 --> 00:04:56.459
+Step 6.
+
+00:04:56.759 --> 00:04:58.398
+Try it and feed back.
+
+00:04:58.948 --> 00:05:04.398
+Try it: ask for a new test and check whether it honored locators, Page Objects and
+
+00:05:04.398 --> 00:05:05.395
+the three runs.
+
+00:05:05.695 --> 00:05:09.912
+Whatever it missed goes back into AGENTS.md as a clearer rule.
+
+00:05:10.462 --> 00:05:15.849
+Ask for a new test for a simple flow and check the result against your rules: did it
+
+00:05:15.849 --> 00:05:21.045
+use role-based locators? did it create or reuse the Page Object? did it run three
+
+00:05:21.045 --> 00:05:21.429
+times?
+
+00:05:21.729 --> 00:05:24.588
+Whatever it skipped is an unclear or missing rule.
+
+00:05:24.888 --> 00:05:29.929
+Fix the file, not just the test, because the file is what improves the next session.
+
+00:05:30.229 --> 00:05:34.966
+After four or five iterations the rules reflect how your team really works, and they
+
+00:05:34.966 --> 00:05:36.827
+also help when onboarding people.
+
+00:05:38.127 --> 00:05:39.232
+An example.
+
+00:05:39.782 --> 00:05:44.348
+A team asks the agent for an "add product to cart" test with no setup at all.
+
+00:05:44.648 --> 00:05:50.490
+The result uses selectors such as div.card:nth-child(3) button, a two-second wait
+
+00:05:50.490 --> 00:05:51.860
+and no Page Object.
+
+00:05:52.160 --> 00:05:56.946
+They write a twenty-line rules file, a skill for new tests and declare the MCP
+
+00:05:56.946 --> 00:05:57.375
+server.
+
+00:05:57.675 --> 00:05:59.257
+They repeat the request.
+
+00:05:59.557 --> 00:06:05.270
+Now the test uses getByRole, reuses the cart Page Object and the agent runs it three
+
+00:06:05.270 --> 00:06:05.678
+times.
+
+00:06:05.978 --> 00:06:09.835
+It skips one thing: it doesn't add the test to the smoke tag.
+
+00:06:10.135 --> 00:06:12.054
+They add that line to the rules.
+
+00:06:12.354 --> 00:06:14.620
+The third time it comes out complete.
+
+00:06:15.920 --> 00:06:17.583
+The most common mistakes.
+
+00:06:18.133 --> 00:06:21.897
+Writing a long, generic rules file nobody can verify.
+
+00:06:22.447 --> 00:06:25.794
+Fixing the test by hand without updating the missing rule.
+
+00:06:26.344 --> 00:06:29.771
+Granting broad permissions "just to try" on a real repo.
+
+00:06:30.321 --> 00:06:33.911
+Accepting the agent's summary as evidence that tests pass.
+
+00:06:35.211 --> 00:06:37.455
+To know it is done, check this.
+
+00:06:38.005 --> 00:06:42.082
+The rules file has how to run, conventions and a definition of done.
+
+00:06:42.632 --> 00:06:46.432
+There is at least one skill with a real example from the repo.
+
+00:06:46.982 --> 00:06:49.898
+The MCP server points to a test environment.
+
+00:06:50.448 --> 00:06:54.422
+The generated test passed three times in a run you executed yourself.
+
+00:06:55.722 --> 00:06:57.617
+And where AI fell short.
+
+00:06:58.167 --> 00:07:02.604
+Facing a red test, it tends to weaken the assertion instead of investigating.
+
+00:07:02.904 --> 00:07:05.461
+Forbid it in writing and check it in the diff.
+
+00:07:06.761 --> 00:07:08.145
+That was day 9.
+
+00:07:08.445 --> 00:07:13.420
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:13.420 --> 00:07:14.427
+asked questions.
+
+00:07:14.977 --> 00:07:20.590
+Continue with day 10: Playwright MCP: an agent that browses your app and proposes
+
+00:07:20.590 --> 00:07:21.005
+tests.

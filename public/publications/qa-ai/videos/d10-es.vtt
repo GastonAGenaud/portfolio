@@ -1,0 +1,382 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.394
+Día 10 de la serie 31 días de QA + IA.
+
+00:00:03.944 --> 00:00:07.162
+Playwright MCP: un agente que navega tu app y propone tests.
+
+00:00:07.712 --> 00:00:11.629
+Conectá Playwright MCP a tu agente, hacé una exploración guiada y terminá con un
+
+00:00:11.629 --> 00:00:14.762
+plan de pruebas y un test que usa los roles reales de la página.
+
+00:00:16.062 --> 00:00:20.788
+Durante años, generar tests de UI con IA significó pegar HTML en un chat y recibir
+
+00:00:20.788 --> 00:00:22.055
+selectores adivinados.
+
+00:00:22.355 --> 00:00:26.227
+El modelo nunca veía la aplicación funcionando: no sabía qué aparece después de un
+
+00:00:26.227 --> 00:00:29.626
+clic, qué botón queda deshabilitado ni cuánto tarda en cargar una lista.
+
+00:00:29.926 --> 00:00:33.330
+Los tests resultantes compilaban y fallaban en la primera corrida.
+
+00:00:34.630 --> 00:00:38.549
+El servidor MCP de Playwright cambia ese punto de partida: le da al agente un
+
+00:00:38.549 --> 00:00:39.973
+navegador que puede manejar.
+
+00:00:40.273 --> 00:00:44.107
+Navega, hace clic, completa formularios y lee el estado real de la página.
+
+00:00:44.407 --> 00:00:48.092
+Esta guía muestra cómo usarlo con orden, primero para explorar y recién al final
+
+00:00:48.092 --> 00:00:51.639
+para escribir código, y qué límites ponerle, porque un agente que lee páginas
+
+00:00:51.639 --> 00:00:53.895
+también lee lo que alguien haya escrito en ellas.
+
+00:00:55.195 --> 00:00:57.125
+Para seguir esta guía necesitás:
+
+00:00:57.675 --> 00:01:01.010
+Node.js 22+ y un agente compatible con MCP.
+
+00:01:01.560 --> 00:01:05.707
+App de práctica: https://demo.playwright.dev/todomvc.
+
+00:01:06.257 --> 00:01:08.129
+Solo ambientes y cuentas de prueba.
+
+00:01:09.429 --> 00:01:10.604
+Este es el setup.
+
+00:01:10.904 --> 00:01:14.251
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:15.551 --> 00:01:17.690
+Y este es el siguiente archivo del setup.
+
+00:01:18.990 --> 00:01:19.886
+Paso 1.
+
+00:01:20.186 --> 00:01:21.478
+Conectar y comprobar.
+
+00:01:22.028 --> 00:01:25.781
+Conectá el servidor MCP de Playwright a tu agente y verificá que aparezcan las
+
+00:01:25.781 --> 00:01:27.081
+herramientas del navegador.
+
+00:01:27.631 --> 00:01:31.719
+Agregá el servidor a tu agente con el comando de la guía y, antes de pedir nada,
+
+00:01:31.719 --> 00:01:33.508
+listá las herramientas disponibles.
+
+00:01:33.808 --> 00:01:37.989
+Tienen que aparecer las de navegador: navegar, hacer clic, escribir, tomar un
+
+00:01:37.989 --> 00:01:38.478
+snapshot.
+
+00:01:38.778 --> 00:01:43.039
+Si no aparecen, el agente va a responder igual, pero de memoria, y vas a creer que
+
+00:01:43.039 --> 00:01:44.910
+exploró la página cuando no lo hizo.
+
+00:01:45.210 --> 00:01:48.383
+Esa comprobación de diez segundos evita la confusión más común.
+
+00:01:48.683 --> 00:01:53.044
+Después pedile algo trivial, como abrir una URL y decir el título, para confirmar
+
+00:01:53.044 --> 00:01:54.444
+que el navegador responde.
+
+00:01:55.744 --> 00:01:56.640
+Paso 2.
+
+00:01:56.940 --> 00:01:58.058
+Qué ve el agente.
+
+00:01:58.608 --> 00:02:02.846
+Entendé qué ve el agente: un snapshot de accesibilidad con roles y nombres, no una
+
+00:02:02.846 --> 00:02:03.208
+imagen.
+
+00:02:03.508 --> 00:02:05.426
+Por eso sus locators salen mejor.
+
+00:02:05.976 --> 00:02:10.052
+No ve una captura de pantalla sino un snapshot de accesibilidad: un árbol de texto
+
+00:02:10.052 --> 00:02:13.084
+con el rol de cada elemento, su nombre accesible y su estado.
+
+00:02:13.384 --> 00:02:17.508
+Un botón aparece como botón con su etiqueta, un campo como textbox con su label.
+
+00:02:17.808 --> 00:02:19.320
+Tiene dos consecuencias.
+
+00:02:19.620 --> 00:02:23.850
+La primera es que los locators que propone se basan en roles y nombres, que son más
+
+00:02:23.850 --> 00:02:25.277
+estables que las clases CSS.
+
+00:02:25.577 --> 00:02:29.906
+La segunda es que una página con mala accesibilidad le resulta tan difícil como a un
+
+00:02:29.906 --> 00:02:32.174
+lector de pantalla, y ese ya es un hallazgo.
+
+00:02:33.474 --> 00:02:34.370
+Paso 3.
+
+00:02:34.670 --> 00:02:36.380
+Explorar sin escribir código.
+
+00:02:36.930 --> 00:02:38.744
+Explorá primero, sin código.
+
+00:02:39.044 --> 00:02:43.504
+Usá el prompt de exploración y leé el reporte de roles, estados y posibles defectos.
+
+00:02:44.054 --> 00:02:47.632
+Pedile que recorra un flujo y que reporte lo que encuentra, con la instrucción
+
+00:02:47.632 --> 00:02:49.421
+explícita de no escribir tests todavía.
+
+00:02:49.721 --> 00:02:53.680
+El reporte debería listar los elementos por rol, los estados que observó, como
+
+00:02:53.680 --> 00:02:57.537
+listas vacías, errores o elementos deshabilitados, y lo que le pareció raro.
+
+00:02:57.837 --> 00:03:01.648
+Leelo como leerías las notas de alguien que usa el producto por primera vez.
+
+00:03:01.948 --> 00:03:04.563
+Sirve para descubrir estados que no tenías en mente.
+
+00:03:04.863 --> 00:03:08.580
+No sirve como lista de bugs: el agente no conoce tus reglas de negocio.
+
+00:03:09.880 --> 00:03:10.882
+Paso 4.
+
+00:03:11.182 --> 00:03:13.425
+Un plan en Markdown, corregido por vos.
+
+00:03:13.975 --> 00:03:17.995
+Pedí un plan de pruebas en Markdown a partir de lo observado y corregilo vos:
+
+00:03:17.995 --> 00:03:19.562
+prioridades y casos faltantes.
+
+00:03:20.112 --> 00:03:24.020
+Con la exploración hecha, pedí un plan de pruebas en Markdown basado solo en lo
+
+00:03:24.020 --> 00:03:24.515
+observado.
+
+00:03:24.815 --> 00:03:27.708
+Un plan es barato de corregir y un conjunto de tests no.
+
+00:03:28.008 --> 00:03:31.724
+Revisalo con tres preguntas: qué casos faltan que solo conoce quien sabe del
+
+00:03:31.724 --> 00:03:35.733
+negocio, cuáles sobran porque repiten lo mismo y cuál es la prioridad real de cada
+
+00:03:35.733 --> 00:03:35.929
+uno.
+
+00:03:36.229 --> 00:03:38.228
+Guardá el plan corregido en el repo.
+
+00:03:38.528 --> 00:03:42.656
+Es la especificación de lo que vas a pedir después, y deja registro de qué decidiste
+
+00:03:42.656 --> 00:03:43.442
+probar y qué no.
+
+00:03:44.742 --> 00:03:45.743
+Paso 5.
+
+00:03:46.043 --> 00:03:47.242
+Un test por vez.
+
+00:03:47.792 --> 00:03:51.660
+Pedí un solo test del plan, con los roles que vio, y correlo tres veces.
+
+00:03:52.210 --> 00:03:56.170
+Pedí un solo test del plan, indicando que use los roles y nombres que vio en la
+
+00:03:56.170 --> 00:03:56.520
+página.
+
+00:03:56.820 --> 00:03:59.447
+Correlo tres veces seguidas antes de pedir el siguiente.
+
+00:03:59.747 --> 00:04:03.759
+Generar de a uno parece lento, pero cada test que pasa confirma que las convenciones
+
+00:04:03.759 --> 00:04:06.959
+se entendieron, y cada fallo se corrige una vez en lugar de veinte.
+
+00:04:07.259 --> 00:04:11.349
+Cuando un test falle, mirá primero si el problema es del test o de la aplicación.
+
+00:04:11.649 --> 00:04:15.795
+Si el agente explora y el test falla igual, puede que haya encontrado un defecto de
+
+00:04:15.795 --> 00:04:16.144
+verdad.
+
+00:04:17.444 --> 00:04:18.411
+Paso 6.
+
+00:04:18.711 --> 00:04:20.083
+Límites de seguridad.
+
+00:04:20.633 --> 00:04:24.963
+Fijá límites: nunca producción ni credenciales reales, y recordá que el agente lee
+
+00:04:24.963 --> 00:04:27.973
+todo el contenido de la página, incluido texto malicioso.
+
+00:04:28.523 --> 00:04:29.838
+Dos reglas fijas.
+
+00:04:30.138 --> 00:04:33.031
+Primera: nunca producción ni credenciales reales.
+
+00:04:33.331 --> 00:04:37.050
+El agente puede hacer clic en cualquier cosa que vea, incluidos los botones de
+
+00:04:37.050 --> 00:04:37.908
+borrar y de pagar.
+
+00:04:38.208 --> 00:04:42.473
+Segunda: todo el texto de la página entra a su contexto, y eso incluye contenido
+
+00:04:42.473 --> 00:04:46.578
+escrito por terceros, como comentarios, nombres de usuario o descripciones de
+
+00:04:46.578 --> 00:04:47.058
+producto.
+
+00:04:47.358 --> 00:04:51.111
+Si alguien escribió ahí una instrucción, el agente puede intentar seguirla.
+
+00:04:51.411 --> 00:04:55.181
+Usá un entorno de prueba con datos controlados y revisá cualquier acción que no
+
+00:04:55.181 --> 00:04:55.802
+hayas pedido.
+
+00:04:57.102 --> 00:04:58.022
+Un ejemplo.
+
+00:04:58.572 --> 00:05:02.719
+Una tester conecta el servidor y le pide al agente explorar una aplicación de lista
+
+00:05:02.719 --> 00:05:03.218
+de tareas.
+
+00:05:03.518 --> 00:05:07.766
+El reporte lista un campo de texto, una casilla por tarea, tres filtros y un
+
+00:05:07.766 --> 00:05:08.269
+contador.
+
+00:05:08.569 --> 00:05:13.003
+Marca dos sospechas: el contador dice "1 items left" con una sola tarea, y no hay
+
+00:05:13.003 --> 00:05:14.865
+forma visible de editar una tarea.
+
+00:05:15.165 --> 00:05:19.328
+La primera es un defecto de texto menor; la segunda no es un defecto, se edita con
+
+00:05:19.328 --> 00:05:21.309
+doble clic y el agente no lo descubrió.
+
+00:05:21.609 --> 00:05:26.354
+Ella corrige el plan agregando el caso de edición, pide el primer test, "agregar una
+
+00:05:26.354 --> 00:05:27.823
+tarea", y pasa tres veces.
+
+00:05:28.123 --> 00:05:31.260
+En veinte minutos tiene un plan revisado y un test confiable.
+
+00:05:32.560 --> 00:05:34.084
+Los errores más comunes.
+
+00:05:34.634 --> 00:05:37.725
+Pedir tests antes de explorar y de tener un plan revisado.
+
+00:05:38.275 --> 00:05:41.284
+No comprobar que las herramientas de navegador estén cargadas.
+
+00:05:41.834 --> 00:05:45.471
+Tratar el reporte de exploración como una lista de bugs confirmados.
+
+00:05:46.021 --> 00:05:49.344
+Apuntar el agente a un entorno con datos o credenciales reales.
+
+00:05:50.644 --> 00:05:52.910
+Para saber que quedó bien, revisá esto.
+
+00:05:53.460 --> 00:05:56.528
+Las herramientas de navegador aparecen en la lista del agente.
+
+00:05:57.078 --> 00:06:00.517
+Hay un reporte de exploración con roles, estados y sospechas.
+
+00:06:01.067 --> 00:06:03.961
+El plan en Markdown está corregido y guardado en el repo.
+
+00:06:04.511 --> 00:06:07.079
+Un test generado pasó tres corridas seguidas.
+
+00:06:08.379 --> 00:06:09.949
+Y lo que la IA no hizo bien.
+
+00:06:10.499 --> 00:06:14.197
+Confunde comportamiento esperado con defecto cuando no conoce las reglas del
+
+00:06:14.197 --> 00:06:14.635
+producto.
+
+00:06:14.935 --> 00:06:18.676
+El reporte de exploración es una lista de sospechas, no de bugs.
+
+00:06:19.976 --> 00:06:21.372
+Eso fue el día 10.
+
+00:06:21.672 --> 00:06:26.304
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:26.304 --> 00:06:26.911
+frecuentes.
+
+00:06:27.461 --> 00:06:32.049
+Seguí con el día 11: Playwright Test Agents: planner, generator y healer en acción.

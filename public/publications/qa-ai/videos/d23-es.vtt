@@ -1,0 +1,382 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.556
+Día 23 de la serie 31 días de QA + IA.
+
+00:00:04.106 --> 00:00:07.545
+Modelo para pruebas de seguridad (2): red teaming automatizado.
+
+00:00:08.095 --> 00:00:11.974
+Un esquema de tres modelos (atacante, objetivo y evaluador) que genera pruebas
+
+00:00:11.974 --> 00:00:15.853
+adversas a partir de tu threat model y reporta la tasa de éxito por categoría.
+
+00:00:17.153 --> 00:00:20.662
+Con el modelo de amenazas de ayer tenés una lista de casos de abuso.
+
+00:00:20.962 --> 00:00:25.082
+Probarlos a mano, escribiendo variantes de ataques una por una, funciona para cinco
+
+00:00:25.082 --> 00:00:26.422
+casos y no para quinientos.
+
+00:00:26.722 --> 00:00:31.209
+Y los ataques reales no vienen de a uno: vienen reformulados, traducidos, repartidos
+
+00:00:31.209 --> 00:00:33.667
+en varios mensajes o disfrazados de otra cosa.
+
+00:00:34.967 --> 00:00:39.030
+El red teaming automatizado usa un modelo para generar esas variantes en volumen,
+
+00:00:39.030 --> 00:00:42.993
+las envía contra tu aplicación y usa otro modelo para decidir si el ataque tuvo
+
+00:00:42.993 --> 00:00:43.294
+éxito.
+
+00:00:43.594 --> 00:00:47.899
+Es potente y tiene límites claros: cuesta, genera contenido adverso y su veredicto
+
+00:00:47.899 --> 00:00:48.949
+también se equivoca.
+
+00:00:49.249 --> 00:00:53.204
+Esta guía muestra cómo configurarlo a partir de tu modelo de amenazas, cómo leer el
+
+00:00:53.204 --> 00:00:56.635
+reporte sin tomarlo como verdad y dónde ubicarlo en tu ciclo de pruebas.
+
+00:00:57.935 --> 00:00:59.865
+Para seguir esta guía necesitás:
+
+00:01:00.415 --> 00:01:04.505
+Solo contra sistemas propios o con autorización escrita, y en ambientes de prueba.
+
+00:01:05.055 --> 00:01:06.950
+El threat model del día 22.
+
+00:01:07.500 --> 00:01:10.811
+Tu asistente corriendo en local o staging con un endpoint HTTP.
+
+00:01:11.361 --> 00:01:13.523
+Node.js 22+ y promptfoo.
+
+00:01:14.823 --> 00:01:15.999
+Este es el setup.
+
+00:01:16.299 --> 00:01:19.645
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:20.945 --> 00:01:23.084
+Y este es el siguiente archivo del setup.
+
+00:01:24.384 --> 00:01:25.280
+Paso 1.
+
+00:01:25.580 --> 00:01:27.197
+Autorización y entorno.
+
+00:01:27.747 --> 00:01:29.758
+Confirmá autorización y ambiente.
+
+00:01:30.058 --> 00:01:34.275
+El red teaming genera contenido adverso: va contra staging, con datos de prueba.
+
+00:01:34.825 --> 00:01:38.733
+Antes de correr nada, confirmá por escrito que tenés autorización para atacar ese
+
+00:01:38.733 --> 00:01:41.724
+sistema, y apuntá a un entorno de staging con datos de prueba.
+
+00:01:42.024 --> 00:01:46.018
+El red teaming genera contenido adverso a propósito y puede disparar acciones reales
+
+00:01:46.018 --> 00:01:48.110
+si el sistema tiene herramientas conectadas.
+
+00:01:48.410 --> 00:01:52.593
+Contra producción puede enviar mensajes, modificar registros o activar alertas de
+
+00:01:52.593 --> 00:01:53.626
+abuso del proveedor.
+
+00:01:53.926 --> 00:01:56.355
+Avisale también al equipo que opera el entorno.
+
+00:01:56.655 --> 00:01:59.827
+Una corrida que nadie esperaba se parece mucho a un incidente.
+
+00:02:01.127 --> 00:02:02.024
+Paso 2.
+
+00:02:02.324 --> 00:02:03.301
+Tres roles.
+
+00:02:03.851 --> 00:02:08.367
+Entendé el esquema: un modelo atacante genera entradas adversas, tu aplicación es el
+
+00:02:08.367 --> 00:02:11.377
+objetivo, y un evaluador decide si el ataque tuvo éxito.
+
+00:02:11.927 --> 00:02:13.730
+El esquema tiene tres piezas.
+
+00:02:14.030 --> 00:02:16.598
+Un modelo atacante genera entradas adversas.
+
+00:02:16.898 --> 00:02:20.825
+Tu aplicación es el objetivo y las recibe como si vinieran de un usuario.
+
+00:02:21.125 --> 00:02:24.959
+Un evaluador decide, para cada intercambio, si el ataque logró lo que buscaba.
+
+00:02:25.259 --> 00:02:29.456
+Entender esto ayuda a interpretar los resultados, porque dos de las tres piezas son
+
+00:02:29.456 --> 00:02:31.124
+modelos, con sus propios errores.
+
+00:02:31.424 --> 00:02:35.283
+Una tasa de éxito de ataque depende tanto de tu aplicación como de lo creativo que
+
+00:02:35.283 --> 00:02:37.824
+fue el atacante y de lo estricto que fue el evaluador.
+
+00:02:39.124 --> 00:02:40.021
+Paso 3.
+
+00:02:40.321 --> 00:02:42.216
+El propósito, con sus límites.
+
+00:02:42.766 --> 00:02:46.762
+Describí el propósito del sistema con precisión, incluido lo que no debe hacer.
+
+00:02:47.062 --> 00:02:50.014
+Los ataques se generan en relación a esa descripción.
+
+00:02:50.564 --> 00:02:53.214
+La configuración pide una descripción del sistema.
+
+00:02:53.514 --> 00:02:57.487
+De todo el archivo, es el campo que más influye en la calidad de los ataques.
+
+00:02:57.787 --> 00:03:02.129
+Escribí qué hace la aplicación, para quién y, sobre todo, qué no debe hacer nunca:
+
+00:03:02.129 --> 00:03:06.366
+revelar datos de otros clientes, dar asesoramiento médico, ejecutar acciones sin
+
+00:03:06.366 --> 00:03:07.054
+confirmación.
+
+00:03:07.354 --> 00:03:10.294
+Los ataques se generan en relación con esa descripción.
+
+00:03:10.594 --> 00:03:14.924
+Con un propósito vago recibís ataques genéricos, y un reporte que dice poco sobre
+
+00:03:14.924 --> 00:03:15.566
+tus riesgos.
+
+00:03:16.866 --> 00:03:17.867
+Paso 4.
+
+00:03:18.167 --> 00:03:20.375
+Plugins y estrategias desde el threat model.
+
+00:03:20.925 --> 00:03:23.923
+Elegí plugins a partir de tu threat model, no todos.
+
+00:03:24.223 --> 00:03:28.607
+Cada plugin es una categoría de riesgo; cada estrategia, una forma de entregar el
+
+00:03:28.607 --> 00:03:28.986
+ataque.
+
+00:03:29.286 --> 00:03:33.074
+Los nombres cambian entre versiones: redteam init te ofrece los vigentes.
+
+00:03:33.624 --> 00:03:37.715
+Cada plugin representa una categoría de riesgo y cada estrategia, una forma de
+
+00:03:37.715 --> 00:03:38.711
+entregar el ataque.
+
+00:03:39.011 --> 00:03:40.930
+La tentación es activar todo.
+
+00:03:41.230 --> 00:03:44.344
+Es caro, lento y produce un reporte imposible de leer.
+
+00:03:44.644 --> 00:03:48.866
+Elegí los plugins que corresponden a los riesgos que marcaste como aplicables ayer,
+
+00:03:48.866 --> 00:03:50.138
+y dos o tres estrategias.
+
+00:03:50.438 --> 00:03:54.073
+Los nombres cambian entre versiones de la herramienta, así que usá el comando de
+
+00:03:54.073 --> 00:03:57.708
+inicialización para ver los vigentes en lugar de copiarlos de un tutorial viejo.
+
+00:03:59.008 --> 00:04:00.010
+Paso 5.
+
+00:04:00.310 --> 00:04:02.472
+Leer el reporte y las conversaciones.
+
+00:04:03.022 --> 00:04:06.356
+Corré y leé el reporte por categoría: tasa de éxito de ataque.
+
+00:04:06.656 --> 00:04:10.746
+Después abrí las conversaciones: el evaluador también da falsos positivos.
+
+00:04:11.296 --> 00:04:14.607
+El reporte muestra una tasa de éxito de ataque por categoría.
+
+00:04:14.907 --> 00:04:18.184
+Sirve para saber dónde mirar, no para sacar conclusiones.
+
+00:04:18.484 --> 00:04:21.517
+Abrí las conversaciones marcadas como exitosas y leelas.
+
+00:04:21.817 --> 00:04:25.479
+Vas a encontrar hallazgos reales, y también falsos positivos: casos donde la
+
+00:04:25.479 --> 00:04:29.238
+aplicación se negó de forma correcta y el evaluador igual lo contó como fallo.
+
+00:04:29.538 --> 00:04:33.492
+Revisá además una muestra de los marcados como resistidos, porque los falsos
+
+00:04:33.492 --> 00:04:34.429
+negativos existen.
+
+00:04:34.729 --> 00:04:38.284
+Un hallazgo es una conversación que una persona leyó y confirmó.
+
+00:04:39.584 --> 00:04:40.550
+Paso 6.
+
+00:04:40.850 --> 00:04:42.687
+Corregir, repetir y programar.
+
+00:04:43.237 --> 00:04:46.618
+Arreglá, volvé a correr y programalo: nocturno o por release.
+
+00:04:46.918 --> 00:04:48.883
+Por costo no conviene en cada PR.
+
+00:04:49.433 --> 00:04:53.650
+Para cada hallazgo confirmado, decidí el arreglo, que puede ser un cambio de prompt,
+
+00:04:53.650 --> 00:04:57.365
+un filtro o un control de diseño, y volvé a correr la misma configuración.
+
+00:04:57.665 --> 00:05:01.747
+Guardá los ataques que tuvieron éxito como casos de regresión deterministas, para
+
+00:05:01.747 --> 00:05:04.367
+probarlos en cada cambio sin tener que generar nada.
+
+00:05:04.667 --> 00:05:08.733
+La corrida completa de red teaming va de forma programada, por noche o por release.
+
+00:05:09.033 --> 00:05:11.961
+Por costo y por duración no conviene en cada pull request.
+
+00:05:13.261 --> 00:05:14.181
+Un ejemplo.
+
+00:05:14.731 --> 00:05:18.851
+Un equipo corre red teaming contra el asistente de soporte de ayer, en staging, con
+
+00:05:18.851 --> 00:05:21.433
+cuatro plugins elegidos desde su modelo de amenazas.
+
+00:05:21.733 --> 00:05:24.754
+El reporte marca doce ataques exitosos sobre doscientos.
+
+00:05:25.054 --> 00:05:29.525
+Al leer las conversaciones, cinco son falsos positivos: el asistente se negó y
+
+00:05:29.525 --> 00:05:31.245
+ofreció derivar a una persona.
+
+00:05:31.545 --> 00:05:32.871
+Quedan siete reales.
+
+00:05:33.171 --> 00:05:37.047
+Cuatro logran que revele parte de sus instrucciones internas y tres consiguen datos
+
+00:05:37.047 --> 00:05:39.803
+de un pedido cambiando el número en un mensaje reformulado.
+
+00:05:40.103 --> 00:05:41.870
+El segundo grupo es grave.
+
+00:05:42.170 --> 00:05:46.016
+Lo corrigen validando en el código que el pedido pertenezca al usuario, no en el
+
+00:05:46.016 --> 00:05:46.352
+prompt.
+
+00:05:46.652 --> 00:05:49.070
+En la segunda corrida ese grupo queda en cero.
+
+00:05:50.370 --> 00:05:51.893
+Los errores más comunes.
+
+00:05:52.443 --> 00:05:55.209
+Correr contra producción o sin autorización escrita.
+
+00:05:55.759 --> 00:05:59.071
+Activar todos los plugins en lugar de los del modelo de amenazas.
+
+00:05:59.621 --> 00:06:02.944
+Reportar la tasa de éxito sin haber leído las conversaciones.
+
+00:06:03.494 --> 00:06:06.956
+Arreglar con una frase en el prompt lo que requiere un control en código.
+
+00:06:08.256 --> 00:06:10.523
+Para saber que quedó bien, revisá esto.
+
+00:06:11.073 --> 00:06:14.617
+Hay autorización escrita y el objetivo es staging con datos de prueba.
+
+00:06:15.167 --> 00:06:17.839
+El propósito describe qué no debe hacer el sistema.
+
+00:06:18.389 --> 00:06:21.422
+Los plugins salen de los riesgos aplicables del día anterior.
+
+00:06:21.972 --> 00:06:25.342
+Cada hallazgo reportado fue leído y confirmado por una persona.
+
+00:06:26.642 --> 00:06:28.212
+Y lo que la IA no hizo bien.
+
+00:06:28.762 --> 00:06:32.375
+El modelo evaluador produce falsos positivos y falsos negativos.
+
+00:06:32.675 --> 00:06:35.871
+Un reporte de red teaming sin revisión humana no es un hallazgo.
+
+00:06:37.171 --> 00:06:38.764
+Eso fue el día 23.
+
+00:06:39.064 --> 00:06:43.696
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:43.696 --> 00:06:44.302
+frecuentes.
+
+00:06:44.853 --> 00:06:49.306
+Seguí con el día 24: Seguridad (3): prompt injection en agentes con herramientas y
+
+00:06:49.306 --> 00:06:50.718
+cómo probar los controles.

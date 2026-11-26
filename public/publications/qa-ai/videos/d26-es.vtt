@@ -1,0 +1,388 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.730
+Día 26 de la serie 31 días de QA + IA.
+
+00:00:04.280 --> 00:00:07.859
+Performance (2): prueba de carga a un endpoint LLM con k6.
+
+00:00:08.409 --> 00:00:12.186
+Una prueba de carga escalonada contra un endpoint LLM, con métricas de tokens y
+
+00:00:12.186 --> 00:00:15.343
+goodput, para encontrar el punto donde el sistema deja de escalar.
+
+00:00:16.643 --> 00:00:20.152
+Con la línea de base y los objetivos de ayer ya podés hacer la pregunta que le
+
+00:00:20.152 --> 00:00:23.482
+importa a quien opera el sistema: cuántos usuarios soporta antes de que la
+
+00:00:23.482 --> 00:00:24.517
+experiencia se degrade.
+
+00:00:24.817 --> 00:00:28.793
+La respuesta es una curva con un punto de quiebre, y encontrarlo requiere cargar de
+
+00:00:28.793 --> 00:00:30.949
+forma gradual y mirar las métricas correctas.
+
+00:00:32.249 --> 00:00:33.959
+k6 sirve bien para esto.
+
+00:00:34.259 --> 00:00:38.306
+Los scripts son código, corren en local y en CI, y los umbrales convierten la prueba
+
+00:00:38.306 --> 00:00:39.799
+en un criterio de pasa o falla.
+
+00:00:40.099 --> 00:00:43.689
+Pero una prueba de carga contra un modelo tiene trampas propias: el caché que
+
+00:00:43.689 --> 00:00:47.604
+maquilla los resultados, los límites de cuota del proveedor que parecen saturación y
+
+00:00:47.604 --> 00:00:50.121
+los timeouts por defecto que cortan respuestas largas.
+
+00:00:50.421 --> 00:00:52.932
+Esta guía arma la prueba evitando esas tres.
+
+00:00:54.232 --> 00:00:56.162
+Para seguir esta guía necesitás:
+
+00:00:56.712 --> 00:00:57.991
+k6 instalado.
+
+00:00:58.541 --> 00:01:02.062
+Un endpoint compatible con OpenAI y los objetivos del día 25.
+
+00:01:02.612 --> 00:01:07.119
+Presupuesto aprobado si la API es paga: limitá max_tokens, duración y usuarios.
+
+00:01:07.669 --> 00:01:12.271
+k6 no mide streaming de forma nativa: para TTFT bajo carga hace falta una extensión
+
+00:01:12.271 --> 00:01:14.766
+de SSE o una herramienta específica para LLM.
+
+00:01:16.066 --> 00:01:17.241
+Este es el setup.
+
+00:01:17.541 --> 00:01:20.887
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:22.187 --> 00:01:23.815
+El mismo archivo sigue acá.
+
+00:01:25.115 --> 00:01:27.254
+Y este es el siguiente archivo del setup.
+
+00:01:28.554 --> 00:01:29.451
+Paso 1.
+
+00:01:29.751 --> 00:01:31.471
+Umbrales desde los objetivos.
+
+00:01:32.021 --> 00:01:35.612
+Partí de la línea base del día 25 y de objetivos escritos.
+
+00:01:35.912 --> 00:01:37.992
+Los thresholds del script salen de ahí.
+
+00:01:38.542 --> 00:01:42.711
+Los umbrales del script son los objetivos que escribiste ayer, traducidos a código:
+
+00:01:42.711 --> 00:01:46.829
+el percentil noventa y cinco del tiempo al primer token, el de la latencia total y
+
+00:01:46.829 --> 00:01:48.135
+la tasa máxima de errores.
+
+00:01:48.435 --> 00:01:52.083
+No los inventes al escribir el script ni aceptes los que traiga un ejemplo.
+
+00:01:52.383 --> 00:01:56.298
+Un umbral sin origen es decoración: nadie sabe qué significa que falle.
+
+00:01:56.598 --> 00:02:00.574
+Con los objetivos del producto como umbrales, un resultado en rojo quiere decir que
+
+00:02:00.574 --> 00:02:03.544
+los usuarios van a tener una experiencia peor que la acordada.
+
+00:02:04.844 --> 00:02:05.740
+Paso 2.
+
+00:02:06.040 --> 00:02:07.935
+Una mezcla de prompts realista.
+
+00:02:08.485 --> 00:02:11.065
+Usá una mezcla de prompts parecida a la real.
+
+00:02:11.365 --> 00:02:15.130
+Con un solo prompt repetido, el caché te da números que producción no va a ver.
+
+00:02:15.680 --> 00:02:19.546
+Cargá los prompts desde un archivo con la mezcla del perfil de carga: tipos y
+
+00:02:19.546 --> 00:02:20.199
+proporciones.
+
+00:02:20.499 --> 00:02:23.195
+Si repetís un único prompt, pasan dos cosas.
+
+00:02:23.495 --> 00:02:27.315
+El caché del proveedor o de tu propia aplicación responde mucho más rápido que en
+
+00:02:27.315 --> 00:02:30.521
+uso real, y los números salen mejores de lo que producción va a ver.
+
+00:02:30.821 --> 00:02:34.661
+Además, todas las respuestas tienen el mismo largo, y perdés la variabilidad que
+
+00:02:34.661 --> 00:02:35.573
+estresa al sistema.
+
+00:02:35.873 --> 00:02:39.997
+Usá suficientes prompts distintos como para que no se repitan durante la prueba.
+
+00:02:41.297 --> 00:02:42.193
+Paso 3.
+
+00:02:42.493 --> 00:02:43.657
+Carga por etapas.
+
+00:02:44.207 --> 00:02:47.391
+Cargá por etapas: subís, sostenés, subís de nuevo.
+
+00:02:47.691 --> 00:02:50.143
+Las mesetas son donde se lee el comportamiento.
+
+00:02:50.693 --> 00:02:54.748
+Subí la carga en escalones: rampa hasta un nivel, mantenelo unos minutos, rampa
+
+00:02:54.748 --> 00:02:55.723
+hasta el siguiente.
+
+00:02:56.023 --> 00:02:59.839
+Las mesetas son donde se lee el comportamiento, porque el sistema tuvo tiempo de
+
+00:02:59.839 --> 00:03:00.507
+estabilizarse.
+
+00:03:00.807 --> 00:03:03.793
+Durante las rampas, los números mezclan dos estados.
+
+00:03:04.093 --> 00:03:08.256
+Mantené cada meseta el tiempo suficiente como para completar varias veces la request
+
+00:03:08.256 --> 00:03:09.297
+más larga del perfil.
+
+00:03:09.597 --> 00:03:13.606
+Si una respuesta larga tarda cuarenta segundos, una meseta de un minuto apenas
+
+00:03:13.606 --> 00:03:15.045
+alcanza a mostrar una ronda.
+
+00:03:16.345 --> 00:03:17.346
+Paso 4.
+
+00:03:17.646 --> 00:03:18.949
+Encontrar la rodilla.
+
+00:03:19.499 --> 00:03:23.608
+Buscá la rodilla: el punto donde los tokens por segundo totales dejan de crecer y la
+
+00:03:23.608 --> 00:03:24.831
+latencia empieza a subir.
+
+00:03:25.131 --> 00:03:26.503
+Esa es tu capacidad.
+
+00:03:27.053 --> 00:03:30.783
+Graficá para cada meseta los tokens totales por segundo y la latencia.
+
+00:03:31.083 --> 00:03:35.288
+Al principio, más usuarios producen más tokens por segundo con una latencia estable.
+
+00:03:35.588 --> 00:03:39.644
+En algún punto, los tokens por segundo dejan de crecer y la latencia empieza a
+
+00:03:39.644 --> 00:03:39.956
+subir.
+
+00:03:40.256 --> 00:03:43.312
+Esa es la rodilla, y marca la capacidad real del sistema.
+
+00:03:43.612 --> 00:03:47.725
+Más allá de ese punto, cada usuario adicional solo hace esperar más a los demás.
+
+00:03:48.025 --> 00:03:51.801
+Tu capacidad utilizable queda un poco por debajo, con margen para picos.
+
+00:03:53.101 --> 00:03:54.102
+Paso 5.
+
+00:03:54.402 --> 00:03:55.728
+Separar los errores.
+
+00:03:56.278 --> 00:04:01.797
+Separá los errores: 429 es límite de cuota del proveedor; 5xx y timeouts son
+
+00:04:01.797 --> 00:04:02.596
+saturación.
+
+00:04:02.896 --> 00:04:04.188
+Se arreglan distinto.
+
+00:04:04.738 --> 00:04:06.981
+No todos los errores significan lo mismo.
+
+00:04:07.281 --> 00:04:11.405
+Un 429 es el límite de cuota del proveedor: llegaste al máximo de requests o de
+
+00:04:11.405 --> 00:04:15.319
+tokens por minuto que tu cuenta permite, y se resuelve pidiendo más cuota o
+
+00:04:15.319 --> 00:04:17.094
+agregando una cola con reintentos.
+
+00:04:17.394 --> 00:04:22.013
+Un 5xx o un timeout es saturación, de tu infraestructura o de la del proveedor, y se
+
+00:04:22.013 --> 00:04:25.257
+resuelve con capacidad o reduciendo el trabajo por request.
+
+00:04:25.557 --> 00:04:27.475
+Contalos por separado en el script.
+
+00:04:27.775 --> 00:04:31.470
+Mezclados en una sola tasa de error, llevan a la solución equivocada.
+
+00:04:32.770 --> 00:04:33.736
+Paso 6.
+
+00:04:34.036 --> 00:04:36.674
+Umbrales como criterio y ejecución programada.
+
+00:04:37.224 --> 00:04:41.222
+Dejá los thresholds como criterio de pasa o falla y corré la prueba de forma
+
+00:04:41.222 --> 00:04:42.590
+programada, no en cada PR.
+
+00:04:43.140 --> 00:04:47.035
+Dejá los umbrales como criterio automático de pasa o falla, así la prueba puede
+
+00:04:47.035 --> 00:04:49.598
+correr sin que alguien interprete gráficos cada vez.
+
+00:04:49.898 --> 00:04:54.109
+Programala de forma periódica o antes de cada release, no en cada pull request: es
+
+00:04:54.109 --> 00:04:58.218
+lenta, cuesta dinero si usás una API paga y necesita un entorno estable para ser
+
+00:04:58.218 --> 00:04:58.782
+comparable.
+
+00:04:59.082 --> 00:05:00.896
+Guardá el resumen de cada corrida.
+
+00:05:01.196 --> 00:05:04.885
+La tendencia de la rodilla a lo largo del tiempo te avisa de una degradación antes
+
+00:05:04.885 --> 00:05:06.505
+de que se convierta en un incidente.
+
+00:05:07.805 --> 00:05:08.724
+Un ejemplo.
+
+00:05:09.274 --> 00:05:13.481
+Con cifras ilustrativas: un equipo carga su asistente en mesetas de cinco, diez,
+
+00:05:13.481 --> 00:05:17.845
+veinte y cuarenta usuarios, tres minutos cada una, con cincuenta prompts distintos.
+
+00:05:18.145 --> 00:05:22.317
+Hasta veinte usuarios, los tokens por segundo crecen de forma casi proporcional y el
+
+00:05:22.317 --> 00:05:25.694
+percentil noventa y cinco de latencia se mantiene en nueve segundos.
+
+00:05:25.994 --> 00:05:29.939
+Con cuarenta, los tokens por segundo quedan iguales que con veinte y la latencia
+
+00:05:29.939 --> 00:05:31.221
+sube a veintidós segundos.
+
+00:05:31.521 --> 00:05:33.475
+La rodilla está alrededor de veinte.
+
+00:05:33.775 --> 00:05:36.030
+En la última meseta aparecen errores.
+
+00:05:36.330 --> 00:05:39.444
+Al separarlos, casi todos son 429.
+
+00:05:39.744 --> 00:05:42.811
+No es saturación del modelo sino el límite de cuota de la cuenta.
+
+00:05:43.111 --> 00:05:47.444
+La acción correcta es gestionar la cuota y sumar una cola, no agregar servidores.
+
+00:05:48.744 --> 00:05:50.268
+Los errores más comunes.
+
+00:05:50.818 --> 00:05:54.025
+Repetir un solo prompt y medir el caché en lugar del sistema.
+
+00:05:54.575 --> 00:05:57.155
+Subir la carga en una sola rampa sin mesetas.
+
+00:05:57.705 --> 00:06:01.667
+Sumar los 429 y los 5xx en una única tasa de error.
+
+00:06:02.217 --> 00:06:05.331
+Dejar el timeout por defecto y cortar las respuestas largas.
+
+00:06:06.631 --> 00:06:08.897
+Para saber que quedó bien, revisá esto.
+
+00:06:09.447 --> 00:06:12.585
+Los umbrales del script coinciden con los objetivos escritos.
+
+00:06:13.135 --> 00:06:16.179
+Los prompts salen de un archivo con la mezcla del perfil.
+
+00:06:16.729 --> 00:06:19.298
+La prueba tiene mesetas y ubicaste la rodilla.
+
+00:06:19.848 --> 00:06:24.053
+Los errores 429 se cuentan aparte de 5xx y timeouts.
+
+00:06:25.353 --> 00:06:26.923
+Y lo que la IA no hizo bien.
+
+00:06:27.473 --> 00:06:31.317
+Los scripts generados suelen venir sin timeout, sin mezcla de prompts y con
+
+00:06:31.317 --> 00:06:32.445
+thresholds inventados.
+
+00:06:32.745 --> 00:06:35.406
+Se revisan contra tus objetivos antes de correr.
+
+00:06:36.706 --> 00:06:38.415
+Eso fue el día 26.
+
+00:06:38.715 --> 00:06:43.348
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:43.348 --> 00:06:43.954
+frecuentes.
+
+00:06:44.504 --> 00:06:49.313
+Seguí con el día 27: Performance (3): IA generando y analizando pruebas de carga.

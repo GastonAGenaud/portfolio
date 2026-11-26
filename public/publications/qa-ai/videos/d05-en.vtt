@@ -1,0 +1,358 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.160
+Day 5 of the 31 days of QA + AI series.
+
+00:00:04.710 --> 00:00:08.590
+Test cases from user stories: the prompt that actually works.
+
+00:00:09.140 --> 00:00:13.597
+A versioned prompt template that generates cases by design technique and tells you
+
+00:00:13.597 --> 00:00:14.739
+what it didn't cover.
+
+00:00:16.039 --> 00:00:20.725
+Asking a model to "generate test cases for this story" always returns the same
+
+00:00:20.725 --> 00:00:25.713
+thing: a long, even list with repeated cases and two or three rules nobody defined.
+
+00:00:26.013 --> 00:00:28.395
+It isn't a model capability problem.
+
+00:00:28.695 --> 00:00:33.516
+The request doesn't say which rules to work against, which technique to use or when
+
+00:00:33.516 --> 00:00:33.980
+to stop.
+
+00:00:35.280 --> 00:00:39.661
+This guide replaces that request with a three-step flow that mirrors how a good
+
+00:00:39.661 --> 00:00:44.153
+analyst works: ask first, then design with technique and finally declare what was
+
+00:00:44.153 --> 00:00:44.652
+left out.
+
+00:00:44.952 --> 00:00:49.677
+The result isn't a longer list but a shorter, defensible one, where each case has a
+
+00:00:49.677 --> 00:00:51.840
+reason and you know which gaps remain.
+
+00:00:53.140 --> 00:00:54.837
+To follow this guide you need:
+
+00:00:55.387 --> 00:00:58.014
+The qa-ai-lab repo from day 4.
+
+00:00:58.564 --> 00:01:01.248
+A user story with acceptance criteria.
+
+00:01:01.798 --> 00:01:04.750
+Business rules in writing, even five lines.
+
+00:01:06.050 --> 00:01:07.330
+This is the setup.
+
+00:01:07.630 --> 00:01:11.847
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:13.147 --> 00:01:14.183
+Step 1.
+
+00:01:14.483 --> 00:01:16.958
+Business rules as the source of truth.
+
+00:01:17.508 --> 00:01:19.543
+Write the business rules first.
+
+00:01:19.843 --> 00:01:23.595
+They are the source of truth; without them the model invents some.
+
+00:01:24.145 --> 00:01:29.126
+Before opening the chat, write the rules governing the feature, even if it's five
+
+00:01:29.126 --> 00:01:32.078
+lines: limits, possible states, who can do what.
+
+00:01:32.378 --> 00:01:37.056
+If they don't exist in writing, that's your first finding and it's worth more than
+
+00:01:37.056 --> 00:01:37.570
+any case.
+
+00:01:37.870 --> 00:01:42.704
+In the prompt, say explicitly that those rules are the only source of truth and that
+
+00:01:42.704 --> 00:01:44.200
+it must not invent others.
+
+00:01:44.500 --> 00:01:49.375
+Without that sentence the model fills gaps with what's common in other systems, not
+
+00:01:49.375 --> 00:01:49.727
+yours.
+
+00:01:51.027 --> 00:01:52.225
+Step 2.
+
+00:01:52.525 --> 00:01:54.072
+The template in the repo.
+
+00:01:54.622 --> 00:01:58.375
+Save the template in prompts/test-design.md.
+
+00:01:58.925 --> 00:02:02.863
+Save the prompt as a file with variables for the rules and the story.
+
+00:02:03.163 --> 00:02:07.779
+Having it versioned lets you improve it gradually: every time the result fails in a
+
+00:02:07.779 --> 00:02:11.061
+new way, you add an instruction and the whole team gets it.
+
+00:02:11.361 --> 00:02:16.250
+It also makes work comparable across people, because everyone starts from the same
+
+00:02:16.250 --> 00:02:16.727
+request.
+
+00:02:17.027 --> 00:02:21.679
+It works the same in Spanish; what matters is that the three stages are separate and
+
+00:02:21.679 --> 00:02:23.949
+the first one ends with an order to wait.
+
+00:02:25.249 --> 00:02:26.332
+Step 3.
+
+00:02:26.632 --> 00:02:28.550
+Step one: questions.
+
+00:02:29.100 --> 00:02:33.178
+Step 1: ask only for ambiguities and questions.
+
+00:02:33.478 --> 00:02:36.093
+You or the PO answer them before moving on.
+
+00:02:36.643 --> 00:02:40.581
+This stage delivers the most value and almost everyone skips it.
+
+00:02:40.881 --> 00:02:46.530
+Ask for ambiguities, contradictions between criteria and missing data, and nothing
+
+00:02:46.530 --> 00:02:46.874
+else.
+
+00:02:47.174 --> 00:02:50.590
+Take the real questions to the product owner before continuing.
+
+00:02:50.890 --> 00:02:55.363
+Every ambiguity resolved here is a defect that never gets written.
+
+00:02:55.663 --> 00:03:00.250
+If the model finds no questions in a story you know is incomplete, that signals
+
+00:03:00.250 --> 00:03:04.373
+missing context, and the cases it generates afterwards will be shallow.
+
+00:03:05.673 --> 00:03:06.686
+Step 4.
+
+00:03:06.986 --> 00:03:09.334
+Step two: cases by technique.
+
+00:03:09.884 --> 00:03:15.605
+Step 2: ask for cases by technique (partitions, boundaries, decision table, error
+
+00:03:15.605 --> 00:03:17.653
+states) in a table with risk.
+
+00:03:18.203 --> 00:03:23.360
+With answers in hand, ask for cases naming the techniques: equivalence partitioning,
+
+00:03:23.360 --> 00:03:26.368
+boundary values, decision table and error states.
+
+00:03:26.668 --> 00:03:29.875
+Require a table with the technique for each case.
+
+00:03:30.175 --> 00:03:34.568
+That lets you see at a glance whether one is missing: a table with no boundaries or
+
+00:03:34.568 --> 00:03:36.157
+no error states is incomplete.
+
+00:03:36.457 --> 00:03:41.791
+It also reduces duplicates, because two cases from the same partition stand out when
+
+00:03:41.791 --> 00:03:42.299
+labeled.
+
+00:03:43.599 --> 00:03:44.728
+Step 5.
+
+00:03:45.028 --> 00:03:47.410
+Step three: what it didn't cover.
+
+00:03:47.960 --> 00:03:50.831
+Step 3: ask for the not-covered list.
+
+00:03:51.131 --> 00:03:53.769
+It's the most useful part for your review.
+
+00:03:54.319 --> 00:03:57.410
+Ask for a list of what was left out and why.
+
+00:03:57.710 --> 00:04:03.065
+Concurrency, accessibility, performance, permissions and migration of existing data
+
+00:04:03.065 --> 00:04:04.098
+usually show up.
+
+00:04:04.398 --> 00:04:08.209
+That isn't a flaw in the result: it's information for deciding.
+
+00:04:08.509 --> 00:04:13.056
+Some things you'll cover with another kind of test and others you'll accept as risk,
+
+00:04:13.056 --> 00:04:14.897
+but the decision becomes explicit.
+
+00:04:15.197 --> 00:04:19.786
+This list is also the best input for the team conversation about what gets tested
+
+00:04:19.786 --> 00:04:20.749
+and what doesn't.
+
+00:04:22.049 --> 00:04:23.236
+Step 6.
+
+00:04:23.536 --> 00:04:25.210
+The three-question review.
+
+00:04:25.760 --> 00:04:30.848
+Review with three questions: any duplicates? any invented rule? any missing
+
+00:04:30.848 --> 00:04:31.527
+negatives?
+
+00:04:31.827 --> 00:04:35.034
+Whatever survives goes to your test management tool.
+
+00:04:35.584 --> 00:04:37.966
+Review the table looking for three things.
+
+00:04:38.266 --> 00:04:42.843
+Duplicates: cases exercising the same partition with another value.
+
+00:04:43.143 --> 00:04:47.616
+Invented rules: any expected result you can't trace to a written rule.
+
+00:04:47.916 --> 00:04:53.015
+Missing negatives: invalid inputs, insufficient permissions, impossible states.
+
+00:04:53.315 --> 00:04:55.222
+Discarding a third is normal.
+
+00:04:55.522 --> 00:05:00.587
+Priority is yours to set as well, because the model tends to mark everything as high
+
+00:05:00.587 --> 00:05:00.888
+risk.
+
+00:05:01.188 --> 00:05:05.069
+What survives goes into your test management tool under your name.
+
+00:05:06.369 --> 00:05:07.474
+An example.
+
+00:05:08.024 --> 00:05:12.265
+The story says: "as a customer I want to transfer money to another account".
+
+00:05:12.565 --> 00:05:17.930
+There are four written rules: minimum amount, daily cap, active destination account
+
+00:05:17.930 --> 00:05:19.417
+and sufficient balance.
+
+00:05:19.717 --> 00:05:24.189
+In step one the model asks what happens if the daily cap is reached in the middle of
+
+00:05:24.189 --> 00:05:28.608
+a scheduled transfer and whether the cap is per customer or per account; nobody had
+
+00:05:28.608 --> 00:05:29.193
+defined it.
+
+00:05:29.493 --> 00:05:32.770
+In step two it returns twenty-two labeled cases.
+
+00:05:33.070 --> 00:05:37.456
+In review, five duplicates from the "valid amount" partition and two assuming a
+
+00:05:37.456 --> 00:05:39.121
+nonexistent fee are discarded.
+
+00:05:39.421 --> 00:05:40.655
+Fifteen remain.
+
+00:05:40.955 --> 00:05:45.642
+Step three declares it didn't cover concurrency between two sessions, and the team
+
+00:05:45.642 --> 00:05:47.471
+decides to test that separately.
+
+00:05:48.771 --> 00:05:50.433
+The most common mistakes.
+
+00:05:50.983 --> 00:05:54.167
+Asking for cases without passing the business rules.
+
+00:05:54.717 --> 00:05:58.818
+Merging the three steps into one request and losing the questions stage.
+
+00:05:59.368 --> 00:06:03.643
+Loading cases into the tool without checking duplicates or invented rules.
+
+00:06:04.193 --> 00:06:06.936
+Accepting the priority the model assigns.
+
+00:06:08.236 --> 00:06:10.479
+To know it is done, check this.
+
+00:06:11.029 --> 00:06:13.215
+The template is versioned under prompts/.
+
+00:06:13.765 --> 00:06:17.320
+At least one real ambiguity reached the product owner.
+
+00:06:17.870 --> 00:06:21.507
+Each final case has a technique and traces to a written rule.
+
+00:06:22.057 --> 00:06:25.043
+There is a discard list with the reason for each.
+
+00:06:26.343 --> 00:06:28.238
+And where AI fell short.
+
+00:06:28.788 --> 00:06:31.473
+It assigns high risk to almost everything.
+
+00:06:31.773 --> 00:06:35.328
+Prioritizing is a business decision, not a writing task.
+
+00:06:36.628 --> 00:06:38.198
+That was day 5.
+
+00:06:38.498 --> 00:06:43.472
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:43.472 --> 00:06:44.480
+asked questions.
+
+00:06:45.030 --> 00:06:51.778
+Continue with day 6: Synthetic test data with LLMs: realistic, valid and PII-free.

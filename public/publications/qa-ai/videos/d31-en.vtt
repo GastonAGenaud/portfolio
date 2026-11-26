@@ -1,0 +1,394 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.148
+Day 31 of the 31 days of QA + AI series.
+
+00:00:04.698 --> 00:00:09.658
+Capstone: the full AI quality pipeline and your 2027 roadmap.
+
+00:00:10.208 --> 00:00:14.653
+The previous 30 days tied into a single pipeline, a 12-point checklist to
+
+00:00:14.653 --> 00:00:17.757
+self-assess and a 90-day plan with public evidence.
+
+00:00:19.057 --> 00:00:23.999
+For thirty days you saw separate pieces: a rule for delegating, an eval, a
+
+00:00:23.999 --> 00:00:27.605
+configured agent, a threat model, a load test, a gate.
+
+00:00:27.905 --> 00:00:30.148
+Each solves a concrete problem.
+
+00:00:30.448 --> 00:00:34.877
+The greater value appears when they connect, because that's where they stop being
+
+00:00:34.877 --> 00:00:38.485
+experiments and become a quality system for software that uses AI.
+
+00:00:39.785 --> 00:00:42.086
+This last day adds no tools.
+
+00:00:42.386 --> 00:00:46.714
+It assembles the full map, asks you for an honest assessment of what you really have
+
+00:00:46.714 --> 00:00:49.239
+working and helps you choose what to build first.
+
+00:00:49.539 --> 00:00:53.152
+The series doesn't expect you to implement all twelve pieces.
+
+00:00:53.452 --> 00:00:58.221
+It expects you to know which ones matter to your product, in what order, and to be
+
+00:00:58.221 --> 00:01:01.477
+able to show evidence of progress three months from now.
+
+00:01:02.777 --> 00:01:04.475
+To follow this guide you need:
+
+00:01:05.025 --> 00:01:08.697
+The qa-ai-lab repo with whatever you built during the series.
+
+00:01:09.247 --> 00:01:11.351
+The skills matrix from day 2.
+
+00:01:12.651 --> 00:01:14.139
+12-piece checklist.
+
+00:01:14.689 --> 00:01:19.359
+Delegation rule: verifiable, cheap to review, reversible (day 1).
+
+00:01:19.909 --> 00:01:23.824
+Repo with rules for agents, tools and permissions (day 9).
+
+00:01:24.374 --> 00:01:30.310
+Tests written by people, implementation by agents, with guardrails (days 13 and 14).
+
+00:01:30.860 --> 00:01:34.972
+Playwright agents with plan and diff review (days 10 and 11).
+
+00:01:35.522 --> 00:01:38.393
+Eval harness with a versioned prompt (day 8).
+
+00:01:38.943 --> 00:01:43.253
+Pinned model versions and a calibrated judge (days 15 and 16).
+
+00:01:43.803 --> 00:01:48.205
+Golden dataset with dev, test and regression (day 17).
+
+00:01:48.755 --> 00:01:53.390
+Repeated runs, ranges and cost per call (days 18 and 19).
+
+00:01:53.940 --> 00:01:57.066
+Prompt regression before every change (day 20).
+
+00:01:57.616 --> 00:02:02.042
+Threat model, red teaming and injection tests (days 22 to 24).
+
+00:02:02.592 --> 00:02:06.983
+Performance targets and tests with token metrics (days 25 to 27).
+
+00:02:07.534 --> 00:02:12.563
+CI gates, reproducible infra and observability (days 28 to 30).
+
+00:02:13.863 --> 00:02:14.899
+Step 1.
+
+00:02:15.199 --> 00:02:16.363
+The full journey.
+
+00:02:16.913 --> 00:02:21.939
+Walk the diagram end to end: a change enters through the repo, produced by an agent
+
+00:02:21.939 --> 00:02:27.025
+or a person, and goes through tests, evals, security and performance before reaching
+
+00:02:27.025 --> 00:02:29.327
+production, where measuring continues.
+
+00:02:29.877 --> 00:02:32.433
+Follow a change end to end on the diagram.
+
+00:02:32.733 --> 00:02:37.273
+It enters through the repository, written by a person or by an agent working with
+
+00:02:37.273 --> 00:02:38.506
+rules and permissions.
+
+00:02:38.806 --> 00:02:42.164
+It goes through deterministic tests and guardrails.
+
+00:02:42.464 --> 00:02:47.210
+If it touches anything related to a model, it goes through evals with their dataset
+
+00:02:47.210 --> 00:02:48.411
+and calibrated judge.
+
+00:02:48.711 --> 00:02:51.767
+Before release, through security and performance.
+
+00:02:52.067 --> 00:02:56.764
+In production it stays measured with traces and online evals, and every failure
+
+00:02:56.764 --> 00:02:58.548
+returns to the regression set.
+
+00:02:58.848 --> 00:03:02.670
+The closed loop is what makes the system improve with use.
+
+00:03:03.970 --> 00:03:05.169
+Step 2.
+
+00:03:05.469 --> 00:03:07.108
+An honest checklist.
+
+00:03:07.659 --> 00:03:09.739
+Fill in the checklist honestly.
+
+00:03:10.039 --> 00:03:14.071
+"I saw it in a video" doesn't count; what runs in a repo does.
+
+00:03:14.621 --> 00:03:19.305
+Fill in the twelve-piece checklist with a strict rule: a piece counts only if it
+
+00:03:19.305 --> 00:03:21.705
+runs in a repository and someone uses it.
+
+00:03:22.005 --> 00:03:26.571
+Having read about it, seen it in a video or tried it one afternoon doesn't count.
+
+00:03:26.871 --> 00:03:30.008
+The rule is uncomfortable, and that's why it works.
+
+00:03:30.308 --> 00:03:34.734
+Most teams discover they have two or three real pieces and several half done.
+
+00:03:35.034 --> 00:03:36.685
+That isn't a bad result.
+
+00:03:36.985 --> 00:03:41.146
+It's a precise starting point, and it's what you need to plan without fooling
+
+00:03:41.146 --> 00:03:41.632
+yourself.
+
+00:03:42.932 --> 00:03:44.014
+Step 3.
+
+00:03:44.314 --> 00:03:46.093
+Three pieces, by risk.
+
+00:03:46.643 --> 00:03:51.730
+Pick three missing pieces and order them by your product's risk, not by what's most
+
+00:03:51.730 --> 00:03:51.975
+fun.
+
+00:03:52.525 --> 00:03:57.545
+From the missing ones, pick three and order them by your product's risk, not by what
+
+00:03:57.545 --> 00:03:59.099
+you find most interesting.
+
+00:03:59.399 --> 00:04:04.166
+If your system has a tool-using agent and there are no injection tests, that goes
+
+00:04:04.166 --> 00:04:05.578
+before optimizing costs.
+
+00:04:05.878 --> 00:04:10.641
+If a feature with a model is in production with no eval at all, that goes first.
+
+00:04:10.941 --> 00:04:14.927
+Ask yourself which failure would hurt you most tomorrow and which piece would have
+
+00:04:14.927 --> 00:04:15.413
+caught it.
+
+00:04:15.713 --> 00:04:17.121
+That's the first one.
+
+00:04:18.421 --> 00:04:19.433
+Step 4.
+
+00:04:19.733 --> 00:04:21.071
+A ninety-day plan.
+
+00:04:21.621 --> 00:04:26.639
+Build the 90-day plan: one piece per month, each with a verifiable deliverable.
+
+00:04:27.189 --> 00:04:30.930
+Assign one piece per month, each with a verifiable deliverable.
+
+00:04:31.230 --> 00:04:33.648
+"Learn about evals" isn't a deliverable.
+
+00:04:33.948 --> 00:04:38.188
+"A thirty-case eval for the classifier, running in the PR pipeline" is.
+
+00:04:38.488 --> 00:04:40.615
+One month per piece looks slow.
+
+00:04:40.915 --> 00:04:44.320
+It's realistic if you do it alongside your usual work.
+
+00:04:44.620 --> 00:04:48.442
+Put the dates on the calendar and tell someone on your team about the plan.
+
+00:04:48.742 --> 00:04:53.133
+A commitment another person knows about gets kept far more often than a private one.
+
+00:04:54.433 --> 00:04:55.562
+Step 5.
+
+00:04:55.862 --> 00:04:57.107
+Publish evidence.
+
+00:04:57.657 --> 00:05:02.378
+Publish evidence: the repo with a README explaining what each part measures, and a
+
+00:05:02.378 --> 00:05:04.393
+written case with your own numbers.
+
+00:05:04.943 --> 00:05:07.779
+As you finish each piece, leave it visible.
+
+00:05:08.079 --> 00:05:12.574
+A repository with a README explaining what each part measures and how to run it.
+
+00:05:12.874 --> 00:05:17.678
+A written case with your own numbers: what the problem was, what you measured, what
+
+00:05:17.678 --> 00:05:19.704
+you decided and what happened next.
+
+00:05:20.004 --> 00:05:23.884
+Use your own or synthetic data, never a client's information.
+
+00:05:24.184 --> 00:05:28.794
+That evidence works inside your team, so others adopt what you built, and outside
+
+00:05:28.794 --> 00:05:32.778
+it, because it shows applied judgment and not just knowledge of tools.
+
+00:05:34.078 --> 00:05:35.265
+Step 6.
+
+00:05:35.565 --> 00:05:36.938
+Back to the matrix.
+
+00:05:37.488 --> 00:05:41.484
+Update the day 2 matrix and set a date to repeat the self-assessment.
+
+00:05:42.034 --> 00:05:46.553
+Open the skills matrix from day two and update it with what you did this month.
+
+00:05:46.853 --> 00:05:50.617
+Rows that were at zero or one should now have linked evidence.
+
+00:05:50.917 --> 00:05:55.494
+Set a date to repeat the self-assessment three months from now, when the plan ends.
+
+00:05:55.794 --> 00:06:00.000
+The specific tools in this series will change, some within a few months.
+
+00:06:00.300 --> 00:06:05.268
+What holds is the method: define what correct means, measure it repeatably and
+
+00:06:05.268 --> 00:06:06.351
+decide with data.
+
+00:06:07.651 --> 00:06:08.757
+An example.
+
+00:06:09.307 --> 00:06:12.479
+An SDET fills in the checklist at the end of the series.
+
+00:06:12.779 --> 00:06:17.996
+Real pieces: the delegation rule, a repo with rules for agents and the TDD cycle
+
+00:06:17.996 --> 00:06:19.039
+with guardrails.
+
+00:06:19.339 --> 00:06:21.792
+Half done: an eval run by hand.
+
+00:06:22.092 --> 00:06:24.103
+Missing: everything else.
+
+00:06:24.403 --> 00:06:28.759
+Her product has an assistant with access to customer data and an email tool.
+
+00:06:29.059 --> 00:06:30.478
+She orders by risk.
+
+00:06:30.778 --> 00:06:34.148
+First month, injection tests on the agent's actions.
+
+00:06:34.448 --> 00:06:38.491
+Second month, the eval with a versioned dataset inside the pipeline.
+
+00:06:38.791 --> 00:06:42.253
+Third month, traces and a quality alert in production.
+
+00:06:42.553 --> 00:06:46.878
+She leaves cost and performance for the following quarter, and writes that down as a
+
+00:06:46.878 --> 00:06:48.268
+decision, not an oversight.
+
+00:06:49.568 --> 00:06:51.231
+The most common mistakes.
+
+00:06:51.781 --> 00:06:55.139
+Marking as done a piece you only saw or tried once.
+
+00:06:55.689 --> 00:06:59.174
+Choosing what to build by interest and not by product risk.
+
+00:06:59.724 --> 00:07:02.420
+Planning all twelve pieces for the same quarter.
+
+00:07:02.970 --> 00:07:06.108
+Publishing evidence with a client's data or details.
+
+00:07:07.408 --> 00:07:09.651
+To know it is done, check this.
+
+00:07:10.201 --> 00:07:13.791
+The checklist is filled in under the rule that only what runs counts.
+
+00:07:14.341 --> 00:07:16.898
+Three pieces are chosen and ordered by risk.
+
+00:07:17.448 --> 00:07:21.050
+The ninety-day plan has one verifiable deliverable per month.
+
+00:07:21.600 --> 00:07:24.876
+The day two matrix is updated and has a review date.
+
+00:07:26.176 --> 00:07:28.072
+And where AI fell short.
+
+00:07:28.622 --> 00:07:31.712
+It summarizes well and doesn't prioritize.
+
+00:07:32.012 --> 00:07:36.322
+Deciding which risk comes first in your product is still a person's job.
+
+00:07:37.622 --> 00:07:39.378
+That was day 31.
+
+00:07:39.678 --> 00:07:44.652
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:44.652 --> 00:07:45.660
+asked questions.
+
+00:07:46.210 --> 00:07:48.453
+This guide closes the series.
+
+00:07:48.753 --> 00:07:50.590
+Thanks for making it this far.

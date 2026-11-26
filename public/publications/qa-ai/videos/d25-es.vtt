@@ -1,0 +1,406 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.602
+Día 25 de la serie 31 días de QA + IA.
+
+00:00:04.153 --> 00:00:08.288
+Modelo para pruebas de performance (1): las métricas que importan en un LLM.
+
+00:00:08.838 --> 00:00:13.033
+El modelo de performance de una feature con LLM: perfil de carga, métricas propias
+
+00:00:13.033 --> 00:00:15.540
+de generación de texto y objetivos por percentil.
+
+00:00:16.840 --> 00:00:20.635
+Quien viene de pruebas de performance tradicionales llega a un endpoint con un
+
+00:00:20.635 --> 00:00:24.429
+modelo y aplica lo que sabe: requests por segundo, latencia promedio y tasa de
+
+00:00:24.429 --> 00:00:24.819
+errores.
+
+00:00:25.119 --> 00:00:27.710
+Los números salen, y describen mal el sistema.
+
+00:00:28.010 --> 00:00:32.043
+Dos requests al mismo endpoint pueden generar veinte tokens o dos mil, y tardar
+
+00:00:32.043 --> 00:00:33.319
+medio segundo o cuarenta.
+
+00:00:33.619 --> 00:00:36.071
+Promediarlos mezcla cosas que no se parecen.
+
+00:00:37.371 --> 00:00:39.788
+La unidad de trabajo de un modelo es el token.
+
+00:00:40.088 --> 00:00:43.872
+La experiencia del usuario depende de cuándo llega el primero y de qué tan fluido
+
+00:00:43.872 --> 00:00:44.573
+llega el resto.
+
+00:00:44.873 --> 00:00:48.735
+Esta guía presenta las métricas que describen eso, cómo definir objetivos por
+
+00:00:48.735 --> 00:00:51.795
+percentil y cómo medir una línea de base con un solo usuario.
+
+00:00:52.095 --> 00:00:56.033
+Sin esa base, cualquier prueba de carga posterior es un número sin referencia.
+
+00:00:57.333 --> 00:00:59.263
+Para seguir esta guía necesitás:
+
+00:00:59.813 --> 00:01:03.148
+Un endpoint compatible con la API de OpenAI (Ollama local sirve).
+
+00:01:03.698 --> 00:01:05.384
+Python 3.10+.
+
+00:01:06.684 --> 00:01:07.859
+Este es el setup.
+
+00:01:08.159 --> 00:01:11.505
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:12.805 --> 00:01:14.944
+Y este es el siguiente archivo del setup.
+
+00:01:16.244 --> 00:01:17.315
+Las métricas.
+
+00:01:17.865 --> 00:01:21.188
+TTFT (time to first token): tiempo hasta el primer token.
+
+00:01:21.488 --> 00:01:23.615
+Es lo que el usuario siente como "respondió".
+
+00:01:24.165 --> 00:01:26.978
+ITL (inter-token latency): tiempo entre tokens.
+
+00:01:27.278 --> 00:01:29.324
+Mide la fluidez del texto en streaming.
+
+00:01:29.874 --> 00:01:32.767
+Output tokens/s: velocidad de generación.
+
+00:01:33.067 --> 00:01:34.881
+Es la capacidad real del sistema.
+
+00:01:35.431 --> 00:01:39.648
+Latencia total p95 y p99: la cola es la que genera quejas.
+
+00:01:40.198 --> 00:01:45.506
+Tasa de error (429, 5xx, timeouts): límites de cuota y saturación.
+
+00:01:46.056 --> 00:01:49.693
+Goodput: porcentaje de requests que cumple todos los objetivos a la vez.
+
+00:01:50.243 --> 00:01:52.579
+Costo por request: tokens de entrada y salida.
+
+00:01:52.879 --> 00:01:54.449
+La carga también se paga.
+
+00:01:55.749 --> 00:01:56.646
+Paso 1.
+
+00:01:56.946 --> 00:01:59.096
+Por qué las métricas clásicas engañan.
+
+00:01:59.646 --> 00:02:04.232
+Entendé por qué las métricas clásicas engañan: dos requests al mismo endpoint pueden
+
+00:02:04.232 --> 00:02:05.651
+generar 20 o 2.000 tokens.
+
+00:02:05.951 --> 00:02:09.344
+Requests por segundo y latencia promedio mezclan cosas distintas.
+
+00:02:09.894 --> 00:02:14.320
+En una API tradicional, las requests al mismo endpoint cuestan más o menos lo mismo.
+
+00:02:14.620 --> 00:02:18.679
+Con un modelo, el costo de cada request depende de cuántos tokens entran y, sobre
+
+00:02:18.679 --> 00:02:21.635
+todo, de cuántos salen, porque la generación es secuencial.
+
+00:02:21.935 --> 00:02:25.599
+Diez requests por segundo con respuestas cortas y con respuestas largas son dos
+
+00:02:25.599 --> 00:02:28.103
+cargas completamente distintas para el mismo servidor.
+
+00:02:28.403 --> 00:02:32.412
+Si reportás solo requests por segundo y latencia promedio, dos pruebas con igual
+
+00:02:32.412 --> 00:02:34.768
+resultado pueden haber medido cosas diferentes.
+
+00:02:36.068 --> 00:02:36.964
+Paso 2.
+
+00:02:37.264 --> 00:02:38.498
+El perfil de carga.
+
+00:02:39.048 --> 00:02:43.179
+Definí el perfil de carga: tamaños de prompt, largo de salida esperado, con o sin
+
+00:02:43.179 --> 00:02:45.169
+streaming, y concurrencia en hora pico.
+
+00:02:45.719 --> 00:02:47.916
+Antes de medir, describí la carga real.
+
+00:02:48.216 --> 00:02:50.830
+Qué tamaños de prompt llegan y en qué proporción.
+
+00:02:51.130 --> 00:02:52.875
+Qué largo de respuesta se espera.
+
+00:02:53.175 --> 00:02:55.673
+Si se usa streaming o se espera la respuesta entera.
+
+00:02:55.973 --> 00:02:57.485
+Cuál es la concurrencia pico.
+
+00:02:57.785 --> 00:03:01.823
+Sacá estos datos de los registros de producción si existen, o estimalos con el
+
+00:03:01.823 --> 00:03:03.117
+equipo de producto si no.
+
+00:03:03.417 --> 00:03:07.402
+Un perfil con tres o cuatro tipos de request y sus proporciones es suficiente.
+
+00:03:07.702 --> 00:03:11.841
+Sin perfil vas a probar con un prompt cualquiera y obtener números que no predicen
+
+00:03:11.841 --> 00:03:12.093
+nada.
+
+00:03:13.393 --> 00:03:14.290
+Paso 3.
+
+00:03:14.590 --> 00:03:16.241
+Objetivos por percentil.
+
+00:03:16.791 --> 00:03:22.399
+Fijá objetivos por percentil, no por promedio: por ejemplo TTFT p95, latencia total
+
+00:03:22.399 --> 00:03:24.224
+p95 y tasa de error máxima.
+
+00:03:24.774 --> 00:03:28.712
+Un promedio esconde la cola, y la cola es donde están los usuarios que se quejan.
+
+00:03:29.012 --> 00:03:33.059
+Definí los objetivos como percentiles: por ejemplo, tiempo al primer token en el
+
+00:03:33.059 --> 00:03:37.308
+percentil noventa y cinco, latencia total en el percentil noventa y cinco y una tasa
+
+00:03:37.308 --> 00:03:38.117
+de error máxima.
+
+00:03:38.417 --> 00:03:42.102
+Los valores salen de la experiencia que el producto necesita, no de lo que el
+
+00:03:42.102 --> 00:03:42.820
+sistema da hoy.
+
+00:03:43.120 --> 00:03:44.690
+Escribilos antes de medir.
+
+00:03:44.990 --> 00:03:48.859
+Si los definís después, se van a parecer sospechosamente a lo que mediste.
+
+00:03:50.159 --> 00:03:51.160
+Paso 4.
+
+00:03:51.460 --> 00:03:53.424
+La línea de base con un usuario.
+
+00:03:53.974 --> 00:03:56.856
+Medí la línea base con un solo usuario usando el script.
+
+00:03:57.156 --> 00:04:00.990
+Si con un usuario ya no cumplís, no hay prueba de carga que hacer todavía.
+
+00:04:01.540 --> 00:04:05.634
+Corré el script con un solo usuario y sin concurrencia, varias veces por cada tipo
+
+00:04:05.634 --> 00:04:06.733
+de request del perfil.
+
+00:04:07.033 --> 00:04:10.878
+Eso te da el mejor caso: lo que el sistema hace cuando no compite con nadie.
+
+00:04:11.178 --> 00:04:14.780
+Si con un usuario no cumplís los objetivos, no hay prueba de carga que correr
+
+00:04:14.780 --> 00:04:18.663
+todavía, porque el problema está en el modelo elegido, en el tamaño del prompt o en
+
+00:04:18.663 --> 00:04:21.142
+la infraestructura, y la carga solo lo va a empeorar.
+
+00:04:21.442 --> 00:04:25.230
+La línea de base es además la referencia para leer todo lo que viene después.
+
+00:04:26.530 --> 00:04:27.531
+Paso 5.
+
+00:04:27.831 --> 00:04:28.576
+Goodput.
+
+00:04:29.126 --> 00:04:33.146
+Sumá goodput: el porcentaje de requests que cumple todos los objetivos a la vez.
+
+00:04:33.696 --> 00:04:37.642
+El goodput es el porcentaje de requests que cumplen todos los objetivos a la vez:
+
+00:04:37.642 --> 00:04:40.955
+primer token a tiempo, latencia total dentro del límite y sin error.
+
+00:04:41.255 --> 00:04:45.108
+Importa porque las métricas por separado pueden verse bien mientras la experiencia
+
+00:04:45.108 --> 00:04:45.484
+es mala.
+
+00:04:45.784 --> 00:04:49.624
+Un sistema puede sostener muchas requests por segundo y tener un goodput bajo si
+
+00:04:49.624 --> 00:04:51.208
+buena parte de ellas llega tarde.
+
+00:04:51.508 --> 00:04:55.633
+Es el número que mejor resume si la carga se está atendiendo de forma aceptable, y
+
+00:04:55.633 --> 00:04:57.443
+sirve para comparar configuraciones.
+
+00:04:58.743 --> 00:04:59.710
+Paso 6.
+
+00:05:00.010 --> 00:05:01.324
+El costo por request.
+
+00:05:01.874 --> 00:05:03.398
+Anotá costo por request.
+
+00:05:03.698 --> 00:05:07.137
+Una prueba de carga contra una API paga consume presupuesto real.
+
+00:05:07.687 --> 00:05:11.556
+Registrá los tokens de entrada y de salida de cada request y convertilos en costo.
+
+00:05:11.856 --> 00:05:13.054
+Tiene dos usos.
+
+00:05:13.354 --> 00:05:17.374
+El primero es de producto: saber cuánto cuesta atender a un usuario con la carga
+
+00:05:17.374 --> 00:05:17.827
+esperada.
+
+00:05:18.127 --> 00:05:19.697
+El segundo es práctico.
+
+00:05:19.997 --> 00:05:23.998
+Una prueba de carga contra una API paga consume presupuesto real, y una prueba mal
+
+00:05:23.998 --> 00:05:27.023
+dimensionada puede gastar en una hora lo previsto para un mes.
+
+00:05:27.323 --> 00:05:31.192
+Estimá el costo de la prueba antes de correrla y usá una clave con tope de gasto.
+
+00:05:32.492 --> 00:05:33.412
+Un ejemplo.
+
+00:05:33.962 --> 00:05:38.346
+Con valores ilustrativos: un equipo define tres tipos de request para su asistente,
+
+00:05:38.346 --> 00:05:41.674
+corta, media y larga, en proporción de sesenta, treinta y diez.
+
+00:05:41.974 --> 00:05:45.993
+Los objetivos son primer token en menos de un segundo y medio y latencia total bajo
+
+00:05:45.993 --> 00:05:48.559
+doce segundos, ambos en el percentil noventa y cinco.
+
+00:05:48.859 --> 00:05:52.484
+La línea de base con un usuario muestra que las cortas y las medias cumplen.
+
+00:05:52.784 --> 00:05:56.745
+Las largas tardan dieciocho segundos en total, aunque el primer token llega a
+
+00:05:56.745 --> 00:05:57.106
+tiempo.
+
+00:05:57.406 --> 00:06:00.206
+Antes de cualquier prueba de carga ya hay un hallazgo.
+
+00:06:00.506 --> 00:06:04.537
+Lo discuten con producto y acuerdan limitar el largo de esas respuestas, lo que las
+
+00:06:04.537 --> 00:06:05.606
+deja en once segundos.
+
+00:06:06.906 --> 00:06:08.429
+Los errores más comunes.
+
+00:06:08.979 --> 00:06:11.966
+Reportar solo requests por segundo y latencia promedio.
+
+00:06:12.516 --> 00:06:15.595
+Probar con un único prompt que no representa la carga real.
+
+00:06:16.145 --> 00:06:18.713
+Fijar los objetivos después de ver las mediciones.
+
+00:06:19.263 --> 00:06:22.250
+Lanzar una prueba de carga sin estimar cuánto va a costar.
+
+00:06:23.550 --> 00:06:25.816
+Para saber que quedó bien, revisá esto.
+
+00:06:26.366 --> 00:06:29.318
+El perfil de carga tiene tipos de request y proporciones.
+
+00:06:29.868 --> 00:06:33.005
+Los objetivos están escritos por percentil antes de medir.
+
+00:06:33.555 --> 00:06:36.878
+Hay una línea de base con un usuario para cada tipo de request.
+
+00:06:37.428 --> 00:06:39.950
+Cada medición incluye tokens y costo por request.
+
+00:06:41.250 --> 00:06:42.820
+Y lo que la IA no hizo bien.
+
+00:06:43.370 --> 00:06:47.611
+Los asistentes proponen por defecto métricas de API clásica (RPS, promedio).
+
+00:06:47.911 --> 00:06:50.769
+Hay que pedir explícitamente métricas de generación.
+
+00:06:52.069 --> 00:06:53.721
+Eso fue el día 25.
+
+00:06:54.021 --> 00:06:58.653
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:58.653 --> 00:06:59.259
+frecuentes.
+
+00:06:59.809 --> 00:07:04.920
+Seguí con el día 26: Performance (2): prueba de carga a un endpoint LLM con k6.

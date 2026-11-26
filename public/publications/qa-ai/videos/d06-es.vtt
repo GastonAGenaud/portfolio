@@ -1,0 +1,364 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.463
+Día 6 de la serie 31 días de QA + IA.
+
+00:00:04.013 --> 00:00:08.068
+Datos de prueba sintéticos con LLM: realistas, válidos y sin PII.
+
+00:00:08.618 --> 00:00:12.736
+Un dataset de prueba que combina Faker para volumen y un LLM para casos borde,
+
+00:00:12.736 --> 00:00:15.482
+validado contra un schema y sin datos de producción.
+
+00:00:16.782 --> 00:00:20.221
+Los datos de prueba son uno de los cuellos de botella más viejos de QA.
+
+00:00:20.521 --> 00:00:24.762
+O usás una copia de producción, con todo el riesgo legal que implica, o usás datos
+
+00:00:24.762 --> 00:00:29.054
+tan prolijos que nunca disparan un bug: nombres sin acentos, direcciones perfectas,
+
+00:00:29.054 --> 00:00:29.881
+montos redondos.
+
+00:00:30.181 --> 00:00:33.799
+Los defectos reales aparecen con el apellido que tiene apóstrofo, el mail con
+
+00:00:33.799 --> 00:00:36.384
+subdominio o la nota que alguien completó con un emoji.
+
+00:00:37.684 --> 00:00:41.529
+Un LLM es bueno justamente para eso: producir variedad realista.
+
+00:00:41.829 --> 00:00:44.885
+Pero también produce filas inválidas con mucha seguridad.
+
+00:00:45.185 --> 00:00:49.173
+Esta guía combina tres piezas para quedarse con lo mejor de cada una: un schema que
+
+00:00:49.173 --> 00:00:53.113
+define qué es válido, Faker para el volumen y el modelo solo para los casos raros,
+
+00:00:53.113 --> 00:00:54.987
+con validación automática de cada fila.
+
+00:00:56.287 --> 00:00:58.217
+Para seguir esta guía necesitás:
+
+00:00:58.767 --> 00:01:00.035
+El repo qa-ai-lab.
+
+00:01:00.585 --> 00:01:02.073
+Un modelo local con Ollama.
+
+00:01:03.373 --> 00:01:04.549
+Este es el setup.
+
+00:01:04.849 --> 00:01:08.195
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:09.495 --> 00:01:11.634
+Y este es el siguiente archivo del setup.
+
+00:01:12.934 --> 00:01:15.073
+Y este es el siguiente archivo del setup.
+
+00:01:16.373 --> 00:01:17.269
+Paso 1.
+
+00:01:17.569 --> 00:01:18.710
+El schema manda.
+
+00:01:19.260 --> 00:01:20.830
+Definí el schema primero.
+
+00:01:21.130 --> 00:01:23.663
+Es la fuente de verdad de qué es un dato válido.
+
+00:01:24.213 --> 00:01:26.735
+Escribí el schema antes de generar una sola fila.
+
+00:01:27.035 --> 00:01:31.621
+Es el contrato de tus datos: qué campos existen, de qué tipo son, qué rangos aceptan
+
+00:01:31.621 --> 00:01:33.040
+y cuáles son obligatorios.
+
+00:01:33.340 --> 00:01:37.536
+Con Zod o JSON Schema lo expresás una vez y lo usás en tres lugares: para validar lo
+
+00:01:37.536 --> 00:01:41.632
+que produce Faker, para validar lo que produce el modelo y como documentación para
+
+00:01:41.632 --> 00:01:42.132
+el equipo.
+
+00:01:42.432 --> 00:01:46.362
+Si el schema está flojo, por ejemplo acepta cualquier string como fecha, los datos
+
+00:01:46.362 --> 00:01:50.197
+inválidos pasan de largo y los vas a descubrir en un test que falla por la razón
+
+00:01:50.197 --> 00:01:50.724
+equivocada.
+
+00:01:52.024 --> 00:01:52.920
+Paso 2.
+
+00:01:53.220 --> 00:01:54.616
+Faker para el volumen.
+
+00:01:55.166 --> 00:01:59.325
+Usá Faker con seed fija para el volumen: es rápido, gratis y reproducible.
+
+00:01:59.875 --> 00:02:02.746
+Para las miles de filas "normales" no hace falta un modelo.
+
+00:02:03.046 --> 00:02:05.835
+Faker las genera en milisegundos, sin costo y sin red.
+
+00:02:06.135 --> 00:02:10.200
+Lo importante es fijar la semilla: con la misma semilla obtenés exactamente los
+
+00:02:10.200 --> 00:02:13.185
+mismos datos en tu máquina, en la de tu compañero y en CI.
+
+00:02:13.485 --> 00:02:16.541
+Eso convierte un fallo intermitente en uno reproducible.
+
+00:02:16.841 --> 00:02:20.856
+Elegí además el locale que corresponde a tus usuarios, porque cambia el formato de
+
+00:02:20.856 --> 00:02:24.970
+nombres, teléfonos y direcciones, y esos formatos son parte de lo que querés probar.
+
+00:02:26.270 --> 00:02:27.167
+Paso 3.
+
+00:02:27.467 --> 00:02:29.257
+El modelo para los casos raros.
+
+00:02:29.807 --> 00:02:34.350
+Usá el LLM para lo que Faker no da: casos borde realistas (apellidos con apóstrofo,
+
+00:02:34.350 --> 00:02:38.564
+nombres con ñ y tildes, emails con subdominios, notas con emojis o comillas).
+
+00:02:39.114 --> 00:02:43.329
+Pedile al modelo lo que una librería no sabe inventar: variantes creíbles que rompen
+
+00:02:43.329 --> 00:02:43.830
+supuestos.
+
+00:02:44.130 --> 00:02:45.723
+Sé específico en el pedido.
+
+00:02:46.023 --> 00:02:50.229
+En lugar de "generá datos raros", listá las categorías que te interesan: apellidos
+
+00:02:50.229 --> 00:02:54.229
+compuestos y con apóstrofo, nombres de una sola letra, mails con subdominios y
+
+00:02:54.229 --> 00:02:58.229
+signos más, textos libres con comillas, saltos de línea o emojis, fechas en el
+
+00:02:58.229 --> 00:02:59.203
+límite de un rango.
+
+00:02:59.503 --> 00:03:01.294
+Pedí pocas filas por categoría.
+
+00:03:01.594 --> 00:03:05.897
+Diez casos bien pensados valen más que quinientos parecidos, y son más baratos de
+
+00:03:05.897 --> 00:03:06.322
+revisar.
+
+00:03:07.622 --> 00:03:08.623
+Paso 4.
+
+00:03:08.923 --> 00:03:10.597
+Validación fila por fila.
+
+00:03:11.147 --> 00:03:14.668
+Pedile al modelo salida en JSON y validá cada fila contra el schema.
+
+00:03:14.968 --> 00:03:17.095
+Lo que no valida se descarta y se cuenta.
+
+00:03:17.645 --> 00:03:21.398
+Pedí la salida en JSON y pasá cada fila por el schema antes de aceptarla.
+
+00:03:21.698 --> 00:03:23.825
+Lo que no valida se descarta y se cuenta.
+
+00:03:24.125 --> 00:03:28.059
+Ese contador es una métrica útil: si el modelo falla una de cada cuatro filas, el
+
+00:03:28.059 --> 00:03:32.139
+prompt necesita un ejemplo de formato o el schema tiene una regla que no explicaste.
+
+00:03:32.439 --> 00:03:36.203
+No corrijas a mano las filas inválidas, porque rompe la reproducibilidad.
+
+00:03:36.503 --> 00:03:41.897
+Tampoco confíes en una revisión visual: una fecha como 2026-02-30 se ve perfecta y
+
+00:03:41.897 --> 00:03:42.554
+no existe.
+
+00:03:43.854 --> 00:03:44.855
+Paso 5.
+
+00:03:45.155 --> 00:03:46.853
+Producción no entra al prompt.
+
+00:03:47.403 --> 00:03:49.739
+Nunca pegues datos de producción en el prompt.
+
+00:03:50.039 --> 00:03:52.410
+Describí la forma del dato, no el dato.
+
+00:03:52.960 --> 00:03:57.422
+La regla es simple y no tiene excepciones: en el prompt va la forma de los datos,
+
+00:03:57.422 --> 00:03:58.304
+nunca los datos.
+
+00:03:58.604 --> 00:04:02.642
+Describí campos, formatos y rarezas que querés ver, sin pegar registros reales ni
+
+00:04:02.642 --> 00:04:06.581
+siquiera "anonimizados a mano", porque esa anonimización casi siempre deja algo
+
+00:04:06.581 --> 00:04:07.279
+identificable.
+
+00:04:07.579 --> 00:04:11.334
+Si necesitás que los datos sintéticos se parezcan estadísticamente a los reales,
+
+00:04:11.334 --> 00:04:13.259
+describí las distribuciones con palabras.
+
+00:04:13.559 --> 00:04:17.863
+Y verificá el resultado: revisá que no aparezcan nombres o documentos que coincidan
+
+00:04:17.863 --> 00:04:19.471
+con personas reales de tu base.
+
+00:04:20.771 --> 00:04:21.737
+Paso 6.
+
+00:04:22.037 --> 00:04:24.466
+Semilla, prompt y dataset versionados.
+
+00:04:25.016 --> 00:04:27.887
+Versioná en data/ el seed, el prompt y el dataset final.
+
+00:04:28.187 --> 00:04:30.697
+Un dataset que no se puede regenerar es deuda.
+
+00:04:31.247 --> 00:04:35.372
+Guardá en data/ las tres cosas que permiten regenerar el conjunto: la semilla de
+
+00:04:35.372 --> 00:04:38.877
+Faker, el prompt usado con el modelo y el archivo final ya validado.
+
+00:04:39.177 --> 00:04:43.534
+La parte generada por el modelo no es reproducible bit a bit, por eso se versiona el
+
+00:04:43.534 --> 00:04:45.090
+resultado y no solo la receta.
+
+00:04:45.390 --> 00:04:47.261
+Anotá también el modelo y la fecha.
+
+00:04:47.561 --> 00:04:51.699
+Cuando un test falle dentro de seis meses, vas a poder saber con qué datos corrió, y
+
+00:04:51.699 --> 00:04:54.704
+si hay que ampliar el conjunto vas a partir de algo conocido.
+
+00:04:56.004 --> 00:04:56.924
+Un ejemplo.
+
+00:04:57.474 --> 00:05:00.286
+Un equipo prueba un formulario de alta de clientes.
+
+00:05:00.586 --> 00:05:04.327
+Con Faker y semilla fija generan mil clientes válidos en menos de un segundo.
+
+00:05:04.627 --> 00:05:08.032
+Después le piden al modelo veinte casos raros en cinco categorías.
+
+00:05:08.332 --> 00:05:12.594
+De las veinte filas, el schema rechaza cuatro: dos fechas de nacimiento imposibles,
+
+00:05:12.594 --> 00:05:14.906
+un teléfono con letras y un mail sin dominio.
+
+00:05:15.206 --> 00:05:16.416
+Quedan dieciséis.
+
+00:05:16.716 --> 00:05:20.925
+Al correr la suite con esos dieciséis, dos tests fallan: el apellido O'Connor rompe
+
+00:05:20.925 --> 00:05:24.323
+una consulta mal escapada y un nombre con emoji se guarda truncado.
+
+00:05:24.623 --> 00:05:28.608
+Ninguno de los mil registros prolijos había encontrado esos dos defectos.
+
+00:05:29.908 --> 00:05:31.431
+Los errores más comunes.
+
+00:05:31.981 --> 00:05:35.885
+Generar todo con el modelo, incluso el volumen que Faker resuelve gratis.
+
+00:05:36.435 --> 00:05:39.839
+Aceptar las filas por cómo se ven, sin validarlas contra el schema.
+
+00:05:40.389 --> 00:05:42.934
+Pegar un registro real "como ejemplo de formato".
+
+00:05:43.484 --> 00:05:46.540
+No guardar el dataset final y no poder repetir una corrida.
+
+00:05:47.840 --> 00:05:50.107
+Para saber que quedó bien, revisá esto.
+
+00:05:50.657 --> 00:05:53.493
+El schema rechaza fechas, mails y rangos inválidos.
+
+00:05:54.043 --> 00:05:57.598
+Faker corre con semilla fija y da el mismo resultado dos veces.
+
+00:05:58.148 --> 00:06:01.680
+Cada fila del modelo pasó por el schema y hay un conteo de descartes.
+
+00:06:02.230 --> 00:06:05.390
+Semilla, prompt, modelo, fecha y dataset están en data/.
+
+00:06:06.690 --> 00:06:08.260
+Y lo que la IA no hizo bien.
+
+00:06:08.810 --> 00:06:12.226
+Devuelve JSON que parece válido y no lo es (fechas, formatos).
+
+00:06:12.526 --> 00:06:15.850
+Sin validación automática, esos errores llegan a tus tests.
+
+00:06:17.150 --> 00:06:18.511
+Eso fue el día 6.
+
+00:06:18.811 --> 00:06:23.443
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:23.443 --> 00:06:24.049
+frecuentes.
+
+00:06:24.599 --> 00:06:29.246
+Seguí con el día 7: Arneses 101: test harness, eval harness y agent harness.

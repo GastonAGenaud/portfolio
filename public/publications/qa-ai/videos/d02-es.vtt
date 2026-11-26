@@ -1,0 +1,355 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.347
+Día 2 de la serie 31 días de QA + IA.
+
+00:00:03.897 --> 00:00:07.081
+Cómo se está reorientando el rol SDET en el mundo de la IA.
+
+00:00:07.631 --> 00:00:11.893
+Qué cambia y qué no en el rol SDET, y cómo armar tu matriz de habilidades para los
+
+00:00:11.893 --> 00:00:12.777
+próximos 30 días.
+
+00:00:14.077 --> 00:00:18.288
+La pregunta que más se repite en la comunidad de testing es si la IA va a reemplazar
+
+00:00:18.288 --> 00:00:18.689
+al SDET.
+
+00:00:18.989 --> 00:00:22.846
+Es una pregunta mal planteada: el trabajo no desaparece, cambia de lugar.
+
+00:00:23.146 --> 00:00:27.165
+Escribir un test dejó de ser la parte escasa, porque un agente lo hace en segundos.
+
+00:00:27.465 --> 00:00:31.665
+Lo escaso ahora es saber qué vale la pena probar, darle contexto a quien lo escribe
+
+00:00:31.665 --> 00:00:33.993
+y poder afirmar que el resultado es confiable.
+
+00:00:35.293 --> 00:00:38.963
+Esta guía describe ese corrimiento con cuatro competencias nuevas y tres que no
+
+00:00:38.963 --> 00:00:41.843
+cambian, y termina con una matriz para medirte sin autoengaño.
+
+00:00:42.143 --> 00:00:45.878
+No es una lista de herramientas de moda: es un mapa de habilidades con evidencia
+
+00:00:45.878 --> 00:00:47.092
+verificable para cada una.
+
+00:00:48.392 --> 00:00:50.322
+Para seguir esta guía necesitás:
+
+00:00:50.872 --> 00:00:53.301
+Una hoja de cálculo o una página de notas.
+
+00:00:53.851 --> 00:00:55.537
+Tu descripción de puesto actual.
+
+00:00:56.087 --> 00:00:57.796
+30 minutos de honestidad.
+
+00:00:59.096 --> 00:00:59.993
+Paso 1.
+
+00:01:00.293 --> 00:01:01.967
+Antes y ahora, por escrito.
+
+00:01:02.517 --> 00:01:05.248
+Escribí qué hacías hace dos años y qué hacés hoy.
+
+00:01:05.548 --> 00:01:09.665
+El cambio de fondo: de escribir cada test a diseñar, guiar, revisar y validar
+
+00:01:09.665 --> 00:01:10.787
+sistemas que testean.
+
+00:01:11.337 --> 00:01:14.207
+Tomá tu descripción de puesto y tus últimas diez tareas.
+
+00:01:14.507 --> 00:01:18.569
+Para cada una preguntate qué parte fue producir (escribir código de test, datos,
+
+00:01:18.569 --> 00:01:22.630
+reportes) y qué parte fue decidir (qué cubrir, qué riesgo aceptar, qué resultado
+
+00:01:22.630 --> 00:01:22.985
+creer).
+
+00:01:23.285 --> 00:01:26.550
+Hace dos años la mayor parte del tiempo se iba en producir.
+
+00:01:26.850 --> 00:01:29.616
+Hoy esa parte se abarata y la de decidir pesa más.
+
+00:01:29.916 --> 00:01:34.056
+Verlo escrito con tus propias tareas evita discutir en abstracto y te muestra cuánto
+
+00:01:34.056 --> 00:01:35.190
+de tu semana ya cambió.
+
+00:01:36.490 --> 00:01:37.386
+Paso 2.
+
+00:01:37.686 --> 00:01:39.593
+Las cuatro competencias nuevas.
+
+00:01:40.143 --> 00:01:44.592
+Sumá las cuatro competencias nuevas: contexto para agentes (reglas, skills, specs),
+
+00:01:44.592 --> 00:01:48.987
+evals para salidas no deterministas, revisión de tests generados por IA, y costo e
+
+00:01:48.987 --> 00:01:51.024
+infraestructura (tokens, CI, runners).
+
+00:01:51.574 --> 00:01:55.491
+Contexto para agentes es escribir reglas, convenciones y especificaciones que un
+
+00:01:55.491 --> 00:01:57.254
+agente pueda seguir sin vos al lado.
+
+00:01:57.554 --> 00:02:01.574
+Evals es medir salidas que no son iguales dos veces, con datasets y umbrales.
+
+00:02:01.874 --> 00:02:05.584
+Revisión de tests generados es detectar relleno: aserciones débiles, casos
+
+00:02:05.584 --> 00:02:07.890
+duplicados, mocks de lo que se debería probar.
+
+00:02:08.190 --> 00:02:12.520
+Costo e infraestructura es saber cuánto cuesta cada corrida en tokens y minutos de
+
+00:02:12.520 --> 00:02:13.998
+CI, y dónde corre cada cosa.
+
+00:02:14.298 --> 00:02:17.772
+Ninguna reemplaza a la automatización clásica: se apoyan en ella.
+
+00:02:19.072 --> 00:02:19.969
+Paso 3.
+
+00:02:20.269 --> 00:02:21.374
+Lo que no cambia.
+
+00:02:21.924 --> 00:02:26.281
+Marcá lo que no cambia: pensar en riesgo, diseñar buenos casos y conocer el sistema.
+
+00:02:26.581 --> 00:02:28.290
+Eso es lo que la IA no trae.
+
+00:02:28.840 --> 00:02:33.038
+Pensar en riesgo es decidir dónde un fallo le duele al negocio y concentrar ahí el
+
+00:02:33.038 --> 00:02:33.498
+esfuerzo.
+
+00:02:33.798 --> 00:02:38.007
+Diseñar buenos casos es conocer técnicas como particiones, bordes y tablas de
+
+00:02:38.007 --> 00:02:40.302
+decisión, y saber cuándo aplicar cada una.
+
+00:02:40.602 --> 00:02:44.831
+Conocer el sistema es entender sus dependencias, sus datos y sus puntos frágiles.
+
+00:02:45.131 --> 00:02:48.895
+Un agente sin estas tres cosas genera cobertura numérica, no calidad.
+
+00:02:49.195 --> 00:02:53.454
+Son además las habilidades que te permiten revisar lo que el agente produce, así que
+
+00:02:53.454 --> 00:02:54.620
+su valor sube, no baja.
+
+00:02:55.920 --> 00:02:56.921
+Paso 4.
+
+00:02:57.221 --> 00:02:58.686
+La matriz de habilidades.
+
+00:02:59.236 --> 00:03:04.051
+Armá la matriz: una fila por competencia, columnas Nivel hoy (0 a 3), Evidencia y
+
+00:03:04.051 --> 00:03:04.823
+Próximo paso.
+
+00:03:05.374 --> 00:03:09.184
+Usá una fila por competencia: las cuatro nuevas y las tres que no cambian.
+
+00:03:09.484 --> 00:03:13.410
+En la columna de nivel poné un número de cero a tres, donde cero es no lo hice
+
+00:03:13.410 --> 00:03:17.637
+nunca, uno es lo probé, dos es lo uso en un proyecto real y tres es puedo enseñarlo.
+
+00:03:17.937 --> 00:03:22.468
+En evidencia, un enlace o un artefacto concreto: un repo, un pipeline, un reporte.
+
+00:03:22.768 --> 00:03:25.858
+Si no hay evidencia, el nivel no puede ser mayor que uno.
+
+00:03:26.158 --> 00:03:28.506
+Esa regla es la que vuelve honesta a la matriz.
+
+00:03:29.806 --> 00:03:30.807
+Paso 5.
+
+00:03:31.107 --> 00:03:32.654
+Dos focos, no siete.
+
+00:03:33.204 --> 00:03:37.235
+Elegí dos competencias con nivel 0 o 1 y atales un día de esta serie.
+
+00:03:37.785 --> 00:03:39.855
+Mejorar todo a la vez no funciona.
+
+00:03:40.155 --> 00:03:44.134
+Elegí las dos filas con nivel más bajo que además importen para tu trabajo actual o
+
+00:03:44.134 --> 00:03:45.045
+para el que buscás.
+
+00:03:45.345 --> 00:03:49.623
+A cada una asignale un día de esta serie y una fecha: por ejemplo, evals con el día
+
+00:03:49.623 --> 00:03:52.407
+ocho y costo e infraestructura con el día veintinueve.
+
+00:03:52.707 --> 00:03:56.525
+El próximo paso tiene que ser un entregable chico y visible, como un eval harness
+
+00:03:56.525 --> 00:03:59.164
+con diez casos o un job que publique tokens por corrida.
+
+00:04:00.464 --> 00:04:01.431
+Paso 6.
+
+00:04:01.731 --> 00:04:03.115
+Evidencia en tu perfil.
+
+00:04:03.665 --> 00:04:07.312
+Actualizá tu perfil con evidencia concreta: un repo con evals vale más que
+
+00:04:07.312 --> 00:04:08.346
+"experiencia con IA".
+
+00:04:08.896 --> 00:04:12.931
+Un perfil que dice "experiencia con IA aplicada a testing" no se distingue de otros
+
+00:04:12.931 --> 00:04:13.125
+mil.
+
+00:04:13.425 --> 00:04:17.518
+Uno que enlaza un repositorio con un eval harness, un pipeline con un quality gate y
+
+00:04:17.518 --> 00:04:18.931
+un caso escrito de triage sí.
+
+00:04:19.231 --> 00:04:22.977
+Cuando termines cada entregable, sumalo con una frase que diga qué mide y qué
+
+00:04:22.977 --> 00:04:24.144
+decisión permitió tomar.
+
+00:04:24.444 --> 00:04:28.447
+En entrevistas, esa evidencia te deja hablar de experiencia propia en lugar de
+
+00:04:28.447 --> 00:04:31.680
+repetir teoría, y eso es lo que un entrevistador técnico busca.
+
+00:04:32.980 --> 00:04:33.900
+Un ejemplo.
+
+00:04:34.450 --> 00:04:37.669
+Un SDET con seis años de experiencia completa la matriz.
+
+00:04:37.969 --> 00:04:42.313
+En diseño de casos y conocimiento del sistema se pone tres, con evidencia de sobra.
+
+00:04:42.613 --> 00:04:46.764
+En contexto para agentes se pone uno: usó un asistente, pero nunca escribió reglas
+
+00:04:46.764 --> 00:04:47.422
+para el repo.
+
+00:04:47.722 --> 00:04:48.944
+En evals, cero.
+
+00:04:49.244 --> 00:04:51.371
+En revisión de tests generados, uno.
+
+00:04:51.671 --> 00:04:52.858
+En costo, cero.
+
+00:04:53.158 --> 00:04:55.901
+Elige evals y contexto para agentes como focos.
+
+00:04:56.201 --> 00:05:00.513
+En tres semanas arma un AGENTS.md para su repo de automation y un eval de diez casos
+
+00:05:00.513 --> 00:05:02.566
+para el clasificador de bugs del equipo.
+
+00:05:02.866 --> 00:05:07.212
+Su perfil pasa de una frase genérica a dos enlaces con una línea de explicación cada
+
+00:05:07.212 --> 00:05:07.419
+uno.
+
+00:05:08.719 --> 00:05:10.243
+Los errores más comunes.
+
+00:05:10.793 --> 00:05:13.489
+Ponerte nivel alto sin un artefacto que lo respalde.
+
+00:05:14.039 --> 00:05:17.861
+Elegir como foco la herramienta de moda en lugar de la competencia que te falta.
+
+00:05:18.412 --> 00:05:21.584
+Abandonar diseño de casos y riesgo porque "eso lo hace la IA".
+
+00:05:22.134 --> 00:05:25.364
+Planear siete mejoras en paralelo y no terminar ninguna.
+
+00:05:26.664 --> 00:05:28.930
+Para saber que quedó bien, revisá esto.
+
+00:05:29.480 --> 00:05:33.082
+La matriz tiene siete filas con nivel, evidencia y próximo paso.
+
+00:05:33.632 --> 00:05:36.653
+Ningún nivel mayor a uno carece de evidencia enlazada.
+
+00:05:37.203 --> 00:05:39.517
+Elegiste dos focos con fecha y entregable.
+
+00:05:40.067 --> 00:05:42.844
+Tu perfil enlaza al menos un artefacto verificable.
+
+00:05:44.144 --> 00:05:45.714
+Y lo que la IA no hizo bien.
+
+00:05:46.264 --> 00:05:49.633
+Le pedí a un modelo que evaluara mi nivel y me puso todo en "avanzado".
+
+00:05:49.933 --> 00:05:52.200
+No sirve para autoevaluarte: te halaga.
+
+00:05:53.500 --> 00:05:54.768
+Eso fue el día 2.
+
+00:05:55.068 --> 00:05:59.700
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:05:59.700 --> 00:06:00.307
+frecuentes.
+
+00:06:00.857 --> 00:06:04.691
+Seguí con el día 3: Las nuevas formas de probar: de asserts a evals.

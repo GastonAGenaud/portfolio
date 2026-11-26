@@ -1,0 +1,376 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.544
+Día 13 de la serie 31 días de QA + IA.
+
+00:00:04.094 --> 00:00:07.197
+TDD con IA (1): red, green, refactor con un agente.
+
+00:00:07.747 --> 00:00:11.736
+Tres ciclos de TDD donde vos escribís el test y el agente escribe la implementación
+
+00:00:11.736 --> 00:00:12.986
+mínima, sin tocar el test.
+
+00:00:14.286 --> 00:00:18.494
+TDD siempre tuvo un costo de disciplina: escribir el test antes cuando la solución
+
+00:00:18.494 --> 00:00:19.931
+ya está en tu cabeza cuesta.
+
+00:00:20.231 --> 00:00:24.204
+Con un agente que escribe la implementación en segundos, la tentación se invierte.
+
+00:00:24.504 --> 00:00:28.331
+Lo fácil es pedir "implementá esta función con sus tests" y recibir todo junto, con
+
+00:00:28.331 --> 00:00:32.111
+tests que pasan porque fueron escritos mirando el código que tenían que verificar.
+
+00:00:33.411 --> 00:00:37.941
+El ciclo rojo, verde, refactor ordena esa relación con una regla de autoría: el test
+
+00:00:37.941 --> 00:00:40.206
+es tuyo y la implementación es del agente.
+
+00:00:40.506 --> 00:00:44.372
+El test se vuelve la especificación ejecutable y también el control de calidad de lo
+
+00:00:44.372 --> 00:00:45.384
+que el agente produce.
+
+00:00:45.684 --> 00:00:49.599
+Esta guía recorre el ciclo completo con una función chica, para que el hábito quede
+
+00:00:49.599 --> 00:00:51.155
+antes de aplicarlo a algo grande.
+
+00:00:52.455 --> 00:00:54.385
+Para seguir esta guía necesitás:
+
+00:00:54.935 --> 00:00:58.421
+Node.js 22+, un agente de código y un repo vacío.
+
+00:00:59.721 --> 00:01:00.896
+Este es el setup.
+
+00:01:01.196 --> 00:01:04.542
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:05.842 --> 00:01:07.981
+Y este es el siguiente archivo del setup.
+
+00:01:09.281 --> 00:01:11.420
+Y este es el siguiente archivo del setup.
+
+00:01:12.720 --> 00:01:13.617
+Paso 1.
+
+00:01:13.917 --> 00:01:15.835
+Rojo: un test, escrito por vos.
+
+00:01:16.385 --> 00:01:18.501
+Rojo: escribí vos un solo test.
+
+00:01:18.801 --> 00:01:20.998
+El test es la especificación y es tuyo.
+
+00:01:21.548 --> 00:01:25.349
+Escribí un solo test que describa un comportamiento concreto, con un nombre que se
+
+00:01:25.349 --> 00:01:26.740
+lea como una regla de negocio.
+
+00:01:27.040 --> 00:01:28.970
+Uno solo, no la suite completa.
+
+00:01:29.270 --> 00:01:33.098
+Al escribirlo tomás decisiones de diseño que no conviene delegar: cómo se llama la
+
+00:01:33.098 --> 00:01:36.366
+función, qué recibe, qué devuelve y qué pasa con una entrada inválida.
+
+00:01:36.666 --> 00:01:38.468
+Ese es el trabajo de pensar.
+
+00:01:38.768 --> 00:01:42.657
+Si le pedís el test al agente, esas decisiones las toma él, y después vas a estar
+
+00:01:42.657 --> 00:01:44.913
+revisando una especificación que no escribiste.
+
+00:01:46.213 --> 00:01:47.109
+Paso 2.
+
+00:01:47.409 --> 00:01:49.177
+Fallar por la razón correcta.
+
+00:01:49.727 --> 00:01:53.601
+Corré npx vitest run y confirmá que falla por el motivo correcto (la función no
+
+00:01:53.601 --> 00:01:56.347
+existe o devuelve otra cosa), no por un error de import.
+
+00:01:56.897 --> 00:01:58.513
+Corré el test y leé el mensaje.
+
+00:01:58.813 --> 00:02:02.927
+Tiene que fallar porque la función no existe o porque devuelve otra cosa, no por un
+
+00:02:02.927 --> 00:02:05.306
+error de import, de configuración o de sintaxis.
+
+00:02:05.606 --> 00:02:09.724
+Es un paso que se saltea con frecuencia y que evita un problema clásico: un test que
+
+00:02:09.724 --> 00:02:11.832
+nunca pudo fallar por la razón que importa.
+
+00:02:12.132 --> 00:02:15.002
+Si el mensaje de error es confuso, mejoralo ahora.
+
+00:02:15.302 --> 00:02:19.298
+Ese mismo mensaje es lo que el agente va a leer para saber qué tiene que construir.
+
+00:02:20.598 --> 00:02:21.495
+Paso 3.
+
+00:02:21.795 --> 00:02:23.922
+Verde: lo mínimo, sin tocar tests.
+
+00:02:24.472 --> 00:02:28.442
+Verde: pedí al agente el código mínimo para pasar ese test, con la instrucción
+
+00:02:28.442 --> 00:02:30.071
+explícita de no modificar tests.
+
+00:02:30.621 --> 00:02:34.389
+Pedile al agente el código mínimo para pasar ese test, con dos instrucciones
+
+00:02:34.389 --> 00:02:38.356
+explícitas: no modificar archivos de test y no agregar nada que el test no pida.
+
+00:02:38.656 --> 00:02:40.272
+La palabra mínimo importa.
+
+00:02:40.572 --> 00:02:44.437
+Sin ella vas a recibir validaciones, casos y parámetros opcionales que nadie
+
+00:02:44.437 --> 00:02:46.217
+especificó y que ningún test cubre.
+
+00:02:46.517 --> 00:02:50.470
+Es código que parece útil y que queda sin dueño: nadie sabe si funciona ni si
+
+00:02:50.470 --> 00:02:51.292
+debería existir.
+
+00:02:51.592 --> 00:02:54.427
+Si después hace falta, lo agregás con su propio test.
+
+00:02:55.727 --> 00:02:56.728
+Paso 4.
+
+00:02:57.028 --> 00:02:58.517
+Verificar el verde vos.
+
+00:02:59.067 --> 00:03:01.287
+Verificá vos el verde corriendo el comando.
+
+00:03:01.587 --> 00:03:05.792
+Revisá el diff: solo debería haber cambiado src/discount.ts.
+
+00:03:06.342 --> 00:03:08.470
+Corré el comando vos y mirá el resultado.
+
+00:03:08.770 --> 00:03:10.049
+Después revisá el diff.
+
+00:03:10.349 --> 00:03:14.091
+En este ejercicio solo debería haber cambiado el archivo de implementación.
+
+00:03:14.391 --> 00:03:18.578
+Si cambió el test, la configuración o apareció un archivo nuevo, preguntate por qué
+
+00:03:18.578 --> 00:03:19.385
+antes de seguir.
+
+00:03:19.685 --> 00:03:23.375
+Son treinta segundos que sostienen todo el método: el verde vale porque lo produjo
+
+00:03:23.375 --> 00:03:26.840
+un test que el agente no pudo ajustar y porque lo comprobaste por fuera de su
+
+00:03:26.840 --> 00:03:27.200
+resumen.
+
+00:03:28.500 --> 00:03:29.501
+Paso 5.
+
+00:03:29.801 --> 00:03:31.452
+Refactor con la red puesta.
+
+00:03:32.002 --> 00:03:35.732
+Refactor: pedí una mejora de legibilidad manteniendo los tests en verde.
+
+00:03:36.032 --> 00:03:36.766
+Commit.
+
+00:03:37.316 --> 00:03:41.538
+Con el test en verde, pedí una mejora de legibilidad sin cambio de comportamiento:
+
+00:03:41.538 --> 00:03:45.400
+nombres más claros, una constante en lugar de un número suelto, una función
+
+00:03:45.400 --> 00:03:45.863
+extraída.
+
+00:03:46.163 --> 00:03:47.571
+Volvé a correr los tests.
+
+00:03:47.871 --> 00:03:51.693
+Este es el paso donde el agente aporta más con menos riesgo, porque cualquier error
+
+00:03:51.693 --> 00:03:53.121
+lo detecta el test al instante.
+
+00:03:53.421 --> 00:03:54.805
+Commiteá al terminar.
+
+00:03:55.105 --> 00:03:59.478
+Si el refactor rompe algo y no es evidente por qué, descartarlo cuesta un comando, y
+
+00:03:59.478 --> 00:04:00.936
+volvés a un estado conocido.
+
+00:04:02.236 --> 00:04:03.202
+Paso 6.
+
+00:04:03.502 --> 00:04:04.736
+Un ciclo, un commit.
+
+00:04:05.286 --> 00:04:07.390
+Repetí con el segundo y el tercer test.
+
+00:04:07.690 --> 00:04:10.827
+Un commit por ciclo deja un historial que se puede auditar.
+
+00:04:11.377 --> 00:04:15.491
+Repetí el ciclo con el segundo y el tercer comportamiento, y hacé un commit por
+
+00:04:15.491 --> 00:04:15.803
+ciclo.
+
+00:04:16.103 --> 00:04:19.924
+El historial queda como una secuencia de reglas agregadas de a una, cada una con su
+
+00:04:19.924 --> 00:04:21.075
+test y su implementación.
+
+00:04:21.375 --> 00:04:25.231
+Eso sirve para revisar y para auditar: quien lea el historial puede ver qué se
+
+00:04:25.231 --> 00:04:27.159
+pidió, qué se construyó y en qué orden.
+
+00:04:27.459 --> 00:04:31.467
+También te da puntos de retorno baratos si un ciclo sale mal, algo que con cambios
+
+00:04:31.467 --> 00:04:33.325
+grandes generados de una vez no tenés.
+
+00:04:34.625 --> 00:04:35.545
+Un ejemplo.
+
+00:04:36.095 --> 00:04:38.454
+La función a construir aplica descuentos.
+
+00:04:38.754 --> 00:04:42.564
+Primer test, escrito a mano: un cupón del diez por ciento sobre cien devuelve
+
+00:04:42.564 --> 00:04:42.960
+noventa.
+
+00:04:43.260 --> 00:04:45.329
+Falla porque la función no existe.
+
+00:04:45.629 --> 00:04:49.637
+El agente escribe cuatro líneas y el test pasa; el diff toca un solo archivo.
+
+00:04:49.937 --> 00:04:52.528
+Refactor: extrae el cálculo del porcentaje.
+
+00:04:52.828 --> 00:04:53.562
+Commit.
+
+00:04:53.862 --> 00:04:57.244
+Segundo test: un descuento mayor al cien por ciento lanza un error.
+
+00:04:57.544 --> 00:04:59.450
+El agente agrega la validación.
+
+00:04:59.750 --> 00:05:02.853
+Tercer test: el resultado se redondea a dos decimales.
+
+00:05:03.153 --> 00:05:07.128
+En el segundo ciclo, el agente había sumado además soporte para cupones de monto
+
+00:05:07.128 --> 00:05:08.171
+fijo que nadie pidió.
+
+00:05:08.471 --> 00:05:10.610
+Se quita, porque ningún test lo exige.
+
+00:05:10.910 --> 00:05:12.875
+Quedan tres commits y tres reglas.
+
+00:05:14.175 --> 00:05:15.698
+Los errores más comunes.
+
+00:05:16.248 --> 00:05:18.735
+Pedir implementación y tests en el mismo pedido.
+
+00:05:19.285 --> 00:05:21.819
+No comprobar que el test falla antes de implementar.
+
+00:05:22.369 --> 00:05:24.775
+Dejar código extra que ningún test exige.
+
+00:05:25.325 --> 00:05:27.429
+Juntar varios ciclos en un solo commit.
+
+00:05:28.729 --> 00:05:30.995
+Para saber que quedó bien, revisá esto.
+
+00:05:31.545 --> 00:05:34.613
+Cada test fue escrito por vos antes que su implementación.
+
+00:05:35.163 --> 00:05:37.708
+Viste cada test fallar por la razón esperada.
+
+00:05:38.258 --> 00:05:41.013
+Ningún diff de implementación tocó archivos de test.
+
+00:05:41.563 --> 00:05:43.690
+El historial tiene un commit por ciclo.
+
+00:05:44.990 --> 00:05:46.560
+Y lo que la IA no hizo bien.
+
+00:05:47.110 --> 00:05:50.503
+Tiende a implementar de más: funciones y casos que ningún test pide.
+
+00:05:50.803 --> 00:05:53.301
+Código sin test que lo pida es código sin dueño.
+
+00:05:54.601 --> 00:05:55.997
+Eso fue el día 13.
+
+00:05:56.297 --> 00:06:00.929
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:00.929 --> 00:06:01.536
+frecuentes.
+
+00:06:02.086 --> 00:06:06.767
+Seguí con el día 14: TDD con IA (2): guardrails para que el agente no haga trampa.

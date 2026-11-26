@@ -1,0 +1,388 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.405
+Día 7 de la serie 31 días de QA + IA.
+
+00:00:03.955 --> 00:00:07.371
+Arneses 101: test harness, eval harness y agent harness.
+
+00:00:07.921 --> 00:00:11.903
+Los tres arneses que hoy conviven en QA, qué envuelve cada uno y cómo ubicar qué le
+
+00:00:11.903 --> 00:00:12.719
+falta a tu stack.
+
+00:00:14.019 --> 00:00:18.209
+La palabra "harness" aparece en casi todas las conversaciones sobre IA y testing, y
+
+00:00:18.209 --> 00:00:20.279
+casi siempre con un significado distinto.
+
+00:00:20.579 --> 00:00:23.658
+Para algunos es el framework de automatización de siempre.
+
+00:00:23.958 --> 00:00:26.631
+Para otros, la herramienta que evalúa un prompt.
+
+00:00:26.931 --> 00:00:31.230
+Para otros, el programa que convierte un modelo en un agente capaz de editar código.
+
+00:00:31.530 --> 00:00:35.286
+Las tres cosas existen y las tres se llaman igual, y esa confusión hace que los
+
+00:00:35.286 --> 00:00:37.616
+equipos compren o construyan lo que no necesitan.
+
+00:00:38.916 --> 00:00:43.067
+Esta guía separa los tres significados con una sola definición común y muestra la
+
+00:00:43.067 --> 00:00:44.143
+relación entre ellos.
+
+00:00:44.443 --> 00:00:48.409
+No hay código hoy: el objetivo es que puedas mirar tu propio stack y decir qué
+
+00:00:48.409 --> 00:00:51.713
+harness tenés, cuál te falta y, sobre todo, cuál verifica a cuál.
+
+00:00:53.013 --> 00:00:54.943
+Para seguir esta guía necesitás:
+
+00:00:55.493 --> 00:00:57.644
+Conocer tu stack actual de automation.
+
+00:00:58.194 --> 00:01:00.971
+La lista de abajo para completar con tus herramientas.
+
+00:01:02.271 --> 00:01:03.574
+Los tres arneses.
+
+00:01:04.124 --> 00:01:06.368
+Test harness: envuelve tu aplicación.
+
+00:01:06.668 --> 00:01:08.899
+Runner, fixtures, mocks y reporters.
+
+00:01:09.199 --> 00:01:11.733
+Ejemplos: Playwright Test, JUnit, pytest.
+
+00:01:12.283 --> 00:01:14.654
+Eval harness: envuelve un modelo o un prompt.
+
+00:01:14.954 --> 00:01:17.406
+Dataset, runner, scorers y reporte.
+
+00:01:17.706 --> 00:01:20.391
+Ejemplos: promptfoo, DeepEval, Inspect AI.
+
+00:01:20.941 --> 00:01:23.428
+Agent harness: envuelve un modelo que actúa.
+
+00:01:23.728 --> 00:01:26.146
+Loop, tools, contexto, permisos y memoria.
+
+00:01:26.446 --> 00:01:29.084
+Ejemplos: Claude Code, Copilot agent, Cursor.
+
+00:01:30.384 --> 00:01:31.280
+Paso 1.
+
+00:01:31.580 --> 00:01:33.046
+Una sola definición.
+
+00:01:33.596 --> 00:01:37.609
+Quedate con la definición: un arnés es todo lo que rodea a lo que probás para poder
+
+00:01:37.609 --> 00:01:39.253
+ejecutarlo, controlarlo y medirlo.
+
+00:01:39.803 --> 00:01:43.523
+Un harness es todo lo que rodea a la cosa bajo prueba para poder ejecutarla,
+
+00:01:43.523 --> 00:01:44.600
+controlarla y medirla.
+
+00:01:44.900 --> 00:01:47.979
+Ejecutarla significa ponerla en marcha de forma repetible.
+
+00:01:48.279 --> 00:01:50.941
+Controlarla, fijar sus entradas y su entorno.
+
+00:01:51.241 --> 00:01:53.798
+Medirla, obtener un resultado comparable.
+
+00:01:54.098 --> 00:01:58.115
+La definición sirve para los tres tipos; lo único que cambia es qué hay en el
+
+00:01:58.115 --> 00:02:00.462
+centro: tu aplicación, un modelo o un agente.
+
+00:02:00.762 --> 00:02:04.755
+Cuando alguien use la palabra, preguntá qué está en el centro y la conversación se
+
+00:02:04.755 --> 00:02:05.339
+ordena sola.
+
+00:02:06.639 --> 00:02:07.536
+Paso 2.
+
+00:02:07.836 --> 00:02:09.638
+Test harness: el que ya tenés.
+
+00:02:10.188 --> 00:02:11.967
+Test harness: ya lo tenés.
+
+00:02:12.267 --> 00:02:15.764
+Runner, fixtures, mocks y reportes alrededor de tu aplicación.
+
+00:02:16.314 --> 00:02:19.022
+Si corrés tests automatizados, ya tenés uno.
+
+00:02:19.322 --> 00:02:23.668
+El runner ejecuta, las fixtures preparan el estado, los mocks aíslan dependencias y
+
+00:02:23.668 --> 00:02:25.501
+los reportes muestran el resultado.
+
+00:02:25.801 --> 00:02:30.123
+Es determinista: la misma entrada da la misma salida y un fallo significa algo.
+
+00:02:30.423 --> 00:02:34.001
+Vale la pena reconocerlo como harness porque es la base de los otros dos.
+
+00:02:34.301 --> 00:02:38.417
+Un equipo con un test harness lento, frágil o que nadie mira va a trasladar esos
+
+00:02:38.417 --> 00:02:41.247
+mismos problemas a todo lo que construya con IA encima.
+
+00:02:42.547 --> 00:02:43.443
+Paso 3.
+
+00:02:43.743 --> 00:02:46.393
+Eval harness: lo mismo alrededor de un modelo.
+
+00:02:46.943 --> 00:02:50.429
+Eval harness: lo mismo, pero alrededor de un modelo o un prompt.
+
+00:02:50.729 --> 00:02:53.518
+Cambia el assert por scorers y el caso por un dataset.
+
+00:02:54.068 --> 00:02:56.625
+Acá la cosa bajo prueba es un modelo o un prompt.
+
+00:02:56.925 --> 00:03:01.122
+Las piezas tienen equivalentes directos: los casos de prueba pasan a ser un dataset,
+
+00:03:01.122 --> 00:03:05.219
+los asserts pasan a ser scorers que puntúan una salida, y el reporte muestra tasas
+
+00:03:05.219 --> 00:03:07.167
+de aprobación en lugar de verde o rojo.
+
+00:03:07.467 --> 00:03:11.483
+Se agregan dos cosas que el test harness no necesitaba: repetir cada caso varias
+
+00:03:11.483 --> 00:03:13.240
+veces y registrar costo y latencia.
+
+00:03:13.540 --> 00:03:17.536
+Lo vas a necesitar el día que una funcionalidad de tu producto dependa de un modelo.
+
+00:03:18.836 --> 00:03:19.838
+Paso 4.
+
+00:03:20.138 --> 00:03:21.998
+Agent harness: el que trabaja.
+
+00:03:22.548 --> 00:03:26.439
+Agent harness: el loop que convierte un modelo en un agente, con herramientas,
+
+00:03:26.439 --> 00:03:28.135
+instrucciones, permisos y memoria.
+
+00:03:28.435 --> 00:03:30.283
+Acá el agente hace trabajo de QA.
+
+00:03:30.833 --> 00:03:34.843
+Es el bucle que convierte un modelo en un agente: recibe una tarea, decide qué
+
+00:03:34.843 --> 00:03:38.441
+herramienta usar, lee el resultado y vuelve a decidir, hasta terminar.
+
+00:03:38.741 --> 00:03:43.028
+A su alrededor hay instrucciones del repositorio, herramientas disponibles, permisos
+
+00:03:43.028 --> 00:03:43.538
+y memoria.
+
+00:03:43.838 --> 00:03:47.753
+La diferencia clave con los otros dos es de rol: este no mide, produce.
+
+00:03:48.053 --> 00:03:51.167
+Escribe tests, modifica código, investiga un fallo.
+
+00:03:51.467 --> 00:03:55.212
+Por eso su configuración se parece más a incorporar a un compañero nuevo que a
+
+00:03:55.212 --> 00:03:56.509
+configurar una herramienta.
+
+00:03:57.809 --> 00:03:58.810
+Paso 5.
+
+00:03:59.110 --> 00:04:00.482
+Quién verifica a quién.
+
+00:04:01.033 --> 00:04:05.105
+Relación clave: el agent harness produce tests y cambios; el test harness y el eval
+
+00:04:05.105 --> 00:04:06.724
+harness verifican lo que produjo.
+
+00:04:07.024 --> 00:04:08.199
+Nunca al revés.
+
+00:04:08.749 --> 00:04:10.969
+La relación es de una sola dirección.
+
+00:04:11.269 --> 00:04:15.074
+El agent harness produce tests y cambios; el test harness y el eval harness
+
+00:04:15.074 --> 00:04:16.241
+verifican lo producido.
+
+00:04:16.541 --> 00:04:20.394
+Si invertís la flecha y dejás que el agente juzgue su propio trabajo, perdés la
+
+00:04:20.394 --> 00:04:23.173
+verificación independiente, que es la razón de ser de QA.
+
+00:04:23.473 --> 00:04:27.306
+En la práctica esto se traduce en una regla concreta: lo que cuenta como terminado
+
+00:04:27.306 --> 00:04:31.232
+es el resultado de un comando que corre fuera del agente, con su código de salida, y
+
+00:04:31.232 --> 00:04:32.915
+no el resumen que el agente escribe.
+
+00:04:34.215 --> 00:04:35.181
+Paso 6.
+
+00:04:35.481 --> 00:04:36.726
+Tu stack en la lista.
+
+00:04:37.276 --> 00:04:40.425
+Completá la lista con tu stack y marcá el arnés que no tenés.
+
+00:04:40.725 --> 00:04:42.318
+Ese es tu próximo paso.
+
+00:04:42.868 --> 00:04:45.854
+Completá la lista de los tres harnesses con nombres propios.
+
+00:04:46.154 --> 00:04:48.711
+Qué runner, qué fixtures y qué reportes usás.
+
+00:04:49.011 --> 00:04:51.893
+Si evaluás algún modelo, con qué dataset y qué scorers.
+
+00:04:52.193 --> 00:04:55.307
+Si usás un agente, qué reglas, herramientas y permisos tiene.
+
+00:04:55.607 --> 00:04:57.723
+Las celdas vacías son información.
+
+00:04:58.023 --> 00:05:02.470
+Si te falta el eval harness y tu producto ya usa un modelo, ese es el próximo paso,
+
+00:05:02.470 --> 00:05:03.703
+y es el tema de mañana.
+
+00:05:04.003 --> 00:05:08.429
+Si te falta el de agentes, puede esperar: es productividad, no verificación.
+
+00:05:09.729 --> 00:05:10.649
+Un ejemplo.
+
+00:05:11.199 --> 00:05:13.488
+Un equipo de producto completa la lista.
+
+00:05:13.788 --> 00:05:18.238
+Test harness: Playwright, fixtures de login, reporte HTML en CI; completo.
+
+00:05:18.538 --> 00:05:22.797
+Eval harness: vacío, aunque el producto tiene un asistente que responde consultas de
+
+00:05:22.797 --> 00:05:24.368
+clientes desde hace tres meses.
+
+00:05:24.668 --> 00:05:28.978
+Agent harness: dos personas usan un agente de código sin reglas compartidas.
+
+00:05:29.278 --> 00:05:30.848
+El diagnóstico es claro.
+
+00:05:31.148 --> 00:05:35.474
+La funcionalidad con más riesgo, el asistente, no tiene ninguna medición, mientras
+
+00:05:35.474 --> 00:05:37.478
+el equipo discutía qué agente adoptar.
+
+00:05:37.778 --> 00:05:41.777
+Deciden armar primero un eval de veinte casos para el asistente y después escribir
+
+00:05:41.777 --> 00:05:43.923
+un archivo de reglas común para los agentes.
+
+00:05:45.223 --> 00:05:46.746
+Los errores más comunes.
+
+00:05:47.296 --> 00:05:49.586
+Usar "harness" sin aclarar qué hay en el centro.
+
+00:05:50.136 --> 00:05:53.030
+Dejar que el agente declare terminado su propio trabajo.
+
+00:05:53.580 --> 00:05:56.636
+Invertir en un agent harness teniendo un test harness frágil.
+
+00:05:57.186 --> 00:06:00.625
+Evaluar un modelo con asserts exactos en lugar de un eval harness.
+
+00:06:01.925 --> 00:06:04.192
+Para saber que quedó bien, revisá esto.
+
+00:06:04.742 --> 00:06:07.751
+Podés explicar los tres harnesses con la misma definición.
+
+00:06:08.301 --> 00:06:11.822
+Tu lista tiene nombres concretos en cada celda o un vacío explícito.
+
+00:06:12.372 --> 00:06:15.033
+Identificaste cuál te falta y por qué importa.
+
+00:06:15.583 --> 00:06:18.523
+Tenés escrita la regla de que el gate corre fuera del agente.
+
+00:06:19.823 --> 00:06:21.393
+Y lo que la IA no hizo bien.
+
+00:06:21.943 --> 00:06:25.533
+Sin un gate externo, el agente reporta éxito sin haber ejecutado.
+
+00:06:25.833 --> 00:06:28.332
+Verificá con el exit code, no con el resumen.
+
+00:06:29.632 --> 00:06:30.981
+Eso fue el día 7.
+
+00:06:31.281 --> 00:06:35.913
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:35.913 --> 00:06:36.520
+frecuentes.
+
+00:06:37.070 --> 00:06:40.080
+Seguí con el día 8: Tu primer eval harness con promptfoo.

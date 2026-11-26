@@ -1,0 +1,364 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.102
+Day 6 of the 31 days of QA + AI series.
+
+00:00:04.652 --> 00:00:09.763
+Synthetic test data with LLMs: realistic, valid and PII-free.
+
+00:00:10.313 --> 00:00:15.174
+A test dataset combining Faker for volume and an LLM for edge cases, validated
+
+00:00:15.174 --> 00:00:17.978
+against a schema and with no production data.
+
+00:00:19.278 --> 00:00:22.380
+Test data is one of the oldest bottlenecks in QA.
+
+00:00:22.680 --> 00:00:27.891
+Either you use a copy of production, with all the legal risk that implies, or you
+
+00:00:27.891 --> 00:00:33.230
+use data so tidy it never triggers a bug: names without accents, perfect addresses,
+
+00:00:33.230 --> 00:00:34.131
+round amounts.
+
+00:00:34.431 --> 00:00:38.926
+Real defects show up with the surname that has an apostrophe, the email with a
+
+00:00:38.926 --> 00:00:42.038
+subdomain or the note someone filled in with an emoji.
+
+00:00:43.338 --> 00:00:47.729
+An LLM is good at exactly that: producing realistic variety.
+
+00:00:48.029 --> 00:00:51.468
+But it also produces invalid rows with great confidence.
+
+00:00:51.768 --> 00:00:56.255
+This guide combines three pieces to keep the best of each: a schema that defines
+
+00:00:56.255 --> 00:01:00.967
+what is valid, Faker for volume and the model only for the odd cases, with automatic
+
+00:01:00.967 --> 00:01:02.313
+validation of every row.
+
+00:01:03.613 --> 00:01:05.310
+To follow this guide you need:
+
+00:01:05.860 --> 00:01:07.662
+The qa-ai-lab repo.
+
+00:01:08.213 --> 00:01:10.038
+A local model with Ollama.
+
+00:01:11.338 --> 00:01:12.618
+This is the setup.
+
+00:01:12.918 --> 00:01:17.135
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:18.435 --> 00:01:20.701
+And this is the next setup file.
+
+00:01:22.001 --> 00:01:24.268
+And this is the next setup file.
+
+00:01:25.568 --> 00:01:26.604
+Step 1.
+
+00:01:26.904 --> 00:01:28.381
+The schema rules.
+
+00:01:28.931 --> 00:01:30.605
+Define the schema first.
+
+00:01:30.905 --> 00:01:33.880
+It's the source of truth for what valid data is.
+
+00:01:34.430 --> 00:01:37.382
+Write the schema before generating a single row.
+
+00:01:37.682 --> 00:01:42.513
+It's the contract for your data: which fields exist, what type they are, which
+
+00:01:42.513 --> 00:01:45.115
+ranges they accept and which are required.
+
+00:01:45.415 --> 00:01:50.251
+With Zod or JSON Schema you express it once and use it in three places: to validate
+
+00:01:50.251 --> 00:01:54.970
+what Faker produces, to validate what the model produces and as documentation for
+
+00:01:54.970 --> 00:01:55.495
+the team.
+
+00:01:55.795 --> 00:02:00.265
+If the schema is loose, for example it accepts any string as a date, invalid data
+
+00:02:00.265 --> 00:02:04.459
+slips through and you'll discover it in a test failing for the wrong reason.
+
+00:02:05.759 --> 00:02:06.957
+Step 2.
+
+00:02:07.257 --> 00:02:08.618
+Faker for volume.
+
+00:02:09.168 --> 00:02:13.838
+Use Faker with a fixed seed for volume: fast, free and reproducible.
+
+00:02:14.388 --> 00:02:17.130
+For the thousands of "normal" rows you don't need a model.
+
+00:02:17.430 --> 00:02:21.682
+Faker generates them in milliseconds, at no cost and with no network.
+
+00:02:21.982 --> 00:02:26.885
+What matters is pinning the seed: with the same seed you get exactly the same data
+
+00:02:26.885 --> 00:02:29.636
+on your machine, on your teammate's and in CI.
+
+00:02:29.936 --> 00:02:33.584
+That turns an intermittent failure into a reproducible one.
+
+00:02:33.884 --> 00:02:38.739
+Also choose the locale matching your users, because it changes the format of names,
+
+00:02:38.739 --> 00:02:43.477
+phone numbers and addresses, and those formats are part of what you want to test.
+
+00:02:44.777 --> 00:02:45.859
+Step 3.
+
+00:02:46.159 --> 00:02:48.042
+The model for the odd cases.
+
+00:02:48.592 --> 00:02:53.451
+Use the LLM for what Faker can't give: realistic edge cases (apostrophes in
+
+00:02:53.451 --> 00:02:58.568
+surnames, accented names, emails with subdomains, notes with emojis or quotes).
+
+00:02:59.118 --> 00:03:03.610
+Ask the model for what a library can't invent: believable variants that break
+
+00:03:03.610 --> 00:03:04.310
+assumptions.
+
+00:03:04.610 --> 00:03:06.517
+Be specific in the request.
+
+00:03:06.817 --> 00:03:11.617
+Instead of "generate weird data", list the categories you care about: compound
+
+00:03:11.617 --> 00:03:16.725
+surnames and ones with apostrophes, single-letter names, emails with subdomains and
+
+00:03:16.725 --> 00:03:21.648
+plus signs, free text with quotes, line breaks or emojis, dates at the edge of a
+
+00:03:21.648 --> 00:03:22.017
+range.
+
+00:03:22.317 --> 00:03:24.688
+Ask for a few rows per category.
+
+00:03:24.988 --> 00:03:29.283
+Ten well-thought-out cases are worth more than five hundred similar ones, and they
+
+00:03:29.283 --> 00:03:30.436
+are cheaper to review.
+
+00:03:31.736 --> 00:03:32.749
+Step 4.
+
+00:03:33.049 --> 00:03:34.711
+Row-by-row validation.
+
+00:03:35.261 --> 00:03:39.780
+Ask the model for JSON output and validate every row against the schema.
+
+00:03:40.080 --> 00:03:42.788
+Whatever fails gets discarded and counted.
+
+00:03:43.338 --> 00:03:48.136
+Ask for JSON output and pass every row through the schema before accepting it.
+
+00:03:48.436 --> 00:03:51.561
+Whatever doesn't validate gets discarded and counted.
+
+00:03:51.861 --> 00:03:56.392
+That counter is a useful metric: if the model fails one row in four, the prompt
+
+00:03:56.392 --> 00:04:00.235
+needs a format example or the schema has a rule you didn't explain.
+
+00:04:00.535 --> 00:04:05.042
+Don't fix invalid rows by hand, because that breaks reproducibility.
+
+00:04:05.342 --> 00:04:11.735
+Don't trust a visual review either: a date such as 2026-02-30 looks perfect and
+
+00:04:11.735 --> 00:04:12.868
+doesn't exist.
+
+00:04:14.168 --> 00:04:15.297
+Step 5.
+
+00:04:15.597 --> 00:04:17.561
+Production stays out of the prompt.
+
+00:04:18.112 --> 00:04:20.657
+Never paste production data into the prompt.
+
+00:04:20.957 --> 00:04:23.757
+Describe the shape of the data, not the data.
+
+00:04:24.307 --> 00:04:29.098
+The rule is simple and has no exceptions: the prompt carries the shape of the data,
+
+00:04:29.098 --> 00:04:29.964
+never the data.
+
+00:04:30.264 --> 00:04:35.423
+Describe fields, formats and oddities you want to see, without pasting real records,
+
+00:04:35.423 --> 00:04:40.336
+not even "hand-anonymized" ones, because that anonymization almost always leaves
+
+00:04:40.336 --> 00:04:41.749
+something identifiable.
+
+00:04:42.049 --> 00:04:46.893
+If you need synthetic data to resemble the real data statistically, describe the
+
+00:04:46.893 --> 00:04:48.286
+distributions in words.
+
+00:04:48.586 --> 00:04:53.840
+And verify the result: check that no names or ID numbers match real people in your
+
+00:04:53.840 --> 00:04:54.417
+database.
+
+00:04:55.717 --> 00:04:56.904
+Step 6.
+
+00:04:57.204 --> 00:04:59.714
+Seed, prompt and dataset versioned.
+
+00:05:00.264 --> 00:05:04.238
+Version the seed, the prompt and the final dataset in data/.
+
+00:05:04.538 --> 00:05:07.071
+A dataset you can't regenerate is debt.
+
+00:05:07.621 --> 00:05:12.368
+Store in data/ the three things that let you regenerate the set: the Faker seed, the
+
+00:05:12.368 --> 00:05:16.041
+prompt used with the model and the final, already validated file.
+
+00:05:16.341 --> 00:05:20.805
+The part generated by the model isn't reproducible bit for bit, which is why you
+
+00:05:20.805 --> 00:05:23.205
+version the result and not just the recipe.
+
+00:05:23.505 --> 00:05:25.598
+Also note the model and the date.
+
+00:05:25.898 --> 00:05:30.271
+When a test fails six months from now, you'll be able to tell which data it ran
+
+00:05:30.271 --> 00:05:34.201
+with, and if the set needs extending you'll start from something known.
+
+00:05:35.501 --> 00:05:36.607
+An example.
+
+00:05:37.157 --> 00:05:39.702
+A team tests a customer sign-up form.
+
+00:05:40.002 --> 00:05:44.196
+With Faker and a fixed seed they generate a thousand valid customers in under a
+
+00:05:44.196 --> 00:05:44.567
+second.
+
+00:05:44.867 --> 00:05:49.026
+Then they ask the model for twenty odd cases across five categories.
+
+00:05:49.326 --> 00:05:54.284
+Of the twenty rows, the schema rejects four: two impossible birth dates, a phone
+
+00:05:54.284 --> 00:05:57.259
+number with letters and an email with no domain.
+
+00:05:57.559 --> 00:05:58.827
+Sixteen remain.
+
+00:05:59.127 --> 00:06:03.889
+Running the suite with those sixteen, two tests fail: the surname O'Connor breaks a
+
+00:06:03.889 --> 00:06:07.732
+badly escaped query and a name with an emoji gets stored truncated.
+
+00:06:08.032 --> 00:06:11.472
+None of the thousand tidy records had found those two defects.
+
+00:06:12.772 --> 00:06:14.435
+The most common mistakes.
+
+00:06:14.985 --> 00:06:19.573
+Generating everything with the model, even the volume Faker handles for free.
+
+00:06:20.123 --> 00:06:24.619
+Accepting rows by how they look, without validating them against the schema.
+
+00:06:25.169 --> 00:06:28.132
+Pasting a real record "as a format example".
+
+00:06:28.682 --> 00:06:32.458
+Not saving the final dataset and being unable to repeat a run.
+
+00:06:33.758 --> 00:06:36.001
+To know it is done, check this.
+
+00:06:36.551 --> 00:06:40.199
+The schema rejects invalid dates, emails and ranges.
+
+00:06:40.749 --> 00:06:44.467
+Faker runs with a fixed seed and gives the same result twice.
+
+00:06:45.017 --> 00:06:48.851
+Every model row went through the schema and there is a discard count.
+
+00:06:49.401 --> 00:06:53.525
+Seed, prompt, model, date and dataset are in data/.
+
+00:06:54.825 --> 00:06:56.720
+And where AI fell short.
+
+00:06:57.271 --> 00:07:01.476
+It returns JSON that looks valid and isn't (dates, formats).
+
+00:07:01.776 --> 00:07:05.389
+Without automatic validation, those errors reach your tests.
+
+00:07:06.689 --> 00:07:08.178
+That was day 6.
+
+00:07:08.478 --> 00:07:13.452
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:13.452 --> 00:07:14.460
+asked questions.
+
+00:07:15.010 --> 00:07:21.502
+Continue with day 7: Harnesses 101: test harness, eval harness and agent harness.

@@ -1,0 +1,364 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.568
+Día 15 de la serie 31 días de QA + IA.
+
+00:00:04.118 --> 00:00:06.280
+Cómo setear modelos para pruebas de calidad.
+
+00:00:06.830 --> 00:00:10.933
+Configurar un modelo para pruebas de forma reproducible: versión fija, parámetros
+
+00:00:10.933 --> 00:00:14.530
+explícitos, salida estructurada y un juez separado del modelo evaluado.
+
+00:00:15.830 --> 00:00:19.690
+Cuando un test con un modelo da resultados distintos de un día para el otro, la
+
+00:00:19.690 --> 00:00:21.498
+primera sospecha suele ser el modelo.
+
+00:00:21.798 --> 00:00:24.250
+La segunda debería ser la configuración.
+
+00:00:24.550 --> 00:00:28.325
+Un alias que apunta a la última versión, una temperatura que quedó en el valor por
+
+00:00:28.325 --> 00:00:32.099
+defecto, un límite de tokens que corta la respuesta o un juez que cambió sin aviso
+
+00:00:32.099 --> 00:00:34.584
+explican buena parte de las diferencias inexplicables.
+
+00:00:35.884 --> 00:00:39.639
+Configurar un modelo para pruebas de calidad es tratarlo como cualquier otra
+
+00:00:39.639 --> 00:00:43.789
+dependencia de un entorno de test: versión fija, parámetros explícitos y registro de
+
+00:00:43.789 --> 00:00:45.024
+con qué corrió cada cosa.
+
+00:00:45.324 --> 00:00:49.314
+Esta guía recorre las seis decisiones que hacen que dos corridas sean comparables, y
+
+00:00:49.314 --> 00:00:53.115
+deja en claro qué significa reproducibilidad cuando el sistema bajo prueba no es
+
+00:00:53.115 --> 00:00:53.732
+determinista.
+
+00:00:55.032 --> 00:00:56.962
+Para seguir esta guía necesitás:
+
+00:00:57.512 --> 00:00:59.233
+El eval harness del día 8.
+
+00:00:59.783 --> 00:01:03.373
+Opcional: API key de un proveedor para el segundo modelo y el juez.
+
+00:01:04.673 --> 00:01:05.848
+Este es el setup.
+
+00:01:06.148 --> 00:01:09.495
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:10.795 --> 00:01:11.691
+Paso 1.
+
+00:01:11.991 --> 00:01:13.991
+El rol define la configuración.
+
+00:01:14.541 --> 00:01:18.470
+Definí el rol del modelo en la prueba: sistema bajo prueba, generador (datos o
+
+00:01:18.470 --> 00:01:19.176
+tests) o juez.
+
+00:01:19.476 --> 00:01:21.359
+Cada rol se configura distinto.
+
+00:01:21.909 --> 00:01:26.208
+Un mismo modelo puede cumplir tres roles en tu proceso, y cada uno pide otra cosa.
+
+00:01:26.508 --> 00:01:30.712
+Como sistema bajo prueba, se configura igual que en producción, porque querés medir
+
+00:01:30.712 --> 00:01:31.978
+lo que el usuario recibe.
+
+00:01:32.278 --> 00:01:36.704
+Como generador de datos o tests, puede usar más temperatura para producir variedad.
+
+00:01:37.004 --> 00:01:40.258
+Como juez, necesita la configuración más estable posible.
+
+00:01:40.558 --> 00:01:44.540
+Mezclar roles en una sola configuración es un error frecuente: terminás midiendo el
+
+00:01:44.540 --> 00:01:46.795
+producto con parámetros que el producto no usa.
+
+00:01:48.095 --> 00:01:48.992
+Paso 2.
+
+00:01:49.292 --> 00:01:51.024
+Versión exacta, sin alias.
+
+00:01:51.574 --> 00:01:53.109
+Fijá la versión exacta.
+
+00:01:53.409 --> 00:01:57.385
+Nada de alias tipo "latest": si el proveedor actualiza el modelo, tus resultados
+
+00:01:57.385 --> 00:01:58.776
+cambian sin que toques nada.
+
+00:01:59.326 --> 00:02:03.264
+Los proveedores ofrecen alias que apuntan a la versión más reciente de un modelo.
+
+00:02:03.564 --> 00:02:07.298
+Son cómodos para desarrollar y malos para medir: el día que el alias cambia, tus
+
+00:02:07.298 --> 00:02:11.032
+resultados cambian sin que hayas tocado nada, y no tenés forma de saber por qué.
+
+00:02:11.332 --> 00:02:14.562
+Usá siempre el identificador completo con su versión o fecha.
+
+00:02:14.862 --> 00:02:18.519
+Cuando quieras actualizar, hacelo como un cambio deliberado: corré el eval con la
+
+00:02:18.519 --> 00:02:22.086
+versión vieja y con la nueva, compará y recién después cambiá el identificador.
+
+00:02:23.386 --> 00:02:24.283
+Paso 3.
+
+00:02:24.583 --> 00:02:25.990
+Parámetros a la vista.
+
+00:02:26.540 --> 00:02:30.804
+Parámetros explícitos: temperatura baja para clasificar y juzgar, límite de tokens
+
+00:02:30.804 --> 00:02:33.091
+de salida y seed si el proveedor lo soporta.
+
+00:02:33.391 --> 00:02:36.006
+Si un modelo no expone algún parámetro, anotalo.
+
+00:02:36.556 --> 00:02:40.462
+Escribí en la configuración los parámetros que afectan la salida, aunque coincidan
+
+00:02:40.462 --> 00:02:44.463
+con los valores por defecto: temperatura, límite de tokens de salida y semilla si el
+
+00:02:44.463 --> 00:02:45.463
+proveedor la soporta.
+
+00:02:45.763 --> 00:02:48.367
+Para clasificar y juzgar, temperatura baja.
+
+00:02:48.667 --> 00:02:52.911
+El límite de tokens merece atención: una respuesta cortada a la mitad puede parecer
+
+00:02:52.911 --> 00:02:55.519
+un fallo de formato cuando es un límite mal puesto.
+
+00:02:55.819 --> 00:02:58.991
+Algunos modelos no exponen ciertos parámetros o los ignoran.
+
+00:02:59.291 --> 00:03:03.427
+Anotalo también, para no atribuirle a la configuración un control que no tenés.
+
+00:03:04.727 --> 00:03:05.728
+Paso 4.
+
+00:03:06.028 --> 00:03:07.331
+Salida estructurada.
+
+00:03:07.881 --> 00:03:10.357
+Salida estructurada: pedí JSON con schema.
+
+00:03:10.657 --> 00:03:12.889
+Te ahorra buena parte de los fallos de formato.
+
+00:03:13.439 --> 00:03:17.390
+Si tu código va a parsear la respuesta, pedila en JSON con un schema, usando el
+
+00:03:17.390 --> 00:03:20.442
+mecanismo de salida estructurada del proveedor cuando exista.
+
+00:03:20.742 --> 00:03:25.058
+Reduce una clase entera de fallos: texto antes o después del JSON, campos con otro
+
+00:03:25.058 --> 00:03:27.374
+nombre, valores fuera de la lista permitida.
+
+00:03:27.674 --> 00:03:31.777
+No reemplaza a la validación de tu lado, que sigue siendo necesaria, pero cambia la
+
+00:03:31.777 --> 00:03:32.321
+proporción.
+
+00:03:32.621 --> 00:03:36.448
+Vas a dedicar los evals a medir si el contenido es correcto, en lugar de gastar
+
+00:03:36.448 --> 00:03:38.579
+casos en descubrir que el formato vino roto.
+
+00:03:39.879 --> 00:03:40.880
+Paso 5.
+
+00:03:41.180 --> 00:03:42.274
+Un juez separado.
+
+00:03:42.824 --> 00:03:46.594
+Juez separado: el modelo que evalúa no debería ser el mismo que se evalúa, y
+
+00:03:46.594 --> 00:03:48.330
+conviene que sea igual o más capaz.
+
+00:03:48.880 --> 00:03:52.745
+El modelo que califica no debería ser el mismo que está siendo calificado, y
+
+00:03:52.745 --> 00:03:54.525
+conviene que sea igual o más capaz.
+
+00:03:54.825 --> 00:03:58.407
+Un modelo que evalúa su propia salida tiende a encontrarla razonable, porque
+
+00:03:58.407 --> 00:04:00.528
+comparte los mismos sesgos que la produjeron.
+
+00:04:00.828 --> 00:04:04.546
+Declaralo como un provider aparte, con su versión fija y su etiqueta.
+
+00:04:04.846 --> 00:04:08.464
+Cambiar el juez es cambiar el instrumento de medición: después de hacerlo, las
+
+00:04:08.464 --> 00:04:12.082
+métricas nuevas no son comparables con las anteriores hasta volver a calibrar.
+
+00:04:13.382 --> 00:04:14.348
+Paso 6.
+
+00:04:14.648 --> 00:04:15.893
+La ficha de corrida.
+
+00:04:16.443 --> 00:04:21.253
+Registrá la ficha de cada corrida: modelo y versión, versión del prompt, parámetros,
+
+00:04:21.253 --> 00:04:22.169
+fecha y dataset.
+
+00:04:22.469 --> 00:04:24.527
+Sin ficha no hay comparación válida.
+
+00:04:25.077 --> 00:04:29.503
+Cada corrida debería dejar un registro con modelo y versión, versión del prompt,
+
+00:04:29.503 --> 00:04:31.883
+parámetros, fecha, dataset y, si hay, juez.
+
+00:04:32.183 --> 00:04:35.192
+Es un archivo chico que se guarda junto a los resultados.
+
+00:04:35.492 --> 00:04:39.661
+Sin esa ficha, una comparación entre dos corridas no dice nada, porque no sabés qué
+
+00:04:39.661 --> 00:04:41.068
+más cambió entre una y otra.
+
+00:04:41.368 --> 00:04:45.147
+Con ella podés responder la pregunta que siempre llega: por qué la semana pasada
+
+00:04:45.147 --> 00:04:46.990
+daba noventa y hoy da ochenta y cuatro.
+
+00:04:48.290 --> 00:04:49.210
+Un ejemplo.
+
+00:04:49.760 --> 00:04:53.839
+Un equipo nota que su eval de clasificación bajó cinco puntos sin que nadie tocara
+
+00:04:53.839 --> 00:04:54.337
+el prompt.
+
+00:04:54.637 --> 00:04:56.915
+Buscan las fichas de corrida y no existen.
+
+00:04:57.215 --> 00:05:00.806
+Reconstruyen lo que pueden: el provider usaba un alias y el proveedor había
+
+00:05:00.806 --> 00:05:02.674
+publicado una versión nueva esa semana.
+
+00:05:02.974 --> 00:05:07.121
+Fijan la versión anterior, corren de nuevo y el resultado vuelve al valor original.
+
+00:05:07.421 --> 00:05:11.424
+Después corren la versión nueva a propósito: es mejor en los casos ambiguos y peor
+
+00:05:11.424 --> 00:05:12.498
+en dos casos críticos.
+
+00:05:12.798 --> 00:05:14.704
+Deciden no actualizar todavía.
+
+00:05:15.004 --> 00:05:19.175
+A partir de ahí, cada corrida guarda su ficha y el identificador del modelo incluye
+
+00:05:19.175 --> 00:05:19.628
+la fecha.
+
+00:05:20.928 --> 00:05:22.451
+Los errores más comunes.
+
+00:05:23.001 --> 00:05:25.500
+Usar un alias de versión en evals o en CI.
+
+00:05:26.050 --> 00:05:29.338
+Evaluar el producto con parámetros distintos a los de producción.
+
+00:05:29.888 --> 00:05:32.271
+Usar como juez el mismo modelo que se evalúa.
+
+00:05:32.821 --> 00:05:35.749
+Comparar dos corridas sin saber qué cambió entre ellas.
+
+00:05:37.049 --> 00:05:39.316
+Para saber que quedó bien, revisá esto.
+
+00:05:39.866 --> 00:05:42.713
+Cada provider tiene un rol y una etiqueta que lo dice.
+
+00:05:43.263 --> 00:05:46.238
+Todos los modelos están fijados a una versión exacta.
+
+00:05:46.788 --> 00:05:49.914
+Temperatura, límite de tokens y semilla están escritos.
+
+00:05:50.464 --> 00:05:53.183
+Cada corrida guarda su ficha junto a los resultados.
+
+00:05:54.483 --> 00:05:56.053
+Y lo que la IA no hizo bien.
+
+00:05:56.603 --> 00:05:59.369
+Temperatura cero no garantiza la misma respuesta.
+
+00:05:59.669 --> 00:06:04.025
+La reproducibilidad en LLMs es estadística: se mide con corridas repetidas.
+
+00:06:05.325 --> 00:06:06.709
+Eso fue el día 15.
+
+00:06:07.009 --> 00:06:11.642
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:11.642 --> 00:06:12.248
+frecuentes.
+
+00:06:12.798 --> 00:06:17.491
+Seguí con el día 16: LLM como juez: rúbricas y calibración contra humanos.

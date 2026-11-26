@@ -1,0 +1,358 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.067
+Day 20 of the 31 days of QA + AI series.
+
+00:00:04.617 --> 00:00:08.370
+Prompt regression: version, compare and don't break what worked.
+
+00:00:08.920 --> 00:00:13.685
+Treating every prompt change as a code change: version, side-by-side comparison and
+
+00:00:13.685 --> 00:00:15.981
+a regression set that decides the merge.
+
+00:00:17.281 --> 00:00:22.113
+A prompt in production is code that gets modified often and almost never tested.
+
+00:00:22.413 --> 00:00:27.845
+Someone finds a failing case, adds a sentence to fix it, tries it on that same case,
+
+00:00:27.845 --> 00:00:29.591
+sees it works and ships it.
+
+00:00:29.891 --> 00:00:33.330
+A week later three cases that used to work no longer do.
+
+00:00:33.630 --> 00:00:38.358
+Nobody connects one thing with the other, because there's no record of what changed
+
+00:00:38.358 --> 00:00:39.554
+or how it was before.
+
+00:00:40.854 --> 00:00:45.872
+It's a classic regression problem, and it's solved with the classic tools adapted:
+
+00:00:45.872 --> 00:00:50.830
+versions, small changes, side-by-side comparison and a regression set that grows.
+
+00:00:51.130 --> 00:00:55.722
+This guide builds that flow and adds two cautions specific to models: looking at
+
+00:00:55.722 --> 00:01:00.200
+errors by type and watching that prompt examples don't leak from the test set.
+
+00:01:01.500 --> 00:01:03.197
+To follow this guide you need:
+
+00:01:03.747 --> 00:01:07.105
+A golden dataset with test and regression (day 17).
+
+00:01:07.655 --> 00:01:10.096
+Two prompt versions in separate files.
+
+00:01:11.396 --> 00:01:12.676
+This is the setup.
+
+00:01:12.976 --> 00:01:17.193
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:18.493 --> 00:01:20.759
+And this is the next setup file.
+
+00:01:22.059 --> 00:01:24.326
+And this is the next setup file.
+
+00:01:25.626 --> 00:01:26.662
+Step 1.
+
+00:01:26.962 --> 00:01:30.215
+One version, one file, one changelog line.
+
+00:01:30.765 --> 00:01:35.741
+Each prompt version is a file, with a changelog line stating which rule changed and
+
+00:01:35.741 --> 00:01:35.981
+why.
+
+00:01:36.531 --> 00:01:41.325
+Each prompt version is its own file with its number, and each has a changelog line
+
+00:01:41.325 --> 00:01:43.372
+stating which rule changed and why.
+
+00:01:43.672 --> 00:01:47.459
+Don't overwrite the previous file, because you'll need it to compare.
+
+00:01:47.759 --> 00:01:50.188
+The why matters as much as the what.
+
+00:01:50.488 --> 00:01:53.486
+"Added rule for performance complaints" isn't enough.
+
+00:01:53.786 --> 00:01:55.739
+Add which case motivated it.
+
+00:01:56.039 --> 00:02:00.237
+Months from now someone will want to remove that rule, and without the reason they
+
+00:02:00.237 --> 00:02:01.824
+won't know what it might break.
+
+00:02:03.124 --> 00:02:04.322
+Step 2.
+
+00:02:04.622 --> 00:02:06.227
+One change per version.
+
+00:02:06.777 --> 00:02:08.382
+One change per version.
+
+00:02:08.682 --> 00:02:12.980
+If you change three things at once, you don't know which one moved the result.
+
+00:02:13.530 --> 00:02:17.822
+If in a single version you rewrite a rule, add an example and change the output
+
+00:02:17.822 --> 00:02:21.788
+format, and the result moves, you don't know which of the three moved it.
+
+00:02:22.088 --> 00:02:26.386
+One may even have improved things and another worsened them, and you see a tie.
+
+00:02:26.686 --> 00:02:31.298
+One change per version means each measurement has a single possible explanation.
+
+00:02:31.598 --> 00:02:32.901
+It looks slower.
+
+00:02:33.201 --> 00:02:37.514
+In practice it's faster, because you don't waste time untangling mixed changes to
+
+00:02:37.514 --> 00:02:39.484
+find the one that caused the problem.
+
+00:02:40.784 --> 00:02:41.867
+Step 3.
+
+00:02:42.167 --> 00:02:44.422
+Side by side, five times.
+
+00:02:44.972 --> 00:02:50.048
+Run both versions side by side on the test set, 5 times, and on the regression set.
+
+00:02:50.598 --> 00:02:55.258
+Set up the eval with both versions as prompts in the same file, so they run on the
+
+00:02:55.258 --> 00:02:55.883
+same cases.
+
+00:02:56.183 --> 00:03:00.655
+Use the test set and the regression set as well, with five repetitions.
+
+00:03:00.955 --> 00:03:05.320
+The viewer shows the two columns and lets you filter the cases where one version
+
+00:03:05.320 --> 00:03:06.902
+passes and the other doesn't.
+
+00:03:07.202 --> 00:03:08.981
+Those are the cases to read.
+
+00:03:09.281 --> 00:03:13.436
+That's where you see what you fixed, what you broke and what changed its answer
+
+00:03:13.436 --> 00:03:14.961
+without changing its verdict.
+
+00:03:16.261 --> 00:03:17.274
+Step 4.
+
+00:03:17.574 --> 00:03:19.248
+Movement by error type.
+
+00:03:19.798 --> 00:03:23.029
+Look at movement per error type, not just the total.
+
+00:03:23.329 --> 00:03:25.677
+Fixing one type often raises another.
+
+00:03:26.227 --> 00:03:29.933
+The total can stay the same while everything shifts underneath.
+
+00:03:30.233 --> 00:03:34.717
+Classify failures by type and compare the count of each type across versions.
+
+00:03:35.017 --> 00:03:38.990
+It's common for a new rule to fix one category and worsen another.
+
+00:03:39.290 --> 00:03:44.046
+An instruction making the model more cautious with complaints, for example, can make
+
+00:03:44.046 --> 00:03:45.632
+it under-flag real blockers.
+
+00:03:45.932 --> 00:03:50.266
+If you look only at the overall percentage, that trade stays hidden, and you'll
+
+00:03:50.266 --> 00:03:51.693
+discover it in production.
+
+00:03:52.993 --> 00:03:54.122
+Step 5.
+
+00:03:54.422 --> 00:03:56.433
+Leaks between prompt and test.
+
+00:03:56.983 --> 00:04:01.479
+Check for leakage: examples you put in the prompt can't be test set cases.
+
+00:04:02.029 --> 00:04:07.276
+The examples you put in the prompt can't be test set cases, nor nearly identical
+
+00:04:07.276 --> 00:04:07.604
+ones.
+
+00:04:07.904 --> 00:04:12.268
+If they are, the model sees the answer before the question and the metric rises with
+
+00:04:12.268 --> 00:04:13.514
+nothing having improved.
+
+00:04:13.814 --> 00:04:18.563
+It's an easy leak to commit: the failing case is exactly the one you want to use as
+
+00:04:18.563 --> 00:04:19.192
+an example.
+
+00:04:19.492 --> 00:04:24.180
+Take examples from the dev set or write them from scratch, and verify with a text
+
+00:04:24.180 --> 00:04:26.089
+search that none appears in test.
+
+00:04:27.389 --> 00:04:28.576
+Step 6.
+
+00:04:28.876 --> 00:04:30.156
+The merge rule.
+
+00:04:30.706 --> 00:04:35.062
+Merge rule: test improves beyond noise and regression doesn't drop.
+
+00:04:35.362 --> 00:04:38.523
+Then the newly fixed cases join the regression set.
+
+00:04:39.073 --> 00:04:43.566
+Define in advance when a new version replaces the previous one: the test set
+
+00:04:43.566 --> 00:04:48.532
+improves beyond noise, meaning no overlapping ranges, and the regression set doesn't
+
+00:04:48.532 --> 00:04:48.828
+drop.
+
+00:04:49.128 --> 00:04:51.244
+If it qualifies, it merges.
+
+00:04:51.544 --> 00:04:55.052
+Afterwards, the newly fixed cases join the regression set.
+
+00:04:55.352 --> 00:04:58.757
+That way every solved problem stays protected for good.
+
+00:04:59.057 --> 00:05:03.697
+If it doesn't qualify, the version is discarded or worked on further, but it doesn't
+
+00:05:03.697 --> 00:05:05.410
+ship "because it looks better".
+
+00:05:06.710 --> 00:05:07.816
+An example.
+
+00:05:08.366 --> 00:05:11.875
+A ticket classifier marks any slowness complaint as blocking.
+
+00:05:12.175 --> 00:05:16.840
+The team creates version seven with a single new rule: performance complaints with
+
+00:05:16.840 --> 00:05:18.888
+no blocked flow are medium severity.
+
+00:05:19.188 --> 00:05:22.174
+They run it against version six, five times.
+
+00:05:22.474 --> 00:05:27.434
+On test, the mean rises from 82 to 88 with no overlapping ranges.
+
+00:05:27.734 --> 00:05:32.708
+On regression, one case drops: a ticket saying "it takes so long I can't pay" now
+
+00:05:32.708 --> 00:05:33.937
+comes out as medium.
+
+00:05:34.237 --> 00:05:35.714
+That's a real blocker.
+
+00:05:36.014 --> 00:05:40.206
+They adjust the rule's wording in a version eight, run again, and regression is
+
+00:05:40.206 --> 00:05:40.684
+complete.
+
+00:05:40.984 --> 00:05:44.725
+They merge eight and add four new cases to the regression set.
+
+00:05:45.025 --> 00:05:46.734
+The figures are illustrative.
+
+00:05:48.034 --> 00:05:49.697
+The most common mistakes.
+
+00:05:50.247 --> 00:05:53.477
+Overwriting the prompt without keeping the previous version.
+
+00:05:54.027 --> 00:05:56.584
+Putting several changes into a single version.
+
+00:05:57.134 --> 00:06:00.132
+Trying the change only on the case that motivated it.
+
+00:06:00.682 --> 00:06:03.784
+Using test set cases as prompt examples.
+
+00:06:05.084 --> 00:06:07.328
+To know it is done, check this.
+
+00:06:07.878 --> 00:06:11.166
+Each prompt version is a file with its changelog line.
+
+00:06:11.716 --> 00:06:15.051
+The new version has a single change from the previous one.
+
+00:06:15.601 --> 00:06:19.446
+Both versions ran side by side on test and on regression.
+
+00:06:19.996 --> 00:06:22.600
+The fixed cases were added to the regression set.
+
+00:06:23.900 --> 00:06:25.795
+And where AI fell short.
+
+00:06:26.345 --> 00:06:29.192
+Adherence to a prompt rule is probabilistic.
+
+00:06:29.492 --> 00:06:32.153
+Measure in what percentage of runs it's honored.
+
+00:06:33.453 --> 00:06:34.849
+That was day 20.
+
+00:06:35.149 --> 00:06:40.123
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:40.123 --> 00:06:41.131
+asked questions.
+
+00:06:41.681 --> 00:06:47.999
+Continue with day 21: Testing RAG: retrieval, faithfulness and answer, separately.

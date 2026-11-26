@@ -1,0 +1,373 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.510
+Día 20 de la serie 31 días de QA + IA.
+
+00:00:04.060 --> 00:00:07.603
+Regresión de prompts: versionar, comparar y no romper lo que andaba.
+
+00:00:08.153 --> 00:00:12.236
+Tratar cada cambio de prompt como un cambio de código: versión, comparación lado a
+
+00:00:12.236 --> 00:00:14.576
+lado y un set de regresión que decide el merge.
+
+00:00:15.876 --> 00:00:19.954
+Un prompt en producción es código que se modifica seguido y casi nunca se prueba.
+
+00:00:20.254 --> 00:00:24.489
+Alguien encuentra un caso que falla, agrega una frase para arreglarlo, lo prueba con
+
+00:00:24.489 --> 00:00:26.758
+ese mismo caso, ve que funciona y lo publica.
+
+00:00:27.058 --> 00:00:30.532
+Una semana después aparecen tres casos que antes andaban y ahora no.
+
+00:00:30.832 --> 00:00:34.970
+Nadie conecta una cosa con la otra, porque no hay registro de qué cambió ni de cómo
+
+00:00:34.970 --> 00:00:35.618
+estaba antes.
+
+00:00:36.918 --> 00:00:41.042
+Es un problema clásico de regresión, y se resuelve con las herramientas clásicas
+
+00:00:41.042 --> 00:00:45.062
+adaptadas: versiones, cambios chicos, comparación lado a lado y un conjunto de
+
+00:00:45.062 --> 00:00:46.093
+regresión que crece.
+
+00:00:46.393 --> 00:00:50.280
+Esta guía arma ese flujo y agrega dos cuidados propios de los modelos: mirar los
+
+00:00:50.280 --> 00:00:54.021
+errores por tipo y vigilar que los ejemplos del prompt no se filtren desde el
+
+00:00:54.021 --> 00:00:54.847
+conjunto de test.
+
+00:00:56.147 --> 00:00:58.077
+Para seguir esta guía necesitás:
+
+00:00:58.627 --> 00:01:01.649
+Un golden dataset con test y regression (día 17).
+
+00:01:02.199 --> 00:01:04.790
+Dos versiones del prompt en archivos separados.
+
+00:01:06.090 --> 00:01:07.265
+Este es el setup.
+
+00:01:07.565 --> 00:01:10.912
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:12.212 --> 00:01:14.351
+Y este es el siguiente archivo del setup.
+
+00:01:15.651 --> 00:01:17.789
+Y este es el siguiente archivo del setup.
+
+00:01:19.089 --> 00:01:19.986
+Paso 1.
+
+00:01:20.286 --> 00:01:23.180
+Una versión, un archivo, una línea de changelog.
+
+00:01:23.730 --> 00:01:27.826
+Cada versión del prompt es un archivo, con una línea de changelog que diga qué regla
+
+00:01:27.826 --> 00:01:28.655
+cambió y por qué.
+
+00:01:29.205 --> 00:01:33.023
+Cada versión del prompt es un archivo propio con su número, y cada una tiene una
+
+00:01:33.023 --> 00:01:35.790
+línea en el changelog que dice qué regla cambió y por qué.
+
+00:01:36.090 --> 00:01:40.122
+No sobrescribas el archivo anterior, porque lo vas a necesitar para comparar.
+
+00:01:40.422 --> 00:01:42.352
+El porqué importa tanto como el qué.
+
+00:01:42.652 --> 00:01:45.429
+"Se agregó regla para quejas de rendimiento" no alcanza.
+
+00:01:45.729 --> 00:01:47.311
+Sumale qué caso la motivó.
+
+00:01:47.611 --> 00:01:51.713
+Dentro de unos meses, alguien va a querer quitar esa regla, y sin el motivo no va a
+
+00:01:51.713 --> 00:01:52.849
+saber qué puede romper.
+
+00:01:54.149 --> 00:01:55.046
+Paso 2.
+
+00:01:55.346 --> 00:01:56.753
+Un cambio por versión.
+
+00:01:57.303 --> 00:01:58.711
+Un cambio por versión.
+
+00:01:59.011 --> 00:02:02.392
+Si cambiás tres cosas juntas, no sabés cuál movió el resultado.
+
+00:02:02.942 --> 00:02:06.763
+Si en una misma versión reescribís una regla, agregás un ejemplo y cambiás el
+
+00:02:06.763 --> 00:02:10.634
+formato de salida, y el resultado se mueve, no sabés cuál de las tres cosas lo
+
+00:02:10.634 --> 00:02:10.932
+movió.
+
+00:02:11.232 --> 00:02:14.706
+Puede incluso que una haya mejorado y otra empeorado, y veas un empate.
+
+00:02:15.006 --> 00:02:19.038
+Un cambio por versión hace que cada medición tenga una sola explicación posible.
+
+00:02:19.338 --> 00:02:20.594
+Parece más lento.
+
+00:02:20.894 --> 00:02:24.837
+En la práctica es más rápido, porque no perdés tiempo desarmando cambios mezclados
+
+00:02:24.837 --> 00:02:26.760
+para encontrar el que causó el problema.
+
+00:02:28.060 --> 00:02:28.956
+Paso 3.
+
+00:02:29.256 --> 00:02:30.989
+Lado a lado, cinco veces.
+
+00:02:31.539 --> 00:02:36.030
+Corré las dos versiones lado a lado sobre el set de test, 5 veces, y sobre el de
+
+00:02:36.030 --> 00:02:36.592
+regresión.
+
+00:02:37.142 --> 00:02:41.229
+Configurá el eval con las dos versiones como prompts del mismo archivo, de modo que
+
+00:02:41.229 --> 00:02:42.706
+corran sobre los mismos casos.
+
+00:02:43.006 --> 00:02:46.863
+Usá el conjunto de test y también el de regresión, con cinco repeticiones.
+
+00:02:47.163 --> 00:02:51.327
+El visor muestra las dos columnas y permite filtrar los casos donde una versión pasa
+
+00:02:51.327 --> 00:02:51.972
+y la otra no.
+
+00:02:52.272 --> 00:02:53.993
+Esos casos son los que hay que leer.
+
+00:02:54.293 --> 00:02:58.000
+Ahí aparece lo que arreglaste, lo que rompiste y lo que cambió de respuesta sin
+
+00:02:58.000 --> 00:02:58.986
+cambiar de veredicto.
+
+00:03:00.286 --> 00:03:01.287
+Paso 4.
+
+00:03:01.587 --> 00:03:03.261
+Movimiento por tipo de error.
+
+00:03:03.812 --> 00:03:06.728
+Mirá el movimiento por tipo de error, no solo el total.
+
+00:03:07.028 --> 00:03:09.028
+Arreglar un tipo suele subir otro.
+
+00:03:09.578 --> 00:03:12.564
+El total puede quedar igual mientras por debajo cambia todo.
+
+00:03:12.864 --> 00:03:17.139
+Clasificá los fallos por tipo y compará la cantidad de cada tipo entre versiones.
+
+00:03:17.439 --> 00:03:21.111
+Es habitual que una regla nueva arregle una categoría y empeore otra.
+
+00:03:21.411 --> 00:03:25.189
+Una instrucción que vuelve al modelo más cauto con las quejas, por ejemplo, puede
+
+00:03:25.189 --> 00:03:27.334
+hacer que marque de menos los bloqueos reales.
+
+00:03:27.634 --> 00:03:31.678
+Si solo mirás el porcentaje global, ese intercambio queda oculto, y lo vas a
+
+00:03:31.678 --> 00:03:32.954
+descubrir en producción.
+
+00:03:34.254 --> 00:03:35.256
+Paso 5.
+
+00:03:35.556 --> 00:03:37.184
+Fugas entre prompt y test.
+
+00:03:37.734 --> 00:03:41.938
+Controlá fugas: los ejemplos que ponés en el prompt no pueden ser casos del set de
+
+00:03:41.938 --> 00:03:42.194
+test.
+
+00:03:42.744 --> 00:03:46.951
+Los ejemplos que ponés en el prompt no pueden ser casos del conjunto de test, ni
+
+00:03:46.951 --> 00:03:47.635
+casi iguales.
+
+00:03:47.935 --> 00:03:51.933
+Si lo son, el modelo ve la respuesta antes de la pregunta y la métrica sube sin que
+
+00:03:51.933 --> 00:03:52.849
+haya mejorado nada.
+
+00:03:53.149 --> 00:03:57.372
+Es una fuga fácil de cometer: el caso que falla es justo el que uno quiere usar de
+
+00:03:57.372 --> 00:03:57.784
+ejemplo.
+
+00:03:58.084 --> 00:04:02.111
+Sacá los ejemplos del conjunto de dev o escribilos desde cero, y verificá con una
+
+00:04:02.111 --> 00:04:04.448
+búsqueda de texto que ninguno aparezca en test.
+
+00:04:05.748 --> 00:04:06.715
+Paso 6.
+
+00:04:07.015 --> 00:04:08.236
+La regla de merge.
+
+00:04:08.786 --> 00:04:12.493
+Regla de merge: test mejora por encima del ruido y regresión no baja.
+
+00:04:12.793 --> 00:04:16.406
+Después, los casos recién arreglados entran al set de regresión.
+
+00:04:16.956 --> 00:04:21.049
+Definí por adelantado cuándo una versión nueva reemplaza a la anterior: el conjunto
+
+00:04:21.049 --> 00:04:25.092
+de test mejora por encima del ruido, es decir sin superposición de rangos, y el de
+
+00:04:25.092 --> 00:04:25.980
+regresión no baja.
+
+00:04:26.280 --> 00:04:27.629
+Si cumple, se mergea.
+
+00:04:27.929 --> 00:04:31.658
+Después, los casos recién arreglados pasan al conjunto de regresión.
+
+00:04:31.958 --> 00:04:34.922
+Así cada problema resuelto queda protegido para siempre.
+
+00:04:35.222 --> 00:04:39.072
+Si no cumple, la versión se descarta o se sigue trabajando, pero no se publica
+
+00:04:39.072 --> 00:04:40.158
+"porque parece mejor".
+
+00:04:41.458 --> 00:04:42.378
+Un ejemplo.
+
+00:04:42.928 --> 00:04:46.867
+Un clasificador de tickets marca como bloqueante cualquier queja de lentitud.
+
+00:04:47.167 --> 00:04:51.023
+El equipo crea la versión siete con una sola regla nueva: las quejas de rendimiento
+
+00:04:51.023 --> 00:04:53.160
+sin un flujo bloqueado son de severidad media.
+
+00:04:53.460 --> 00:04:56.354
+La corren contra la versión seis, cinco veces.
+
+00:04:56.654 --> 00:05:00.905
+En test, el promedio sube de 82 a 88 sin superposición de rangos.
+
+00:05:01.205 --> 00:05:05.424
+En regresión, baja un caso: un ticket que decía "tarda tanto que no puedo pagar"
+
+00:05:05.424 --> 00:05:06.583
+ahora sale como medio.
+
+00:05:06.883 --> 00:05:08.047
+Es un bloqueo real.
+
+00:05:08.347 --> 00:05:12.371
+Ajustan la redacción de la regla en una versión ocho, vuelven a correr, y regresión
+
+00:05:12.371 --> 00:05:13.098
+queda completa.
+
+00:05:13.398 --> 00:05:17.186
+Mergean la ocho y suman cuatro casos nuevos al conjunto de regresión.
+
+00:05:17.486 --> 00:05:19.241
+Las cifras son ilustrativas.
+
+00:05:20.541 --> 00:05:22.065
+Los errores más comunes.
+
+00:05:22.615 --> 00:05:25.718
+Sobrescribir el prompt sin conservar la versión anterior.
+
+00:05:26.268 --> 00:05:28.650
+Meter varios cambios en una misma versión.
+
+00:05:29.200 --> 00:05:31.629
+Probar el cambio solo con el caso que lo motivó.
+
+00:05:32.179 --> 00:05:35.154
+Usar casos del conjunto de test como ejemplos del prompt.
+
+00:05:36.454 --> 00:05:38.721
+Para saber que quedó bien, revisá esto.
+
+00:05:39.271 --> 00:05:42.605
+Cada versión del prompt es un archivo con su línea de changelog.
+
+00:05:43.155 --> 00:05:46.119
+La versión nueva tiene un solo cambio respecto de la anterior.
+
+00:05:46.669 --> 00:05:50.050
+Las dos versiones corrieron lado a lado en test y en regresión.
+
+00:05:50.600 --> 00:05:53.702
+Los casos arreglados se sumaron al conjunto de regresión.
+
+00:05:55.002 --> 00:05:56.572
+Y lo que la IA no hizo bien.
+
+00:05:57.122 --> 00:06:00.144
+El cumplimiento de una regla del prompt es probabilístico.
+
+00:06:00.444 --> 00:06:03.175
+Hay que medir en qué porcentaje de corridas se respeta.
+
+00:06:04.475 --> 00:06:05.905
+Eso fue el día 20.
+
+00:06:06.205 --> 00:06:10.837
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:10.837 --> 00:06:11.444
+frecuentes.
+
+00:06:11.994 --> 00:06:16.710
+Seguí con el día 21: Testing de RAG: retrieval, fidelidad y respuesta por separado.

@@ -1,0 +1,391 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.102
+Day 7 of the 31 days of QA + AI series.
+
+00:00:04.652 --> 00:00:09.473
+Harnesses 101: test harness, eval harness and agent harness.
+
+00:00:10.023 --> 00:00:14.727
+The three harnesses that coexist in QA today, what each one wraps and how to spot
+
+00:00:14.727 --> 00:00:16.004
+what your stack lacks.
+
+00:00:17.304 --> 00:00:21.846
+The word "harness" shows up in almost every conversation about AI and testing, and
+
+00:00:21.846 --> 00:00:24.006
+almost always with a different meaning.
+
+00:00:24.306 --> 00:00:26.990
+For some it's the usual automation framework.
+
+00:00:27.290 --> 00:00:30.033
+For others, the tool that evaluates a prompt.
+
+00:00:30.333 --> 00:00:35.189
+For others, the program that turns a model into an agent able to edit code.
+
+00:00:35.489 --> 00:00:40.151
+All three exist and all three share the name, and that confusion makes teams buy or
+
+00:00:40.151 --> 00:00:41.668
+build what they don't need.
+
+00:00:42.968 --> 00:00:47.148
+This guide separates the three meanings with a single common definition and shows
+
+00:00:47.148 --> 00:00:47.974
+how they relate.
+
+00:00:48.274 --> 00:00:53.034
+There is no code today: the goal is for you to look at your own stack and say which
+
+00:00:53.034 --> 00:00:57.507
+harness you have, which one you lack and, above all, which one verifies which.
+
+00:00:58.807 --> 00:01:00.505
+To follow this guide you need:
+
+00:01:01.055 --> 00:01:03.101
+Know your current automation stack.
+
+00:01:03.651 --> 00:01:06.347
+The list below, to fill in with your tools.
+
+00:01:07.647 --> 00:01:09.043
+The three harnesses.
+
+00:01:09.593 --> 00:01:11.650
+Test harness: wraps your app.
+
+00:01:11.950 --> 00:01:14.762
+Runner, fixtures, mocks and reporters.
+
+00:01:15.062 --> 00:01:19.082
+Examples: Playwright Test, JUnit, pytest.
+
+00:01:19.632 --> 00:01:22.491
+Eval harness: wraps a model or prompt.
+
+00:01:22.791 --> 00:01:25.568
+Dataset, runner, scorers and report.
+
+00:01:25.868 --> 00:01:30.016
+Examples: promptfoo, DeepEval, Inspect AI.
+
+00:01:30.566 --> 00:01:33.645
+Agent harness: wraps a model that acts.
+
+00:01:33.945 --> 00:01:37.442
+Loop, tools, context, permissions and memory.
+
+00:01:37.742 --> 00:01:41.506
+Examples: Claude Code, Copilot agent, Cursor.
+
+00:01:42.806 --> 00:01:43.842
+Step 1.
+
+00:01:44.142 --> 00:01:45.608
+A single definition.
+
+00:01:46.158 --> 00:01:50.561
+Keep the definition: a harness is everything around the thing under test that lets
+
+00:01:50.561 --> 00:01:52.279
+you run, control and measure it.
+
+00:01:52.829 --> 00:01:57.151
+A harness is everything around the thing under test that lets you run, control and
+
+00:01:57.151 --> 00:01:57.731
+measure it.
+
+00:01:58.031 --> 00:02:00.983
+Running it means starting it in a repeatable way.
+
+00:02:01.283 --> 00:02:04.548
+Controlling it, fixing its inputs and its environment.
+
+00:02:04.848 --> 00:02:07.729
+Measuring it, getting a comparable result.
+
+00:02:08.029 --> 00:02:12.692
+The definition works for all three types; the only thing that changes is what sits
+
+00:02:12.692 --> 00:02:15.706
+in the middle: your application, a model or an agent.
+
+00:02:16.006 --> 00:02:20.656
+When someone uses the word, ask what's in the middle and the conversation sorts
+
+00:02:20.656 --> 00:02:21.303
+itself out.
+
+00:02:22.603 --> 00:02:23.802
+Step 2.
+
+00:02:24.102 --> 00:02:26.774
+Test harness: the one you already have.
+
+00:02:27.324 --> 00:02:29.626
+Test harness: you already have it.
+
+00:02:29.926 --> 00:02:33.586
+Runner, fixtures, mocks and reports around your app.
+
+00:02:34.136 --> 00:02:37.215
+If you run automated tests, you already have one.
+
+00:02:37.515 --> 00:02:42.803
+The runner executes, fixtures prepare state, mocks isolate dependencies and reports
+
+00:02:42.803 --> 00:02:43.822
+show the result.
+
+00:02:44.122 --> 00:02:48.577
+It's deterministic: the same input gives the same output and a failure means
+
+00:02:48.577 --> 00:02:49.163
+something.
+
+00:02:49.463 --> 00:02:53.820
+It's worth recognizing as a harness because it's the base for the other two.
+
+00:02:54.120 --> 00:02:58.809
+A team with a slow, brittle test harness that nobody looks at will carry those same
+
+00:02:58.809 --> 00:03:01.634
+problems into everything it builds with AI on top.
+
+00:03:02.934 --> 00:03:04.016
+Step 3.
+
+00:03:04.316 --> 00:03:06.908
+Eval harness: the same around a model.
+
+00:03:07.458 --> 00:03:11.234
+Eval harness: the same idea around a model or prompt.
+
+00:03:11.534 --> 00:03:14.845
+Asserts become scorers and cases become a dataset.
+
+00:03:15.395 --> 00:03:18.149
+Here the thing under test is a model or a prompt.
+
+00:03:18.449 --> 00:03:23.182
+The pieces have direct equivalents: test cases become a dataset, asserts become
+
+00:03:23.182 --> 00:03:28.034
+scorers that grade an output, and the report shows pass rates instead of green or
+
+00:03:28.034 --> 00:03:28.274
+red.
+
+00:03:28.574 --> 00:03:33.330
+Two things are added that the test harness didn't need: repeating each case several
+
+00:03:33.330 --> 00:03:35.450
+times and recording cost and latency.
+
+00:03:35.750 --> 00:03:39.282
+You'll need it the day a feature of your product depends on a model.
+
+00:03:40.582 --> 00:03:41.595
+Step 4.
+
+00:03:41.895 --> 00:03:44.347
+Agent harness: the one that works.
+
+00:03:44.897 --> 00:03:50.381
+Agent harness: the loop that turns a model into an agent, with tools, instructions,
+
+00:03:50.381 --> 00:03:51.900
+permissions and memory.
+
+00:03:52.200 --> 00:03:54.154
+Here the agent does QA work.
+
+00:03:54.704 --> 00:03:59.827
+It's the loop that turns a model into an agent: it receives a task, decides which
+
+00:03:59.827 --> 00:04:03.623
+tool to use, reads the result and decides again, until done.
+
+00:04:03.923 --> 00:04:09.127
+Around it are repository instructions, available tools, permissions and memory.
+
+00:04:09.427 --> 00:04:13.963
+The key difference from the other two is the role: this one doesn't measure, it
+
+00:04:13.963 --> 00:04:14.480
+produces.
+
+00:04:14.780 --> 00:04:18.788
+It writes tests, modifies code, investigates a failure.
+
+00:04:19.088 --> 00:04:23.426
+That's why configuring it feels more like onboarding a new teammate than setting up
+
+00:04:23.426 --> 00:04:23.792
+a tool.
+
+00:04:25.092 --> 00:04:26.221
+Step 5.
+
+00:04:26.521 --> 00:04:27.905
+Who verifies whom.
+
+00:04:28.455 --> 00:04:33.728
+Key relationship: the agent harness produces tests and changes; the test harness and
+
+00:04:33.728 --> 00:04:36.051
+eval harness verify what it produced.
+
+00:04:36.351 --> 00:04:37.770
+Never the other way round.
+
+00:04:38.320 --> 00:04:41.109
+The relationship runs in one direction only.
+
+00:04:41.409 --> 00:04:46.568
+The agent harness produces tests and changes; the test harness and the eval harness
+
+00:04:46.568 --> 00:04:48.122
+verify what was produced.
+
+00:04:48.422 --> 00:04:53.234
+If you reverse the arrow and let the agent judge its own work, you lose independent
+
+00:04:53.234 --> 00:04:55.844
+verification, which is the whole point of QA.
+
+00:04:56.144 --> 00:05:00.648
+In practice this becomes a concrete rule: what counts as done is the result of a
+
+00:05:00.648 --> 00:05:05.377
+command running outside the agent, with its exit code, and not the summary the agent
+
+00:05:05.377 --> 00:05:05.771
+writes.
+
+00:05:07.071 --> 00:05:08.258
+Step 6.
+
+00:05:08.558 --> 00:05:10.093
+Your stack on the list.
+
+00:05:10.643 --> 00:05:13.885
+Fill the list with your stack and flag the harness you lack.
+
+00:05:14.185 --> 00:05:15.627
+That's your next step.
+
+00:05:16.177 --> 00:05:19.221
+Fill in the list of three harnesses with real names.
+
+00:05:19.521 --> 00:05:22.670
+Which runner, fixtures and reports you use.
+
+00:05:22.970 --> 00:05:26.862
+If you evaluate a model, with which dataset and scorers.
+
+00:05:27.162 --> 00:05:31.263
+If you use an agent, which rules, tools and permissions it has.
+
+00:05:31.563 --> 00:05:33.621
+Empty cells are information.
+
+00:05:33.921 --> 00:05:38.749
+If you lack the eval harness and your product already uses a model, that's the next
+
+00:05:38.749 --> 00:05:40.611
+step, and it's tomorrow's topic.
+
+00:05:40.911 --> 00:05:46.161
+If you lack the agent one, it can wait: it's productivity, not verification.
+
+00:05:47.461 --> 00:05:48.567
+An example.
+
+00:05:49.117 --> 00:05:51.221
+A product team fills in the list.
+
+00:05:51.521 --> 00:05:57.003
+Test harness: Playwright, login fixtures, HTML report in CI; complete.
+
+00:05:57.303 --> 00:06:02.378
+Eval harness: empty, even though the product has had an assistant answering customer
+
+00:06:02.378 --> 00:06:03.889
+queries for three months.
+
+00:06:04.189 --> 00:06:08.661
+Agent harness: two people use a coding agent with no shared rules.
+
+00:06:08.961 --> 00:06:10.729
+The diagnosis is clear.
+
+00:06:11.029 --> 00:06:15.510
+The riskiest feature, the assistant, has no measurement at all, while the team was
+
+00:06:15.510 --> 00:06:17.150
+debating which agent to adopt.
+
+00:06:17.450 --> 00:06:21.635
+They decide to build a twenty-case eval for the assistant first and then write a
+
+00:06:21.635 --> 00:06:23.362
+common rules file for the agents.
+
+00:06:24.662 --> 00:06:26.325
+The most common mistakes.
+
+00:06:26.875 --> 00:06:29.815
+Using "harness" without saying what sits in the middle.
+
+00:06:30.365 --> 00:06:33.096
+Letting the agent declare its own work done.
+
+00:06:33.646 --> 00:06:37.143
+Investing in an agent harness while the test harness is brittle.
+
+00:06:37.693 --> 00:06:41.631
+Evaluating a model with exact asserts instead of an eval harness.
+
+00:06:42.931 --> 00:06:45.175
+To know it is done, check this.
+
+00:06:45.725 --> 00:06:49.106
+You can explain the three harnesses with the same definition.
+
+00:06:49.656 --> 00:06:53.583
+Your list has concrete names in each cell or an explicit gap.
+
+00:06:54.133 --> 00:06:57.444
+You identified which one you lack and why it matters.
+
+00:06:57.994 --> 00:07:01.329
+You have the rule written down that the gate runs outside the agent.
+
+00:07:02.629 --> 00:07:04.524
+And where AI fell short.
+
+00:07:05.074 --> 00:07:09.477
+Without an external gate, the agent reports success without having run anything.
+
+00:07:09.777 --> 00:07:12.879
+Verify with the exit code, not the summary.
+
+00:07:14.179 --> 00:07:15.529
+That was day 7.
+
+00:07:15.829 --> 00:07:20.803
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:20.803 --> 00:07:21.810
+asked questions.
+
+00:07:22.360 --> 00:07:26.229
+Continue with day 8: Your first eval harness with promptfoo.

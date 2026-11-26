@@ -1,0 +1,388 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.299
+Day 28 of the 31 days of QA + AI series.
+
+00:00:04.849 --> 00:00:08.404
+Evals in CI: quality gates for AI features.
+
+00:00:08.954 --> 00:00:13.657
+How to bring evals into the pipeline at three tiers (PR, nightly and release) with a
+
+00:00:13.657 --> 00:00:16.120
+gate that blocks merges and controlled cost.
+
+00:00:17.420 --> 00:00:21.498
+An eval that runs only when someone remembers ends up not running.
+
+00:00:21.798 --> 00:00:26.147
+The way to sustain the quality of an AI feature over time is the same as for the
+
+00:00:26.147 --> 00:00:30.658
+rest of software: a gate in the pipeline that blocks the change when something gets
+
+00:00:30.658 --> 00:00:30.984
+worse.
+
+00:00:31.284 --> 00:00:33.272
+What changes are the constraints.
+
+00:00:33.572 --> 00:00:38.614
+Evals cost money per run, take longer than a unit test and their result varies.
+
+00:00:39.914 --> 00:00:44.458
+Putting every eval on every pull request makes the pipeline slow and expensive, and
+
+00:00:44.458 --> 00:00:46.046
+the team ends up skipping it.
+
+00:00:46.346 --> 00:00:48.659
+Putting in none lets regressions through.
+
+00:00:48.959 --> 00:00:54.086
+This guide organizes evals into three tiers, per PR, nightly and per release, each
+
+00:00:54.086 --> 00:00:59.213
+with a different scope, cost and consequence, and shows how to keep spending under
+
+00:00:59.213 --> 00:00:59.713
+control.
+
+00:01:01.013 --> 00:01:02.710
+To follow this guide you need:
+
+00:01:03.260 --> 00:01:06.932
+A repo with evals (day 8) and a golden dataset (day 17).
+
+00:01:07.482 --> 00:01:10.515
+CI: GitHub Actions or Jenkins.
+
+00:01:11.065 --> 00:01:14.817
+An API key stored as a CI secret, with a spending cap.
+
+00:01:16.117 --> 00:01:17.397
+This is the setup.
+
+00:01:17.697 --> 00:01:21.914
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:23.214 --> 00:01:25.481
+And this is the next setup file.
+
+00:01:26.781 --> 00:01:28.060
+The three tiers.
+
+00:01:28.610 --> 00:01:32.909
+PR: runs when prompts, evals or AI code change.
+
+00:01:33.209 --> 00:01:37.263
+Reduced dev set, 3 runs, format and content checks.
+
+00:01:37.563 --> 00:01:38.889
+Blocks the merge.
+
+00:01:39.440 --> 00:01:41.335
+Nightly: every night.
+
+00:01:41.635 --> 00:01:44.934
+Full test set x5, judge and red teaming.
+
+00:01:45.234 --> 00:01:47.455
+Alerts the team and shows the trend.
+
+00:01:48.005 --> 00:01:49.830
+Release: before shipping.
+
+00:01:50.130 --> 00:01:52.141
+Full regression plus performance.
+
+00:01:52.441 --> 00:01:54.116
+A person signs off.
+
+00:01:55.416 --> 00:01:56.452
+Step 1.
+
+00:01:56.752 --> 00:01:58.171
+The PR tier.
+
+00:01:58.721 --> 00:02:04.828
+Start with the PR tier: a small, fast subset that runs only when prompts, evals or
+
+00:02:04.828 --> 00:02:05.945
+AI code change.
+
+00:02:06.495 --> 00:02:10.375
+It's a small, fast subset designed to answer within a few minutes.
+
+00:02:10.675 --> 00:02:15.689
+It runs only when the change touches prompts, eval config or code that calls the
+
+00:02:15.689 --> 00:02:16.065
+model.
+
+00:02:16.365 --> 00:02:20.373
+For a frontend style change, spending tokens makes no sense.
+
+00:02:20.673 --> 00:02:26.019
+Include the deterministic format and content checks, and a reduced set of cases with
+
+00:02:26.019 --> 00:02:27.038
+few repetitions.
+
+00:02:27.338 --> 00:02:32.342
+Its job isn't measuring quality precisely, but catching obvious breakage before the
+
+00:02:32.342 --> 00:02:32.704
+merge.
+
+00:02:34.004 --> 00:02:35.203
+Step 2.
+
+00:02:35.503 --> 00:02:37.479
+The exit code as the gate.
+
+00:02:38.029 --> 00:02:42.571
+The eval command returns a non-zero exit code when cases fail.
+
+00:02:42.871 --> 00:02:44.813
+That's enough to block the merge.
+
+00:02:45.363 --> 00:02:48.024
+The mechanism is the same as for any test.
+
+00:02:48.324 --> 00:02:53.457
+The eval command ends with a non-zero code when cases fail, and the pipeline marks
+
+00:02:53.457 --> 00:02:54.271
+the step red.
+
+00:02:54.571 --> 00:02:58.196
+That's enough to block the merge through branch protection rules.
+
+00:02:58.496 --> 00:03:00.344
+Nothing special needs building.
+
+00:03:00.644 --> 00:03:05.064
+You do need to verify it works: force a failure on purpose on a test branch and
+
+00:03:05.064 --> 00:03:07.358
+confirm the pull request ends up blocked.
+
+00:03:08.658 --> 00:03:09.740
+Step 3.
+
+00:03:10.040 --> 00:03:12.875
+Artifacts always, on failure too.
+
+00:03:13.425 --> 00:03:17.248
+Always save the result as an artifact, including on failure.
+
+00:03:17.548 --> 00:03:20.197
+Without the detail nobody can diagnose.
+
+00:03:20.747 --> 00:03:24.837
+Configure the step that saves results to run even when the eval fails.
+
+00:03:25.137 --> 00:03:29.258
+It's a config detail often forgotten, and then the pipeline goes red with no
+
+00:03:29.258 --> 00:03:32.674
+information about which case failed or what the model answered.
+
+00:03:32.974 --> 00:03:37.284
+The artifact must include inputs, outputs and verdicts per case.
+
+00:03:37.584 --> 00:03:41.949
+With that file, whoever opened the PR can diagnose in minutes without rerunning
+
+00:03:41.949 --> 00:03:43.496
+everything on their machine.
+
+00:03:44.796 --> 00:03:45.809
+Step 4.
+
+00:03:46.109 --> 00:03:47.424
+Controlling cost.
+
+00:03:47.974 --> 00:03:54.377
+Control cost: path filters, response caching, a subset on PRs and a CI API key with
+
+00:03:54.377 --> 00:03:55.534
+a spending cap.
+
+00:03:56.084 --> 00:03:57.457
+There are four levers.
+
+00:03:57.757 --> 00:04:02.055
+Path filters, so evals don't run on changes that don't affect them.
+
+00:04:02.355 --> 00:04:07.072
+Response caching, so you don't pay twice for the same input with the same prompt.
+
+00:04:07.372 --> 00:04:10.416
+A subset at the PR tier instead of the full set.
+
+00:04:10.716 --> 00:04:15.582
+And a CI-only API key with a spending cap, so a config error or a loop doesn't
+
+00:04:15.582 --> 00:04:17.267
+consume the month's budget.
+
+00:04:17.567 --> 00:04:20.054
+Publish each run's spend next to the result.
+
+00:04:21.354 --> 00:04:22.483
+Step 5.
+
+00:04:22.783 --> 00:04:23.958
+The nightly tier.
+
+00:04:24.508 --> 00:04:29.155
+Add the nightly tier with the full set, five runs, the judge and red teaming.
+
+00:04:29.455 --> 00:04:32.627
+That's where you watch the trend, not a single PR.
+
+00:04:33.177 --> 00:04:38.352
+Once a day, with the full test set, five repetitions, the calibrated judge and red
+
+00:04:38.352 --> 00:04:38.857
+teaming.
+
+00:04:39.157 --> 00:04:41.377
+This is where you measure precisely.
+
+00:04:41.677 --> 00:04:46.110
+The result doesn't block a particular PR: it alerts the team and feeds a trend
+
+00:04:46.110 --> 00:04:46.451
+chart.
+
+00:04:46.751 --> 00:04:51.821
+It's where you'll detect problems no PR introduced, such as a silent provider update
+
+00:04:51.821 --> 00:04:53.209
+or gradual degradation.
+
+00:04:53.509 --> 00:04:57.041
+Since it runs at night, time and cost are more tolerable.
+
+00:04:58.341 --> 00:04:59.528
+Step 6.
+
+00:04:59.828 --> 00:05:00.957
+The release tier.
+
+00:05:01.507 --> 00:05:05.871
+At release run regression and performance, and leave the final call to a person with
+
+00:05:05.871 --> 00:05:07.326
+the report in front of them.
+
+00:05:07.876 --> 00:05:11.675
+Before shipping, full regression and performance tests run.
+
+00:05:11.975 --> 00:05:14.718
+The difference from the other tiers is who decides.
+
+00:05:15.018 --> 00:05:18.294
+Here the result is a report a person reads and signs.
+
+00:05:18.594 --> 00:05:21.929
+Automatic gates cover what can be expressed as a threshold.
+
+00:05:22.229 --> 00:05:26.294
+The decision to ship with a metric at the limit or with a known risk is a business
+
+00:05:26.294 --> 00:05:30.210
+judgment, and someone has to take responsibility for it with the information in
+
+00:05:30.210 --> 00:05:30.904
+front of them.
+
+00:05:32.204 --> 00:05:33.310
+An example.
+
+00:05:33.860 --> 00:05:35.941
+A team sets up the three tiers.
+
+00:05:36.241 --> 00:05:41.374
+The PR one runs fifteen cases with three repetitions, only on changes to the prompts
+
+00:05:41.374 --> 00:05:43.941
+and evals folders, and takes four minutes.
+
+00:05:44.241 --> 00:05:49.110
+In the first week it blocks a pull request where a wording change broke the JSON
+
+00:05:49.110 --> 00:05:50.327
+format in two cases.
+
+00:05:50.627 --> 00:05:55.366
+The author opens the artifact, sees the two outputs and fixes it in ten minutes.
+
+00:05:55.666 --> 00:05:59.732
+The nightly tier runs one hundred and twenty cases with five repetitions.
+
+00:06:00.032 --> 00:06:04.296
+One Tuesday the pass rate drops four points with no PR merged.
+
+00:06:04.596 --> 00:06:09.382
+The run card shows the model that answered wasn't the expected one, because of an
+
+00:06:09.382 --> 00:06:11.390
+unpinned alias nobody had noticed.
+
+00:06:12.690 --> 00:06:14.353
+The most common mistakes.
+
+00:06:14.903 --> 00:06:17.518
+Running the full set on every pull request.
+
+00:06:18.068 --> 00:06:20.997
+Not saving artifacts when the eval fails.
+
+00:06:21.547 --> 00:06:24.881
+Using an API key with no spending cap in CI.
+
+00:06:25.431 --> 00:06:28.638
+Treating a single green as proof that quality holds.
+
+00:06:29.938 --> 00:06:32.182
+To know it is done, check this.
+
+00:06:32.732 --> 00:06:36.670
+The PR tier runs only on relevant changes and within minutes.
+
+00:06:37.220 --> 00:06:39.603
+A forced failure blocks the merge.
+
+00:06:40.153 --> 00:06:43.279
+Results are saved as an artifact on failure too.
+
+00:06:43.829 --> 00:06:47.094
+A nightly tier with a trend and a capped key exists.
+
+00:06:48.394 --> 00:06:50.289
+And where AI fell short.
+
+00:06:50.839 --> 00:06:53.999
+The same code can pass a gate and fail hours later.
+
+00:06:54.299 --> 00:06:57.773
+With models, a single green doesn't replace the trend.
+
+00:06:59.073 --> 00:07:00.643
+That was day 28.
+
+00:07:00.943 --> 00:07:05.917
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:05.917 --> 00:07:06.925
+asked questions.
+
+00:07:07.475 --> 00:07:14.398
+Continue with day 29: QA infra for AI: ephemeral runners, local models, secrets and
+
+00:07:14.398 --> 00:07:14.815
+cost.

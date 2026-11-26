@@ -1,0 +1,376 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.661
+Día 16 de la serie 31 días de QA + IA.
+
+00:00:04.211 --> 00:00:07.441
+LLM como juez: rúbricas y calibración contra humanos.
+
+00:00:07.991 --> 00:00:12.025
+Cómo escribir una rúbrica observable para un modelo juez y medir cuánto coincide con
+
+00:00:12.025 --> 00:00:13.706
+tu criterio antes de confiar en él.
+
+00:00:15.006 --> 00:00:18.838
+Hay cualidades de una respuesta que ninguna regla captura: si la explicación es
+
+00:00:18.838 --> 00:00:21.846
+clara, si el tono corresponde, si contesta lo que se preguntó.
+
+00:00:22.146 --> 00:00:25.423
+Revisarlas a mano no escala más allá de unas decenas de casos.
+
+00:00:25.723 --> 00:00:29.901
+La solución habitual es pedirle a otro modelo que las califique, lo que se conoce
+
+00:00:29.901 --> 00:00:30.881
+como LLM como juez.
+
+00:00:32.181 --> 00:00:36.239
+El problema es que ese juez es otro sistema no determinista con sus propios errores,
+
+00:00:36.239 --> 00:00:39.718
+y sus veredictos vienen acompañados de justificaciones muy convincentes.
+
+00:00:40.018 --> 00:00:44.165
+Usarlo sin calibrar equivale a medir con un instrumento que nunca comparaste contra
+
+00:00:44.165 --> 00:00:44.665
+un patrón.
+
+00:00:44.965 --> 00:00:48.902
+Esta guía muestra cómo escribir una rúbrica que se pueda verificar, cómo medir el
+
+00:00:48.902 --> 00:00:52.839
+acuerdo entre el juez y vos, y cuándo ese acuerdo alcanza para confiarle un gate.
+
+00:00:54.139 --> 00:00:56.069
+Para seguir esta guía necesitás:
+
+00:00:56.619 --> 00:00:59.524
+Un eval harness con juez configurado (días 8 y 15).
+
+00:01:00.074 --> 00:01:02.248
+30 salidas reales del modelo evaluado.
+
+00:01:02.798 --> 00:01:06.829
+Una planilla con columnas: id, veredicto humano, veredicto del juez, motivo.
+
+00:01:08.129 --> 00:01:09.304
+Este es el setup.
+
+00:01:09.604 --> 00:01:12.950
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:14.250 --> 00:01:15.147
+Paso 1.
+
+00:01:15.447 --> 00:01:16.878
+Criterios observables.
+
+00:01:17.428 --> 00:01:19.300
+Escribí criterios observables.
+
+00:01:19.600 --> 00:01:21.776
+"¿Es buena la respuesta?" no sirve.
+
+00:01:22.076 --> 00:01:24.284
+"Menciona el componente del reporte" sí.
+
+00:01:24.834 --> 00:01:28.984
+Una rúbrica funciona cuando dos personas que la leen llegan al mismo veredicto sobre
+
+00:01:28.984 --> 00:01:29.922
+la misma respuesta.
+
+00:01:30.222 --> 00:01:32.364
+"¿Es buena la respuesta?" no cumple.
+
+00:01:32.664 --> 00:01:36.488
+"Menciona el componente que figura en el reporte" sí, porque se puede comprobar
+
+00:01:36.488 --> 00:01:37.310
+mirando el texto.
+
+00:01:37.610 --> 00:01:41.761
+Escribí pocos criterios, cada uno verificable, y definí el resultado como pasa o
+
+00:01:41.761 --> 00:01:43.836
+falla con todos los criterios cumplidos.
+
+00:01:44.136 --> 00:01:48.441
+Evitá las escalas del uno al cinco: nadie sabe qué separa un tres de un cuatro, y el
+
+00:01:48.441 --> 00:01:49.108
+juez tampoco.
+
+00:01:50.408 --> 00:01:51.304
+Paso 2.
+
+00:01:51.604 --> 00:01:53.615
+Treinta etiquetas tuyas, primero.
+
+00:01:54.165 --> 00:01:57.500
+Etiquetá vos 30 salidas a mano, pasa o falla, con el motivo.
+
+00:01:57.800 --> 00:01:59.997
+Hacelo antes de mirar lo que dice el juez.
+
+00:02:00.547 --> 00:02:04.833
+Tomá treinta salidas reales del sistema y etiquetalas a mano, pasa o falla, anotando
+
+00:02:04.833 --> 00:02:06.006
+el motivo en una línea.
+
+00:02:06.306 --> 00:02:08.991
+Hacelo antes de correr el juez y sin mirar lo que diría.
+
+00:02:09.291 --> 00:02:13.459
+Si ves primero su veredicto, tu etiqueta se contamina y el acuerdo que midas después
+
+00:02:13.459 --> 00:02:14.402
+va a salir inflado.
+
+00:02:14.702 --> 00:02:17.433
+Treinta casos son un piso razonable para empezar.
+
+00:02:17.733 --> 00:02:21.617
+Buscá que haya aprobados y rechazados en proporciones parecidas: con casi todos
+
+00:02:21.617 --> 00:02:24.272
+aprobados no vas a saber si el juez detecta los malos.
+
+00:02:25.572 --> 00:02:26.469
+Paso 3.
+
+00:02:26.769 --> 00:02:28.884
+Correr el juez sobre los mismos casos.
+
+00:02:29.434 --> 00:02:31.364
+Corré el juez sobre las mismas 30.
+
+00:02:31.914 --> 00:02:35.430
+Ejecutá el juez con la rúbrica sobre esas mismas treinta salidas, con la
+
+00:02:35.430 --> 00:02:37.432
+configuración estable que definiste ayer.
+
+00:02:37.732 --> 00:02:40.404
+Guardá el veredicto y la justificación de cada caso.
+
+00:02:40.704 --> 00:02:45.026
+Si podés, corré dos o tres veces para ver si el juez es consistente consigo mismo.
+
+00:02:45.326 --> 00:02:48.964
+Un juez que cambia de veredicto sobre la misma entrada entre corridas tiene un
+
+00:02:48.964 --> 00:02:52.463
+problema anterior al acuerdo con vos: la rúbrica deja demasiado margen o la
+
+00:02:52.463 --> 00:02:53.769
+configuración no es estable.
+
+00:02:55.069 --> 00:02:56.070
+Paso 4.
+
+00:02:56.370 --> 00:02:57.731
+Acuerdo y dirección.
+
+00:02:58.281 --> 00:03:01.593
+Calculá la coincidencia: casos donde coinciden dividido el total.
+
+00:03:01.893 --> 00:03:05.529
+Y mirá el sentido del desacuerdo: ¿el juez es más blando o más duro que vos?
+
+00:03:06.079 --> 00:03:09.449
+El cálculo es simple: casos donde coinciden dividido por el total.
+
+00:03:09.749 --> 00:03:11.597
+Pero el número solo no alcanza.
+
+00:03:11.897 --> 00:03:13.734
+Mirá la dirección del desacuerdo.
+
+00:03:14.034 --> 00:03:18.115
+Si el juez aprueba casos que vos rechazaste, es indulgente y tu gate va a dejar
+
+00:03:18.115 --> 00:03:18.890
+pasar defectos.
+
+00:03:19.190 --> 00:03:23.430
+Si rechaza casos que vos aprobaste, es estricto y va a bloquear trabajo válido.
+
+00:03:23.730 --> 00:03:26.113
+Son riesgos distintos y se corrigen distinto.
+
+00:03:26.413 --> 00:03:30.638
+Armá la tabla de dos por dos, vos contra el juez, y leé las dos celdas de desacuerdo
+
+00:03:30.638 --> 00:03:31.292
+por separado.
+
+00:03:32.592 --> 00:03:33.593
+Paso 5.
+
+00:03:33.893 --> 00:03:35.138
+Corregir la rúbrica.
+
+00:03:35.688 --> 00:03:39.938
+Arreglá la rúbrica donde no coinciden: un criterio más preciso o un ejemplo de pasa
+
+00:03:39.938 --> 00:03:40.706
+y uno de falla.
+
+00:03:41.256 --> 00:03:44.057
+Leé cada desacuerdo y preguntate quién tiene razón.
+
+00:03:44.357 --> 00:03:46.786
+A veces es el juez, y corregís tu etiqueta.
+
+00:03:47.086 --> 00:03:49.596
+Lo más frecuente es que el criterio fuera ambiguo.
+
+00:03:49.896 --> 00:03:54.021
+Hay dos arreglos que funcionan: reescribir el criterio para que sea más preciso, o
+
+00:03:54.021 --> 00:03:56.888
+agregar a la rúbrica un ejemplo que pasa y uno que falla.
+
+00:03:57.188 --> 00:04:00.998
+No agregues diez ejemplos, porque el juez empieza a copiar los ejemplos en lugar de
+
+00:04:00.998 --> 00:04:01.916
+aplicar el criterio.
+
+00:04:02.216 --> 00:04:05.806
+Y no uses como ejemplo ninguno de los treinta casos que después vas a medir.
+
+00:04:07.106 --> 00:04:08.072
+Paso 6.
+
+00:04:08.372 --> 00:04:10.140
+Medir de nuevo y fijar un mínimo.
+
+00:04:10.690 --> 00:04:11.749
+Volvé a medir.
+
+00:04:12.049 --> 00:04:15.950
+Definí un mínimo de coincidencia para usar el juez en CI y repetí la calibración
+
+00:04:15.950 --> 00:04:17.705
+cada vez que cambies de modelo juez.
+
+00:04:18.255 --> 00:04:19.883
+Corré otra vez y recalculá.
+
+00:04:20.183 --> 00:04:24.517
+Decidí por adelantado qué acuerdo mínimo necesitás para usar el juez en CI y dejalo
+
+00:04:24.517 --> 00:04:24.935
+escrito.
+
+00:04:25.235 --> 00:04:29.327
+Si no llegás, el juez sirve para ordenar qué revisar a mano, pero no para bloquear
+
+00:04:29.327 --> 00:04:29.777
+un merge.
+
+00:04:30.077 --> 00:04:34.219
+La calibración vence: cada vez que cambies el modelo juez, su versión o la rúbrica,
+
+00:04:34.219 --> 00:04:35.966
+volvé a medir contra tus etiquetas.
+
+00:04:36.266 --> 00:04:40.413
+Guardá esas treinta etiquetas como un activo, porque son tu patrón de referencia.
+
+00:04:41.713 --> 00:04:42.633
+Un ejemplo.
+
+00:04:43.183 --> 00:04:45.844
+Un equipo evalúa resúmenes de tickets de soporte.
+
+00:04:46.144 --> 00:04:49.223
+Etiquetan treinta a mano: dieciocho pasan y doce fallan.
+
+00:04:49.523 --> 00:04:53.473
+El juez coincide en veintitrés, un acuerdo del setenta y siete por ciento.
+
+00:04:53.773 --> 00:04:57.637
+De los siete desacuerdos, seis son casos que el juez aprobó y ellos no: es
+
+00:04:57.637 --> 00:04:58.211
+indulgente.
+
+00:04:58.511 --> 00:05:00.290
+Al leerlos encuentran el patrón.
+
+00:05:00.590 --> 00:05:04.513
+El criterio decía "incluye el problema del cliente" y el juez aceptaba menciones
+
+00:05:04.513 --> 00:05:04.807
+vagas.
+
+00:05:05.107 --> 00:05:09.117
+Lo reescriben como "nombra el producto y el síntoma concreto" y agregan un ejemplo
+
+00:05:09.117 --> 00:05:09.997
+de cada veredicto.
+
+00:05:10.297 --> 00:05:13.110
+En la segunda medición coinciden veintiocho de treinta.
+
+00:05:13.410 --> 00:05:16.234
+Fijan ese nivel como mínimo para usarlo en el pipeline.
+
+00:05:17.534 --> 00:05:19.057
+Los errores más comunes.
+
+00:05:19.607 --> 00:05:21.943
+Etiquetar después de ver el veredicto del juez.
+
+00:05:22.493 --> 00:05:25.178
+Usar escalas numéricas en lugar de pasa o falla.
+
+00:05:25.728 --> 00:05:28.714
+Mirar solo el porcentaje de acuerdo y no su dirección.
+
+00:05:29.264 --> 00:05:31.461
+Cambiar el modelo juez sin volver a calibrar.
+
+00:05:32.761 --> 00:05:35.028
+Para saber que quedó bien, revisá esto.
+
+00:05:35.578 --> 00:05:38.704
+La rúbrica tiene criterios que se verifican mirando el texto.
+
+00:05:39.254 --> 00:05:42.356
+Hay treinta casos etiquetados a mano antes de correr el juez.
+
+00:05:42.906 --> 00:05:46.241
+Calculaste el acuerdo y sabés si el juez es indulgente o estricto.
+
+00:05:46.791 --> 00:05:49.545
+Hay un acuerdo mínimo escrito para usarlo en CI.
+
+00:05:50.845 --> 00:05:52.415
+Y lo que la IA no hizo bien.
+
+00:05:52.965 --> 00:05:55.568
+El juez explica muy bien veredictos incorrectos.
+
+00:05:55.868 --> 00:05:59.064
+No confíes en la justificación: medí la coincidencia.
+
+00:06:00.364 --> 00:06:02.050
+Eso fue el día 16.
+
+00:06:02.350 --> 00:06:06.982
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:06.982 --> 00:06:07.588
+frecuentes.
+
+00:06:08.139 --> 00:06:12.855
+Seguí con el día 17: Golden datasets: cómo etiquetar, balancear y versionar.

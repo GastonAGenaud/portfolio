@@ -1,0 +1,397 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.102
+Day 30 of the 31 days of QA + AI series.
+
+00:00:04.652 --> 00:00:09.461
+LLM observability in production: traces, online evals and alerts.
+
+00:00:10.011 --> 00:00:14.611
+What to record for every production model call, how to continuously evaluate a
+
+00:00:14.611 --> 00:00:17.560
+sample and which alerts justify waking someone up.
+
+00:00:18.860 --> 00:00:23.486
+Everything you tested before release describes how the system behaved with your
+
+00:00:23.486 --> 00:00:25.829
+cases, in your environment, on that day.
+
+00:00:26.129 --> 00:00:31.297
+In production, inputs nobody imagined arrive, the provider updates the model,
+
+00:00:31.297 --> 00:00:34.049
+documents change and users find new uses.
+
+00:00:34.349 --> 00:00:38.334
+An AI system can degrade without anyone having deployed anything.
+
+00:00:39.634 --> 00:00:42.899
+That's why quality in these systems doesn't end at the gate.
+
+00:00:43.199 --> 00:00:47.855
+It continues in production, with the same questions and different instruments:
+
+00:00:47.855 --> 00:00:52.868
+traces instead of reports, evals on real traffic instead of datasets, alerts instead
+
+00:00:52.868 --> 00:00:53.883
+of CI thresholds.
+
+00:00:54.183 --> 00:00:58.436
+This guide builds that circuit and closes it, so that every failure found in
+
+00:00:58.436 --> 00:01:01.570
+production comes back as a test case and doesn't repeat.
+
+00:01:02.870 --> 00:01:04.567
+To follow this guide you need:
+
+00:01:05.117 --> 00:01:08.847
+An LLM feature in an environment with traffic (staging works).
+
+00:01:09.397 --> 00:01:13.974
+An LLM tracing tool; Langfuse is open source and can run locally.
+
+00:01:14.524 --> 00:01:17.963
+The scorers from the eval harness (days 8 and 16).
+
+00:01:19.263 --> 00:01:20.543
+This is the setup.
+
+00:01:20.843 --> 00:01:25.060
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:26.360 --> 00:01:28.568
+What to record and what to measure.
+
+00:01:29.118 --> 00:01:35.790
+Requested model and responding model: gen_ai.request.model and gen_ai.response.model
+
+00:01:35.790 --> 00:01:38.490
+(OpenTelemetry GenAI conventions).
+
+00:01:39.040 --> 00:01:47.019
+Input and output tokens: gen_ai.usage.input_tokens and gen_ai.usage.output_tokens.
+
+00:01:47.569 --> 00:01:50.880
+Operation: gen_ai.operation.name.
+
+00:01:51.430 --> 00:01:56.422
+Prompt version, total latency and time to first token: custom attributes and the
+
+00:01:56.422 --> 00:01:57.296
+span duration.
+
+00:01:57.846 --> 00:02:00.867
+Tool calls and outcome: child spans.
+
+00:02:01.417 --> 00:02:04.740
+Quality indicator: pass rate of online evals.
+
+00:02:05.040 --> 00:02:08.375
+Alert on a sustained drop, not an isolated point.
+
+00:02:08.925 --> 00:02:13.990
+Latency indicator: TTFT p95, per the day 25 target.
+
+00:02:14.540 --> 00:02:20.440
+Error indicator: 429, 5xx and timeouts below the agreed maximum.
+
+00:02:20.990 --> 00:02:24.662
+Cost indicator: hourly spend against the daily budget.
+
+00:02:25.962 --> 00:02:26.998
+Step 1.
+
+00:02:27.298 --> 00:02:29.169
+One span per model call.
+
+00:02:29.719 --> 00:02:35.091
+Instrument every model call as a span with model, prompt version, tokens, latency
+
+00:02:35.091 --> 00:02:35.887
+and outcome.
+
+00:02:36.187 --> 00:02:39.731
+The OpenTelemetry GenAI conventions give you the names.
+
+00:02:40.281 --> 00:02:45.481
+Instrument every model call as a span recording which model was requested and which
+
+00:02:45.481 --> 00:02:50.430
+one answered, the prompt version, input and output tokens, latency and outcome.
+
+00:02:50.730 --> 00:02:55.553
+The OpenTelemetry conventions for generative AI define standard names for those
+
+00:02:55.553 --> 00:02:56.224
+attributes.
+
+00:02:56.524 --> 00:03:01.398
+Using them avoids inventing your own schema and lets you change observability tools
+
+00:03:01.398 --> 00:03:02.866
+without re-instrumenting.
+
+00:03:03.166 --> 00:03:08.138
+Tool calls and a RAG's searches go as child spans, so you can see the full chain
+
+00:03:08.138 --> 00:03:09.194
+behind an answer.
+
+00:03:10.494 --> 00:03:11.693
+Step 2.
+
+00:03:11.993 --> 00:03:14.016
+What gets stored and for how long.
+
+00:03:14.566 --> 00:03:18.934
+Mind what you store: prompts and responses can carry personal data.
+
+00:03:19.234 --> 00:03:21.790
+Mask or sample, and set retention.
+
+00:03:22.340 --> 00:03:27.293
+Prompts and responses can contain personal data, and a full trace stores them in
+
+00:03:27.293 --> 00:03:27.974
+plain text.
+
+00:03:28.274 --> 00:03:30.506
+Decide explicitly what gets stored.
+
+00:03:30.806 --> 00:03:35.617
+The options are masking sensitive fields before saving, storing full content only
+
+00:03:35.617 --> 00:03:38.587
+for a sample, or keeping only metadata by default.
+
+00:03:38.887 --> 00:03:41.943
+Also define a retention period and who has access.
+
+00:03:42.243 --> 00:03:46.974
+It's a decision to make together with security and legal, and it's best made before
+
+00:03:46.974 --> 00:03:47.772
+instrumenting.
+
+00:03:49.072 --> 00:03:50.154
+Step 3.
+
+00:03:50.454 --> 00:03:51.827
+Online evals.
+
+00:03:52.377 --> 00:03:57.349
+Online evals: run deterministic checks on all traffic and the judge on a sample.
+
+00:03:57.649 --> 00:04:00.287
+They're the same scorers you use in CI.
+
+00:04:00.837 --> 00:04:04.497
+The same scorers you use in CI can run on real traffic.
+
+00:04:04.797 --> 00:04:10.140
+Deterministic checks, for format, required fields and lengths, are cheap and apply
+
+00:04:10.140 --> 00:04:11.312
+to every response.
+
+00:04:11.612 --> 00:04:14.819
+The judge costs tokens, so it applies to a sample.
+
+00:04:15.119 --> 00:04:18.930
+The result is a continuous pass rate on what users really receive.
+
+00:04:19.230 --> 00:04:23.729
+It's the signal that warns you of a degradation no dataset could anticipate, because
+
+00:04:23.729 --> 00:04:25.711
+it comes from inputs you didn't have.
+
+00:04:27.011 --> 00:04:28.024
+Step 4.
+
+00:04:28.324 --> 00:04:30.567
+Four indicators with alerts.
+
+00:04:31.117 --> 00:04:36.213
+Define four indicators (quality, latency, errors and cost) with a target and an
+
+00:04:36.213 --> 00:04:36.600
+alert.
+
+00:04:36.900 --> 00:04:40.258
+Alert on sustained trend, not on one case.
+
+00:04:40.808 --> 00:04:44.595
+Define four indicators, each with its target and its alert.
+
+00:04:44.895 --> 00:04:47.812
+Quality: the pass rate of online evals.
+
+00:04:48.112 --> 00:04:52.190
+Latency: time to first token at the ninety-fifth percentile.
+
+00:04:52.490 --> 00:04:56.033
+Errors: quota limits, server errors and timeouts.
+
+00:04:56.333 --> 00:04:59.308
+Cost: hourly spend against the daily budget.
+
+00:04:59.608 --> 00:05:03.918
+Alerts are configured on sustained trend, not on an isolated case.
+
+00:05:04.218 --> 00:05:09.303
+With a system that varies by nature, alerting on every bad response generates noise
+
+00:05:09.303 --> 00:05:10.467
+until nobody looks.
+
+00:05:11.767 --> 00:05:12.896
+Step 5.
+
+00:05:13.196 --> 00:05:14.290
+Closing the loop.
+
+00:05:14.840 --> 00:05:19.997
+Close the loop: every production failure, anonymized, joins the regression set.
+
+00:05:20.547 --> 00:05:24.999
+Every failure found in production, through an alert, an online eval or a user
+
+00:05:24.999 --> 00:05:28.410
+complaint, gets anonymized and added to the regression set.
+
+00:05:28.710 --> 00:05:31.859
+This step turns observability into improvement.
+
+00:05:32.159 --> 00:05:36.515
+Without it, the same kind of failure returns with the next prompt change.
+
+00:05:36.815 --> 00:05:40.556
+With it, your dataset looks more and more like real usage.
+
+00:05:40.856 --> 00:05:45.742
+Assign an owner and a cadence: review the week's failures and decide which ones go
+
+00:05:45.742 --> 00:05:45.921
+in.
+
+00:05:47.221 --> 00:05:48.407
+Step 6.
+
+00:05:48.707 --> 00:05:50.161
+The rollback plan.
+
+00:05:50.711 --> 00:05:55.097
+Have the rollback plan written: pinned prompt and model versions and a flag to
+
+00:05:55.097 --> 00:05:57.796
+return to the previous version without a deploy.
+
+00:05:58.346 --> 00:06:01.251
+Have it written down how to go back before you need it.
+
+00:06:01.551 --> 00:06:06.400
+It requires three things: the prompt and model versions pinned and recorded, the
+
+00:06:06.400 --> 00:06:11.492
+previous version still available, and a flag that lets you go back without a deploy.
+
+00:06:11.792 --> 00:06:14.558
+Try the rollback once, in a test environment.
+
+00:06:14.858 --> 00:06:18.715
+A plan that was never executed tends to fail at the worst moment.
+
+00:06:19.015 --> 00:06:23.879
+When the quality alert fires, the first action must be returning to a known state,
+
+00:06:23.879 --> 00:06:25.658
+and analysis comes afterwards.
+
+00:06:26.958 --> 00:06:28.064
+An example.
+
+00:06:28.614 --> 00:06:33.077
+A support assistant has been in production for two months with traces and online
+
+00:06:33.077 --> 00:06:33.412
+evals.
+
+00:06:33.712 --> 00:06:38.778
+One Thursday, the judge's pass rate on the sample drops steadily for three hours,
+
+00:06:38.778 --> 00:06:39.717
+with no deploy.
+
+00:06:40.017 --> 00:06:41.796
+The quality alert fires.
+
+00:06:42.096 --> 00:06:46.657
+Traces show the model answering has a different identifier from last week's: the
+
+00:06:46.657 --> 00:06:48.995
+alias they used pointed to a new version.
+
+00:06:49.295 --> 00:06:53.430
+They flip the flag back to the previous pinned version and the rate recovers.
+
+00:06:53.730 --> 00:06:58.248
+Then they anonymize twelve failed conversations, add them to regression and run the
+
+00:06:58.248 --> 00:07:02.057
+full eval against the new version before deciding whether to adopt it.
+
+00:07:03.357 --> 00:07:05.020
+The most common mistakes.
+
+00:07:05.570 --> 00:07:09.776
+Storing full prompts and responses with no masking or retention policy.
+
+00:07:10.326 --> 00:07:13.440
+Alerting on every failed response instead of on trend.
+
+00:07:13.990 --> 00:07:17.557
+Recording only the requested model and not the one that answered.
+
+00:07:18.107 --> 00:07:21.116
+Not adding production failures to the regression set.
+
+00:07:22.416 --> 00:07:24.660
+To know it is done, check this.
+
+00:07:25.210 --> 00:07:29.671
+Each model call generates a span with model, prompt version and tokens.
+
+00:07:30.221 --> 00:07:33.996
+There is a written policy for masking, sampling and retention.
+
+00:07:34.546 --> 00:07:38.322
+Online evals run with deterministic checks and a judge on a sample.
+
+00:07:38.872 --> 00:07:41.812
+The flag-based rollback was tried at least once.
+
+00:07:43.112 --> 00:07:45.007
+And where AI fell short.
+
+00:07:45.557 --> 00:07:49.809
+The model that answers may not be the one you requested if you use an alias.
+
+00:07:50.109 --> 00:07:53.862
+Record both or you won't be able to explain a behavior change.
+
+00:07:55.162 --> 00:07:56.662
+That was day 30.
+
+00:07:56.962 --> 00:08:01.937
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:08:01.937 --> 00:08:02.944
+asked questions.
+
+00:08:03.494 --> 00:08:10.021
+Continue with day 31: Capstone: the full AI quality pipeline and your 2027 roadmap.

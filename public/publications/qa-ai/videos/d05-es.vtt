@@ -1,0 +1,367 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.544
+Día 5 de la serie 31 días de QA + IA.
+
+00:00:04.094 --> 00:00:07.464
+Casos de prueba desde user stories: el prompt que sí funciona.
+
+00:00:08.014 --> 00:00:12.129
+Una plantilla de prompt versionada que genera casos por técnica de diseño y te dice
+
+00:00:12.129 --> 00:00:12.823
+qué no cubrió.
+
+00:00:14.123 --> 00:00:18.069
+Pedirle a un modelo "generame casos de prueba para esta historia" devuelve siempre
+
+00:00:18.069 --> 00:00:22.112
+lo mismo: una lista larga, pareja, con casos repetidos y dos o tres reglas que nadie
+
+00:00:22.112 --> 00:00:22.497
+definió.
+
+00:00:22.797 --> 00:00:25.075
+No es un problema de capacidad del modelo.
+
+00:00:25.375 --> 00:00:29.434
+Es que el pedido no le dice contra qué reglas trabajar, qué técnica usar ni cuándo
+
+00:00:29.434 --> 00:00:29.929
+detenerse.
+
+00:00:31.229 --> 00:00:35.346
+Esta guía reemplaza ese pedido por un flujo de tres pasos que imita cómo trabaja un
+
+00:00:35.346 --> 00:00:39.413
+buen analista: primero pregunta, después diseña con técnica y al final declara qué
+
+00:00:39.413 --> 00:00:40.008
+dejó afuera.
+
+00:00:40.308 --> 00:00:44.347
+El resultado no es una lista más larga sino una más corta y defendible, donde cada
+
+00:00:44.347 --> 00:00:46.859
+caso tiene un motivo y vos sabés qué huecos quedan.
+
+00:00:48.159 --> 00:00:50.089
+Para seguir esta guía necesitás:
+
+00:00:50.639 --> 00:00:52.592
+El repo qa-ai-lab del día 4.
+
+00:00:53.142 --> 00:00:55.780
+Una user story con criterios de aceptación.
+
+00:00:56.330 --> 00:00:59.676
+Las reglas de negocio escritas, aunque sean cinco líneas.
+
+00:01:00.976 --> 00:01:02.152
+Este es el setup.
+
+00:01:02.452 --> 00:01:05.798
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:07.098 --> 00:01:07.995
+Paso 1.
+
+00:01:08.295 --> 00:01:10.491
+Reglas de negocio como fuente de verdad.
+
+00:01:11.041 --> 00:01:13.134
+Escribí las reglas de negocio primero.
+
+00:01:13.434 --> 00:01:16.269
+Son la fuente de verdad; sin eso el modelo las inventa.
+
+00:01:16.819 --> 00:01:21.119
+Antes de abrir el chat, escribí las reglas que gobiernan la funcionalidad, aunque
+
+00:01:21.119 --> 00:01:24.728
+sean cinco líneas: límites, estados posibles, quién puede hacer qué.
+
+00:01:25.028 --> 00:01:29.211
+Si no existen por escrito, ese es tu primer hallazgo y vale más que cualquier caso.
+
+00:01:29.511 --> 00:01:33.642
+En el prompt, decí de forma explícita que esas reglas son la única fuente de verdad
+
+00:01:33.642 --> 00:01:35.086
+y que no debe inventar otras.
+
+00:01:35.386 --> 00:01:38.950
+Sin esa frase el modelo completa los huecos con lo que es habitual en otros
+
+00:01:38.950 --> 00:01:40.091
+sistemas, no en el tuyo.
+
+00:01:41.391 --> 00:01:42.287
+Paso 2.
+
+00:01:42.587 --> 00:01:44.111
+La plantilla en el repo.
+
+00:01:44.661 --> 00:01:47.833
+Guardá la plantilla en prompts/test-design.md.
+
+00:01:48.133 --> 00:01:50.493
+Funciona igual si la traducís al español.
+
+00:01:51.043 --> 00:01:54.540
+Guardá el prompt como archivo con variables para las reglas y la historia.
+
+00:01:54.840 --> 00:01:58.775
+Tenerlo versionado permite mejorarlo de a poco: cada vez que el resultado falla de
+
+00:01:58.775 --> 00:02:02.087
+una forma nueva, agregás una instrucción y queda para todo el equipo.
+
+00:02:02.387 --> 00:02:06.529
+También vuelve comparable el trabajo entre personas, porque todos parten del mismo
+
+00:02:06.529 --> 00:02:06.883
+pedido.
+
+00:02:07.183 --> 00:02:11.066
+Funciona igual en español; lo que importa es que las tres etapas estén separadas y
+
+00:02:11.066 --> 00:02:13.339
+que la primera termine con una orden de esperar.
+
+00:02:14.639 --> 00:02:15.535
+Paso 3.
+
+00:02:15.835 --> 00:02:17.336
+Paso uno: preguntas.
+
+00:02:17.886 --> 00:02:20.489
+Paso 1: pedí solo ambigüedades y preguntas.
+
+00:02:20.789 --> 00:02:22.963
+Respondelas vos o el PO antes de seguir.
+
+00:02:23.513 --> 00:02:26.952
+Esta etapa es la que más valor entrega y la que casi todos saltean.
+
+00:02:27.252 --> 00:02:31.631
+Pedí ambigüedades, contradicciones entre criterios y datos faltantes, y nada más.
+
+00:02:31.931 --> 00:02:34.895
+Llevá las preguntas reales al product owner antes de seguir.
+
+00:02:35.195 --> 00:02:38.738
+Cada ambigüedad resuelta acá es un defecto que no llega a escribirse.
+
+00:02:39.038 --> 00:02:42.967
+Si el modelo no encuentra ninguna pregunta en una historia que vos sabés incompleta,
+
+00:02:42.967 --> 00:02:46.755
+es una señal de que le falta contexto y de que los casos que genere después van a
+
+00:02:46.755 --> 00:02:47.597
+ser superficiales.
+
+00:02:48.897 --> 00:02:49.898
+Paso 4.
+
+00:02:50.198 --> 00:02:52.035
+Paso dos: casos por técnica.
+
+00:02:52.585 --> 00:02:57.155
+Paso 2: pedí casos por técnica (particiones, bordes, tabla de decisión, estados de
+
+00:02:57.155 --> 00:02:58.660
+error) en tabla con riesgo.
+
+00:02:59.210 --> 00:03:02.800
+Con las respuestas en mano, pedí casos nombrando las técnicas: particiones de
+
+00:03:02.800 --> 00:03:06.016
+equivalencia, valores de borde, tabla de decisión y estados de error.
+
+00:03:06.316 --> 00:03:08.838
+Exigí una tabla con la técnica de cada caso.
+
+00:03:09.138 --> 00:03:13.336
+Eso te permite ver de un vistazo si falta alguna: una tabla sin bordes o sin estados
+
+00:03:13.336 --> 00:03:14.586
+de error está incompleta.
+
+00:03:14.886 --> 00:03:19.011
+También reduce los duplicados, porque dos casos de la misma partición saltan a la
+
+00:03:19.011 --> 00:03:20.589
+vista cuando están etiquetados.
+
+00:03:21.889 --> 00:03:22.890
+Paso 5.
+
+00:03:23.190 --> 00:03:24.981
+Paso tres: lo que no cubrió.
+
+00:03:25.531 --> 00:03:28.018
+Paso 3: pedí la lista de lo no cubierto.
+
+00:03:28.318 --> 00:03:30.457
+Es la parte más útil para tu revisión.
+
+00:03:31.007 --> 00:03:33.436
+Pedí una lista de lo que quedó afuera y por qué.
+
+00:03:33.736 --> 00:03:38.325
+Suelen aparecer concurrencia, accesibilidad, performance, permisos y migración de
+
+00:03:38.325 --> 00:03:39.288
+datos existentes.
+
+00:03:39.588 --> 00:03:43.120
+No es un defecto del resultado: es información para decidir.
+
+00:03:43.420 --> 00:03:47.484
+Algunas cosas las vas a cubrir con otro tipo de prueba y otras las vas a aceptar
+
+00:03:47.484 --> 00:03:49.820
+como riesgo, pero la decisión queda explícita.
+
+00:03:50.120 --> 00:03:54.238
+Esta lista es además el mejor insumo para la conversación con el equipo sobre qué se
+
+00:03:54.238 --> 00:03:55.022
+prueba y qué no.
+
+00:03:56.322 --> 00:03:57.288
+Paso 6.
+
+00:03:57.588 --> 00:03:59.483
+La revisión con tres preguntas.
+
+00:04:00.033 --> 00:04:04.906
+Revisá con tres preguntas: ¿hay casos duplicados?, ¿alguna regla inventada?, ¿faltan
+
+00:04:04.906 --> 00:04:05.486
+negativos?
+
+00:04:05.786 --> 00:04:07.960
+Lo que sobreviva va al gestor de casos.
+
+00:04:08.510 --> 00:04:10.695
+Revisá la tabla buscando tres cosas.
+
+00:04:10.995 --> 00:04:14.527
+Duplicados: casos que ejercitan la misma partición con otro valor.
+
+00:04:14.827 --> 00:04:18.818
+Reglas inventadas: cualquier resultado esperado que no puedas rastrear a una regla
+
+00:04:18.818 --> 00:04:19.207
+escrita.
+
+00:04:19.507 --> 00:04:24.363
+Negativos faltantes: entradas inválidas, permisos insuficientes, estados imposibles.
+
+00:04:24.663 --> 00:04:26.488
+Es normal descartar un tercio.
+
+00:04:26.788 --> 00:04:30.954
+La prioridad también la ponés vos, porque el modelo tiende a marcar todo como riesgo
+
+00:04:30.954 --> 00:04:31.202
+alto.
+
+00:04:31.502 --> 00:04:34.431
+Lo que sobrevive pasa a tu gestor de casos con tu nombre.
+
+00:04:35.731 --> 00:04:36.651
+Un ejemplo.
+
+00:04:37.201 --> 00:04:40.686
+La historia dice: "como cliente quiero transferir dinero a otra cuenta".
+
+00:04:40.986 --> 00:04:45.296
+Las reglas escritas son cuatro: monto mínimo, tope diario, cuenta destino activa y
+
+00:04:45.296 --> 00:04:46.190
+saldo suficiente.
+
+00:04:46.490 --> 00:04:50.310
+En el paso uno el modelo pregunta qué pasa si el tope diario se alcanza a mitad de
+
+00:04:50.310 --> 00:04:53.991
+una transferencia programada y si el tope es por cliente o por cuenta; nadie lo
+
+00:04:53.991 --> 00:04:54.689
+había definido.
+
+00:04:54.989 --> 00:04:57.848
+En el paso dos devuelve veintidós casos etiquetados.
+
+00:04:58.148 --> 00:05:01.856
+En la revisión se descartan cinco duplicados de la partición "monto válido" y dos
+
+00:05:01.856 --> 00:05:03.549
+que asumían una comisión inexistente.
+
+00:05:03.849 --> 00:05:04.839
+Quedan quince.
+
+00:05:05.139 --> 00:05:09.178
+El paso tres declara que no cubrió concurrencia entre dos sesiones, y el equipo
+
+00:05:09.178 --> 00:05:10.354
+decide probarlo aparte.
+
+00:05:11.654 --> 00:05:13.178
+Los errores más comunes.
+
+00:05:13.728 --> 00:05:16.029
+Pedir casos sin pasar las reglas de negocio.
+
+00:05:16.579 --> 00:05:20.239
+Juntar los tres pasos en un solo pedido y perder la etapa de preguntas.
+
+00:05:20.789 --> 00:05:24.530
+Cargar los casos al gestor sin revisar duplicados ni reglas inventadas.
+
+00:05:25.080 --> 00:05:27.323
+Aceptar la prioridad que asigna el modelo.
+
+00:05:28.623 --> 00:05:30.890
+Para saber que quedó bien, revisá esto.
+
+00:05:31.440 --> 00:05:33.602
+La plantilla está versionada en prompts/.
+
+00:05:34.152 --> 00:05:36.732
+Al menos una ambigüedad real llegó al product owner.
+
+00:05:37.282 --> 00:05:40.466
+Cada caso final tiene técnica y se rastrea a una regla escrita.
+
+00:05:41.016 --> 00:05:43.735
+Hay una lista de descartes con el motivo de cada uno.
+
+00:05:45.035 --> 00:05:46.605
+Y lo que la IA no hizo bien.
+
+00:05:47.155 --> 00:05:49.120
+Asigna riesgo alto a casi todo.
+
+00:05:49.420 --> 00:05:52.592
+Priorizar es una decisión de negocio, no de redacción.
+
+00:05:53.892 --> 00:05:55.265
+Eso fue el día 5.
+
+00:05:55.565 --> 00:06:00.197
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:00.197 --> 00:06:00.804
+frecuentes.
+
+00:06:01.354 --> 00:06:06.354
+Seguí con el día 6: Datos de prueba sintéticos con LLM: realistas, válidos y sin
+
+00:06:06.354 --> 00:06:06.604
+PII.
