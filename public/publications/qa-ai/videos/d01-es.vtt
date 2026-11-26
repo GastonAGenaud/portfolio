@@ -1,0 +1,373 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.405
+Día 1 de la serie 31 días de QA + IA.
+
+00:00:03.955 --> 00:00:07.986
+LLMs en QA: el mapa 2026, dónde sirven y dónde no.
+
+00:00:08.536 --> 00:00:12.699
+Seis usos de LLM en QA que hoy funcionan, tres que no, y una regla simple para
+
+00:00:12.699 --> 00:00:13.926
+decidir cuándo delegar.
+
+00:00:15.226 --> 00:00:19.630
+En 2026 casi todos los equipos de QA usan algún LLM, pero pocos pueden decir en qué
+
+00:00:19.630 --> 00:00:22.973
+tareas les ahorra tiempo de verdad y en cuáles les suma riesgo.
+
+00:00:23.273 --> 00:00:27.646
+El resultado típico es usarlo para todo durante dos semanas, encontrarse con casos
+
+00:00:27.646 --> 00:00:31.913
+de prueba inventados y un par de tests frágiles, y volver a trabajar como antes.
+
+00:00:33.213 --> 00:00:34.992
+Esta guía ordena ese terreno.
+
+00:00:35.292 --> 00:00:39.013
+No parte de la herramienta sino de tus tareas: cuáles son de texto a texto, cuáles
+
+00:00:39.013 --> 00:00:42.689
+tienen una fuente de verdad contra la que comparar y cuáles se pueden deshacer si
+
+00:00:42.689 --> 00:00:43.143
+salen mal.
+
+00:00:43.443 --> 00:00:47.597
+Con eso alcanza para armar un mapa propio y una regla de decisión que vas a usar
+
+00:00:47.597 --> 00:00:48.740
+durante toda la serie.
+
+00:00:50.040 --> 00:00:51.970
+Para seguir esta guía necesitás:
+
+00:00:52.520 --> 00:00:54.612
+Una user story real de tu backlog.
+
+00:00:55.162 --> 00:00:58.497
+Un LLM a mano: Claude, ChatGPT o un modelo local con Ollama.
+
+00:00:59.047 --> 00:01:00.176
+20 minutos.
+
+00:01:01.476 --> 00:01:02.372
+Paso 1.
+
+00:01:02.672 --> 00:01:04.428
+Inventario de tareas reales.
+
+00:01:04.978 --> 00:01:09.457
+Listá tus tareas de QA de la última semana y marcá las que son texto a texto:
+
+00:01:09.457 --> 00:01:11.784
+analizar, redactar, clasificar, resumir.
+
+00:01:12.334 --> 00:01:16.753
+Abrí tu calendario y tu tablero de la semana pasada y anotá cada tarea con un verbo:
+
+00:01:16.753 --> 00:01:21.171
+revisar un requisito, escribir casos, preparar datos, automatizar un flujo, analizar
+
+00:01:21.171 --> 00:01:22.960
+un pipeline rojo, reportar un bug.
+
+00:01:23.260 --> 00:01:26.165
+No anotes lo que te gustaría hacer, sino lo que hiciste.
+
+00:01:26.465 --> 00:01:28.975
+Al lado de cada una poné cuánto tiempo te llevó.
+
+00:01:29.275 --> 00:01:32.681
+Las tareas de texto a texto que además te consumen horas son las primeras
+
+00:01:32.681 --> 00:01:36.319
+candidatas, porque ahí el modelo produce un borrador en segundos y vos pasás a
+
+00:01:36.319 --> 00:01:37.672
+revisar en lugar de redactar.
+
+00:01:38.972 --> 00:01:39.869
+Paso 2.
+
+00:01:40.169 --> 00:01:41.762
+Los seis usos que rinden.
+
+00:01:42.312 --> 00:01:46.440
+Ubicalas en los seis usos que funcionan: análisis de requisitos y ambigüedades,
+
+00:01:46.440 --> 00:01:50.411
+diseño de casos desde user stories, datos de prueba, escritura y refactor de
+
+00:01:50.411 --> 00:01:54.644
+automation con agentes, triage de fallos sobre logs y traces, y evals de features
+
+00:01:54.644 --> 00:01:55.271
+que usan IA.
+
+00:01:55.821 --> 00:01:59.435
+Cada uno funciona por la misma razón: hay algo contra qué comparar.
+
+00:01:59.735 --> 00:02:02.872
+En análisis de requisitos, comparás contra el product owner.
+
+00:02:03.172 --> 00:02:05.891
+En diseño de casos, contra las reglas de negocio.
+
+00:02:06.191 --> 00:02:08.121
+En datos de prueba, contra un schema.
+
+00:02:08.421 --> 00:02:10.839
+En automation, contra la ejecución del test.
+
+00:02:11.139 --> 00:02:12.825
+En triage, contra el trace.
+
+00:02:13.125 --> 00:02:15.298
+En evals, contra un dataset etiquetado.
+
+00:02:15.598 --> 00:02:19.847
+Si para una tarea no podés nombrar ese punto de comparación, todavía no pertenece a
+
+00:02:19.847 --> 00:02:22.509
+esta lista, por más que el resultado se vea prolijo.
+
+00:02:23.809 --> 00:02:24.706
+Paso 3.
+
+00:02:25.006 --> 00:02:26.610
+Los tres usos que fallan.
+
+00:02:27.160 --> 00:02:31.349
+Tachá los tres que no funcionan: decidir un release sin una persona, usar el modelo
+
+00:02:31.349 --> 00:02:35.336
+como oráculo sin fuente de verdad, y mergear tests de UI generados sin revisar.
+
+00:02:35.886 --> 00:02:39.550
+Decidir un release es un juicio de riesgo de negocio y el modelo no conoce tu
+
+00:02:39.550 --> 00:02:41.311
+contexto ni responde por la decisión.
+
+00:02:41.611 --> 00:02:45.704
+Usarlo de oráculo sin fuente de verdad produce respuestas seguras y a veces falsas,
+
+00:02:45.704 --> 00:02:47.430
+que es la peor combinación para QA.
+
+00:02:47.730 --> 00:02:51.508
+Y los tests de UI generados en lote suelen pasar una vez y fallar a la semana,
+
+00:02:51.508 --> 00:02:54.269
+porque dependen de selectores adivinados y esperas fijas.
+
+00:02:54.569 --> 00:02:59.011
+No están prohibidos: necesitan una persona que mire el resultado antes de darlo por
+
+00:02:59.011 --> 00:02:59.332
+bueno.
+
+00:03:00.632 --> 00:03:01.633
+Paso 4.
+
+00:03:01.933 --> 00:03:03.642
+La regla de tres preguntas.
+
+00:03:04.192 --> 00:03:08.635
+Aplicá la regla: delego solo si el resultado es verificable, barato de revisar y
+
+00:03:08.635 --> 00:03:09.245
+reversible.
+
+00:03:09.795 --> 00:03:14.129
+Verificable significa que existe un chequeo objetivo: un test que corre, un schema,
+
+00:03:14.129 --> 00:03:15.069
+una regla escrita.
+
+00:03:15.369 --> 00:03:19.555
+Barato de revisar significa que leerlo te cuesta bastante menos que hacerlo vos; si
+
+00:03:19.555 --> 00:03:23.792
+revisar cuarenta casos generados te lleva más que escribir quince buenos, no ganaste
+
+00:03:23.792 --> 00:03:24.044
+nada.
+
+00:03:24.344 --> 00:03:28.762
+Reversible significa que un error no deja consecuencias: un borrador se descarta, un
+
+00:03:28.762 --> 00:03:29.920
+merge a producción no.
+
+00:03:30.220 --> 00:03:34.642
+Si falla una de las tres, la IA puede asistir, pero la decisión y la firma son
+
+00:03:34.642 --> 00:03:34.982
+tuyas.
+
+00:03:36.282 --> 00:03:37.283
+Paso 5.
+
+00:03:37.583 --> 00:03:39.618
+Primera prueba con una user story.
+
+00:03:40.168 --> 00:03:44.379
+Probalo: pegá tu user story y pedí "antes de escribir casos, listá ambigüedades y
+
+00:03:44.379 --> 00:03:45.523
+preguntas para el PO".
+
+00:03:46.073 --> 00:03:50.053
+Elegí una story que ya esté en desarrollo, así podés comparar con lo que el equipo
+
+00:03:50.053 --> 00:03:51.219
+descubrió por las malas.
+
+00:03:51.519 --> 00:03:55.655
+Pegá el texto completo con sus criterios de aceptación y pedí solo ambigüedades y
+
+00:03:55.655 --> 00:03:56.676
+preguntas, no casos.
+
+00:03:56.976 --> 00:04:00.951
+Tomá nota de cuántas preguntas son reales, cuántas ya estaban respondidas en otro
+
+00:04:00.951 --> 00:04:02.226
+lado y cuántas no aplican.
+
+00:04:02.526 --> 00:04:06.322
+Esa proporción te dice si para tu dominio conviene usarlo en refinamiento o si
+
+00:04:06.322 --> 00:04:08.171
+primero necesita más contexto escrito.
+
+00:04:09.471 --> 00:04:10.438
+Paso 6.
+
+00:04:10.738 --> 00:04:12.842
+El registro de aciertos y errores.
+
+00:04:13.392 --> 00:04:15.252
+Anotá qué acertó y qué inventó.
+
+00:04:15.552 --> 00:04:17.505
+Ese registro es tu primer eval.
+
+00:04:18.055 --> 00:04:22.327
+Armá una tabla simple con cuatro columnas: tarea, qué pediste, qué acertó y qué
+
+00:04:22.327 --> 00:04:22.760
+inventó.
+
+00:04:23.060 --> 00:04:26.940
+Completala durante dos semanas cada vez que uses un modelo para algo de QA.
+
+00:04:27.240 --> 00:04:31.263
+Sin ese registro tu opinión sobre la herramienta va a depender del último resultado
+
+00:04:31.263 --> 00:04:31.747
+que viste.
+
+00:04:32.047 --> 00:04:35.907
+Con el registro tenés evidencia para decidir dónde seguir usándola, y además el
+
+00:04:35.907 --> 00:04:39.913
+primer borrador de un dataset de evaluación, que es justo lo que vamos a construir
+
+00:04:39.913 --> 00:04:40.549
+más adelante.
+
+00:04:41.849 --> 00:04:42.768
+Un ejemplo.
+
+00:04:43.318 --> 00:04:46.572
+Una analista toma la story "aplicar cupón de descuento en el checkout".
+
+00:04:46.872 --> 00:04:49.893
+Le pide al modelo ambigüedades y recibe siete preguntas.
+
+00:04:50.193 --> 00:04:54.117
+Tres son reales y nadie las había hecho: qué pasa si el cupón vence durante la
+
+00:04:54.117 --> 00:04:57.034
+compra, si se combina con envío gratis y cómo se redondea.
+
+00:04:57.334 --> 00:05:00.332
+Dos ya estaban respondidas en el documento de reglas.
+
+00:05:00.632 --> 00:05:04.141
+Las otras dos asumen una regla de "un cupón por cliente" que no existe.
+
+00:05:04.441 --> 00:05:08.217
+Resultado en la tabla: tres aciertos, dos sobras y dos inventos.
+
+00:05:08.517 --> 00:05:12.176
+Diez minutos de trabajo y tres preguntas que evitaron un bug en producción.
+
+00:05:12.476 --> 00:05:16.478
+Ese es un uso que pasa la regla: verificable con el PO, barato de leer y sin
+
+00:05:16.478 --> 00:05:18.005
+consecuencias si se descarta.
+
+00:05:19.305 --> 00:05:20.829
+Los errores más comunes.
+
+00:05:21.379 --> 00:05:25.321
+Evaluar la herramienta por una demo o por el último resultado, sin registro de
+
+00:05:25.321 --> 00:05:26.281
+aciertos y errores.
+
+00:05:26.831 --> 00:05:30.920
+Pedir el entregable final (casos, tests) antes de pedir preguntas y ambigüedades.
+
+00:05:31.470 --> 00:05:35.379
+Dar por bueno un resultado porque está bien redactado, sin compararlo contra una
+
+00:05:35.379 --> 00:05:36.210
+fuente de verdad.
+
+00:05:36.760 --> 00:05:40.536
+Medir el ahorro solo en tiempo de escritura y olvidar el tiempo de revisión.
+
+00:05:41.836 --> 00:05:44.102
+Para saber que quedó bien, revisá esto.
+
+00:05:44.652 --> 00:05:48.138
+Tenés diez tareas reales clasificadas en delegables y no delegables.
+
+00:05:48.688 --> 00:05:51.733
+Cada tarea delegable tiene nombrado contra qué se verifica.
+
+00:05:52.283 --> 00:05:55.118
+Corriste el prompt de ambigüedades sobre una story real.
+
+00:05:55.668 --> 00:05:58.817
+Tu tabla tiene al menos tres aciertos y un error anotados.
+
+00:06:00.117 --> 00:06:01.687
+Y lo que la IA no hizo bien.
+
+00:06:02.237 --> 00:06:04.794
+Inventa reglas de negocio con mucha seguridad.
+
+00:06:05.094 --> 00:06:07.976
+Sin una fuente de verdad al lado, no sirve de oráculo.
+
+00:06:09.276 --> 00:06:10.555
+Eso fue el día 1.
+
+00:06:10.855 --> 00:06:15.488
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:15.488 --> 00:06:16.094
+frecuentes.
+
+00:06:16.644 --> 00:06:20.919
+Seguí con el día 2: Cómo se está reorientando el rol SDET en el mundo de la IA.

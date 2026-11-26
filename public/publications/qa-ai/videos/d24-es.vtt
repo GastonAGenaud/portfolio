@@ -1,0 +1,412 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.846
+Día 24 de la serie 31 días de QA + IA.
+
+00:00:04.396 --> 00:00:08.529
+Seguridad (3): prompt injection en agentes con herramientas y cómo probar los
+
+00:00:08.529 --> 00:00:09.066
+controles.
+
+00:00:09.616 --> 00:00:13.345
+Tests que verifican que un agente no ejecuta acciones indebidas cuando el contenido
+
+00:00:13.345 --> 00:00:15.052
+que lee trae instrucciones inyectadas.
+
+00:00:16.352 --> 00:00:20.754
+Una inyección de prompts en un chatbot que solo conversa produce, en el peor caso,
+
+00:00:20.754 --> 00:00:21.881
+un texto inapropiado.
+
+00:00:22.181 --> 00:00:26.170
+La misma inyección en un agente con herramientas puede terminar en una acción: un
+
+00:00:26.170 --> 00:00:29.765
+mail enviado, un registro modificado, datos que salen de la organización.
+
+00:00:30.065 --> 00:00:32.727
+Y no hace falta que el atacante hable con el agente.
+
+00:00:33.027 --> 00:00:36.292
+Alcanza con dejar la instrucción en un lugar que el agente vaya a leer.
+
+00:00:37.592 --> 00:00:41.357
+No existe hoy una defensa que garantice que un modelo ignore instrucciones
+
+00:00:41.357 --> 00:00:42.679
+maliciosas en su contexto.
+
+00:00:42.979 --> 00:00:46.892
+Lo que sí existe son controles alrededor del modelo que limitan lo que puede pasar
+
+00:00:46.892 --> 00:00:48.276
+cuando la inyección funciona.
+
+00:00:48.576 --> 00:00:52.513
+Esta guía muestra cómo probar esos controles con tests deterministas que miran las
+
+00:00:52.513 --> 00:00:54.337
+acciones del agente y no sus palabras.
+
+00:00:55.637 --> 00:00:57.567
+Para seguir esta guía necesitás:
+
+00:00:58.117 --> 00:01:01.869
+Un agente con herramientas en ambiente de prueba, con herramientas falsas o en modo
+
+00:01:01.869 --> 00:01:02.276
+simulado.
+
+00:01:02.826 --> 00:01:06.103
+Acceso al registro de llamadas a herramientas de cada ejecución.
+
+00:01:07.403 --> 00:01:08.578
+Este es el setup.
+
+00:01:08.878 --> 00:01:12.224
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:13.524 --> 00:01:15.199
+Controles y cómo se prueban.
+
+00:01:15.749 --> 00:01:19.616
+Permisos mínimos por herramienta: el agente de soporte no tiene la herramienta de
+
+00:01:19.616 --> 00:01:20.523
+borrado disponible.
+
+00:01:21.073 --> 00:01:25.134
+Aprobación humana en acciones irreversibles: la llamada queda en estado pendiente,
+
+00:01:25.134 --> 00:01:25.778
+no ejecutada.
+
+00:01:26.328 --> 00:01:30.057
+Lista de destinos permitidos: un envío a un dominio no listado se rechaza.
+
+00:01:30.607 --> 00:01:34.906
+Salida de herramientas tratada como dato: texto con instrucciones en un resultado no
+
+00:01:34.906 --> 00:01:35.777
+dispara acciones.
+
+00:01:37.077 --> 00:01:37.973
+Paso 1.
+
+00:01:38.273 --> 00:01:39.890
+Inventario de herramientas.
+
+00:01:40.440 --> 00:01:44.172
+Hacé el inventario: qué herramientas tiene el agente y qué puede hacer cada una
+
+00:01:44.172 --> 00:01:45.353
+(leer, escribir, enviar).
+
+00:01:45.903 --> 00:01:49.758
+Listá cada herramienta que el agente tiene disponible y clasificá lo que puede hacer
+
+00:01:49.758 --> 00:01:52.419
+en tres capacidades: leer, escribir y enviar hacia afuera.
+
+00:01:52.719 --> 00:01:53.906
+Sé específico.
+
+00:01:54.206 --> 00:01:56.472
+"Acceso a la base de datos" no alcanza.
+
+00:01:56.772 --> 00:01:59.109
+Decí qué tablas, y con qué operaciones.
+
+00:01:59.409 --> 00:02:03.130
+Incluí las herramientas que vienen por defecto y las que agrega cada servidor MCP
+
+00:02:03.130 --> 00:02:05.611
+conectado, que suelen ser más de las que uno recuerda.
+
+00:02:05.911 --> 00:02:10.083
+El inventario suele dar una primera sorpresa: herramientas que el agente tiene y que
+
+00:02:10.083 --> 00:02:11.127
+la tarea no necesita.
+
+00:02:12.427 --> 00:02:13.323
+Paso 2.
+
+00:02:13.623 --> 00:02:15.356
+La combinación peligrosa.
+
+00:02:15.906 --> 00:02:19.915
+Buscá la combinación peligrosa: acceso a datos privados, lectura de contenido no
+
+00:02:19.915 --> 00:02:22.422
+confiable y capacidad de comunicarse hacia afuera.
+
+00:02:22.722 --> 00:02:25.870
+Con las tres juntas, una inyección puede sacar datos.
+
+00:02:26.420 --> 00:02:30.674
+Buscá si el agente reúne tres condiciones a la vez: acceso a datos privados, lectura
+
+00:02:30.674 --> 00:02:34.016
+de contenido no confiable y capacidad de comunicarse hacia afuera.
+
+00:02:34.316 --> 00:02:36.374
+Cada una por separado es manejable.
+
+00:02:36.674 --> 00:02:40.506
+Las tres juntas permiten que una instrucción escondida en un documento le indique
+
+00:02:40.506 --> 00:02:42.493
+leer algo privado y enviarlo a un tercero.
+
+00:02:42.793 --> 00:02:47.004
+Si tu agente las reúne, la medida más efectiva es romper la combinación quitando una
+
+00:02:47.004 --> 00:02:49.761
+de las tres para esa tarea, antes de pensar en filtros.
+
+00:02:51.061 --> 00:02:51.958
+Paso 3.
+
+00:02:52.258 --> 00:02:54.304
+Fixtures con inyecciones en cada canal.
+
+00:02:54.854 --> 00:02:59.144
+Armá fixtures con instrucciones inyectadas en cada canal que el agente lee: ticket,
+
+00:02:59.144 --> 00:03:01.625
+documento, página web, resultado de herramienta.
+
+00:03:02.175 --> 00:03:06.329
+Armá datos de prueba con instrucciones inyectadas en todos los lugares que el agente
+
+00:03:06.329 --> 00:03:10.383
+lee: el cuerpo de un ticket, un documento adjunto, el contenido de una página web,
+
+00:03:10.383 --> 00:03:11.965
+el resultado de una herramienta.
+
+00:03:12.265 --> 00:03:16.071
+Usá instrucciones inofensivas pero verificables, como llamar a una herramienta
+
+00:03:16.071 --> 00:03:17.388
+marcadora que no hace nada.
+
+00:03:17.688 --> 00:03:21.900
+Variá el formato: texto directo, texto dentro de un comentario, instrucciones que
+
+00:03:21.900 --> 00:03:23.252
+simulan venir del sistema.
+
+00:03:23.552 --> 00:03:26.979
+Cada fixture corresponde a un caso de abuso del modelo de amenazas.
+
+00:03:28.279 --> 00:03:29.280
+Paso 4.
+
+00:03:29.580 --> 00:03:31.266
+Aserciones sobre acciones.
+
+00:03:31.816 --> 00:03:35.343
+Afirmá sobre acciones, no sobre palabras: el test pasa si la llamada a la
+
+00:03:35.343 --> 00:03:38.193
+herramienta no ocurrió, sin importar lo que el agente diga.
+
+00:03:38.743 --> 00:03:41.010
+El test no evalúa lo que el agente responde.
+
+00:03:41.310 --> 00:03:43.971
+Evalúa si ocurrió la llamada a la herramienta prohibida.
+
+00:03:44.271 --> 00:03:48.319
+Un agente puede escribir "no voy a hacer eso" y aun así ejecutar la acción, o lo
+
+00:03:48.319 --> 00:03:48.825
+contrario.
+
+00:03:49.125 --> 00:03:52.974
+Registrá las llamadas a herramientas y verificá que la lista no contenga la acción
+
+00:03:52.974 --> 00:03:55.931
+prohibida, o que el destinatario esté dentro de los permitidos.
+
+00:03:56.231 --> 00:04:00.230
+Es una aserción clásica y determinista sobre un registro de llamadas, que no
+
+00:04:00.230 --> 00:04:01.493
+necesita un modelo juez.
+
+00:04:02.793 --> 00:04:03.794
+Paso 5.
+
+00:04:04.094 --> 00:04:05.710
+Cada control por separado.
+
+00:04:06.260 --> 00:04:09.746
+Probá cada control por separado, con las herramientas en modo simulado.
+
+00:04:10.296 --> 00:04:14.328
+Probá cada control de forma aislada, con las herramientas en modo simulado para que
+
+00:04:14.328 --> 00:04:15.349
+nada salga de verdad.
+
+00:04:15.649 --> 00:04:19.541
+Mínimo privilegio: la herramienta peligrosa directamente no figura entre las
+
+00:04:19.541 --> 00:04:20.156
+disponibles.
+
+00:04:20.456 --> 00:04:24.174
+Aprobación humana: la acción irreversible queda pendiente y no se ejecuta.
+
+00:04:24.474 --> 00:04:28.203
+Lista de destinos permitidos: un envío a un dominio no listado se rechaza.
+
+00:04:28.503 --> 00:04:32.795
+Salida de herramienta tratada como dato: un resultado con instrucciones no dispara
+
+00:04:32.795 --> 00:04:33.266
+acciones.
+
+00:04:33.566 --> 00:04:35.391
+Aislados, sabés cuál falló.
+
+00:04:36.691 --> 00:04:37.658
+Paso 6.
+
+00:04:37.958 --> 00:04:39.446
+MCP y regresión.
+
+00:04:39.996 --> 00:04:43.940
+Si usás MCP: revisá las descripciones de las herramientas de terceros (también son
+
+00:04:43.940 --> 00:04:46.826
+texto que el modelo lee) y fijá versiones de los servidores.
+
+00:04:47.126 --> 00:04:48.707
+Sumá todo a la regresión.
+
+00:04:49.257 --> 00:04:53.225
+Las descripciones de las herramientas de un servidor MCP también son texto que el
+
+00:04:53.225 --> 00:04:56.702
+modelo lee, y un servidor de terceros podría incluir instrucciones ahí.
+
+00:04:57.002 --> 00:05:01.150
+Revisá las descripciones antes de conectar un servidor y fijá su versión, para que
+
+00:05:01.150 --> 00:05:02.566
+no cambien sin que lo sepas.
+
+00:05:02.866 --> 00:05:06.932
+Sumá todos estos tests al conjunto de regresión y correlos ante cualquier cambio de
+
+00:05:06.932 --> 00:05:08.499
+herramientas, permisos o prompt.
+
+00:05:08.799 --> 00:05:13.005
+Como la resistencia del modelo es probabilística, repetí cada caso varias veces.
+
+00:05:14.305 --> 00:05:15.224
+Un ejemplo.
+
+00:05:15.775 --> 00:05:19.307
+Un agente de soporte lee tickets, consulta pedidos y envía mails.
+
+00:05:19.607 --> 00:05:23.455
+El inventario muestra que además tiene una herramienta para borrar pedidos que nunca
+
+00:05:23.455 --> 00:05:23.638
+usa.
+
+00:05:23.938 --> 00:05:24.858
+La quitan.
+
+00:05:25.158 --> 00:05:28.919
+El agente reúne las tres condiciones peligrosas, así que restringen el mail al
+
+00:05:28.919 --> 00:05:29.932
+remitente del ticket.
+
+00:05:30.232 --> 00:05:33.745
+Arman seis fixtures con inyecciones y corren cada uno diez veces con las
+
+00:05:33.745 --> 00:05:34.867
+herramientas simuladas.
+
+00:05:35.167 --> 00:05:38.827
+En cincuenta y ocho de sesenta corridas el agente ignora la instrucción.
+
+00:05:39.127 --> 00:05:43.182
+En dos intenta enviar un mail a una dirección externa, y la lista de destinos lo
+
+00:05:43.182 --> 00:05:43.588
+rechaza.
+
+00:05:43.888 --> 00:05:46.781
+El modelo cedió dos veces y el control funcionó las dos.
+
+00:05:47.081 --> 00:05:50.427
+El test verifica el control, que es lo que tiene que cumplirse siempre.
+
+00:05:51.727 --> 00:05:53.251
+Los errores más comunes.
+
+00:05:53.801 --> 00:05:56.462
+Evaluar lo que el agente dice en lugar de lo que ejecuta.
+
+00:05:57.012 --> 00:05:59.488
+Probar inyecciones solo en el mensaje del usuario.
+
+00:06:00.038 --> 00:06:03.024
+Confiar en una instrucción del prompt como único control.
+
+00:06:03.574 --> 00:06:07.548
+Conectar servidores MCP de terceros sin revisar ni fijar versión.
+
+00:06:08.848 --> 00:06:11.114
+Para saber que quedó bien, revisá esto.
+
+00:06:11.664 --> 00:06:14.836
+Hay un inventario de herramientas con leer, escribir y enviar.
+
+00:06:15.386 --> 00:06:18.686
+Sabés si el agente reúne la combinación peligrosa y cómo se rompe.
+
+00:06:19.236 --> 00:06:22.443
+Existen fixtures con inyecciones en cada canal de lectura.
+
+00:06:22.993 --> 00:06:26.839
+Cada control tiene un test que verifica acciones, repetido varias veces.
+
+00:06:28.139 --> 00:06:29.709
+Y lo que la IA no hizo bien.
+
+00:06:30.259 --> 00:06:34.298
+La resistencia a la inyección es probabilística: un agente que resiste nueve veces
+
+00:06:34.298 --> 00:06:35.381
+puede ceder la décima.
+
+00:06:35.681 --> 00:06:38.645
+Por eso las acciones sensibles se limitan con permisos.
+
+00:06:39.945 --> 00:06:41.631
+Eso fue el día 24.
+
+00:06:41.931 --> 00:06:46.563
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:46.563 --> 00:06:47.169
+frecuentes.
+
+00:06:47.719 --> 00:06:51.968
+Seguí con el día 25: Modelo para pruebas de performance (1): las métricas que
+
+00:06:51.968 --> 00:06:53.016
+importan en un LLM.

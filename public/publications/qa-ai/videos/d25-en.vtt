@@ -1,0 +1,400 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.357
+Day 25 of the 31 days of QA + AI series.
+
+00:00:04.907 --> 00:00:09.240
+A model for performance testing (1): the metrics that matter for an LLM.
+
+00:00:09.790 --> 00:00:14.881
+The performance model of an LLM feature: workload profile, text-generation-specific
+
+00:00:14.881 --> 00:00:16.782
+metrics and percentile targets.
+
+00:00:18.082 --> 00:00:22.695
+Someone coming from traditional performance testing arrives at an endpoint with a
+
+00:00:22.695 --> 00:00:27.251
+model and applies what they know: requests per second, average latency and error
+
+00:00:27.251 --> 00:00:27.535
+rate.
+
+00:00:27.835 --> 00:00:31.147
+The numbers come out, and they describe the system poorly.
+
+00:00:31.447 --> 00:00:35.797
+Two requests to the same endpoint can generate twenty tokens or two thousand, and
+
+00:00:35.797 --> 00:00:37.301
+take half a second or forty.
+
+00:00:37.601 --> 00:00:40.494
+Averaging them blends things that aren't alike.
+
+00:00:41.794 --> 00:00:44.200
+A model's unit of work is the token.
+
+00:00:44.500 --> 00:00:49.534
+The user's experience depends on when the first one arrives and on how smoothly the
+
+00:00:49.534 --> 00:00:50.261
+rest follow.
+
+00:00:50.561 --> 00:00:55.093
+This guide introduces the metrics that describe that, how to define targets per
+
+00:00:55.093 --> 00:00:58.134
+percentile and how to measure a single-user baseline.
+
+00:00:58.434 --> 00:01:02.813
+Without that baseline, any later load test is a number with no reference.
+
+00:01:04.113 --> 00:01:05.811
+To follow this guide you need:
+
+00:01:06.361 --> 00:01:09.893
+An OpenAI-compatible endpoint (local Ollama works).
+
+00:01:10.443 --> 00:01:12.861
+Python 3.10+.
+
+00:01:14.161 --> 00:01:15.440
+This is the setup.
+
+00:01:15.740 --> 00:01:19.957
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:21.257 --> 00:01:23.524
+And this is the next setup file.
+
+00:01:24.824 --> 00:01:25.883
+The metrics.
+
+00:01:26.433 --> 00:01:30.430
+TTFT (time to first token): time until the first token.
+
+00:01:30.730 --> 00:01:33.228
+It's what the user feels as "it answered".
+
+00:01:33.778 --> 00:01:37.252
+ITL (inter-token latency): time between tokens.
+
+00:01:37.552 --> 00:01:40.307
+It measures how smooth streaming text is.
+
+00:01:40.857 --> 00:01:44.017
+Output tokens/s: generation speed.
+
+00:01:44.317 --> 00:01:46.607
+It's the system's real capacity.
+
+00:01:47.157 --> 00:01:52.373
+Total latency p95 and p99: the tail is what generates complaints.
+
+00:01:52.923 --> 00:01:58.173
+Error rate (429, 5xx, timeouts): quota limits and saturation.
+
+00:01:58.723 --> 00:02:02.754
+Goodput: percentage of requests meeting all targets at once.
+
+00:02:03.304 --> 00:02:06.662
+Cost per request: input and output tokens.
+
+00:02:06.962 --> 00:02:08.613
+Load is paid for too.
+
+00:02:09.913 --> 00:02:10.949
+Step 1.
+
+00:02:11.249 --> 00:02:13.272
+Why classic metrics mislead.
+
+00:02:13.822 --> 00:02:18.949
+Understand why classic metrics mislead: two requests to the same endpoint can
+
+00:02:18.949 --> 00:02:20.814
+generate 20 or 2,000 tokens.
+
+00:02:21.114 --> 00:02:25.227
+Requests per second and average latency blend different things.
+
+00:02:25.777 --> 00:02:30.737
+In a traditional API, requests to the same endpoint cost roughly the same.
+
+00:02:31.037 --> 00:02:36.225
+With a model, each request's cost depends on how many tokens go in and, above all,
+
+00:02:36.225 --> 00:02:39.515
+how many come out, because generation is sequential.
+
+00:02:39.815 --> 00:02:44.521
+Ten requests per second with short answers and with long answers are two completely
+
+00:02:44.521 --> 00:02:46.563
+different loads for the same server.
+
+00:02:46.863 --> 00:02:51.559
+If you report only requests per second and average latency, two tests with the same
+
+00:02:51.559 --> 00:02:53.936
+result may have measured different things.
+
+00:02:55.236 --> 00:02:56.434
+Step 2.
+
+00:02:56.734 --> 00:02:58.351
+The workload profile.
+
+00:02:58.901 --> 00:03:04.606
+Define the workload profile: prompt sizes, expected output length, streaming or not,
+
+00:03:04.606 --> 00:03:06.032
+and peak concurrency.
+
+00:03:06.582 --> 00:03:09.231
+Before measuring, describe the real load.
+
+00:03:09.531 --> 00:03:12.553
+Which prompt sizes arrive and in what proportion.
+
+00:03:12.853 --> 00:03:14.968
+What answer length is expected.
+
+00:03:15.268 --> 00:03:18.638
+Whether streaming is used or the full answer is awaited.
+
+00:03:18.938 --> 00:03:20.705
+What peak concurrency is.
+
+00:03:21.005 --> 00:03:25.821
+Take this from production logs if they exist, or estimate it with the product team
+
+00:03:25.821 --> 00:03:26.232
+if not.
+
+00:03:26.532 --> 00:03:30.668
+A profile with three or four request types and their proportions is enough.
+
+00:03:30.968 --> 00:03:35.947
+Without a profile you'll test with an arbitrary prompt and get numbers that predict
+
+00:03:35.947 --> 00:03:36.427
+nothing.
+
+00:03:37.727 --> 00:03:38.810
+Step 3.
+
+00:03:39.110 --> 00:03:40.924
+Targets per percentile.
+
+00:03:41.474 --> 00:03:48.182
+Set targets per percentile, not average: for example TTFT p95, total latency p95 and
+
+00:03:48.182 --> 00:03:49.859
+a maximum error rate.
+
+00:03:50.409 --> 00:03:54.614
+An average hides the tail, and the tail is where the complaining users are.
+
+00:03:54.914 --> 00:03:59.623
+Define targets as percentiles: for example, time to first token at the ninety-fifth
+
+00:03:59.623 --> 00:04:04.274
+percentile, total latency at the ninety-fifth percentile and a maximum error rate.
+
+00:04:04.574 --> 00:04:09.143
+The values come from the experience the product needs, not from what the system
+
+00:04:09.143 --> 00:04:10.010
+delivers today.
+
+00:04:10.310 --> 00:04:11.973
+Write them before measuring.
+
+00:04:12.273 --> 00:04:16.618
+If you define them afterwards, they'll look suspiciously like what you measured.
+
+00:04:17.918 --> 00:04:18.931
+Step 4.
+
+00:04:19.231 --> 00:04:21.091
+The single-user baseline.
+
+00:04:21.641 --> 00:04:24.546
+Measure the single-user baseline with the script.
+
+00:04:24.846 --> 00:04:28.750
+If you miss targets with one user, there's no load test to run yet.
+
+00:04:29.300 --> 00:04:34.384
+Run the script with a single user and no concurrency, several times for each request
+
+00:04:34.384 --> 00:04:35.595
+type in the profile.
+
+00:04:35.895 --> 00:04:40.333
+That gives you the best case: what the system does when competing with nobody.
+
+00:04:40.633 --> 00:04:45.334
+If you miss targets with one user, there's no load test to run yet, because the
+
+00:04:45.334 --> 00:04:50.155
+problem lies in the chosen model, the prompt size or the infrastructure, and load
+
+00:04:50.155 --> 00:04:51.583
+will only make it worse.
+
+00:04:51.883 --> 00:04:55.950
+The baseline is also the reference for reading everything that comes next.
+
+00:04:57.250 --> 00:04:58.378
+Step 5.
+
+00:04:58.678 --> 00:04:59.598
+Goodput.
+
+00:05:00.148 --> 00:05:04.679
+Add goodput: the percentage of requests meeting all targets at once.
+
+00:05:05.229 --> 00:05:10.119
+Goodput is the percentage of requests meeting all targets at once: first token on
+
+00:05:10.119 --> 00:05:13.138
+time, total latency within the limit and no error.
+
+00:05:13.438 --> 00:05:18.328
+It matters because the separate metrics can look fine while the experience is poor.
+
+00:05:18.628 --> 00:05:23.428
+A system can sustain many requests per second and have low goodput if a good share
+
+00:05:23.428 --> 00:05:24.598
+of them arrive late.
+
+00:05:24.898 --> 00:05:30.002
+It's the number that best sums up whether load is being served acceptably, and it's
+
+00:05:30.002 --> 00:05:32.215
+useful for comparing configurations.
+
+00:05:33.515 --> 00:05:34.702
+Step 6.
+
+00:05:35.002 --> 00:05:36.479
+Cost per request.
+
+00:05:37.029 --> 00:05:39.006
+Record cost per request.
+
+00:05:39.306 --> 00:05:42.954
+A load test against a paid API consumes real budget.
+
+00:05:43.504 --> 00:05:47.802
+Record each request's input and output tokens and convert them into cost.
+
+00:05:48.102 --> 00:05:49.475
+It has two uses.
+
+00:05:49.775 --> 00:05:54.738
+The first is product-related: knowing what it costs to serve a user at the expected
+
+00:05:54.738 --> 00:05:55.037
+load.
+
+00:05:55.337 --> 00:05:57.000
+The second is practical.
+
+00:05:57.300 --> 00:06:02.247
+A load test against a paid API consumes real budget, and a badly sized test can
+
+00:06:02.247 --> 00:06:05.127
+spend in an hour what was planned for a month.
+
+00:06:05.427 --> 00:06:09.551
+Estimate the test's cost before running it and use a key with a spending cap.
+
+00:06:10.851 --> 00:06:11.957
+An example.
+
+00:06:12.507 --> 00:06:17.566
+With illustrative values: a team defines three request types for its assistant,
+
+00:06:17.566 --> 00:06:21.345
+short, medium and long, in a sixty, thirty, ten proportion.
+
+00:06:21.645 --> 00:06:26.333
+The targets are first token in under a second and a half and total latency under
+
+00:06:26.333 --> 00:06:29.380
+twelve seconds, both at the ninety-fifth percentile.
+
+00:06:29.680 --> 00:06:33.549
+The single-user baseline shows the short and medium ones comply.
+
+00:06:33.849 --> 00:06:38.804
+The long ones take eighteen seconds in total, even though the first token arrives on
+
+00:06:38.804 --> 00:06:39.099
+time.
+
+00:06:39.399 --> 00:06:42.292
+Before any load test there's already a finding.
+
+00:06:42.592 --> 00:06:47.099
+They discuss it with product and agree to limit the length of those answers, which
+
+00:06:47.099 --> 00:06:48.748
+brings them to eleven seconds.
+
+00:06:50.048 --> 00:06:51.711
+The most common mistakes.
+
+00:06:52.261 --> 00:06:55.875
+Reporting only requests per second and average latency.
+
+00:06:56.425 --> 00:07:00.003
+Testing with a single prompt that doesn't represent the real load.
+
+00:07:00.553 --> 00:07:02.971
+Setting targets after seeing the measurements.
+
+00:07:03.521 --> 00:07:07.204
+Launching a load test without estimating what it will cost.
+
+00:07:08.504 --> 00:07:10.747
+To know it is done, check this.
+
+00:07:11.297 --> 00:07:14.632
+The workload profile has request types and proportions.
+
+00:07:15.182 --> 00:07:18.087
+Targets are written per percentile before measuring.
+
+00:07:18.637 --> 00:07:21.658
+There is a single-user baseline for each request type.
+
+00:07:22.208 --> 00:07:25.926
+Each measurement includes tokens and cost per request.
+
+00:07:27.226 --> 00:07:29.121
+And where AI fell short.
+
+00:07:29.671 --> 00:07:33.923
+Assistants default to classic API metrics (RPS, averages).
+
+00:07:34.223 --> 00:07:37.360
+You have to explicitly ask for generation metrics.
+
+00:07:38.660 --> 00:07:40.462
+That was day 25.
+
+00:07:40.762 --> 00:07:45.737
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:45.737 --> 00:07:46.744
+asked questions.
+
+00:07:47.294 --> 00:07:53.148
+Continue with day 26: Performance (2): load testing an LLM endpoint with k6.

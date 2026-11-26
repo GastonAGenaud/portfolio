@@ -1,0 +1,379 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.404
+Day 16 of the 31 days of QA + AI series.
+
+00:00:04.954 --> 00:00:08.834
+LLM-as-a-judge: rubrics and calibration against humans.
+
+00:00:09.384 --> 00:00:13.876
+How to write an observable rubric for a judge model and measure how much it agrees
+
+00:00:13.876 --> 00:00:15.958
+with your judgment before trusting it.
+
+00:00:17.258 --> 00:00:21.986
+Some qualities of an answer are captured by no rule: whether the explanation is
+
+00:00:21.986 --> 00:00:25.817
+clear, whether the tone fits, whether it answers what was asked.
+
+00:00:26.117 --> 00:00:30.021
+Reviewing them by hand doesn't scale beyond a few dozen cases.
+
+00:00:30.321 --> 00:00:35.420
+The usual solution is asking another model to grade them, known as LLM as a judge.
+
+00:00:36.720 --> 00:00:40.966
+The problem is that this judge is another non-deterministic system with its own
+
+00:00:40.966 --> 00:00:44.513
+errors, and its verdicts come with very convincing justifications.
+
+00:00:44.813 --> 00:00:48.875
+Using it uncalibrated is like measuring with an instrument you never compared
+
+00:00:48.875 --> 00:00:49.878
+against a standard.
+
+00:00:50.178 --> 00:00:53.961
+This guide shows how to write a rubric that can be verified, how to measure
+
+00:00:53.961 --> 00:00:58.097
+agreement between the judge and you, and when that agreement is enough to trust it
+
+00:00:58.097 --> 00:00:58.702
+with a gate.
+
+00:01:00.002 --> 00:01:01.700
+To follow this guide you need:
+
+00:01:02.250 --> 00:01:05.956
+An eval harness with a judge configured (days 8 and 15).
+
+00:01:06.506 --> 00:01:09.469
+30 real outputs from the model under test.
+
+00:01:10.019 --> 00:01:14.596
+A sheet with columns: id, human verdict, judge verdict, reason.
+
+00:01:15.896 --> 00:01:17.176
+This is the setup.
+
+00:01:17.476 --> 00:01:21.693
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:22.993 --> 00:01:24.029
+Step 1.
+
+00:01:24.329 --> 00:01:25.968
+Observable criteria.
+
+00:01:26.518 --> 00:01:28.588
+Write observable criteria.
+
+00:01:28.888 --> 00:01:31.250
+"Is the answer good?" doesn't work.
+
+00:01:31.550 --> 00:01:34.014
+"Mentions the component from the report" does.
+
+00:01:34.564 --> 00:01:39.233
+A rubric works when two people reading it reach the same verdict on the same answer.
+
+00:01:39.533 --> 00:01:42.221
+"Is the answer good?" doesn't qualify.
+
+00:01:42.521 --> 00:01:46.951
+"Mentions the component named in the report" does, because it can be checked by
+
+00:01:46.951 --> 00:01:48.073
+looking at the text.
+
+00:01:48.373 --> 00:01:54.067
+Write few criteria, each verifiable, and define the result as pass or fail with all
+
+00:01:54.067 --> 00:01:54.958
+criteria met.
+
+00:01:55.258 --> 00:02:00.237
+Avoid one-to-five scales: nobody knows what separates a three from a four, and
+
+00:02:00.237 --> 00:02:01.704
+neither does the judge.
+
+00:02:03.004 --> 00:02:04.203
+Step 2.
+
+00:02:04.503 --> 00:02:06.793
+Thirty labels of your own, first.
+
+00:02:07.343 --> 00:02:11.548
+Hand-label 30 outputs yourself, pass or fail, with the reason.
+
+00:02:11.848 --> 00:02:14.463
+Do it before looking at what the judge says.
+
+00:02:15.013 --> 00:02:19.635
+Take thirty real outputs from the system and label them by hand, pass or fail,
+
+00:02:19.635 --> 00:02:21.413
+noting the reason in one line.
+
+00:02:21.713 --> 00:02:25.477
+Do it before running the judge and without looking at what it would say.
+
+00:02:25.777 --> 00:02:30.202
+If you see its verdict first, your label gets contaminated and the agreement you
+
+00:02:30.202 --> 00:02:32.525
+measure afterwards will come out inflated.
+
+00:02:32.825 --> 00:02:35.498
+Thirty cases are a reasonable floor to start.
+
+00:02:35.798 --> 00:02:40.248
+Aim for passes and fails in similar proportions: with almost everything passing you
+
+00:02:40.248 --> 00:02:42.929
+won't know whether the judge detects the bad ones.
+
+00:02:44.229 --> 00:02:45.312
+Step 3.
+
+00:02:45.612 --> 00:02:47.727
+Run the judge on the same cases.
+
+00:02:48.277 --> 00:02:50.300
+Run the judge on the same 30.
+
+00:02:50.850 --> 00:02:54.727
+Run the judge with the rubric on those same thirty outputs, with the stable
+
+00:02:54.727 --> 00:02:56.588
+configuration you defined yesterday.
+
+00:02:56.888 --> 00:02:59.781
+Save the verdict and justification for each case.
+
+00:03:00.081 --> 00:03:04.729
+If you can, run two or three times to see whether the judge is consistent with
+
+00:03:04.729 --> 00:03:05.146
+itself.
+
+00:03:05.446 --> 00:03:09.960
+A judge that changes its verdict on the same input between runs has a problem that
+
+00:03:09.960 --> 00:03:14.584
+comes before agreement with you: the rubric leaves too much room or the config isn't
+
+00:03:14.584 --> 00:03:14.969
+stable.
+
+00:03:16.269 --> 00:03:17.282
+Step 4.
+
+00:03:17.582 --> 00:03:19.314
+Agreement and direction.
+
+00:03:19.864 --> 00:03:23.257
+Compute agreement: matching cases divided by total.
+
+00:03:23.557 --> 00:03:28.045
+And check the direction of disagreement: is the judge more lenient or stricter than
+
+00:03:28.045 --> 00:03:28.262
+you?
+
+00:03:28.812 --> 00:03:32.727
+The calculation is simple: matching cases divided by the total.
+
+00:03:33.027 --> 00:03:35.084
+But the number alone isn't enough.
+
+00:03:35.384 --> 00:03:37.326
+Look at the direction of disagreement.
+
+00:03:37.626 --> 00:03:42.563
+If the judge passes cases you failed, it's lenient and your gate will let defects
+
+00:03:42.563 --> 00:03:43.050
+through.
+
+00:03:43.350 --> 00:03:47.800
+If it fails cases you passed, it's strict and will block valid work.
+
+00:03:48.100 --> 00:03:50.738
+Those are different risks and they're fixed differently.
+
+00:03:51.038 --> 00:03:55.377
+Build the two-by-two table, you against the judge, and read the two disagreement
+
+00:03:55.377 --> 00:03:56.300
+cells separately.
+
+00:03:57.600 --> 00:03:58.728
+Step 5.
+
+00:03:59.028 --> 00:04:00.192
+Fix the rubric.
+
+00:04:00.742 --> 00:04:06.016
+Fix the rubric where you disagree: a sharper criterion or one pass and one fail
+
+00:04:06.016 --> 00:04:06.550
+example.
+
+00:04:07.100 --> 00:04:09.877
+Read each disagreement and ask who is right.
+
+00:04:10.177 --> 00:04:13.314
+Sometimes it's the judge, and you correct your label.
+
+00:04:13.614 --> 00:04:16.380
+Most often the criterion was ambiguous.
+
+00:04:16.680 --> 00:04:21.431
+Two fixes work: rewriting the criterion to make it sharper, or adding to the rubric
+
+00:04:21.431 --> 00:04:23.893
+one example that passes and one that fails.
+
+00:04:24.193 --> 00:04:28.785
+Don't add ten examples, because the judge starts copying the examples instead of
+
+00:04:28.785 --> 00:04:30.105
+applying the criterion.
+
+00:04:30.405 --> 00:04:34.564
+And don't use as an example any of the thirty cases you'll measure afterwards.
+
+00:04:35.864 --> 00:04:37.051
+Step 6.
+
+00:04:37.351 --> 00:04:39.292
+Measure again and set a minimum.
+
+00:04:39.842 --> 00:04:41.017
+Measure again.
+
+00:04:41.317 --> 00:04:45.924
+Set a minimum agreement to use the judge in CI and recalibrate whenever you change
+
+00:04:45.924 --> 00:04:46.823
+the judge model.
+
+00:04:47.373 --> 00:04:49.338
+Run again and recompute.
+
+00:04:49.638 --> 00:04:54.416
+Decide in advance which minimum agreement you need to use the judge in CI and write
+
+00:04:54.416 --> 00:04:54.877
+it down.
+
+00:04:55.177 --> 00:05:00.041
+If you don't reach it, the judge is useful for ordering what to review by hand, but
+
+00:05:00.041 --> 00:05:01.507
+not for blocking a merge.
+
+00:05:01.807 --> 00:05:06.336
+Calibration expires: every time you change the judge model, its version or the
+
+00:05:06.336 --> 00:05:08.775
+rubric, measure again against your labels.
+
+00:05:09.075 --> 00:05:13.350
+Keep those thirty labels as an asset, because they are your reference standard.
+
+00:05:14.650 --> 00:05:15.756
+An example.
+
+00:05:16.306 --> 00:05:19.316
+A team evaluates summaries of support tickets.
+
+00:05:19.616 --> 00:05:23.357
+They label thirty by hand: eighteen pass and twelve fail.
+
+00:05:23.657 --> 00:05:27.827
+The judge matches on twenty-three, an agreement of seventy-seven percent.
+
+00:05:28.127 --> 00:05:32.626
+Of the seven disagreements, six are cases the judge passed and they didn't: it's
+
+00:05:32.626 --> 00:05:33.076
+lenient.
+
+00:05:33.376 --> 00:05:35.573
+Reading them, they find the pattern.
+
+00:05:35.873 --> 00:05:40.274
+The criterion said "includes the customer's problem" and the judge accepted vague
+
+00:05:40.274 --> 00:05:40.763
+mentions.
+
+00:05:41.063 --> 00:05:45.767
+They rewrite it as "names the product and the concrete symptom" and add one example
+
+00:05:45.767 --> 00:05:46.673
+of each verdict.
+
+00:05:46.973 --> 00:05:50.227
+In the second measurement, twenty-eight out of thirty match.
+
+00:05:50.527 --> 00:05:54.024
+They set that level as the minimum for using it in the pipeline.
+
+00:05:55.324 --> 00:05:56.987
+The most common mistakes.
+
+00:05:57.537 --> 00:06:00.047
+Labeling after seeing the judge's verdict.
+
+00:06:00.597 --> 00:06:03.920
+Using numeric scales instead of pass or fail.
+
+00:06:04.470 --> 00:06:07.991
+Looking only at the agreement percentage and not its direction.
+
+00:06:08.541 --> 00:06:11.156
+Changing the judge model without recalibrating.
+
+00:06:12.456 --> 00:06:14.699
+To know it is done, check this.
+
+00:06:15.249 --> 00:06:18.932
+The rubric has criteria that can be checked by looking at the text.
+
+00:06:19.482 --> 00:06:23.154
+There are thirty cases labeled by hand before running the judge.
+
+00:06:23.704 --> 00:06:27.619
+You computed agreement and know whether the judge is lenient or strict.
+
+00:06:28.169 --> 00:06:31.515
+There is a written minimum agreement for using it in CI.
+
+00:06:32.815 --> 00:06:34.710
+And where AI fell short.
+
+00:06:35.260 --> 00:06:38.258
+The judge explains wrong verdicts very well.
+
+00:06:38.558 --> 00:06:41.533
+Don't trust the justification: measure agreement.
+
+00:06:42.833 --> 00:06:44.624
+That was day 16.
+
+00:06:44.924 --> 00:06:49.898
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:49.898 --> 00:06:50.905
+asked questions.
+
+00:06:51.455 --> 00:06:56.949
+Continue with day 17: Golden datasets: how to label, balance and version.

@@ -6,6 +6,7 @@ import { veraPlaywrightTestAnalytics } from './vera-playwright-test-analytics';
 
 const withoutBody = ({
   body: _body,
+  video: _video,
   ...summary
 }: Publication): PublicationSummary => summary;
 

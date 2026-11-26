@@ -1,0 +1,394 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.765
+Día 27 de la serie 31 días de QA + IA.
+
+00:00:04.315 --> 00:00:07.824
+Performance (3): IA generando y analizando pruebas de carga.
+
+00:00:08.374 --> 00:00:12.443
+Cómo usar un LLM para escribir un script de carga desde una especificación y para
+
+00:00:12.443 --> 00:00:16.411
+proponer hipótesis sobre los resultados, con un método para verificar cada una.
+
+00:00:17.711 --> 00:00:21.528
+Escribir un script de carga desde cero y leer después un resumen con cientos de
+
+00:00:21.528 --> 00:00:25.539
+métricas son las dos partes más lentas de las pruebas de performance, y las dos son
+
+00:00:25.539 --> 00:00:25.829
+texto.
+
+00:00:26.129 --> 00:00:27.931
+Un modelo puede acelerar ambas.
+
+00:00:28.231 --> 00:00:32.119
+Lo que no puede hacer es saber cómo es tu tráfico, cuáles son tus objetivos ni qué
+
+00:00:32.119 --> 00:00:34.538
+estaba pasando en tus servidores durante la prueba.
+
+00:00:35.838 --> 00:00:40.393
+Si no le das esa información, la completa con valores razonables y la presenta con
+
+00:00:40.393 --> 00:00:40.949
+seguridad.
+
+00:00:41.249 --> 00:00:44.758
+El script resultante corre, y prueba una carga que no es la tuya.
+
+00:00:45.058 --> 00:00:49.275
+El análisis resultante suena experto, y describe cuellos de botella genéricos.
+
+00:00:49.575 --> 00:00:53.279
+Esta guía muestra qué entradas hacen útil a la IA en performance, cómo revisar lo
+
+00:00:53.279 --> 00:00:57.121
+que genera antes de gastar una corrida y cómo convertir su análisis en hipótesis que
+
+00:00:57.121 --> 00:00:57.716
+se verifican.
+
+00:00:59.016 --> 00:01:00.946
+Para seguir esta guía necesitás:
+
+00:01:01.496 --> 00:01:04.726
+k6 y una API de práctica con especificación OpenAPI.
+
+00:01:05.276 --> 00:01:09.785
+Un perfil de tráfico agregado (porcentaje por endpoint), nunca logs crudos con datos
+
+00:01:09.785 --> 00:01:10.375
+personales.
+
+00:01:10.925 --> 00:01:12.832
+Objetivos de servicio escritos.
+
+00:01:14.132 --> 00:01:15.307
+Este es el setup.
+
+00:01:15.607 --> 00:01:18.954
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:20.254 --> 00:01:22.392
+Y este es el siguiente archivo del setup.
+
+00:01:23.692 --> 00:01:25.831
+Y este es el siguiente archivo del setup.
+
+00:01:27.131 --> 00:01:28.028
+Paso 1.
+
+00:01:28.328 --> 00:01:30.037
+Tres entradas obligatorias.
+
+00:01:30.587 --> 00:01:34.924
+Dale al modelo tres insumos: la especificación de la API, la mezcla de tráfico
+
+00:01:34.924 --> 00:01:36.314
+agregada y los objetivos.
+
+00:01:36.614 --> 00:01:38.207
+Sin eso inventa los tres.
+
+00:01:38.757 --> 00:01:42.033
+El modelo necesita tres cosas para escribir un script que sirva.
+
+00:01:42.333 --> 00:01:46.556
+La especificación de la API, para conocer los endpoints, los parámetros y los
+
+00:01:46.556 --> 00:01:47.433
+formatos reales.
+
+00:01:47.733 --> 00:01:51.931
+La mezcla de tráfico agregada, es decir qué porcentaje de las llamadas va a cada
+
+00:01:51.931 --> 00:01:54.922
+operación, sacada de tus registros sin datos de usuarios.
+
+00:01:55.222 --> 00:01:57.326
+Y los objetivos de latencia y error.
+
+00:01:57.626 --> 00:02:00.392
+Si falta cualquiera de las tres, la va a inventar.
+
+00:02:00.692 --> 00:02:04.603
+Y lo va a hacer de forma verosímil, que es peor que hacerlo mal: una mezcla de
+
+00:02:04.603 --> 00:02:07.010
+tráfico inventada no se ve distinta de una real.
+
+00:02:08.310 --> 00:02:09.207
+Paso 2.
+
+00:02:09.507 --> 00:02:11.530
+Requisitos explícitos en el pedido.
+
+00:02:12.080 --> 00:02:16.255
+Pedí el script con requisitos explícitos: escenarios, think time, datos desde
+
+00:02:16.255 --> 00:02:19.130
+archivo, variables de entorno, thresholds y timeouts.
+
+00:02:19.680 --> 00:02:23.431
+Pedí el script con una lista de requisitos, no con una descripción general:
+
+00:02:23.431 --> 00:02:27.482
+escenarios separados por tipo de operación, tiempo de espera entre acciones de un
+
+00:02:27.482 --> 00:02:31.282
+mismo usuario, datos leídos desde un archivo, URLs y claves por variables de
+
+00:02:31.282 --> 00:02:35.483
+entorno, umbrales con tus objetivos y timeouts adecuados al largo de las respuestas.
+
+00:02:35.783 --> 00:02:39.478
+Cada requisito corresponde a un defecto frecuente en los scripts generados.
+
+00:02:39.778 --> 00:02:43.509
+Guardá el pedido como plantilla en el repo, igual que los prompts de los días
+
+00:02:43.509 --> 00:02:44.042
+anteriores.
+
+00:02:45.342 --> 00:02:46.238
+Paso 3.
+
+00:02:46.538 --> 00:02:47.818
+Revisión con checklist.
+
+00:02:48.368 --> 00:02:52.869
+Revisalo con checklist antes de correr: ¿la mezcla coincide?, ¿hay think time?, ¿los
+
+00:02:52.869 --> 00:02:57.263
+datos no se repiten?, ¿cero secretos en el código?, ¿los thresholds son los tuyos?
+
+00:02:57.813 --> 00:03:01.101
+Antes de correr nada, revisá el script con cinco preguntas.
+
+00:03:01.401 --> 00:03:04.051
+¿La mezcla de escenarios coincide con la que pasaste?
+
+00:03:04.351 --> 00:03:08.301
+¿Hay tiempo de espera entre acciones, o cada usuario virtual dispara sin pausa?
+
+00:03:08.601 --> 00:03:11.483
+¿Los datos varían, o se repite el mismo registro?
+
+00:03:11.783 --> 00:03:13.852
+¿Hay algún secreto escrito en el código?
+
+00:03:14.152 --> 00:03:16.918
+¿Los umbrales son los tuyos, o aparecieron otros?
+
+00:03:17.218 --> 00:03:19.113
+Son cinco minutos de lectura.
+
+00:03:19.413 --> 00:03:23.283
+Correr un script equivocado cuesta una hora de prueba, presupuesto de API y, sobre
+
+00:03:23.283 --> 00:03:26.114
+todo, conclusiones sacadas de datos que no representan nada.
+
+00:03:27.414 --> 00:03:28.415
+Paso 4.
+
+00:03:28.715 --> 00:03:30.576
+Corrida en seco y corrida real.
+
+00:03:31.126 --> 00:03:35.407
+Dry run con un usuario y una iteración para ver que funciona, y después la corrida
+
+00:03:35.407 --> 00:03:36.817
+real exportando el resumen.
+
+00:03:37.367 --> 00:03:40.214
+Ejecutá primero con un usuario y una iteración.
+
+00:03:40.514 --> 00:03:44.308
+Sirve para confirmar que el script funciona: que autentica, que las respuestas son
+
+00:03:44.308 --> 00:03:46.020
+las esperadas y que los checks pasan.
+
+00:03:46.320 --> 00:03:50.643
+Encontrar un error de autenticación con mil usuarios virtuales es una forma cara de
+
+00:03:50.643 --> 00:03:51.164
+enterarse.
+
+00:03:51.464 --> 00:03:55.008
+Recién después lanzá la corrida real y exportá el resumen a un archivo.
+
+00:03:55.308 --> 00:03:59.422
+Ese archivo, junto con la ventana exacta de tiempo de la prueba, es la entrada del
+
+00:03:59.422 --> 00:04:00.175
+paso siguiente.
+
+00:04:01.475 --> 00:04:02.476
+Paso 5.
+
+00:04:02.776 --> 00:04:04.764
+Análisis con métricas del servidor.
+
+00:04:05.314 --> 00:04:09.166
+Para el análisis, pasá el resumen junto con métricas del servidor de la misma
+
+00:04:09.166 --> 00:04:09.566
+ventana.
+
+00:04:09.866 --> 00:04:13.897
+Pedí hipótesis ordenadas, con la métrica que las respalda y cómo confirmarlas.
+
+00:04:14.447 --> 00:04:18.707
+Para el análisis, pasale al modelo el resumen de la prueba junto con las métricas
+
+00:04:18.707 --> 00:04:22.966
+del servidor de la misma ventana: CPU, memoria, conexiones a la base, longitud de
+
+00:04:22.966 --> 00:04:24.701
+colas, uso de GPU si corresponde.
+
+00:04:25.001 --> 00:04:29.085
+Pedí hipótesis ordenadas por probabilidad, cada una con la métrica que la respalda y
+
+00:04:29.085 --> 00:04:30.252
+la forma de confirmarla.
+
+00:04:30.552 --> 00:04:34.397
+Ese formato lo obliga a citar datos en lugar de enumerar causas típicas.
+
+00:04:34.697 --> 00:04:38.787
+Una hipótesis que no nombra una métrica de tus datos se descarta sin más análisis.
+
+00:04:40.087 --> 00:04:41.053
+Paso 6.
+
+00:04:41.353 --> 00:04:43.225
+Verificar la primera hipótesis.
+
+00:04:43.775 --> 00:04:46.958
+Verificá la hipótesis principal con una medición dirigida.
+
+00:04:47.258 --> 00:04:50.024
+Un cuello de botella no confirmado es una sospecha.
+
+00:04:50.574 --> 00:04:54.682
+Tomá la hipótesis mejor ubicada y diseñá una medición dirigida para confirmarla o
+
+00:04:54.682 --> 00:04:55.291
+descartarla.
+
+00:04:55.591 --> 00:04:59.461
+Si dice que el cuello de botella es el pool de conexiones, repetí la prueba con el
+
+00:04:59.461 --> 00:05:01.538
+pool ampliado y mirá si la rodilla se mueve.
+
+00:05:01.838 --> 00:05:05.462
+Si no se mueve, la hipótesis era incorrecta y pasás a la siguiente.
+
+00:05:05.762 --> 00:05:09.434
+Hasta que una medición lo confirma, un cuello de botella es una sospecha.
+
+00:05:09.734 --> 00:05:13.696
+Reportarlo como hallazgo sin verificar hace que el equipo optimice algo que no era
+
+00:05:13.696 --> 00:05:14.276
+el problema.
+
+00:05:15.576 --> 00:05:16.496
+Un ejemplo.
+
+00:05:17.046 --> 00:05:21.441
+Un equipo le pide a un modelo un script para su API con la especificación, la mezcla
+
+00:05:21.441 --> 00:05:22.853
+de tráfico y los objetivos.
+
+00:05:23.153 --> 00:05:26.906
+La revisión con checklist encuentra dos problemas: no hay tiempo de espera entre
+
+00:05:26.906 --> 00:05:30.753
+acciones y el umbral de latencia es de quinientos milisegundos, cuando su objetivo
+
+00:05:30.753 --> 00:05:31.550
+era dos segundos.
+
+00:05:31.850 --> 00:05:32.944
+Corrigen ambos.
+
+00:05:33.244 --> 00:05:34.849
+La corrida en seco pasa.
+
+00:05:35.149 --> 00:05:38.356
+La corrida real muestra una rodilla en ciento veinte usuarios.
+
+00:05:38.656 --> 00:05:41.874
+Para el análisis entregan el resumen y las métricas del servidor.
+
+00:05:42.174 --> 00:05:45.698
+La primera hipótesis: el pool de conexiones a la base se agota, porque las
+
+00:05:45.698 --> 00:05:48.841
+conexiones activas llegan al máximo justo cuando sube la latencia.
+
+00:05:49.141 --> 00:05:52.592
+Amplían el pool, repiten, y la rodilla pasa a ciento ochenta.
+
+00:05:52.892 --> 00:05:55.716
+Hipótesis confirmada, con cifras ilustrativas.
+
+00:05:57.016 --> 00:05:58.539
+Los errores más comunes.
+
+00:05:59.089 --> 00:06:02.819
+Pedir el script sin especificación, mezcla de tráfico ni objetivos.
+
+00:06:03.369 --> 00:06:06.239
+Correr el script generado sin revisarlo contra el checklist.
+
+00:06:06.789 --> 00:06:10.008
+Pedir el análisis solo con el resumen de la herramienta de carga.
+
+00:06:10.558 --> 00:06:13.672
+Reportar como cuello de botella una hipótesis sin verificar.
+
+00:06:14.972 --> 00:06:17.238
+Para saber que quedó bien, revisá esto.
+
+00:06:17.788 --> 00:06:21.483
+El pedido incluye especificación, mezcla de tráfico y objetivos.
+
+00:06:22.033 --> 00:06:24.485
+El script pasó el checklist de cinco preguntas.
+
+00:06:25.035 --> 00:06:27.453
+Hubo una corrida en seco antes de la corrida real.
+
+00:06:28.003 --> 00:06:31.164
+La primera hipótesis se confirmó o descartó con una medición.
+
+00:06:32.464 --> 00:06:34.034
+Y lo que la IA no hizo bien.
+
+00:06:34.584 --> 00:06:38.278
+Sin métricas del servidor, diagnostica con seguridad causas genéricas.
+
+00:06:38.578 --> 00:06:41.042
+El análisis vale lo que valen los datos que le das.
+
+00:06:42.342 --> 00:06:43.947
+Eso fue el día 27.
+
+00:06:44.247 --> 00:06:48.879
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:48.879 --> 00:06:49.486
+frecuentes.
+
+00:06:50.036 --> 00:06:54.438
+Seguí con el día 28: Evals en CI: quality gates para features con IA.

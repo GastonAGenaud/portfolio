@@ -1,0 +1,376 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.475
+Día 9 de la serie 31 días de QA + IA.
+
+00:00:04.025 --> 00:00:07.940
+Agent harness para QA: reglas, skills y MCP en tu repo de automation.
+
+00:00:08.490 --> 00:00:12.185
+Cómo preparar un repo de automation para que cualquier agente de código escriba
+
+00:00:12.185 --> 00:00:15.505
+tests siguiendo tus convenciones, con herramientas y permisos acotados.
+
+00:00:16.805 --> 00:00:20.361
+Darle a un agente de código acceso a tu repositorio de automatización sin
+
+00:00:20.361 --> 00:00:24.064
+configurarlo es como sumar a alguien al equipo sin contarle cómo se trabaja.
+
+00:00:24.364 --> 00:00:28.714
+Va a escribir tests, pero con selectores CSS frágiles, sin tus Page Objects, con
+
+00:00:28.714 --> 00:00:30.346
+esperas fijas y sin correrlos.
+
+00:00:30.646 --> 00:00:34.374
+Después la conclusión suele ser que "el agente no sirve", cuando el problema es que
+
+00:00:34.374 --> 00:00:35.362
+nadie le dio contexto.
+
+00:00:36.662 --> 00:00:41.348
+Esta guía arma ese contexto en cinco piezas: reglas, skills, herramientas, permisos
+
+00:00:41.348 --> 00:00:41.912
+y un gate.
+
+00:00:42.212 --> 00:00:45.501
+Cada una responde a un fallo concreto que vas a ver si no está.
+
+00:00:45.801 --> 00:00:49.435
+El resultado es un repo donde un agente puede producir un test que respeta tus
+
+00:00:49.435 --> 00:00:53.348
+convenciones, y donde vos podés comprobarlo con un comando en lugar de confiar en su
+
+00:00:53.348 --> 00:00:53.721
+palabra.
+
+00:00:55.021 --> 00:00:56.951
+Para seguir esta guía necesitás:
+
+00:00:57.501 --> 00:00:59.396
+Un repo con Playwright (día 4).
+
+00:00:59.946 --> 00:01:03.397
+Un agente de código: Claude Code, Copilot agent, Cursor u otro.
+
+00:01:04.697 --> 00:01:05.872
+Este es el setup.
+
+00:01:06.172 --> 00:01:09.519
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:10.819 --> 00:01:12.957
+Y este es el siguiente archivo del setup.
+
+00:01:14.257 --> 00:01:15.154
+Paso 1.
+
+00:01:15.454 --> 00:01:16.966
+Reglas en la raíz del repo.
+
+00:01:17.516 --> 00:01:21.792
+Reglas: creá AGENTS.md en la raíz con cómo correr, convenciones y qué significa
+
+00:01:21.792 --> 00:01:22.441
+"terminado".
+
+00:01:22.741 --> 00:01:26.064
+Si usás Claude Code, el archivo equivalente es CLAUDE.md.
+
+00:01:26.614 --> 00:01:30.674
+El archivo de reglas es lo primero que el agente lee en cada sesión, así que tiene
+
+00:01:30.674 --> 00:01:31.911
+que ser corto y concreto.
+
+00:01:32.211 --> 00:01:36.112
+Tres secciones alcanzan: cómo correr los tests, qué convenciones seguir y qué
+
+00:01:36.112 --> 00:01:37.125
+significa terminado.
+
+00:01:37.425 --> 00:01:41.399
+En convenciones, escribí lo que le marcarías a una persona en un code review:
+
+00:01:41.399 --> 00:01:44.753
+locators por rol, sin esperas fijas, un Page Object por pantalla.
+
+00:01:45.053 --> 00:01:46.960
+Evitá los párrafos de filosofía.
+
+00:01:47.260 --> 00:01:51.479
+Cada línea debería poder verificarse mirando un diff, y cada regla nueva debería
+
+00:01:51.479 --> 00:01:53.114
+nacer de un error que ya viste.
+
+00:01:54.414 --> 00:01:55.311
+Paso 2.
+
+00:01:55.611 --> 00:01:57.111
+Skills para lo que se repite.
+
+00:01:57.661 --> 00:02:01.688
+Skills: pasá a un archivo los procedimientos que repetís, por ejemplo "cómo escribir
+
+00:02:01.688 --> 00:02:04.037
+un test nuevo" con tu estructura de Page Objects.
+
+00:02:04.587 --> 00:02:08.542
+Hay procedimientos que no entran en una regla de una línea: cómo crear un test nuevo
+
+00:02:08.542 --> 00:02:12.450
+con su Page Object, cómo agregar un dato de prueba, cómo investigar un fallo en CI.
+
+00:02:12.750 --> 00:02:16.747
+Escribilos como archivos separados, paso a paso, con un ejemplo real del repo.
+
+00:02:17.047 --> 00:02:20.923
+El agente los carga cuando la tarea lo pide, sin ocupar contexto el resto del
+
+00:02:20.923 --> 00:02:21.275
+tiempo.
+
+00:02:21.575 --> 00:02:25.771
+Un buen indicio de que algo merece una skill es que ya se lo explicaste dos veces, a
+
+00:02:25.771 --> 00:02:27.069
+una persona o a un agente.
+
+00:02:28.369 --> 00:02:29.266
+Paso 3.
+
+00:02:29.566 --> 00:02:31.507
+Herramientas para ver la aplicación.
+
+00:02:32.057 --> 00:02:36.538
+Herramientas: declará el servidor MCP de Playwright en .mcp.json para que el agente
+
+00:02:36.538 --> 00:02:38.805
+pueda abrir la app y mirar la página real.
+
+00:02:39.356 --> 00:02:43.522
+Sin acceso a un navegador, el agente escribe selectores de memoria, adivinando la
+
+00:02:43.522 --> 00:02:44.757
+estructura de la página.
+
+00:02:45.057 --> 00:02:48.761
+Con el servidor MCP de Playwright puede abrir la aplicación, leer los roles y
+
+00:02:48.761 --> 00:02:51.840
+nombres reales de los elementos y escribir locators que existen.
+
+00:02:52.140 --> 00:02:56.945
+Declararlo en .mcp.json dentro del repo hace que todo el equipo tenga la misma
+
+00:02:56.945 --> 00:02:57.808
+configuración.
+
+00:02:58.108 --> 00:03:02.118
+Apuntalo siempre a un entorno de prueba: la herramienta le da al agente la capacidad
+
+00:03:02.118 --> 00:03:05.030
+de hacer clic, y eso incluye botones que no querés que toque.
+
+00:03:06.330 --> 00:03:07.331
+Paso 4.
+
+00:03:07.631 --> 00:03:09.538
+Permisos antes del primer uso.
+
+00:03:10.088 --> 00:03:14.655
+Permisos: negá lo destructivo (borrar, push, tocar .env) y pedí confirmación para
+
+00:03:14.655 --> 00:03:15.896
+instalar dependencias.
+
+00:03:16.446 --> 00:03:18.968
+Definí qué no puede hacer antes de pedirle nada.
+
+00:03:19.268 --> 00:03:23.787
+Lo mínimo es denegar acciones destructivas o irreversibles: borrar archivos fuera de
+
+00:03:23.787 --> 00:03:26.747
+la carpeta de tests, hacer push, leer o modificar .env.
+
+00:03:27.047 --> 00:03:31.434
+Instalar dependencias debería pedir confirmación, porque cambia el proyecto para
+
+00:03:31.434 --> 00:03:31.763
+todos.
+
+00:03:32.063 --> 00:03:36.478
+Los permisos no reemplazan a la revisión, pero achican el daño posible de un error.
+
+00:03:36.778 --> 00:03:40.555
+Pensalo como los accesos de alguien que recién ingresa: puede proponer cualquier
+
+00:03:40.555 --> 00:03:42.585
+cosa y ejecutar pocas sin que alguien mire.
+
+00:03:43.885 --> 00:03:44.886
+Paso 5.
+
+00:03:45.186 --> 00:03:46.629
+El gate es un comando.
+
+00:03:47.179 --> 00:03:51.374
+Gate: "terminado" se verifica con un comando y su exit code, no con el resumen del
+
+00:03:51.374 --> 00:03:51.732
+agente.
+
+00:03:52.282 --> 00:03:56.081
+Escribí en las reglas qué comando define que el trabajo está terminado, por ejemplo
+
+00:03:56.081 --> 00:03:58.462
+correr el test nuevo tres veces seguidas sin fallos.
+
+00:03:58.762 --> 00:04:02.050
+Y verificalo vos, o tu pipeline, mirando el código de salida.
+
+00:04:02.350 --> 00:04:06.126
+Un agente puede escribir "todos los tests pasan" sin haberlos corrido, o habiéndolos
+
+00:04:06.126 --> 00:04:08.239
+corrido con un filtro que excluye el que falla.
+
+00:04:08.539 --> 00:04:11.305
+No es mala intención, es un resumen optimista.
+
+00:04:11.605 --> 00:04:15.434
+La diferencia entre un flujo confiable y uno que no lo es está en quién ejecuta la
+
+00:04:15.434 --> 00:04:16.321
+verificación final.
+
+00:04:17.621 --> 00:04:18.587
+Paso 6.
+
+00:04:18.887 --> 00:04:20.271
+Probar y realimentar.
+
+00:04:20.821 --> 00:04:25.087
+Probalo: pedí un test nuevo y revisá si respetó locators, Page Objects y las tres
+
+00:04:25.087 --> 00:04:25.561
+corridas.
+
+00:04:25.861 --> 00:04:29.091
+Lo que no respetó vuelve a AGENTS.md como regla más clara.
+
+00:04:29.641 --> 00:04:33.923
+Pedile un test nuevo para un flujo simple y revisá el resultado contra tus reglas:
+
+00:04:33.923 --> 00:04:38.205
+¿usó locators por rol?, ¿creó o reutilizó el Page Object?, ¿corrió las tres veces?
+
+00:04:38.505 --> 00:04:41.747
+Cada cosa que haya salteado es una regla poco clara o que falta.
+
+00:04:42.047 --> 00:04:46.232
+Corregí el archivo, no solo el test, porque el archivo es lo que mejora la próxima
+
+00:04:46.232 --> 00:04:46.589
+sesión.
+
+00:04:46.889 --> 00:04:51.472
+Después de cuatro o cinco iteraciones, las reglas reflejan cómo trabaja tu equipo de
+
+00:04:51.472 --> 00:04:53.928
+verdad, y sirven también para sumar personas.
+
+00:04:55.228 --> 00:04:56.148
+Un ejemplo.
+
+00:04:56.698 --> 00:05:00.662
+Un equipo le pide al agente un test de "agregar producto al carrito" sin ninguna
+
+00:05:00.662 --> 00:05:01.356
+configuración.
+
+00:05:01.656 --> 00:05:06.141
+El resultado usa selectores como div.card:nth-child(3) button, una espera de dos
+
+00:05:06.141 --> 00:05:07.823
+segundos y ningún Page Object.
+
+00:05:08.123 --> 00:05:12.148
+Escriben un archivo de reglas de veinte líneas, una skill para tests nuevos y
+
+00:05:12.148 --> 00:05:13.455
+declaran el servidor MCP.
+
+00:05:13.755 --> 00:05:14.965
+Repiten el pedido.
+
+00:05:15.265 --> 00:05:19.452
+Ahora el test usa getByRole, reutiliza el Page Object del carrito y el agente lo
+
+00:05:19.452 --> 00:05:20.341
+corre tres veces.
+
+00:05:20.641 --> 00:05:23.639
+Se saltea una cosa: no agrega el test al tag de smoke.
+
+00:05:23.939 --> 00:05:25.741
+Suman esa línea a las reglas.
+
+00:05:26.041 --> 00:05:27.844
+La tercera vez sale completo.
+
+00:05:29.144 --> 00:05:30.667
+Los errores más comunes.
+
+00:05:31.217 --> 00:05:34.796
+Escribir un archivo de reglas largo y general que nadie puede verificar.
+
+00:05:35.346 --> 00:05:38.344
+Corregir el test a mano sin actualizar la regla que faltaba.
+
+00:05:38.894 --> 00:05:41.601
+Dar permisos amplios "para probar" en un repo real.
+
+00:05:42.151 --> 00:05:45.614
+Aceptar el resumen del agente como evidencia de que los tests pasan.
+
+00:05:46.914 --> 00:05:49.180
+Para saber que quedó bien, revisá esto.
+
+00:05:49.730 --> 00:05:53.588
+El archivo de reglas tiene cómo correr, convenciones y definición de terminado.
+
+00:05:54.138 --> 00:05:56.869
+Hay al menos una skill con un ejemplo real del repo.
+
+00:05:57.419 --> 00:06:00.080
+El servidor MCP apunta a un entorno de prueba.
+
+00:06:00.630 --> 00:06:04.185
+El test generado pasó tres veces en una corrida que ejecutaste vos.
+
+00:06:05.485 --> 00:06:07.055
+Y lo que la IA no hizo bien.
+
+00:06:07.605 --> 00:06:11.114
+Ante un test rojo, tiende a debilitar el assert en lugar de investigar.
+
+00:06:11.414 --> 00:06:14.133
+Hay que prohibirlo por escrito y revisarlo en el diff.
+
+00:06:15.433 --> 00:06:16.794
+Eso fue el día 9.
+
+00:06:17.094 --> 00:06:21.727
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:21.727 --> 00:06:22.333
+frecuentes.
+
+00:06:22.883 --> 00:06:27.170
+Seguí con el día 10: Playwright MCP: un agente que navega tu app y propone tests.

@@ -1,0 +1,355 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.568
+Día 4 de la serie 31 días de QA + IA.
+
+00:00:04.118 --> 00:00:07.696
+Tu laboratorio de QA con IA: setup completo en 30 minutos.
+
+00:00:08.246 --> 00:00:12.466
+El repo de laboratorio que se usa el resto de la serie: modelo local, herramienta de
+
+00:00:12.466 --> 00:00:14.425
+evals, Playwright y manejo de secretos.
+
+00:00:15.725 --> 00:00:19.940
+La mayoría de los tutoriales de IA aplicada a testing asumen que ya tenés un entorno
+
+00:00:19.940 --> 00:00:23.553
+funcionando, una API key con crédito y tiempo para pelear con versiones.
+
+00:00:23.853 --> 00:00:26.944
+En la práctica, ese arranque es donde mucha gente abandona.
+
+00:00:27.244 --> 00:00:31.086
+Esta guía resuelve el punto de partida: un repositorio chico, reproducible y
+
+00:00:31.086 --> 00:00:34.120
+gratuito, que vas a reutilizar en todos los días que siguen.
+
+00:00:35.420 --> 00:00:38.197
+La decisión central es trabajar con un modelo local.
+
+00:00:38.497 --> 00:00:42.701
+No es el más capaz, pero tiene tres ventajas para aprender: no cuesta nada, ningún
+
+00:00:42.701 --> 00:00:46.546
+dato sale de tu máquina y sus errores son frecuentes, lo cual es ideal para
+
+00:00:46.546 --> 00:00:47.776
+practicar cómo medirlos.
+
+00:00:48.076 --> 00:00:51.863
+Cuando necesites más calidad, cambiar a un modelo en la nube es una línea de
+
+00:00:51.863 --> 00:00:52.560
+configuración.
+
+00:00:53.860 --> 00:00:55.790
+Para seguir esta guía necesitás:
+
+00:00:56.340 --> 00:00:59.292
+Node.js 22+ y Python 3.10+.
+
+00:00:59.842 --> 00:01:00.413
+Git.
+
+00:01:00.963 --> 00:01:03.427
+Ollama, para correr un modelo local sin costo.
+
+00:01:03.977 --> 00:01:06.035
+Opcional: API key de un proveedor.
+
+00:01:07.335 --> 00:01:08.510
+Este es el setup.
+
+00:01:08.810 --> 00:01:12.156
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:13.456 --> 00:01:15.595
+Y este es el siguiente archivo del setup.
+
+00:01:16.895 --> 00:01:19.034
+Y este es el siguiente archivo del setup.
+
+00:01:20.334 --> 00:01:21.231
+Paso 1.
+
+00:01:21.531 --> 00:01:22.799
+Versiones primero.
+
+00:01:23.349 --> 00:01:25.592
+Verificá versiones de Node, Python y Git.
+
+00:01:25.892 --> 00:01:28.681
+Si Node es menor a 22, actualizá primero.
+
+00:01:29.231 --> 00:01:31.997
+Corré los tres comandos de versión antes de instalar nada.
+
+00:01:32.297 --> 00:01:35.977
+Las herramientas de evals y los agentes de código piden versiones recientes de Node,
+
+00:01:35.977 --> 00:01:39.219
+y buena parte de los errores raros de instalación vienen de un Node viejo.
+
+00:01:39.519 --> 00:01:43.767
+Si usás un gestor de versiones, fijá la versión en un archivo como .nvmrc para que
+
+00:01:43.767 --> 00:01:45.942
+cualquiera que clone el repo use la misma.
+
+00:01:46.242 --> 00:01:50.294
+Python lo vas a necesitar más adelante para evals de RAG y para medir performance,
+
+00:01:50.294 --> 00:01:52.665
+así que conviene dejarlo verificado desde ahora.
+
+00:01:53.965 --> 00:01:54.862
+Paso 2.
+
+00:01:55.162 --> 00:01:56.244
+Un modelo local.
+
+00:01:56.794 --> 00:02:00.187
+Instalá Ollama, bajá llama3.2 y probá que responde.
+
+00:02:00.487 --> 00:02:03.613
+Con esto tenés un modelo gratis y sin mandar datos afuera.
+
+00:02:04.163 --> 00:02:09.255
+Ollama corre modelos en tu máquina y expone una API compatible con la de OpenAI en
+
+00:02:09.255 --> 00:02:10.249
+el puerto 11434.
+
+00:02:10.549 --> 00:02:14.349
+Eso significa que casi cualquier herramienta que sepa hablar con un proveedor en la
+
+00:02:14.349 --> 00:02:16.867
+nube puede hablar con tu modelo local cambiando la URL.
+
+00:02:17.167 --> 00:02:21.431
+Un modelo chico alcanza para empezar y corre sin placa de video dedicada, más lento.
+
+00:02:21.731 --> 00:02:25.606
+Probá que responda desde la terminal antes de seguir: si ese paso falla, todo lo
+
+00:02:25.606 --> 00:02:27.689
+demás va a fallar con errores menos claros.
+
+00:02:28.989 --> 00:02:29.886
+Paso 3.
+
+00:02:30.186 --> 00:02:31.547
+Estructura del repo.
+
+00:02:32.097 --> 00:02:35.803
+Creá el repo qa-ai-lab con las carpetas evals, tests, data y prompts.
+
+00:02:36.353 --> 00:02:38.666
+Cuatro carpetas con un propósito cada una.
+
+00:02:38.966 --> 00:02:41.430
+En evals van las configuraciones de evaluación.
+
+00:02:41.730 --> 00:02:43.706
+En tests, los tests de Playwright.
+
+00:02:44.006 --> 00:02:46.227
+En data, los datasets y los schemas.
+
+00:02:46.527 --> 00:02:49.687
+En prompts, las plantillas de prompt como archivos de texto.
+
+00:02:49.987 --> 00:02:53.509
+Separar los prompts del código tiene una razón práctica: se pueden versionar,
+
+00:02:53.509 --> 00:02:57.077
+comparar entre versiones y revisar en un pull request igual que cualquier otro
+
+00:02:57.077 --> 00:02:57.397
+cambio.
+
+00:02:57.697 --> 00:03:01.217
+Un prompt embebido en un string dentro del código no se revisa nunca.
+
+00:03:02.517 --> 00:03:03.519
+Paso 4.
+
+00:03:03.819 --> 00:03:05.470
+Dependencias de desarrollo.
+
+00:03:06.020 --> 00:03:10.019
+Instalá promptfoo y Playwright como dependencias de desarrollo, así las versiones
+
+00:03:10.019 --> 00:03:10.957
+viajan con el repo.
+
+00:03:11.507 --> 00:03:15.497
+Instalá promptfoo y Playwright como dependencias de desarrollo del proyecto, no de
+
+00:03:15.497 --> 00:03:16.130
+forma global.
+
+00:03:16.430 --> 00:03:20.612
+Así las versiones quedan registradas en el lockfile y dos personas con el mismo repo
+
+00:03:20.612 --> 00:03:22.005
+obtienen el mismo resultado.
+
+00:03:22.305 --> 00:03:26.297
+Con herramientas que cambian cada pocas semanas, una instalación global distinta en
+
+00:03:26.297 --> 00:03:29.471
+cada máquina es una fuente constante de diferencias inexplicables.
+
+00:03:29.771 --> 00:03:33.444
+Instalá solo Chromium por ahora: para lo que sigue no hacen falta los otros
+
+00:03:33.444 --> 00:03:35.893
+navegadores y la descarga es bastante más liviana.
+
+00:03:37.193 --> 00:03:38.194
+Paso 5.
+
+00:03:38.494 --> 00:03:39.959
+Secretos fuera del repo.
+
+00:03:40.509 --> 00:03:45.492
+Secretos: las API keys van en .env, y .env va en .gitignore antes del primer commit.
+
+00:03:46.042 --> 00:03:50.012
+Aunque hoy trabajes solo con un modelo local, dejá resuelto el manejo de secretos
+
+00:03:50.012 --> 00:03:51.188
+antes del primer commit.
+
+00:03:51.488 --> 00:03:55.067
+Las API keys van en un archivo .env que está en .gitignore.
+
+00:03:55.367 --> 00:03:59.710
+Subí en cambio un .env.example con los nombres de las variables y sin valores, para
+
+00:03:59.710 --> 00:04:01.070
+documentar qué hace falta.
+
+00:04:01.370 --> 00:04:05.067
+Una key que llega a un repositorio, aunque sea privado, hay que darla por
+
+00:04:05.067 --> 00:04:07.700
+comprometida y rotarla; prevenirlo cuesta una línea.
+
+00:04:09.000 --> 00:04:09.966
+Paso 6.
+
+00:04:10.266 --> 00:04:11.256
+El smoke eval.
+
+00:04:11.806 --> 00:04:12.969
+Corré el smoke eval.
+
+00:04:13.269 --> 00:04:17.382
+Si ves un caso en verde en la tabla y en el visor web, el laboratorio está listo.
+
+00:04:17.932 --> 00:04:21.964
+El archivo de ejemplo tiene un prompt con una variable, un provider local y un test
+
+00:04:21.964 --> 00:04:24.053
+con un assert que no depende de mayúsculas.
+
+00:04:24.353 --> 00:04:28.678
+Correrlo verifica toda la cadena: la herramienta instalada, el modelo respondiendo y
+
+00:04:28.678 --> 00:04:29.708
+el assert evaluando.
+
+00:04:30.008 --> 00:04:33.726
+El visor web muestra cada caso con su entrada, su salida y el resultado.
+
+00:04:34.026 --> 00:04:38.040
+Dejalo como primer paso de cualquier sesión de trabajo: si el smoke eval falla, el
+
+00:04:38.040 --> 00:04:40.634
+problema es de entorno y no de lo que estés probando.
+
+00:04:41.934 --> 00:04:42.854
+Un ejemplo.
+
+00:04:43.404 --> 00:04:46.971
+Una tester sigue los pasos en una notebook de trabajo sin placa de video.
+
+00:04:47.271 --> 00:04:51.551
+Node estaba en la versión 18 y la instalación de promptfoo mostraba advertencias;
+
+00:04:51.551 --> 00:04:53.241
+actualiza a la 22 y desaparecen.
+
+00:04:53.541 --> 00:04:57.189
+Baja el modelo local y la primera respuesta tarda varios segundos, lo cual es
+
+00:04:57.189 --> 00:04:58.374
+esperable en esa máquina.
+
+00:04:58.674 --> 00:05:03.297
+Crea el repo, agrega .env al .gitignore y corre el smoke eval: un caso en verde.
+
+00:05:03.597 --> 00:05:06.874
+Después agrega un segundo test con otro país y lo corre de nuevo.
+
+00:05:07.174 --> 00:05:11.098
+En media hora tiene un entorno que puede clonar en otra máquina y obtener el mismo
+
+00:05:11.098 --> 00:05:11.577
+resultado.
+
+00:05:12.877 --> 00:05:14.400
+Los errores más comunes.
+
+00:05:14.950 --> 00:05:18.575
+Instalar las herramientas de forma global y perder el control de versiones.
+
+00:05:19.125 --> 00:05:22.738
+Hacer el primer commit antes de agregar .env al .gitignore.
+
+00:05:23.288 --> 00:05:27.262
+Saltear la prueba del modelo en la terminal y depurar después errores confusos.
+
+00:05:27.812 --> 00:05:30.357
+Dejar los prompts como strings dentro del código.
+
+00:05:31.657 --> 00:05:33.924
+Para saber que quedó bien, revisá esto.
+
+00:05:34.474 --> 00:05:37.506
+Node 22 o superior, Python y Git verificados.
+
+00:05:38.056 --> 00:05:40.311
+El modelo local responde desde la terminal.
+
+00:05:40.861 --> 00:05:43.743
+El repo tiene las cuatro carpetas y .env ignorado.
+
+00:05:44.293 --> 00:05:47.001
+El smoke eval muestra dos casos en verde en el visor.
+
+00:05:48.301 --> 00:05:49.871
+Y lo que la IA no hizo bien.
+
+00:05:50.421 --> 00:05:53.129
+Los asistentes sugieren flags y versiones viejas.
+
+00:05:53.429 --> 00:05:55.556
+Un comando no corrido es una hipótesis.
+
+00:05:56.856 --> 00:05:58.287
+Eso fue el día 4.
+
+00:05:58.587 --> 00:06:03.219
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:03.219 --> 00:06:03.825
+frecuentes.
+
+00:06:04.376 --> 00:06:08.813
+Seguí con el día 5: Casos de prueba desde user stories: el prompt que sí funciona.

@@ -289,6 +289,7 @@ export const es = {
   [tokens.publicationsSectionType.result]: 'guía encontrada',
   [tokens.publicationsSectionType.results]: 'guías encontradas',
   [tokens.publicationsSectionType.noResults]: 'Ninguna guía coincide con esa búsqueda.',
+  [tokens.publicationsSectionType.video]: 'Video guía · narración con voz sintética',
 
   [tokens.newsletterSectionType.title]: 'Newsletter',
   [tokens.newsletterSectionType.subtitle]: 'Novedades útiles, ordenadas por categoría.',

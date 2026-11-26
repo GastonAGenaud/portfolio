@@ -1,0 +1,364 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.440
+Día 12 de la serie 31 días de QA + IA.
+
+00:00:03.990 --> 00:00:07.754
+Triage de fallos con LLM: de 40 tests rojos a 3 causas.
+
+00:00:08.304 --> 00:00:12.101
+Un paso de triage que agrupa los fallos de una corrida por causa probable, con
+
+00:00:12.101 --> 00:00:14.437
+evidencia, y que dice "no sé" cuando no alcanza.
+
+00:00:15.737 --> 00:00:19.675
+Un pipeline con cuarenta tests en rojo casi nunca tiene cuarenta problemas.
+
+00:00:19.975 --> 00:00:24.591
+Tiene dos o tres: un servicio caído, un cambio de interfaz y, con suerte, un defecto
+
+00:00:24.591 --> 00:00:24.866
+real.
+
+00:00:25.166 --> 00:00:29.262
+El trabajo de quien hace el triage es descubrir esa agrupación, y es un trabajo
+
+00:00:29.262 --> 00:00:33.618
+lento y repetitivo: abrir fallo por fallo, leer el error y reconocer que ya lo viste
+
+00:00:33.618 --> 00:00:34.758
+diez veces esa mañana.
+
+00:00:36.058 --> 00:00:39.614
+Agrupar texto parecido es algo que un LLM hace bien y rápido.
+
+00:00:39.914 --> 00:00:42.343
+Lo que no hace bien es admitir que no sabe.
+
+00:00:42.643 --> 00:00:46.549
+Esta guía arma un triage asistido que aprovecha lo primero y se protege de lo
+
+00:00:46.549 --> 00:00:50.710
+segundo: entrada estructurada y chica, salida con evidencia textual, una categoría
+
+00:00:50.710 --> 00:00:54.464
+"desconocido" obligatoria y una persona que confirma antes de cerrar nada.
+
+00:00:55.764 --> 00:00:57.694
+Para seguir esta guía necesitás:
+
+00:00:58.244 --> 00:01:00.511
+Una suite de Playwright con algunos fallos.
+
+00:01:01.061 --> 00:01:02.886
+Traces activados en reintentos.
+
+00:01:04.186 --> 00:01:05.361
+Este es el setup.
+
+00:01:05.661 --> 00:01:09.008
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:10.308 --> 00:01:12.447
+Y este es el siguiente archivo del setup.
+
+00:01:13.747 --> 00:01:15.885
+Y este es el siguiente archivo del setup.
+
+00:01:17.185 --> 00:01:18.082
+Paso 1.
+
+00:01:18.382 --> 00:01:19.998
+Resultados estructurados.
+
+00:01:20.548 --> 00:01:24.621
+Sacá los resultados en formato estructurado con el reporter JSON y mantené los
+
+00:01:24.621 --> 00:01:25.927
+traces de los reintentos.
+
+00:01:26.477 --> 00:01:30.535
+El punto de partida es que tu runner emita los resultados en un formato que una
+
+00:01:30.535 --> 00:01:33.515
+máquina pueda leer, no solo un reporte HTML para personas.
+
+00:01:33.815 --> 00:01:38.218
+El reporter JSON de Playwright incluye para cada test su título, archivo, estado,
+
+00:01:38.218 --> 00:01:39.251
+error y reintentos.
+
+00:01:39.551 --> 00:01:43.124
+Activá también los traces en el primer reintento: son la evidencia que vas a
+
+00:01:43.124 --> 00:01:45.521
+necesitar para verificar lo que el modelo proponga.
+
+00:01:45.821 --> 00:01:50.100
+Sin datos estructurados terminás pegando logs enteros en un chat, que es caro, lento
+
+00:01:50.100 --> 00:01:51.373
+y mezcla ruido con señal.
+
+00:01:52.673 --> 00:01:53.570
+Paso 2.
+
+00:01:53.870 --> 00:01:55.602
+Extraer solo lo necesario.
+
+00:01:56.152 --> 00:02:00.962
+Extraé solo los fallos: título, archivo y los primeros 400 caracteres del error.
+
+00:02:01.262 --> 00:02:03.424
+Menos tokens, mejor agrupación.
+
+00:02:03.974 --> 00:02:08.120
+Un script corto recorre el JSON y se queda con los tests fallidos: título, archivo y
+
+00:02:08.120 --> 00:02:10.490
+los primeros cuatrocientos caracteres del error.
+
+00:02:10.790 --> 00:02:12.754
+Ese recorte tiene dos efectos.
+
+00:02:13.054 --> 00:02:16.923
+Baja el costo, porque un log completo puede tener miles de líneas irrelevantes.
+
+00:02:17.223 --> 00:02:21.356
+Y mejora el resultado, porque la primera parte del mensaje suele contener lo que
+
+00:02:21.356 --> 00:02:25.178
+distingue una causa de otra: el tipo de error, el locator, el código HTTP.
+
+00:02:25.478 --> 00:02:29.703
+Con stack traces enteros, el modelo tiende a agrupar por coincidencias superficiales
+
+00:02:29.703 --> 00:02:30.206
+del stack.
+
+00:02:31.506 --> 00:02:32.403
+Paso 3.
+
+00:02:32.703 --> 00:02:33.971
+El prompt de triage.
+
+00:02:34.521 --> 00:02:35.998
+Corré el prompt de triage.
+
+00:02:36.298 --> 00:02:39.772
+Exigí categoría, tests del grupo y la línea exacta de evidencia.
+
+00:02:40.322 --> 00:02:44.133
+Pedí tres cosas por grupo: una categoría de una lista cerrada, los tests que lo
+
+00:02:44.133 --> 00:02:47.268
+integran y la línea exacta del error que justifica la agrupación.
+
+00:02:47.568 --> 00:02:52.386
+La lista cerrada es importante: entorno, datos, cambio de interfaz, defecto probable
+
+00:02:52.386 --> 00:02:53.189
+y desconocido.
+
+00:02:53.489 --> 00:02:57.328
+La línea de evidencia tiene que ser una cita literal de la entrada, no una
+
+00:02:57.328 --> 00:02:57.950
+explicación.
+
+00:02:58.250 --> 00:03:02.414
+Así podés comprobar en segundos si el grupo tiene sentido, y un grupo cuya evidencia
+
+00:03:02.414 --> 00:03:05.091
+no aparece en los datos queda descartado de inmediato.
+
+00:03:06.391 --> 00:03:07.392
+Paso 4.
+
+00:03:07.692 --> 00:03:09.599
+Verificar el grupo más grande.
+
+00:03:10.149 --> 00:03:14.656
+Verificá a mano el grupo más grande abriendo un trace con npx playwright show-trace.
+
+00:03:15.206 --> 00:03:19.458
+Antes de actuar sobre el resultado, abrí el trace de un test del grupo más grande.
+
+00:03:19.758 --> 00:03:23.801
+Mirá la línea de tiempo, las llamadas de red y la captura del momento del fallo.
+
+00:03:24.101 --> 00:03:27.730
+Si la causa propuesta coincide con lo que ves, el grupo queda confirmado y
+
+00:03:27.730 --> 00:03:30.721
+probablemente resolviste la mayor parte del pipeline en rojo.
+
+00:03:31.021 --> 00:03:34.089
+Si no coincide, tomá el resultado completo con más cautela.
+
+00:03:34.389 --> 00:03:38.312
+Esa verificación lleva pocos minutos y es la que convierte una sugerencia en un
+
+00:03:38.312 --> 00:03:38.908
+diagnóstico.
+
+00:03:40.208 --> 00:03:41.209
+Paso 5.
+
+00:03:41.509 --> 00:03:42.777
+Guardar cada triage.
+
+00:03:43.327 --> 00:03:45.594
+Guardá cada triage con tu veredicto final.
+
+00:03:45.894 --> 00:03:48.787
+En pocas semanas tenés un dataset para evaluar el prompt.
+
+00:03:49.337 --> 00:03:53.288
+Guardá la entrada, la salida del modelo y tu veredicto final en un archivo por
+
+00:03:53.288 --> 00:03:53.694
+corrida.
+
+00:03:53.994 --> 00:03:56.806
+Parece burocracia y es lo más valioso del proceso.
+
+00:03:57.106 --> 00:04:01.080
+En pocas semanas tenés decenas de casos reales etiquetados por alguien que conoce el
+
+00:04:01.080 --> 00:04:05.007
+sistema: exactamente el dataset que hace falta para evaluar el prompt de triage con
+
+00:04:05.007 --> 00:04:06.095
+el método del día ocho.
+
+00:04:06.395 --> 00:04:10.052
+También vas a ver patrones que un día suelto no muestra, como un test que cae
+
+00:04:10.052 --> 00:04:11.715
+siempre en la categoría de entorno.
+
+00:04:13.015 --> 00:04:13.981
+Paso 6.
+
+00:04:14.281 --> 00:04:15.456
+El cierre es humano.
+
+00:04:16.006 --> 00:04:20.155
+No automatices el cierre: el modelo propone, una persona confirma antes de poner en
+
+00:04:20.155 --> 00:04:21.454
+cuarentena o abrir un bug.
+
+00:04:22.004 --> 00:04:26.105
+El modelo propone grupos y causas; una persona confirma antes de poner un test en
+
+00:04:26.105 --> 00:04:28.636
+cuarentena, abrir un bug o reintentar el pipeline.
+
+00:04:28.936 --> 00:04:30.726
+La razón es de costo del error.
+
+00:04:31.026 --> 00:04:35.209
+Cuarentenar por error un test que detectaba un defecto real deja pasar ese defecto.
+
+00:04:35.509 --> 00:04:38.391
+Abrir veinte bugs duplicados le quita credibilidad a QA.
+
+00:04:38.691 --> 00:04:42.764
+Automatizar la propuesta ahorra la parte tediosa; automatizar la decisión traslada
+
+00:04:42.764 --> 00:04:45.148
+el riesgo a un sistema que no responde por ella.
+
+00:04:46.448 --> 00:04:47.368
+Un ejemplo.
+
+00:04:47.918 --> 00:04:50.951
+Un lunes el pipeline nocturno muestra cuarenta y dos fallos.
+
+00:04:51.251 --> 00:04:55.447
+El script extrae los cuarenta y dos errores recortados y el prompt devuelve cuatro
+
+00:04:55.447 --> 00:04:55.805
+grupos.
+
+00:04:56.105 --> 00:05:00.693
+Treinta y uno comparten la línea de un error 503 del servicio de autenticación:
+
+00:05:00.693 --> 00:05:01.158
+entorno.
+
+00:05:01.458 --> 00:05:05.408
+Siete tienen un timeout esperando un botón cuyo nombre cambió: cambio de interfaz.
+
+00:05:05.708 --> 00:05:09.658
+Tres muestran un total distinto del esperado en el carrito: defecto probable.
+
+00:05:09.958 --> 00:05:11.539
+Uno queda como desconocido.
+
+00:05:11.839 --> 00:05:15.476
+La QA abre un trace del primer grupo y confirma el 503.
+
+00:05:15.776 --> 00:05:19.935
+Reintenta el pipeline cuando el servicio vuelve, actualiza un locator y abre un solo
+
+00:05:19.935 --> 00:05:21.618
+bug con tres tests como evidencia.
+
+00:05:21.918 --> 00:05:25.056
+El caso desconocido resulta ser un dato de prueba vencido.
+
+00:05:26.356 --> 00:05:27.879
+Los errores más comunes.
+
+00:05:28.429 --> 00:05:31.323
+Pegar el log completo en lugar de los errores recortados.
+
+00:05:31.873 --> 00:05:35.556
+No ofrecer la categoría desconocido y obtener causas inventadas.
+
+00:05:36.106 --> 00:05:39.220
+Aceptar la explicación del modelo sin abrir ningún trace.
+
+00:05:39.770 --> 00:05:43.232
+Automatizar la cuarentena o la creación de bugs sin confirmación.
+
+00:05:44.532 --> 00:05:46.799
+Para saber que quedó bien, revisá esto.
+
+00:05:47.349 --> 00:05:50.475
+El runner emite JSON y guarda traces en los reintentos.
+
+00:05:51.025 --> 00:05:54.708
+El script extrae título, archivo y error recortado de cada fallo.
+
+00:05:55.258 --> 00:05:57.815
+Cada grupo trae una línea de evidencia literal.
+
+00:05:58.365 --> 00:06:00.863
+El triage quedó guardado con tu veredicto final.
+
+00:06:02.163 --> 00:06:03.733
+Y lo que la IA no hizo bien.
+
+00:06:04.283 --> 00:06:07.781
+Si no le das la salida "desconocido", fabrica una causa plausible.
+
+00:06:08.081 --> 00:06:10.394
+Una causa inventada es peor que ninguna.
+
+00:06:11.694 --> 00:06:13.078
+Eso fue el día 12.
+
+00:06:13.378 --> 00:06:18.010
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:18.010 --> 00:06:18.617
+frecuentes.
+
+00:06:19.167 --> 00:06:23.604
+Seguí con el día 13: TDD con IA (1): red, green, refactor con un agente.

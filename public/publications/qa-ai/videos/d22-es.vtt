@@ -1,0 +1,421 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.672
+Día 22 de la serie 31 días de QA + IA.
+
+00:00:04.222 --> 00:00:08.706
+Modelo para pruebas de seguridad (1): threat model con OWASP LLM y Agentic Top 10.
+
+00:00:09.256 --> 00:00:13.034
+Cómo armar el modelo de amenazas de una feature con IA y convertirlo en casos de
+
+00:00:13.034 --> 00:00:14.309
+abuso que se pueden probar.
+
+00:00:15.609 --> 00:00:19.536
+Las pruebas de seguridad de una aplicación con modelos suelen empezar por el final:
+
+00:00:19.536 --> 00:00:23.321
+alguien corre una herramienta de ataques, obtiene un reporte largo y no sabe qué
+
+00:00:23.321 --> 00:00:23.936
+hacer con él.
+
+00:00:24.236 --> 00:00:28.241
+Sin un modelo de amenazas, no hay forma de decidir cuáles de esos hallazgos importan
+
+00:00:28.241 --> 00:00:32.103
+para tu sistema ni qué riesgos quedaron sin probar porque ninguna herramienta los
+
+00:00:32.103 --> 00:00:32.389
+cubre.
+
+00:00:33.689 --> 00:00:36.594
+El threat modeling es la parte de pensar antes de atacar.
+
+00:00:36.894 --> 00:00:40.607
+Se dibuja el sistema, se marca dónde entra texto que no controlás y se recorren
+
+00:00:40.607 --> 00:00:43.050
+listas de riesgos conocidos para ver cuáles aplican.
+
+00:00:43.350 --> 00:00:47.437
+OWASP mantiene dos que sirven de guía: una para aplicaciones con LLM y otra para
+
+00:00:47.437 --> 00:00:48.612
+aplicaciones agénticas.
+
+00:00:48.912 --> 00:00:53.037
+Esta guía te lleva del dibujo a una tabla de amenazas con casos de abuso concretos y
+
+00:00:53.037 --> 00:00:54.313
+una decisión por cada uno.
+
+00:00:55.613 --> 00:00:57.543
+Para seguir esta guía necesitás:
+
+00:00:58.093 --> 00:01:01.788
+Una feature con IA propia o de práctica (un asistente de soporte sirve).
+
+00:01:02.338 --> 00:01:07.524
+Las listas vigentes del OWASP GenAI Security Project (genai.owasp.org): Top 10 for
+
+00:01:07.524 --> 00:01:11.698
+LLM Applications, edición 2026, y Top 10 for Agentic Applications.
+
+00:01:12.248 --> 00:01:14.608
+Solo sistemas propios o con autorización.
+
+00:01:15.908 --> 00:01:17.698
+Ejemplo de tabla de amenazas.
+
+00:01:18.248 --> 00:01:21.258
+Chat: el mensaje del usuario es entrada no confiable.
+
+00:01:21.558 --> 00:01:23.197
+Riesgo: Prompt Injection.
+
+00:01:23.497 --> 00:01:27.552
+Caso de abuso: el usuario pide ignorar las reglas y ver datos de otro cliente.
+
+00:01:27.852 --> 00:01:29.167
+Se cubre con un test.
+
+00:01:29.717 --> 00:01:32.575
+RAG: un documento subido es entrada no confiable.
+
+00:01:32.875 --> 00:01:35.026
+Riesgo: Prompt Injection indirecta.
+
+00:01:35.326 --> 00:01:38.417
+Caso de abuso: un documento trae instrucciones ocultas.
+
+00:01:38.717 --> 00:01:40.403
+Se cubre con test y control.
+
+00:01:40.953 --> 00:01:44.067
+Tool de envío de email: la salida del modelo dispara una acción.
+
+00:01:44.367 --> 00:01:46.227
+Riesgo: Excessive Agency.
+
+00:01:46.527 --> 00:01:49.479
+Caso de abuso: el modelo envía un correo sin aprobación.
+
+00:01:49.779 --> 00:01:51.592
+Se cubre con un control de diseño.
+
+00:01:52.892 --> 00:01:53.789
+Paso 1.
+
+00:01:54.089 --> 00:01:55.369
+Dibujar el sistema.
+
+00:01:55.919 --> 00:02:00.017
+Dibujá el sistema: entradas (usuario, documentos, web, herramientas), modelo,
+
+00:02:00.017 --> 00:02:02.040
+salidas y acciones que puede ejecutar.
+
+00:02:02.590 --> 00:02:06.686
+Empezá por un diagrama simple con cuatro tipos de elementos: las entradas, el
+
+00:02:06.686 --> 00:02:08.548
+modelo, las salidas y las acciones.
+
+00:02:08.848 --> 00:02:12.905
+En entradas, listá todo lo que llega al modelo: mensajes del usuario, documentos
+
+00:02:12.905 --> 00:02:17.013
+recuperados, páginas web, resultados de herramientas e instrucciones del sistema.
+
+00:02:17.313 --> 00:02:21.546
+En acciones, todo lo que el sistema puede hacer además de responder: consultar una
+
+00:02:21.546 --> 00:02:23.817
+base, enviar un mail, modificar un registro.
+
+00:02:24.117 --> 00:02:26.279
+No hace falta una herramienta especial.
+
+00:02:26.579 --> 00:02:29.878
+Lo que importa es que el dibujo lo haga o lo valide alguien que conoce la
+
+00:02:29.878 --> 00:02:30.692
+arquitectura real.
+
+00:02:31.992 --> 00:02:32.888
+Paso 2.
+
+00:02:33.188 --> 00:02:34.607
+Fronteras de confianza.
+
+00:02:35.157 --> 00:02:38.940
+Marcá las fronteras de confianza: todo lugar donde el modelo lee texto que no
+
+00:02:38.940 --> 00:02:39.874
+controla tu equipo.
+
+00:02:40.424 --> 00:02:44.277
+Sobre el diagrama, marcá cada lugar donde el modelo lee texto que tu equipo no
+
+00:02:44.277 --> 00:02:45.314
+escribió ni controla.
+
+00:02:45.614 --> 00:02:48.183
+El mensaje del usuario es el caso evidente.
+
+00:02:48.483 --> 00:02:52.357
+Los menos evidentes son los que más problemas traen: un documento subido por un
+
+00:02:52.357 --> 00:02:56.329
+cliente, el contenido de una página web, un campo de texto libre en un ticket, la
+
+00:02:56.329 --> 00:02:57.947
+respuesta de una API de terceros.
+
+00:02:58.247 --> 00:03:02.682
+Para un modelo, todo eso es texto en su contexto, y no distingue de forma confiable
+
+00:03:02.682 --> 00:03:04.392
+entre un dato y una instrucción.
+
+00:03:04.692 --> 00:03:07.353
+Cada frontera es un punto de entrada posible.
+
+00:03:08.653 --> 00:03:09.550
+Paso 3.
+
+00:03:09.850 --> 00:03:12.186
+El Top 10 para aplicaciones con LLM.
+
+00:03:12.736 --> 00:03:16.279
+Recorré el Top 10 de LLM Applications y marcá qué riesgos aplican.
+
+00:03:16.579 --> 00:03:21.310
+Prompt Injection sigue primero en la edición 2026 y Sensitive Information Disclosure
+
+00:03:21.310 --> 00:03:21.760
+segundo.
+
+00:03:22.310 --> 00:03:26.403
+Recorré la lista riesgo por riesgo y, para cada uno, preguntá si aplica a tu
+
+00:03:26.403 --> 00:03:26.887
+diagrama.
+
+00:03:27.187 --> 00:03:31.262
+La inyección de prompts y la divulgación de información sensible encabezan la lista,
+
+00:03:31.262 --> 00:03:32.960
+y aplican a casi cualquier sistema.
+
+00:03:33.260 --> 00:03:37.412
+Otros dependen de la arquitectura: los riesgos de la cadena de suministro aplican si
+
+00:03:37.412 --> 00:03:41.465
+usás modelos o componentes de terceros; el manejo inseguro de la salida, si lo que
+
+00:03:41.465 --> 00:03:44.629
+genera el modelo termina ejecutándose o mostrándose sin validar.
+
+00:03:44.929 --> 00:03:48.112
+Marcá aplica o no aplica, con una línea de justificación.
+
+00:03:49.412 --> 00:03:50.414
+Paso 4.
+
+00:03:50.714 --> 00:03:53.038
+El Top 10 para aplicaciones agénticas.
+
+00:03:53.588 --> 00:03:57.393
+Si el sistema tiene herramientas, memoria o actúa solo, sumá el Top 10 de Agentic
+
+00:03:57.393 --> 00:04:00.963
+Applications: ahí el riesgo ya no es lo que el modelo dice sino lo que hace.
+
+00:04:01.513 --> 00:04:05.630
+Si tu sistema tiene herramientas, memoria o actúa sin aprobación en cada paso, sumá
+
+00:04:05.630 --> 00:04:06.473
+la segunda lista.
+
+00:04:06.773 --> 00:04:10.543
+El cambio de fondo es que el riesgo deja de ser lo que el modelo dice y pasa a ser
+
+00:04:10.543 --> 00:04:11.095
+lo que hace.
+
+00:04:11.395 --> 00:04:15.473
+Un texto incorrecto se puede corregir; un mail enviado o un registro borrado, no.
+
+00:04:15.773 --> 00:04:19.664
+Acá aparecen riesgos como el abuso de herramientas, el exceso de permisos y la
+
+00:04:19.664 --> 00:04:21.011
+manipulación de la memoria.
+
+00:04:21.311 --> 00:04:24.077
+Revisá cada herramienta de tu diagrama contra la lista.
+
+00:04:25.377 --> 00:04:26.378
+Paso 5.
+
+00:04:26.678 --> 00:04:28.306
+Casos de abuso concretos.
+
+00:04:28.856 --> 00:04:33.009
+Por cada riesgo que aplica, escribí un caso de abuso concreto: quién, por dónde
+
+00:04:33.009 --> 00:04:33.956
+entra y qué logra.
+
+00:04:34.506 --> 00:04:38.599
+Para cada riesgo que aplica, escribí un caso de abuso con tres partes: quién, por
+
+00:04:38.599 --> 00:04:40.267
+qué punto de entrada y qué logra.
+
+00:04:40.567 --> 00:04:42.857
+"Inyección de prompts" es una categoría.
+
+00:04:43.157 --> 00:04:46.954
+"Un cliente sube un PDF con texto oculto que le indica al asistente incluir en su
+
+00:04:46.954 --> 00:04:49.626
+respuesta los datos de otro cliente" es un caso de abuso.
+
+00:04:49.926 --> 00:04:53.063
+La diferencia es que el segundo se puede convertir en un test.
+
+00:04:53.363 --> 00:04:57.405
+Si no podés escribir el caso concreto, todavía no entendiste cómo ese riesgo se
+
+00:04:57.405 --> 00:04:58.683
+manifiesta en tu sistema.
+
+00:04:59.983 --> 00:05:00.950
+Paso 6.
+
+00:05:01.250 --> 00:05:02.669
+Priorizar y decidir.
+
+00:05:03.219 --> 00:05:07.249
+Priorizá por impacto y exposición, y decidí qué se cubre con tests automatizados
+
+00:05:07.249 --> 00:05:11.430
+(día 23) y qué necesita un control de diseño: permisos mínimos o aprobación humana.
+
+00:05:11.980 --> 00:05:16.336
+Ordená los casos por impacto y exposición: qué tan grave sería y qué tan fácil es
+
+00:05:16.336 --> 00:05:17.950
+llegar a ese punto de entrada.
+
+00:05:18.250 --> 00:05:20.377
+Después tomá una decisión para cada uno.
+
+00:05:20.677 --> 00:05:24.267
+Algunos se cubren con tests automatizados, que es el tema de mañana.
+
+00:05:24.567 --> 00:05:28.572
+Otros no se resuelven probando sino diseñando: quitarle una herramienta al agente,
+
+00:05:28.572 --> 00:05:32.431
+exigir aprobación humana antes de una acción irreversible, limitar los destinos
+
+00:05:32.431 --> 00:05:32.871
+posibles.
+
+00:05:33.171 --> 00:05:37.318
+Un control de diseño vale más que cien tests de un riesgo que no debería existir.
+
+00:05:38.618 --> 00:05:39.538
+Un ejemplo.
+
+00:05:40.088 --> 00:05:43.975
+Un equipo modela un asistente de soporte que lee tickets, consulta una base de
+
+00:05:43.975 --> 00:05:45.420
+pedidos y puede enviar mails.
+
+00:05:45.720 --> 00:05:49.370
+El diagrama muestra tres fronteras de confianza: el mensaje del usuario, los
+
+00:05:49.370 --> 00:05:52.108
+adjuntos del ticket y las respuestas de la API de envíos.
+
+00:05:52.408 --> 00:05:55.986
+De la primera lista aplican seis riesgos; de la segunda, cuatro.
+
+00:05:56.286 --> 00:05:57.996
+Escriben nueve casos de abuso.
+
+00:05:58.296 --> 00:06:02.048
+El de mayor impacto: un adjunto con instrucciones ocultas hace que el asistente
+
+00:06:02.048 --> 00:06:04.138
+envíe por mail los datos de un pedido ajeno.
+
+00:06:04.438 --> 00:06:05.846
+Deciden dos cosas.
+
+00:06:06.146 --> 00:06:10.142
+La herramienta de mail solo puede escribirle al remitente del ticket, un control de
+
+00:06:10.142 --> 00:06:10.479
+diseño.
+
+00:06:10.779 --> 00:06:13.812
+Y los otros ocho casos pasan a tests automatizados.
+
+00:06:15.112 --> 00:06:16.635
+Los errores más comunes.
+
+00:06:17.185 --> 00:06:20.706
+Correr una herramienta de ataques antes de tener el modelo de amenazas.
+
+00:06:21.256 --> 00:06:24.683
+Considerar solo el mensaje del usuario como entrada no confiable.
+
+00:06:25.233 --> 00:06:28.812
+Dejar los riesgos como categorías, sin casos de abuso concretos.
+
+00:06:29.362 --> 00:06:32.522
+Querer cubrir con tests lo que se resuelve quitando un permiso.
+
+00:06:33.822 --> 00:06:36.089
+Para saber que quedó bien, revisá esto.
+
+00:06:36.639 --> 00:06:39.706
+El diagrama fue validado por alguien que conoce la arquitectura.
+
+00:06:40.257 --> 00:06:42.825
+Todas las fronteras de confianza están marcadas.
+
+00:06:43.375 --> 00:06:47.197
+Cada riesgo aplicable tiene un caso de abuso con quién, por dónde y qué logra.
+
+00:06:47.747 --> 00:06:51.651
+Cada caso tiene una decisión: test, control de diseño o riesgo aceptado.
+
+00:06:52.951 --> 00:06:54.521
+Y lo que la IA no hizo bien.
+
+00:06:55.071 --> 00:06:58.731
+Un threat model generado sin tu arquitectura es una lista genérica.
+
+00:06:59.031 --> 00:07:01.286
+El dibujo del sistema lo hace quien lo conoce.
+
+00:07:02.586 --> 00:07:04.202
+Eso fue el día 22.
+
+00:07:04.502 --> 00:07:09.134
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:07:09.134 --> 00:07:09.741
+frecuentes.
+
+00:07:10.291 --> 00:07:14.995
+Seguí con el día 23: Modelo para pruebas de seguridad (2): red teaming automatizado.

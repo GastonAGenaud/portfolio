@@ -1,0 +1,412 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.765
+Día 31 de la serie 31 días de QA + IA.
+
+00:00:04.315 --> 00:00:08.683
+Capstone: el pipeline completo de calidad con IA y tu hoja de ruta 2027.
+
+00:00:09.233 --> 00:00:13.453
+Los 30 días anteriores unidos en un solo pipeline, un checklist de 12 puntos para
+
+00:00:13.453 --> 00:00:16.422
+autoevaluarte y un plan de 90 días con evidencia pública.
+
+00:00:17.722 --> 00:00:22.040
+Durante treinta días viste piezas sueltas: una regla para delegar, un eval, un
+
+00:00:22.040 --> 00:00:26.026
+agente configurado, un modelo de amenazas, una prueba de carga, un gate.
+
+00:00:26.326 --> 00:00:28.477
+Cada una resuelve un problema concreto.
+
+00:00:28.777 --> 00:00:32.802
+El valor mayor aparece cuando se conectan, porque ahí dejan de ser experimentos y
+
+00:00:32.802 --> 00:00:35.734
+pasan a ser un sistema de calidad para software que usa IA.
+
+00:00:37.034 --> 00:00:39.254
+Este último día no agrega herramientas.
+
+00:00:39.554 --> 00:00:43.447
+Arma el mapa completo, te pide una evaluación honesta de qué tenés funcionando de
+
+00:00:43.447 --> 00:00:45.802
+verdad y te ayuda a elegir qué construir primero.
+
+00:00:46.102 --> 00:00:48.868
+La serie no pretende que implementes las doce piezas.
+
+00:00:49.168 --> 00:00:53.139
+Pretende que sepas cuáles le importan a tu producto, en qué orden, y que dentro de
+
+00:00:53.139 --> 00:00:55.754
+tres meses puedas mostrar evidencia de haber avanzado.
+
+00:00:57.054 --> 00:00:58.984
+Para seguir esta guía necesitás:
+
+00:00:59.534 --> 00:01:02.416
+El repo qa-ai-lab con lo que hayas construido en la serie.
+
+00:01:02.966 --> 00:01:04.919
+La matriz de habilidades del día 2.
+
+00:01:06.219 --> 00:01:07.835
+Checklist de 12 piezas.
+
+00:01:08.385 --> 00:01:12.649
+Regla de delegación: verificable, barato de revisar, reversible (día 1).
+
+00:01:13.199 --> 00:01:16.580
+Repo con reglas para agentes, herramientas y permisos (día 9).
+
+00:01:17.130 --> 00:01:21.837
+Tests escritos por personas, implementación por agentes, con guardrails (días 13 y
+
+00:01:21.837 --> 00:01:22.067
+14).
+
+00:01:22.617 --> 00:01:26.160
+Agentes de Playwright con revisión del plan y del diff (días 10 y 11).
+
+00:01:26.710 --> 00:01:29.174
+Eval harness con prompt versionado (día 8).
+
+00:01:29.724 --> 00:01:33.187
+Modelos con versión fija y juez calibrado (días 15 y 16).
+
+00:01:33.737 --> 00:01:36.723
+Golden dataset con dev, test y regresión (día 17).
+
+00:01:37.273 --> 00:01:41.351
+Corridas repetidas, rangos y costo por llamada (días 18 y 19).
+
+00:01:41.901 --> 00:01:44.678
+Regresión de prompts antes de cada cambio (día 20).
+
+00:01:45.228 --> 00:01:49.097
+Threat model, red teaming y tests de inyección (días 22 a 24).
+
+00:01:49.647 --> 00:01:54.004
+Objetivos y pruebas de performance con métricas de tokens (días 25 a 27).
+
+00:01:54.554 --> 00:01:58.631
+Gates en CI, infra reproducible y observabilidad (días 28 a 30).
+
+00:01:59.931 --> 00:02:00.828
+Paso 1.
+
+00:02:01.128 --> 00:02:02.547
+El recorrido completo.
+
+00:02:03.097 --> 00:02:07.187
+Recorré el diagrama de punta a punta: un cambio entra por el repo, lo produce un
+
+00:02:07.187 --> 00:02:11.225
+agente o una persona, y pasa por tests, evals, seguridad y performance antes de
+
+00:02:11.225 --> 00:02:13.525
+llegar a producción, donde se sigue midiendo.
+
+00:02:14.075 --> 00:02:16.586
+Seguí un cambio de punta a punta sobre el diagrama.
+
+00:02:16.886 --> 00:02:21.096
+Entra por el repositorio, escrito por una persona o por un agente que trabaja con
+
+00:02:21.096 --> 00:02:22.032
+reglas y permisos.
+
+00:02:22.332 --> 00:02:24.888
+Pasa por los tests deterministas y los guardrails.
+
+00:02:25.188 --> 00:02:29.408
+Si toca algo relacionado con un modelo, pasa por los evals con su dataset y su juez
+
+00:02:29.408 --> 00:02:29.916
+calibrado.
+
+00:02:30.216 --> 00:02:33.029
+Antes del release, por seguridad y por performance.
+
+00:02:33.329 --> 00:02:37.243
+En producción sigue medido con trazas y evals en línea, y cada fallo vuelve al
+
+00:02:37.243 --> 00:02:38.347
+conjunto de regresión.
+
+00:02:38.647 --> 00:02:41.889
+El circuito cerrado es lo que hace que el sistema mejore con el uso.
+
+00:02:43.189 --> 00:02:44.085
+Paso 2.
+
+00:02:44.385 --> 00:02:45.618
+Un checklist honesto.
+
+00:02:46.168 --> 00:02:48.133
+Completá el checklist con honestidad.
+
+00:02:48.433 --> 00:02:51.222
+"Lo vi en un video" no cuenta; cuenta lo que corre en un repo.
+
+00:02:51.772 --> 00:02:55.673
+Completá el checklist de doce piezas con una regla estricta: una pieza cuenta solo
+
+00:02:55.673 --> 00:02:57.766
+si corre en un repositorio y alguien la usa.
+
+00:02:58.066 --> 00:03:01.888
+Haberla leído, haberla visto en un video o haberla probado una tarde no cuenta.
+
+00:03:02.188 --> 00:03:04.327
+La regla incomoda, y por eso sirve.
+
+00:03:04.627 --> 00:03:08.526
+La mayoría de los equipos descubre que tiene dos o tres piezas reales y varias a
+
+00:03:08.526 --> 00:03:09.111
+medio hacer.
+
+00:03:09.411 --> 00:03:10.934
+No es un mal resultado.
+
+00:03:11.234 --> 00:03:15.881
+Es un punto de partida preciso, y es lo que necesitás para planificar sin engañarte.
+
+00:03:17.181 --> 00:03:18.078
+Paso 3.
+
+00:03:18.378 --> 00:03:20.075
+Tres piezas, por riesgo.
+
+00:03:20.625 --> 00:03:24.965
+Elegí tres piezas faltantes y ordenalas por riesgo de tu producto, no por lo que más
+
+00:03:24.965 --> 00:03:25.585
+te divierte.
+
+00:03:26.135 --> 00:03:30.364
+De las que faltan, elegí tres y ordenalas según el riesgo de tu producto, no según
+
+00:03:30.364 --> 00:03:32.117
+lo que te resulte más interesante.
+
+00:03:32.417 --> 00:03:36.428
+Si tu sistema tiene un agente con herramientas y no hay tests de inyección, eso va
+
+00:03:36.428 --> 00:03:37.749
+antes que optimizar costos.
+
+00:03:38.049 --> 00:03:41.953
+Si una funcionalidad con un modelo está en producción sin ningún eval, eso va
+
+00:03:41.953 --> 00:03:42.359
+primero.
+
+00:03:42.659 --> 00:03:46.667
+Preguntate qué fallo te haría más daño mañana y qué pieza lo habría detectado.
+
+00:03:46.967 --> 00:03:48.154
+Esa es la primera.
+
+00:03:49.454 --> 00:03:50.455
+Paso 4.
+
+00:03:50.755 --> 00:03:52.313
+Un plan de noventa días.
+
+00:03:52.863 --> 00:03:57.385
+Armá el plan de 90 días: una pieza por mes, con un entregable verificable para cada
+
+00:03:57.385 --> 00:03:57.603
+una.
+
+00:03:58.153 --> 00:04:01.696
+Asigná una pieza por mes, cada una con un entregable verificable.
+
+00:04:01.996 --> 00:04:04.333
+"Aprender sobre evals" no es un entregable.
+
+00:04:04.633 --> 00:04:08.722
+"Un eval de treinta casos para el clasificador, corriendo en el pipeline de PR" sí.
+
+00:04:09.022 --> 00:04:10.754
+Un mes por pieza parece lento.
+
+00:04:11.054 --> 00:04:13.820
+Es realista si lo hacés junto con tu trabajo habitual.
+
+00:04:14.120 --> 00:04:17.478
+Poné las fechas en el calendario y contale el plan a alguien de tu equipo.
+
+00:04:17.778 --> 00:04:21.833
+Un compromiso que conoce otra persona se cumple bastante más que uno privado.
+
+00:04:23.133 --> 00:04:24.134
+Paso 5.
+
+00:04:24.434 --> 00:04:25.725
+Publicar evidencia.
+
+00:04:26.275 --> 00:04:30.596
+Publicá evidencia: el repo con un README que explique qué mide cada parte, y un caso
+
+00:04:30.596 --> 00:04:32.036
+escrito con números propios.
+
+00:04:32.586 --> 00:04:35.329
+A medida que termines cada pieza, dejala visible.
+
+00:04:35.629 --> 00:04:39.440
+Un repositorio con un README que explique qué mide cada parte y cómo correrla.
+
+00:04:39.740 --> 00:04:43.587
+Un caso escrito con tus propios números: qué problema había, qué mediste, qué
+
+00:04:43.587 --> 00:04:45.036
+decidiste y qué pasó después.
+
+00:04:45.336 --> 00:04:49.170
+Usá datos propios o sintéticos, nunca información de un cliente.
+
+00:04:49.470 --> 00:04:53.403
+Esa evidencia sirve dentro de tu equipo, para que otros adopten lo que armaste, y
+
+00:04:53.403 --> 00:04:56.899
+hacia afuera, porque muestra criterio aplicado y no solo conocimiento de
+
+00:04:56.899 --> 00:04:57.530
+herramientas.
+
+00:04:58.830 --> 00:04:59.797
+Paso 6.
+
+00:05:00.097 --> 00:05:01.399
+Volver a la matriz.
+
+00:05:01.949 --> 00:05:06.120
+Actualizá la matriz del día 2 y fijá una fecha para repetir la autoevaluación.
+
+00:05:06.670 --> 00:05:10.536
+Abrí la matriz de habilidades del día dos y actualizala con lo que hiciste en este
+
+00:05:10.536 --> 00:05:10.725
+mes.
+
+00:05:11.025 --> 00:05:14.951
+Las filas que estaban en cero o en uno deberían tener ahora evidencia enlazada.
+
+00:05:15.251 --> 00:05:19.456
+Poné una fecha para repetir la autoevaluación dentro de tres meses, al terminar el
+
+00:05:19.456 --> 00:05:19.712
+plan.
+
+00:05:20.012 --> 00:05:24.044
+Las herramientas concretas de esta serie van a cambiar, algunas en pocos meses.
+
+00:05:24.344 --> 00:05:28.828
+Lo que se mantiene es el método: definir qué es correcto, medirlo de forma repetible
+
+00:05:28.828 --> 00:05:29.896
+y decidir con datos.
+
+00:05:31.196 --> 00:05:32.116
+Un ejemplo.
+
+00:05:32.666 --> 00:05:35.664
+Una SDET completa el checklist al terminar la serie.
+
+00:05:35.964 --> 00:05:40.245
+Piezas reales: la regla de delegación, un repo con reglas para agentes y el ciclo de
+
+00:05:40.245 --> 00:05:41.214
+TDD con guardrails.
+
+00:05:41.514 --> 00:05:43.699
+A medio hacer: un eval que corre a mano.
+
+00:05:43.999 --> 00:05:45.790
+Faltantes: todo lo demás.
+
+00:05:46.090 --> 00:05:49.993
+Su producto tiene un asistente con acceso a datos de clientes y a una herramienta de
+
+00:05:49.993 --> 00:05:50.226
+mail.
+
+00:05:50.526 --> 00:05:51.875
+Ordena por riesgo.
+
+00:05:52.175 --> 00:05:55.161
+Primer mes, tests de inyección sobre las acciones del agente.
+
+00:05:55.461 --> 00:05:58.970
+Segundo mes, el eval con dataset versionado dentro del pipeline.
+
+00:05:59.270 --> 00:06:02.396
+Tercer mes, trazas y una alerta de calidad en producción.
+
+00:06:02.696 --> 00:06:07.077
+Deja costos y performance para el trimestre siguiente, y lo anota como una decisión,
+
+00:06:07.077 --> 00:06:08.016
+no como un olvido.
+
+00:06:09.316 --> 00:06:10.840
+Los errores más comunes.
+
+00:06:11.390 --> 00:06:14.689
+Marcar como hecha una pieza que solo viste o probaste una vez.
+
+00:06:15.239 --> 00:06:18.446
+Elegir qué construir por interés y no por riesgo del producto.
+
+00:06:18.996 --> 00:06:21.565
+Planear las doce piezas para el mismo trimestre.
+
+00:06:22.115 --> 00:06:24.962
+Publicar evidencia con datos o detalles de un cliente.
+
+00:06:26.262 --> 00:06:28.529
+Para saber que quedó bien, revisá esto.
+
+00:06:29.079 --> 00:06:32.239
+El checklist está completo con la regla de que solo cuenta lo que corre.
+
+00:06:32.789 --> 00:06:35.474
+Hay tres piezas elegidas y ordenadas por riesgo.
+
+00:06:36.024 --> 00:06:39.242
+El plan de noventa días tiene un entregable verificable por mes.
+
+00:06:39.792 --> 00:06:43.197
+La matriz del día dos está actualizada y tiene fecha de revisión.
+
+00:06:44.497 --> 00:06:46.067
+Y lo que la IA no hizo bien.
+
+00:06:46.617 --> 00:06:48.245
+Resume bien y no prioriza.
+
+00:06:48.545 --> 00:06:52.646
+Decidir qué riesgo va primero en tu producto sigue siendo trabajo de una persona.
+
+00:06:53.946 --> 00:06:55.597
+Eso fue el día 31.
+
+00:06:55.897 --> 00:07:00.529
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:07:00.529 --> 00:07:01.136
+frecuentes.
+
+00:07:01.686 --> 00:07:03.546
+Con esta guía se cierra la serie.
+
+00:07:03.846 --> 00:07:05.416
+Gracias por llegar hasta acá.

@@ -1,0 +1,379 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.195
+Day 21 of the 31 days of QA + AI series.
+
+00:00:04.745 --> 00:00:09.623
+Testing RAG: retrieval, faithfulness and answer, separately.
+
+00:00:10.173 --> 00:00:15.038
+How to test a RAG system in three layers so that, when it fails, you know whether
+
+00:00:15.038 --> 00:00:18.582
+the problem is retrieval, generation or the knowledge base.
+
+00:00:19.882 --> 00:00:24.958
+A RAG system answers questions by first searching your documents and then generating
+
+00:00:24.958 --> 00:00:26.711
+an answer with what it found.
+
+00:00:27.011 --> 00:00:30.833
+When it answers badly, the usual reaction is to tweak the prompt.
+
+00:00:31.133 --> 00:00:32.599
+Sometimes that works.
+
+00:00:32.899 --> 00:00:37.618
+Often it doesn't, because the problem came earlier: the right document never reached
+
+00:00:37.618 --> 00:00:40.483
+the model, and no instruction can make up for that.
+
+00:00:41.783 --> 00:00:46.992
+Testing a RAG end to end, with a single metric, mixes two different systems: a
+
+00:00:46.992 --> 00:00:48.995
+search engine and a generator.
+
+00:00:49.295 --> 00:00:53.641
+This guide splits them into three layers measured separately, and adds negative
+
+00:00:53.641 --> 00:00:57.657
+cases, where the correct answer is admitting the information isn't there.
+
+00:00:57.957 --> 00:01:02.756
+The result is a diagnosis that says where to fix things, not just that something is
+
+00:01:02.756 --> 00:01:03.103
+wrong.
+
+00:01:04.403 --> 00:01:06.101
+To follow this guide you need:
+
+00:01:06.651 --> 00:01:12.319
+Python 3.10+ and a RAG app exposing the answer and the retrieved chunks.
+
+00:01:12.869 --> 00:01:16.238
+20 questions with expected answer and source document.
+
+00:01:16.788 --> 00:01:22.172
+DeepEval defaults to an OpenAI model as judge (needs OPENAI_API_KEY); its docs
+
+00:01:22.172 --> 00:01:24.036
+explain how to use another.
+
+00:01:25.336 --> 00:01:26.615
+This is the setup.
+
+00:01:26.915 --> 00:01:31.132
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:32.432 --> 00:01:34.699
+And this is the next setup file.
+
+00:01:35.999 --> 00:01:37.035
+Step 1.
+
+00:01:37.335 --> 00:01:39.184
+Layer one: retrieval.
+
+00:01:39.734 --> 00:01:44.371
+Layer 1, retrieval: for each question, check whether the right document shows up
+
+00:01:44.371 --> 00:01:45.936
+among the retrieved chunks.
+
+00:01:46.236 --> 00:01:48.700
+It's deterministic and needs no model.
+
+00:01:49.250 --> 00:01:53.270
+For each question in the dataset, note which document holds the answer.
+
+00:01:53.570 --> 00:01:57.636
+The test checks whether that document shows up among the retrieved chunks.
+
+00:01:57.936 --> 00:02:03.420
+No model is needed to evaluate it: it's a comparison of identifiers, deterministic
+
+00:02:03.420 --> 00:02:04.022
+and fast.
+
+00:02:04.322 --> 00:02:06.670
+This metric is the system's ceiling.
+
+00:02:06.970 --> 00:02:11.145
+If the right chunk shows up for seven questions in ten, the final answer can't be
+
+00:02:11.145 --> 00:02:13.207
+right with grounding in more than seven.
+
+00:02:13.507 --> 00:02:16.691
+Starting here avoids weeks of adjustments in the wrong place.
+
+00:02:17.991 --> 00:02:19.189
+Step 2.
+
+00:02:19.489 --> 00:02:21.675
+Layer two: faithfulness.
+
+00:02:22.225 --> 00:02:27.120
+Layer 2, faithfulness: every claim in the answer must be supported by the retrieved
+
+00:02:27.120 --> 00:02:27.533
+chunks.
+
+00:02:27.833 --> 00:02:30.146
+This is where fabrications get caught.
+
+00:02:30.696 --> 00:02:35.026
+Faithfulness asks whether every claim in the answer is supported by the retrieved
+
+00:02:35.026 --> 00:02:35.401
+chunks.
+
+00:02:35.701 --> 00:02:40.280
+It doesn't evaluate whether the answer is true in general, but whether it comes from
+
+00:02:40.280 --> 00:02:41.752
+the context the system had.
+
+00:02:42.052 --> 00:02:46.845
+This is where fabrications get caught: a fact the model added from prior knowledge,
+
+00:02:46.845 --> 00:02:50.309
+an altered figure, a condition the document doesn't mention.
+
+00:02:50.609 --> 00:02:55.152
+It's measured with a judge that breaks the answer into claims and verifies each one.
+
+00:02:55.452 --> 00:02:58.554
+For figures and dates, add deterministic checks.
+
+00:02:59.854 --> 00:03:00.936
+Step 3.
+
+00:03:01.236 --> 00:03:03.131
+Layer three: answer.
+
+00:03:03.681 --> 00:03:08.584
+Layer 3, answer: does it answer what was asked and match what's expected?
+
+00:03:09.134 --> 00:03:13.936
+Only in the third layer do you evaluate whether the answer addresses what was asked
+
+00:03:13.936 --> 00:03:15.557
+and matches what's expected.
+
+00:03:15.857 --> 00:03:20.182
+An answer can be faithful to the context and still useless: it talks about the
+
+00:03:20.182 --> 00:03:24.230
+topic, quotes the document well and doesn't answer the specific question.
+
+00:03:24.530 --> 00:03:28.983
+Or it can answer correctly from general knowledge without relying on your documents,
+
+00:03:28.983 --> 00:03:30.361
+which is a different risk.
+
+00:03:30.661 --> 00:03:34.958
+That's why the three layers are read together: each combination of results points to
+
+00:03:34.958 --> 00:03:35.981
+a different problem.
+
+00:03:37.281 --> 00:03:38.293
+Step 4.
+
+00:03:38.593 --> 00:03:40.059
+Negative cases.
+
+00:03:40.609 --> 00:03:44.931
+Add negative cases: questions whose answer isn't in the knowledge base.
+
+00:03:45.231 --> 00:03:47.578
+The system must say it doesn't know.
+
+00:03:48.128 --> 00:03:51.242
+Add questions whose answer isn't in the knowledge base.
+
+00:03:51.542 --> 00:03:56.314
+The expected behavior is for the system to say so, instead of assembling a plausible
+
+00:03:56.314 --> 00:03:58.302
+answer from vaguely related chunks.
+
+00:03:58.602 --> 00:04:02.965
+It's the case that does the most damage in production and the least tested, because
+
+00:04:02.965 --> 00:04:05.594
+datasets tend to be built from existing documents.
+
+00:04:05.894 --> 00:04:10.988
+Also include nearly covered questions: the document discusses the topic but doesn't
+
+00:04:10.988 --> 00:04:13.443
+carry the specific fact being asked for.
+
+00:04:14.743 --> 00:04:15.872
+Step 5.
+
+00:04:16.172 --> 00:04:17.649
+Diagnose per layer.
+
+00:04:18.199 --> 00:04:23.178
+Diagnose per layer: low retrieval is fixed in chunking, index or search; low
+
+00:04:23.178 --> 00:04:25.864
+faithfulness is fixed in prompt or model.
+
+00:04:26.164 --> 00:04:28.907
+Changing the prompt doesn't fix bad retrieval.
+
+00:04:29.457 --> 00:04:32.850
+With the three metrics separated, each fix has its place.
+
+00:04:33.150 --> 00:04:36.995
+Low retrieval is fixed in chunk size, the index or the search.
+
+00:04:37.295 --> 00:04:41.791
+Low faithfulness with good retrieval is fixed in the prompt or by changing models.
+
+00:04:42.091 --> 00:04:46.611
+A low answer score with the other two high is usually a format or instructions
+
+00:04:46.611 --> 00:04:47.074
+problem.
+
+00:04:47.374 --> 00:04:51.451
+The practical rule is not to touch the prompt until you've confirmed retrieval
+
+00:04:51.451 --> 00:04:54.900
+works: changing the prompt doesn't fix a search that doesn't find.
+
+00:04:56.200 --> 00:04:57.387
+Step 6.
+
+00:04:57.687 --> 00:04:59.245
+Metrics in CI.
+
+00:04:59.795 --> 00:05:04.548
+Bring the three metrics into CI with thresholds and track them on every document
+
+00:05:04.548 --> 00:05:04.964
+change.
+
+00:05:05.514 --> 00:05:10.189
+Bring the three metrics into the pipeline with a threshold for each, and run the
+
+00:05:10.189 --> 00:05:12.994
+eval every time documents change, not just code.
+
+00:05:13.294 --> 00:05:16.431
+In a RAG, the knowledge base is part of the system.
+
+00:05:16.731 --> 00:05:21.322
+A new document contradicting another, or a folder reorganization, can lower
+
+00:05:21.322 --> 00:05:24.199
+retrieval without anyone having touched a line.
+
+00:05:24.499 --> 00:05:29.128
+Record how the metrics evolve with each content change so you can locate when a drop
+
+00:05:29.128 --> 00:05:29.459
+began.
+
+00:05:30.759 --> 00:05:31.865
+An example.
+
+00:05:32.415 --> 00:05:36.225
+An internal assistant answers questions about company policies.
+
+00:05:36.525 --> 00:05:40.661
+The team builds forty questions with their source document and ten negatives.
+
+00:05:40.961 --> 00:05:47.618
+First measurement, with illustrative figures: retrieval 65%, faithfulness 92%,
+
+00:05:47.618 --> 00:05:48.557
+answer 60%.
+
+00:05:48.857 --> 00:05:51.530
+The team had been tuning the prompt for two weeks.
+
+00:05:51.830 --> 00:05:55.991
+The numbers show the generator is faithful to what it receives and that the problem
+
+00:05:55.991 --> 00:05:56.743
+lies in search.
+
+00:05:57.043 --> 00:05:59.925
+They check and find chunks were cutting tables in half.
+
+00:06:00.225 --> 00:06:05.881
+They change the chunking strategy and retrieval rises to 90%; the answer score, to
+
+00:06:05.881 --> 00:06:08.157
+84%, without touching the prompt.
+
+00:06:08.457 --> 00:06:11.722
+On the negatives, three out of ten still make things up.
+
+00:06:12.022 --> 00:06:14.707
+That one does get fixed with an instruction.
+
+00:06:16.007 --> 00:06:17.670
+The most common mistakes.
+
+00:06:18.220 --> 00:06:21.949
+Measuring only the final answer and not knowing which layer fails.
+
+00:06:22.499 --> 00:06:25.149
+Tuning the prompt when the problem is retrieval.
+
+00:06:25.699 --> 00:06:29.254
+Not including questions with no answer in the knowledge base.
+
+00:06:29.804 --> 00:06:33.406
+Running the eval only when code changes and not documents.
+
+00:06:34.706 --> 00:06:36.949
+To know it is done, check this.
+
+00:06:37.499 --> 00:06:40.091
+Each question has its source document noted.
+
+00:06:40.641 --> 00:06:44.150
+Retrieval, faithfulness and answer are measured separately.
+
+00:06:44.700 --> 00:06:48.151
+The dataset includes negative and nearly covered cases.
+
+00:06:48.701 --> 00:06:51.618
+The eval runs in CI on document changes.
+
+00:06:52.918 --> 00:06:54.813
+And where AI fell short.
+
+00:06:55.363 --> 00:06:58.883
+With the right source in context, it still alters figures.
+
+00:06:59.183 --> 00:07:01.519
+Faithfulness is measured, not assumed.
+
+00:07:02.819 --> 00:07:04.610
+That was day 21.
+
+00:07:04.910 --> 00:07:09.884
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:09.884 --> 00:07:10.892
+asked questions.
+
+00:07:11.442 --> 00:07:17.025
+Continue with day 22: A model for security testing (1): threat modeling with the
+
+00:07:17.025 --> 00:07:19.049
+OWASP LLM and Agentic Top 10.

@@ -1,0 +1,358 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.090
+Day 19 of the 31 days of QA + AI series.
+
+00:00:04.640 --> 00:00:08.404
+Cost as a quality metric: top-K prefiltering before the model.
+
+00:00:08.954 --> 00:00:13.512
+How to cut an agent's input tokens with a local candidate prefilter and prove with
+
+00:00:13.512 --> 00:00:15.679
+measurements that quality doesn't drop.
+
+00:00:16.979 --> 00:00:20.093
+In QA we're used to quality being measured in defects.
+
+00:00:20.393 --> 00:00:25.134
+With systems that use models, cost becomes an equally concrete quality dimension: a
+
+00:00:25.134 --> 00:00:29.474
+feature that gets it right but costs too much per call can't be sustained in
+
+00:00:29.474 --> 00:00:32.958
+production, and one that's cheap and fails is no good either.
+
+00:00:33.258 --> 00:00:35.408
+Someone has to measure both together.
+
+00:00:36.708 --> 00:00:41.224
+The most common case of unnecessary cost is sending the model all the available
+
+00:00:41.224 --> 00:00:42.481
+context, just in case.
+
+00:00:42.781 --> 00:00:47.403
+This guide shows a technique to avoid it: a local prefilter that picks the K most
+
+00:00:47.403 --> 00:00:49.970
+relevant candidates before calling the model.
+
+00:00:50.270 --> 00:00:54.952
+And it shows how to test it, because a badly measured prefilter lowers cost and
+
+00:00:54.952 --> 00:00:57.204
+quality alike without anyone noticing.
+
+00:00:58.504 --> 00:01:00.202
+To follow this guide you need:
+
+00:01:00.752 --> 00:01:04.551
+The day 18 case: names to map against a catalog.
+
+00:01:05.101 --> 00:01:07.902
+A labeled set with the correct answer per name.
+
+00:01:09.202 --> 00:01:10.481
+This is the setup.
+
+00:01:10.781 --> 00:01:14.998
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:16.298 --> 00:01:17.334
+Step 1.
+
+00:01:17.634 --> 00:01:18.647
+The baseline.
+
+00:01:19.197 --> 00:01:24.000
+Measure the baseline: input tokens per call and how much is fixed context (for
+
+00:01:24.000 --> 00:01:25.725
+example, the whole catalog).
+
+00:01:26.275 --> 00:01:28.309
+Before optimizing, measure.
+
+00:01:28.609 --> 00:01:33.299
+For a sample of calls, record how many input tokens each one uses and how many
+
+00:01:33.299 --> 00:01:38.229
+correspond to fixed context repeated every time, such as a whole catalog or a full
+
+00:01:38.229 --> 00:01:38.770
+document.
+
+00:01:39.070 --> 00:01:42.242
+In many systems that fixed part is most of the cost.
+
+00:01:42.542 --> 00:01:45.958
+Also note current quality with the eval you already have.
+
+00:01:46.258 --> 00:01:50.808
+Without those two numbers, tokens and quality, you won't be able to say afterwards
+
+00:01:50.808 --> 00:01:53.970
+whether the change was an improvement or merely a change.
+
+00:01:55.270 --> 00:01:56.469
+Step 2.
+
+00:01:56.769 --> 00:01:58.687
+A simple local prefilter.
+
+00:01:59.237 --> 00:02:02.931
+Build a local prefilter that picks the K most similar candidates.
+
+00:02:03.231 --> 00:02:07.193
+Start with a simple lexical one: it's free and calls no model.
+
+00:02:07.743 --> 00:02:12.426
+The prefilter takes the input and the full candidate list, and returns the K most
+
+00:02:12.426 --> 00:02:12.889
+similar.
+
+00:02:13.189 --> 00:02:18.059
+Start with a lexical method, for example character trigram similarity: it takes a
+
+00:02:18.059 --> 00:02:21.667
+few lines to write, runs in milliseconds and calls no model.
+
+00:02:21.967 --> 00:02:26.393
+It's also deterministic, so it can be tested with classic tests.
+
+00:02:26.693 --> 00:02:30.120
+The temptation is to jump straight to something more sophisticated.
+
+00:02:30.420 --> 00:02:34.138
+Resist it until you have a number showing the simple approach falls short.
+
+00:02:35.438 --> 00:02:36.521
+Step 3.
+
+00:02:36.821 --> 00:02:38.147
+Prefilter recall.
+
+00:02:38.697 --> 00:02:43.790
+Measure prefilter recall: in how many labeled cases the correct answer is among the
+
+00:02:43.790 --> 00:02:43.912
+K.
+
+00:02:44.212 --> 00:02:47.280
+If it isn't there, the model can't get it right.
+
+00:02:47.830 --> 00:02:49.504
+This is the central measurement.
+
+00:02:49.804 --> 00:02:54.427
+For each labeled case, check whether the correct answer is among the K candidates
+
+00:02:54.427 --> 00:02:55.740
+the prefilter returned.
+
+00:02:56.040 --> 00:02:59.189
+The percentage of cases where it is, is recall.
+
+00:02:59.489 --> 00:03:04.098
+It works as the ceiling for the whole system: if the correct answer doesn't reach
+
+00:03:04.098 --> 00:03:08.025
+the context, the model has no way of choosing it, however good it is.
+
+00:03:08.325 --> 00:03:12.971
+It's a deterministic, cheap, fast test, and it tells you whether the problem lies
+
+00:03:12.971 --> 00:03:14.864
+before the model or in the model.
+
+00:03:16.164 --> 00:03:17.176
+Step 4.
+
+00:03:17.476 --> 00:03:19.662
+Compare methods and K values.
+
+00:03:20.212 --> 00:03:24.893
+Compare methods (lexical versus embeddings) and K values on that same recall.
+
+00:03:25.193 --> 00:03:27.065
+Don't assume embeddings win.
+
+00:03:27.615 --> 00:03:32.193
+With recall as the metric you can compare options fairly: lexical method against
+
+00:03:32.193 --> 00:03:34.711
+embeddings, and different K values for each.
+
+00:03:35.011 --> 00:03:36.105
+Build a table.
+
+00:03:36.405 --> 00:03:38.277
+Don't assume embeddings win.
+
+00:03:38.577 --> 00:03:43.163
+In tasks with proper names, codes or abbreviations, lexical similarity often
+
+00:03:43.163 --> 00:03:45.697
+performs as well or better, and it's free.
+
+00:03:45.997 --> 00:03:49.796
+Embeddings help when the relationship is one of meaning rather than spelling.
+
+00:03:50.096 --> 00:03:51.933
+Let your data decide.
+
+00:03:53.233 --> 00:03:54.362
+Step 5.
+
+00:03:54.662 --> 00:03:56.568
+The full eval with each K.
+
+00:03:57.118 --> 00:04:01.301
+Run the full eval, 5 times, with the full list and with each K.
+
+00:04:01.601 --> 00:04:05.423
+Compare accuracy, costly errors, tokens and cost.
+
+00:04:05.973 --> 00:04:09.412
+Recall measures the prefilter, not the final result.
+
+00:04:09.712 --> 00:04:14.556
+Run the eval end to end, five times, with the full list and with each K value.
+
+00:04:14.856 --> 00:04:18.678
+Compare accuracy, costly errors, tokens and cost.
+
+00:04:18.978 --> 00:04:23.616
+You'll see something that tends to surprise: more context doesn't always give a
+
+00:04:23.616 --> 00:04:24.438
+better result.
+
+00:04:24.738 --> 00:04:29.059
+With many similar candidates in the prompt, the model gets confused more.
+
+00:04:29.359 --> 00:04:33.905
+There's a point beyond which adding candidates worsens quality and raises cost at
+
+00:04:33.905 --> 00:04:34.691
+the same time.
+
+00:04:35.991 --> 00:04:37.178
+Step 6.
+
+00:04:37.478 --> 00:04:39.930
+Choose the smallest K that suffices.
+
+00:04:40.480 --> 00:04:43.942
+Pick the smallest K that keeps recall and accuracy.
+
+00:04:44.242 --> 00:04:48.309
+More similar candidates can confuse the model and make results worse.
+
+00:04:48.859 --> 00:04:53.621
+The decision rule is choosing the smallest K that keeps recall and accuracy within
+
+00:04:53.621 --> 00:04:54.724
+the baseline range.
+
+00:04:55.024 --> 00:04:57.860
+Document the full table and the chosen value.
+
+00:04:58.160 --> 00:05:03.525
+Add prefilter recall as a permanent test in CI: if someone changes the method or the
+
+00:05:03.525 --> 00:05:06.847
+catalog grows a lot, recall can drop without notice.
+
+00:05:07.147 --> 00:05:11.903
+That test takes seconds, and it protects a piece that, when it fails, makes
+
+00:05:11.903 --> 00:05:13.488
+everything after it fail.
+
+00:05:14.788 --> 00:05:15.894
+An example.
+
+00:05:16.444 --> 00:05:21.330
+With illustrative numbers: a system sends a catalog of two thousand records on every
+
+00:05:21.330 --> 00:05:23.656
+call, about sixty thousand input tokens.
+
+00:05:23.956 --> 00:05:28.673
+The team builds a trigram prefilter and measures recall on eighty labeled cases.
+
+00:05:28.973 --> 00:05:35.807
+With K equal to five, the correct answer is present in 90% of cases; with ten, in
+
+00:05:35.807 --> 00:05:39.773
+97%; with twenty, in 99%; with fifty, also 99%.
+
+00:05:40.073 --> 00:05:44.963
+They try embeddings and with K equal to twenty get 98%: no improvement.
+
+00:05:45.263 --> 00:05:50.062
+In the full eval, K equal to twenty gives the same accuracy as the full list, with
+
+00:05:50.062 --> 00:05:54.159
+one fewer costly error per run and around three percent of the tokens.
+
+00:05:54.459 --> 00:05:57.677
+With fifty, accuracy drops two points.
+
+00:05:58.977 --> 00:06:00.640
+The most common mistakes.
+
+00:06:01.190 --> 00:06:04.409
+Shrinking context without measuring prefilter recall.
+
+00:06:04.959 --> 00:06:07.504
+Assuming embeddings beat a lexical method.
+
+00:06:08.054 --> 00:06:11.366
+Evaluating only cost and not end-to-end quality.
+
+00:06:11.916 --> 00:06:14.055
+Choosing a large K "to be safe".
+
+00:06:15.355 --> 00:06:17.598
+To know it is done, check this.
+
+00:06:18.148 --> 00:06:21.227
+You have baseline input tokens and quality.
+
+00:06:21.777 --> 00:06:24.996
+Prefilter recall is measured for several K values.
+
+00:06:25.546 --> 00:06:28.683
+The full eval ran with the full list and with each K.
+
+00:06:29.233 --> 00:06:32.173
+Prefilter recall runs as a test in CI.
+
+00:06:33.473 --> 00:06:35.368
+And where AI fell short.
+
+00:06:35.918 --> 00:06:40.507
+With many similar candidates in context, the model picks wrong more often.
+
+00:06:40.807 --> 00:06:43.991
+Context is designed and measured, not piled up.
+
+00:06:45.291 --> 00:06:46.872
+That was day 19.
+
+00:06:47.172 --> 00:06:52.146
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:52.146 --> 00:06:53.154
+asked questions.
+
+00:06:53.704 --> 00:06:59.182
+Continue with day 20: Prompt regression: version, compare and don't break what
+
+00:06:59.182 --> 00:06:59.674
+worked.

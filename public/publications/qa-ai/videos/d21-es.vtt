@@ -1,0 +1,382 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.649
+Día 21 de la serie 31 días de QA + IA.
+
+00:00:04.199 --> 00:00:07.719
+Testing de RAG: retrieval, fidelidad y respuesta por separado.
+
+00:00:08.269 --> 00:00:11.963
+Cómo probar un sistema RAG en tres capas para saber, cuando falla, si el problema
+
+00:00:11.963 --> 00:00:15.017
+está en la búsqueda, en la generación o en la base de conocimiento.
+
+00:00:16.317 --> 00:00:20.057
+Un sistema RAG responde preguntas buscando primero en tus documentos y generando
+
+00:00:20.057 --> 00:00:22.021
+después una respuesta con lo que encontró.
+
+00:00:22.321 --> 00:00:25.609
+Cuando contesta mal, la reacción habitual es retocar el prompt.
+
+00:00:25.909 --> 00:00:27.223
+A veces funciona.
+
+00:00:27.523 --> 00:00:31.601
+Muchas veces no, porque el problema estaba antes: el documento correcto nunca llegó
+
+00:00:31.601 --> 00:00:34.155
+al modelo y ninguna instrucción puede compensar eso.
+
+00:00:35.455 --> 00:00:40.000
+Probar un RAG de punta a punta, con una sola métrica, mezcla dos sistemas distintos:
+
+00:00:40.000 --> 00:00:41.460
+un buscador y un generador.
+
+00:00:41.760 --> 00:00:45.690
+Esta guía los separa en tres capas que se miden por separado, y agrega los casos
+
+00:00:45.690 --> 00:00:49.472
+negativos, donde la respuesta correcta es admitir que la información no está.
+
+00:00:49.772 --> 00:00:53.844
+El resultado es un diagnóstico que dice dónde hay que arreglar, no solo que algo
+
+00:00:53.844 --> 00:00:54.302
+anda mal.
+
+00:00:55.602 --> 00:00:57.532
+Para seguir esta guía necesitás:
+
+00:00:58.082 --> 00:01:02.694
+Python 3.10+ y una app RAG que exponga la respuesta y los fragmentos recuperados.
+
+00:01:03.244 --> 00:01:06.080
+20 preguntas con respuesta esperada y documento fuente.
+
+00:01:06.630 --> 00:01:10.903
+DeepEval usa por defecto un modelo de OpenAI como juez (requiere OPENAI_API_KEY); su
+
+00:01:10.903 --> 00:01:12.786
+documentación explica cómo usar otro.
+
+00:01:14.086 --> 00:01:15.261
+Este es el setup.
+
+00:01:15.561 --> 00:01:18.907
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:20.207 --> 00:01:22.346
+Y este es el siguiente archivo del setup.
+
+00:01:23.646 --> 00:01:24.543
+Paso 1.
+
+00:01:24.843 --> 00:01:26.389
+Capa uno: recuperación.
+
+00:01:26.939 --> 00:01:31.199
+Capa 1, retrieval: para cada pregunta, verificá si el documento correcto aparece
+
+00:01:31.199 --> 00:01:32.956
+entre los fragmentos recuperados.
+
+00:01:33.256 --> 00:01:35.465
+Es determinista y no necesita un modelo.
+
+00:01:36.015 --> 00:01:39.872
+Para cada pregunta del dataset, anotá qué documento contiene la respuesta.
+
+00:01:40.172 --> 00:01:44.203
+El test verifica si ese documento aparece entre los fragmentos recuperados.
+
+00:01:44.503 --> 00:01:49.073
+No hace falta ningún modelo para evaluarlo: es una comparación de identificadores,
+
+00:01:49.073 --> 00:01:50.299
+determinista y rápida.
+
+00:01:50.599 --> 00:01:52.703
+Esta métrica es el techo del sistema.
+
+00:01:53.003 --> 00:01:56.906
+Si el fragmento correcto aparece en siete de cada diez preguntas, la respuesta final
+
+00:01:56.906 --> 00:01:59.136
+no puede acertar con fundamento en más de siete.
+
+00:01:59.436 --> 00:02:02.666
+Empezar por acá evita semanas de ajustes en el lugar equivocado.
+
+00:02:03.966 --> 00:02:04.863
+Paso 2.
+
+00:02:05.163 --> 00:02:06.512
+Capa dos: fidelidad.
+
+00:02:07.062 --> 00:02:11.200
+Capa 2, fidelidad: cada afirmación de la respuesta tiene que estar respaldada por
+
+00:02:11.200 --> 00:02:12.579
+los fragmentos recuperados.
+
+00:02:12.879 --> 00:02:14.867
+Acá se detectan las invenciones.
+
+00:02:15.417 --> 00:02:19.297
+La fidelidad pregunta si cada afirmación de la respuesta está respaldada por los
+
+00:02:19.297 --> 00:02:20.412
+fragmentos recuperados.
+
+00:02:20.712 --> 00:02:24.976
+No evalúa si la respuesta es verdadera en general, sino si sale del contexto que el
+
+00:02:24.976 --> 00:02:25.696
+sistema tenía.
+
+00:02:25.996 --> 00:02:29.989
+Acá se detectan las invenciones: un dato que el modelo agregó de su conocimiento
+
+00:02:29.989 --> 00:02:33.533
+previo, una cifra alterada, una condición que el documento no menciona.
+
+00:02:33.833 --> 00:02:37.702
+Se mide con un juez que descompone la respuesta en afirmaciones y verifica cada una.
+
+00:02:38.002 --> 00:02:40.930
+Para cifras y fechas, sumá chequeos deterministas.
+
+00:02:42.230 --> 00:02:43.127
+Paso 3.
+
+00:02:43.427 --> 00:02:44.846
+Capa tres: respuesta.
+
+00:02:45.396 --> 00:02:49.404
+Capa 3, respuesta: ¿responde lo que se preguntó y coincide con lo esperado?
+
+00:02:49.954 --> 00:02:53.833
+Recién en la tercera capa se evalúa si la respuesta contesta lo que se preguntó y
+
+00:02:53.833 --> 00:02:55.030
+coincide con lo esperado.
+
+00:02:55.330 --> 00:02:59.455
+Una respuesta puede ser fiel al contexto y no servir: habla del tema, cita bien el
+
+00:02:59.455 --> 00:03:01.718
+documento y no responde la pregunta concreta.
+
+00:03:02.018 --> 00:03:05.848
+O puede responder correctamente por conocimiento general sin apoyarse en tus
+
+00:03:05.848 --> 00:03:07.965
+documentos, lo cual es un riesgo distinto.
+
+00:03:08.265 --> 00:03:12.396
+Por eso las tres capas se miran juntas: cada combinación de resultados apunta a un
+
+00:03:12.396 --> 00:03:13.353
+problema diferente.
+
+00:03:14.653 --> 00:03:15.654
+Paso 4.
+
+00:03:15.954 --> 00:03:17.315
+Casos negativos.
+
+00:03:17.865 --> 00:03:21.409
+Sumá casos negativos: preguntas cuya respuesta no está en la base.
+
+00:03:21.709 --> 00:03:23.871
+El sistema tiene que decir que no sabe.
+
+00:03:24.421 --> 00:03:27.697
+Agregá preguntas cuya respuesta no está en la base de conocimiento.
+
+00:03:27.997 --> 00:03:31.633
+El comportamiento esperado es que el sistema lo diga, en lugar de armar una
+
+00:03:31.633 --> 00:03:34.444
+respuesta plausible con fragmentos vagamente relacionados.
+
+00:03:34.744 --> 00:03:38.407
+Es el caso que más daño hace en producción y el que menos se prueba, porque los
+
+00:03:38.407 --> 00:03:41.468
+datasets suelen construirse a partir de los documentos existentes.
+
+00:03:41.768 --> 00:03:46.017
+Incluí también preguntas casi cubiertas: el documento habla del tema, pero no trae
+
+00:03:46.017 --> 00:03:47.622
+el dato específico que se pide.
+
+00:03:48.922 --> 00:03:49.924
+Paso 5.
+
+00:03:50.224 --> 00:03:51.666
+Diagnosticar por capa.
+
+00:03:52.216 --> 00:03:55.997
+Diagnosticá por capa: retrieval bajo se arregla en chunking, índice o búsqueda;
+
+00:03:55.997 --> 00:03:58.151
+fidelidad baja se arregla en prompt o modelo.
+
+00:03:58.451 --> 00:04:00.764
+Cambiar el prompt no arregla un mal retrieval.
+
+00:04:01.314 --> 00:04:04.382
+Con las tres métricas separadas, cada arreglo tiene su lugar.
+
+00:04:04.682 --> 00:04:08.519
+Recuperación baja se corrige en el tamaño de los fragmentos, en el índice o en la
+
+00:04:08.519 --> 00:04:08.945
+búsqueda.
+
+00:04:09.245 --> 00:04:13.172
+Fidelidad baja con buena recuperación se corrige en el prompt o cambiando de modelo.
+
+00:04:13.472 --> 00:04:17.278
+Respuesta baja con las otras dos altas suele ser un problema de formato o de
+
+00:04:17.278 --> 00:04:17.980
+instrucciones.
+
+00:04:18.280 --> 00:04:21.752
+La regla práctica es no tocar el prompt hasta confirmar que la recuperación
+
+00:04:21.752 --> 00:04:24.946
+funciona: cambiar el prompt no arregla una búsqueda que no encuentra.
+
+00:04:26.246 --> 00:04:27.213
+Paso 6.
+
+00:04:27.513 --> 00:04:28.874
+Métricas en CI.
+
+00:04:29.424 --> 00:04:33.315
+Llevá las tres métricas a CI con umbrales y seguí su evolución en cada cambio de
+
+00:04:33.315 --> 00:04:33.850
+documentos.
+
+00:04:34.400 --> 00:04:38.103
+Llevá las tres métricas al pipeline con un umbral para cada una, y corré el eval
+
+00:04:38.103 --> 00:04:40.648
+cada vez que cambien los documentos, no solo el código.
+
+00:04:40.948 --> 00:04:44.028
+En un RAG, la base de conocimiento es parte del sistema.
+
+00:04:44.328 --> 00:04:48.172
+Un documento nuevo que contradice a otro, o una reorganización de carpetas, puede
+
+00:04:48.172 --> 00:04:50.925
+bajar la recuperación sin que nadie haya tocado una línea.
+
+00:04:51.225 --> 00:04:55.354
+Registrá la evolución de las métricas con cada cambio de contenido para poder ubicar
+
+00:04:55.354 --> 00:04:56.533
+cuándo empezó una caída.
+
+00:04:57.833 --> 00:04:58.753
+Un ejemplo.
+
+00:04:59.303 --> 00:05:02.951
+Un asistente interno responde preguntas sobre políticas de la empresa.
+
+00:05:03.251 --> 00:05:06.957
+El equipo arma cuarenta preguntas con su documento fuente y diez negativas.
+
+00:05:07.257 --> 00:05:13.462
+Primera medición, con cifras ilustrativas: recuperación 65%, fidelidad 92%,
+
+00:05:13.462 --> 00:05:14.621
+respuesta 60%.
+
+00:05:14.921 --> 00:05:17.988
+El equipo venía ajustando el prompt hacía dos semanas.
+
+00:05:18.288 --> 00:05:22.162
+Los números muestran que el generador es fiel a lo que recibe y que el problema está
+
+00:05:22.162 --> 00:05:22.854
+en la búsqueda.
+
+00:05:23.154 --> 00:05:26.663
+Revisan y encuentran que los fragmentos cortaban las tablas por la mitad.
+
+00:05:26.963 --> 00:05:32.378
+Cambian la estrategia de fragmentación y la recuperación sube a 90%; la respuesta, a
+
+00:05:32.378 --> 00:05:33.989
+84%, sin tocar el prompt.
+
+00:05:34.289 --> 00:05:36.997
+En las negativas, tres de diez todavía inventan.
+
+00:05:37.297 --> 00:05:39.540
+Eso sí se corrige con una instrucción.
+
+00:05:40.840 --> 00:05:42.364
+Los errores más comunes.
+
+00:05:42.914 --> 00:05:45.773
+Medir solo la respuesta final y no saber qué capa falla.
+
+00:05:46.323 --> 00:05:49.355
+Ajustar el prompt cuando el problema es de recuperación.
+
+00:05:49.905 --> 00:05:52.799
+No incluir preguntas sin respuesta en la base de conocimiento.
+
+00:05:53.349 --> 00:05:56.626
+Correr el eval solo cuando cambia el código y no los documentos.
+
+00:05:57.926 --> 00:06:00.192
+Para saber que quedó bien, revisá esto.
+
+00:06:00.742 --> 00:06:03.287
+Cada pregunta tiene anotado su documento fuente.
+
+00:06:03.838 --> 00:06:06.928
+Recuperación, fidelidad y respuesta se miden por separado.
+
+00:06:07.478 --> 00:06:10.558
+El dataset incluye casos negativos y casi cubiertos.
+
+00:06:11.108 --> 00:06:13.699
+El eval corre en CI ante cambios de documentos.
+
+00:06:14.999 --> 00:06:16.569
+Y lo que la IA no hizo bien.
+
+00:06:17.119 --> 00:06:20.164
+Con la fuente correcta en contexto, igual altera cifras.
+
+00:06:20.464 --> 00:06:22.591
+La fidelidad se mide, no se supone.
+
+00:06:23.891 --> 00:06:25.484
+Eso fue el día 21.
+
+00:06:25.784 --> 00:06:30.416
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:06:30.416 --> 00:06:31.023
+frecuentes.
+
+00:06:31.573 --> 00:06:36.065
+Seguí con el día 22: Modelo para pruebas de seguridad (1): threat model con OWASP
+
+00:06:36.065 --> 00:06:37.230
+LLM y Agentic Top 10.

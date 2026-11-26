@@ -1,0 +1,409 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.264
+Day 29 of the 31 days of QA + AI series.
+
+00:00:04.814 --> 00:00:09.949
+QA infra for AI: ephemeral runners, local models, secrets and cost.
+
+00:00:10.499 --> 00:00:15.408
+The five infrastructure decisions that keep AI testing reproducible, safe and
+
+00:00:15.408 --> 00:00:16.109
+affordable.
+
+00:00:17.409 --> 00:00:22.469
+The evals, agents and security tests from the last few days run on something:
+
+00:00:22.469 --> 00:00:25.295
+runners, containers, models, keys and data.
+
+00:00:25.595 --> 00:00:28.059
+That infrastructure is rarely designed.
+
+00:00:28.359 --> 00:00:33.170
+It gets assembled from whatever is at hand, and one day the pipeline costs three
+
+00:00:33.170 --> 00:00:37.440
+times as much, a result can't be reproduced or a key shows up in a log.
+
+00:00:38.740 --> 00:00:43.909
+Infrastructure decisions for QA with AI are few and have long consequences.
+
+00:00:44.209 --> 00:00:47.172
+Where the model runs defines cost and privacy.
+
+00:00:47.472 --> 00:00:50.389
+What runners are like defines reproducibility.
+
+00:00:50.689 --> 00:00:54.511
+Where an agent works defines how much damage a mistake can cause.
+
+00:00:54.811 --> 00:00:59.371
+This guide walks through those decisions with a practical rule for each, and with
+
+00:00:59.371 --> 00:01:03.987
+two metrics almost nobody publishes that are worth having from day one: tokens and
+
+00:01:03.987 --> 00:01:04.775
+spend per run.
+
+00:01:06.075 --> 00:01:07.773
+To follow this guide you need:
+
+00:01:08.323 --> 00:01:10.288
+The pipeline from day 28.
+
+00:01:10.838 --> 00:01:12.071
+Docker on the runner.
+
+00:01:13.371 --> 00:01:14.651
+This is the setup.
+
+00:01:14.951 --> 00:01:19.168
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:20.468 --> 00:01:21.992
+The five decisions.
+
+00:01:22.542 --> 00:01:27.673
+Where the model runs: cloud API (simple, pay per token, data leaves) or a local
+
+00:01:27.673 --> 00:01:31.635
+model on the runner (free, private, slower and less capable).
+
+00:01:31.935 --> 00:01:36.245
+My rule: local for smoke and format, cloud for judged evals.
+
+00:01:36.795 --> 00:01:40.605
+Runners: persistent or ephemeral (a clean container per run).
+
+00:01:40.905 --> 00:01:43.242
+My rule: always ephemeral.
+
+00:01:43.792 --> 00:01:48.058
+Where an agent works: on the runner with credentials or in a sandbox with no
+
+00:01:48.058 --> 00:01:50.865
+production credentials and limited network egress.
+
+00:01:51.165 --> 00:01:53.095
+My rule: sandbox.
+
+00:01:53.645 --> 00:01:58.842
+Secrets: one shared key or one per environment, with least privilege and a spending
+
+00:01:58.842 --> 00:01:59.092
+cap.
+
+00:01:59.392 --> 00:02:01.438
+My rule: per environment.
+
+00:02:01.988 --> 00:02:05.927
+Data: a production copy or synthetic and anonymized.
+
+00:02:06.227 --> 00:02:08.493
+My rule: never production.
+
+00:02:09.793 --> 00:02:10.829
+Step 1.
+
+00:02:11.129 --> 00:02:12.583
+Where the model runs.
+
+00:02:13.133 --> 00:02:15.702
+Decide where the model runs in CI.
+
+00:02:16.002 --> 00:02:20.737
+A local model as a service covers smoke and format checks at no cost; judged evals
+
+00:02:20.737 --> 00:02:22.239
+need a more capable model.
+
+00:02:22.789 --> 00:02:26.704
+There are two options, and the usual thing is to combine them.
+
+00:02:27.004 --> 00:02:31.434
+A local model, started as a service inside the runner, has no per-token cost and
+
+00:02:31.434 --> 00:02:35.586
+takes no data out of your infrastructure, but it's slower and less capable.
+
+00:02:35.886 --> 00:02:41.195
+A cloud API offers more capable models, charges per use and receives your data.
+
+00:02:41.495 --> 00:02:46.139
+The rule that works best is assigning each job to the cheapest model that solves it:
+
+00:02:46.139 --> 00:02:50.727
+smoke and format checks with the local model, judged evals with a more capable one.
+
+00:02:51.027 --> 00:02:53.689
+Measure before assuming the small one is enough.
+
+00:02:54.989 --> 00:02:56.187
+Step 2.
+
+00:02:56.487 --> 00:02:57.906
+Ephemeral runners.
+
+00:02:58.456 --> 00:03:01.512
+Use ephemeral runners: every run starts clean.
+
+00:03:01.812 --> 00:03:06.066
+Leftover state from a previous run is a frequent cause of results you can't
+
+00:03:06.066 --> 00:03:06.633
+reproduce.
+
+00:03:07.183 --> 00:03:12.083
+An ephemeral runner starts clean on every run: a new container, with no files,
+
+00:03:12.083 --> 00:03:14.721
+caches or processes from the previous run.
+
+00:03:15.021 --> 00:03:19.882
+Persistent runners accumulate state, such as a dependency installed by hand, a
+
+00:03:19.882 --> 00:03:22.500
+temporary file or a model someone updated.
+
+00:03:22.800 --> 00:03:27.111
+That state makes the same commit give different results depending on which machine
+
+00:03:27.111 --> 00:03:27.795
+it landed on.
+
+00:03:28.095 --> 00:03:32.760
+With models, which already bring their own variation, adding the environment's makes
+
+00:03:32.760 --> 00:03:34.704
+it impossible to know what changed.
+
+00:03:35.004 --> 00:03:38.211
+Always ephemeral, with versions pinned in the image.
+
+00:03:39.511 --> 00:03:40.593
+Step 3.
+
+00:03:40.893 --> 00:03:42.568
+Sandbox for agents.
+
+00:03:43.118 --> 00:03:48.252
+If an agent executes commands in CI, have it do so in a sandbox: a container with no
+
+00:03:48.252 --> 00:03:51.491
+production credentials and restricted network egress.
+
+00:03:52.041 --> 00:03:56.707
+If an agent executes commands inside the pipeline, for example to repair a test or
+
+00:03:56.707 --> 00:04:01.487
+investigate a failure, it must do so in an isolated environment: a container with no
+
+00:04:01.487 --> 00:04:05.982
+production credentials, with the file system limited to the repository and with
+
+00:04:05.982 --> 00:04:09.168
+network egress restricted to the necessary destinations.
+
+00:04:09.468 --> 00:04:14.167
+The agent reads content that may carry malicious instructions, as we saw on day
+
+00:04:14.167 --> 00:04:14.881
+twenty-four.
+
+00:04:15.181 --> 00:04:19.837
+The sandbox guarantees that, if one of those instructions takes effect, nothing
+
+00:04:19.837 --> 00:04:21.546
+valuable is within its reach.
+
+00:04:22.846 --> 00:04:23.859
+Step 4.
+
+00:04:24.159 --> 00:04:25.032
+Secrets.
+
+00:04:25.582 --> 00:04:30.602
+Secrets: one API key per environment, with least privilege and a spending cap, and
+
+00:04:30.602 --> 00:04:33.480
+verify it doesn't show up in logs or artifacts.
+
+00:04:34.030 --> 00:04:39.032
+Use one API key per environment: one for development, one for CI and one for
+
+00:04:39.032 --> 00:04:39.756
+production.
+
+00:04:40.056 --> 00:04:42.752
+Each with least privilege and a spending cap.
+
+00:04:43.052 --> 00:04:47.679
+That way a leaked key or a runaway loop in CI affects neither production nor the
+
+00:04:47.679 --> 00:04:48.546
+overall budget.
+
+00:04:48.846 --> 00:04:53.063
+Store them in the CI system's secrets manager, never in the repository.
+
+00:04:53.363 --> 00:04:58.167
+And actively verify they don't show up in logs or artifacts, because some tools
+
+00:04:58.167 --> 00:05:00.843
+print the full configuration when they fail.
+
+00:05:02.143 --> 00:05:03.272
+Step 5.
+
+00:05:03.572 --> 00:05:04.921
+Cost as a metric.
+
+00:05:05.471 --> 00:05:09.955
+Cost as a metric: report tokens and spend per run next to the pass rate.
+
+00:05:10.255 --> 00:05:12.173
+What isn't measured grows.
+
+00:05:12.723 --> 00:05:17.115
+Publish tokens consumed and spend on every run, next to the pass rate.
+
+00:05:17.415 --> 00:05:19.333
+What isn't measured grows.
+
+00:05:19.633 --> 00:05:24.421
+A dataset that doubles, a judge that gets added or one more repetition are all
+
+00:05:24.421 --> 00:05:26.509
+reasonable changes nobody adds up.
+
+00:05:26.809 --> 00:05:31.212
+With the number in view, each change shows its cost and the team can decide whether
+
+00:05:31.212 --> 00:05:31.954
+it's worth it.
+
+00:05:32.254 --> 00:05:37.027
+It also lets you detect anomalies: a run costing ten times the usual tends to
+
+00:05:37.027 --> 00:05:39.072
+indicate an error, not more work.
+
+00:05:40.372 --> 00:05:41.559
+Step 6.
+
+00:05:41.859 --> 00:05:43.429
+Reproducibility.
+
+00:05:43.979 --> 00:05:49.085
+Reproducibility: pinned tool versions (lockfile) and model versions, and results
+
+00:05:49.085 --> 00:05:50.936
+archived with their run card.
+
+00:05:51.486 --> 00:05:53.787
+Two things make a run reproducible.
+
+00:05:54.087 --> 00:05:58.481
+The first is pinning versions: tools through the lockfile and the container image,
+
+00:05:58.481 --> 00:06:00.731
+and models through their exact identifier.
+
+00:06:01.031 --> 00:06:06.126
+The second is archiving results with their run card, the one from day fifteen, for a
+
+00:06:06.126 --> 00:06:07.036
+defined period.
+
+00:06:07.336 --> 00:06:11.834
+When someone asks why a result changed between two dates, you'll be able to compare
+
+00:06:11.834 --> 00:06:15.953
+which version of each thing was used on each, instead of trying to remember.
+
+00:06:17.253 --> 00:06:18.359
+An example.
+
+00:06:18.909 --> 00:06:23.126
+A team reviews its eval pipeline after a month with higher spending than planned.
+
+00:06:23.426 --> 00:06:28.604
+On publishing tokens per run, they discover the format check, which runs on every
+
+00:06:28.604 --> 00:06:31.416
+pull request, uses the most expensive model.
+
+00:06:31.716 --> 00:06:34.993
+They move it to a local model started as a service on the runner.
+
+00:06:35.293 --> 00:06:39.696
+Format is validated just the same, and that step stops costing anything.
+
+00:06:39.996 --> 00:06:42.076
+Judged evals stay in the cloud.
+
+00:06:42.376 --> 00:06:46.346
+They also find that two of their three runners were persistent and had different
+
+00:06:46.346 --> 00:06:50.018
+versions of a tool, which explained different results for the same commit.
+
+00:06:50.318 --> 00:06:53.781
+They replace them with ephemeral containers with a pinned image.
+
+00:06:55.081 --> 00:06:56.744
+The most common mistakes.
+
+00:06:57.294 --> 00:07:01.046
+Using the most expensive model for checks a local one handles.
+
+00:07:01.596 --> 00:07:04.455
+Keeping persistent runners with accumulated state.
+
+00:07:05.005 --> 00:07:08.363
+Letting an agent run in CI with production credentials.
+
+00:07:08.913 --> 00:07:12.097
+Sharing a single API key across all environments.
+
+00:07:13.397 --> 00:07:15.640
+To know it is done, check this.
+
+00:07:16.190 --> 00:07:20.059
+Each type of eval has an assigned model, with its justification.
+
+00:07:20.609 --> 00:07:23.677
+Runners are ephemeral and the image pins versions.
+
+00:07:24.227 --> 00:07:27.840
+Agents run in a sandbox with no production credentials.
+
+00:07:28.390 --> 00:07:31.736
+Each run publishes tokens and spend next to the result.
+
+00:07:33.036 --> 00:07:34.931
+And where AI fell short.
+
+00:07:35.481 --> 00:07:39.513
+A small local model is enough for smoke and format, not for judgment.
+
+00:07:39.813 --> 00:07:43.635
+Choosing a model on cost without measuring quality gets expensive.
+
+00:07:44.935 --> 00:07:46.609
+That was day 29.
+
+00:07:46.909 --> 00:07:51.884
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:07:51.884 --> 00:07:52.891
+asked questions.
+
+00:07:53.441 --> 00:07:59.469
+Continue with day 30: LLM observability in production: traces, online evals and
+
+00:07:59.469 --> 00:08:00.003
+alerts.

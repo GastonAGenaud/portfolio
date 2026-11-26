@@ -1,0 +1,361 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:03.452
+Día 3 de la serie 31 días de QA + IA.
+
+00:00:04.002 --> 00:00:06.628
+Las nuevas formas de probar: de asserts a evals.
+
+00:00:07.178 --> 00:00:11.024
+Cómo convertir un test con assert exacto sobre una salida de IA en un eval de tres
+
+00:00:11.024 --> 00:00:12.150
+capas que no sea frágil.
+
+00:00:13.450 --> 00:00:17.668
+Cuando una funcionalidad incluye un modelo, el test clásico deja de servir tal como
+
+00:00:17.668 --> 00:00:17.922
+está.
+
+00:00:18.222 --> 00:00:22.080
+Un assert que compara contra un texto exacto falla aunque la respuesta sea correcta,
+
+00:00:22.080 --> 00:00:24.192
+porque el modelo la redacta distinto cada vez.
+
+00:00:24.492 --> 00:00:28.651
+La reacción habitual es marcar el test como flaky, agregarle reintentos y seguir.
+
+00:00:28.951 --> 00:00:31.334
+Eso tapa el problema: el test dejó de medir.
+
+00:00:32.634 --> 00:00:36.247
+La salida no es abandonar la automatización sino cambiar la pregunta.
+
+00:00:36.547 --> 00:00:41.105
+En lugar de "¿es igual a esto?", preguntamos "¿cumple estos criterios, la mayoría de
+
+00:00:41.105 --> 00:00:41.757
+las veces?".
+
+00:00:42.057 --> 00:00:43.232
+Eso es un eval.
+
+00:00:43.532 --> 00:00:47.700
+Esta guía muestra cómo armarlo en tres capas, de la más barata y determinista a la
+
+00:00:47.700 --> 00:00:49.479
+más cara, y cómo decidir un umbral.
+
+00:00:50.779 --> 00:00:52.709
+Para seguir esta guía necesitás:
+
+00:00:53.259 --> 00:00:55.200
+Node.js 22 o superior.
+
+00:00:55.750 --> 00:00:58.040
+Un test tuyo que compare texto exacto.
+
+00:00:58.590 --> 00:01:00.636
+Opcional: Ollama con un modelo local.
+
+00:01:01.936 --> 00:01:03.111
+Este es el setup.
+
+00:01:03.411 --> 00:01:06.758
+Pausá el video si querés copiarlo: está completo en la guía escrita.
+
+00:01:08.058 --> 00:01:08.954
+Paso 1.
+
+00:01:09.254 --> 00:01:10.650
+Assert contra eval.
+
+00:01:11.200 --> 00:01:15.651
+Entendé la diferencia: un assert compara contra un valor exacto; un eval mide si la
+
+00:01:15.651 --> 00:01:18.761
+salida cumple criterios, varias veces, y da un porcentaje.
+
+00:01:19.311 --> 00:01:23.029
+Un assert tiene una entrada, una salida esperada y un resultado binario.
+
+00:01:23.329 --> 00:01:27.034
+Un eval tiene un conjunto de entradas, criterios en lugar de una salida única,
+
+00:01:27.034 --> 00:01:30.882
+varias corridas por entrada y un resultado en porcentaje que se compara contra un
+
+00:01:30.882 --> 00:01:31.214
+umbral.
+
+00:01:31.514 --> 00:01:35.692
+Cambia también cómo se lee un fallo: en un assert, rojo significa bug; en un eval,
+
+00:01:35.692 --> 00:01:39.156
+una corrida mala puede ser ruido y cinco seguidas son una regresión.
+
+00:01:39.456 --> 00:01:43.935
+Por eso hace falta registrar la tasa de aprobación en el tiempo y no solo el último
+
+00:01:43.935 --> 00:01:44.475
+resultado.
+
+00:01:45.775 --> 00:01:46.671
+Paso 2.
+
+00:01:46.971 --> 00:01:48.286
+Capa uno: formato.
+
+00:01:48.836 --> 00:01:53.394
+Capa 1, formato: validá estructura con checks deterministas (es JSON válido, tiene
+
+00:01:53.394 --> 00:01:55.061
+los campos, respeta el largo).
+
+00:01:55.611 --> 00:01:57.855
+Es la capa más barata y la que más atrapa.
+
+00:01:58.155 --> 00:02:02.235
+Verificá que la salida sea JSON válido, que tenga los campos obligatorios con el
+
+00:02:02.235 --> 00:02:06.060
+tipo correcto, que respete largos máximos y que no traiga texto fuera de la
+
+00:02:06.060 --> 00:02:06.621
+estructura.
+
+00:02:06.921 --> 00:02:10.105
+Todo eso se resuelve con un schema y sin llamar a ningún modelo.
+
+00:02:10.405 --> 00:02:14.527
+Si esta capa falla, no tiene sentido evaluar las siguientes: una respuesta que tu
+
+00:02:14.527 --> 00:02:17.733
+aplicación no puede parsear ya es un defecto, diga lo que diga.
+
+00:02:19.033 --> 00:02:19.930
+Paso 3.
+
+00:02:20.230 --> 00:02:21.637
+Capa dos: contenido.
+
+00:02:22.187 --> 00:02:26.682
+Capa 2, contenido: verificá hechos clave con contains o regex, sin exigir la frase
+
+00:02:26.682 --> 00:02:27.066
+exacta.
+
+00:02:27.616 --> 00:02:30.045
+Acá verificás hechos, no redacción.
+
+00:02:30.345 --> 00:02:34.389
+Si la respuesta tiene que mencionar un monto, una fecha y un estado, buscá esos tres
+
+00:02:34.389 --> 00:02:36.652
+datos con contains o con una expresión regular.
+
+00:02:36.952 --> 00:02:41.039
+También sirve verificar lo contrario: que no aparezca información que no debería
+
+00:02:41.039 --> 00:02:44.002
+estar, como un dato de otro cliente o un paso inexistente.
+
+00:02:44.302 --> 00:02:46.859
+Esta capa sigue siendo determinista y barata.
+
+00:02:47.159 --> 00:02:51.551
+La regla práctica es que todo dato duro se valida acá, nunca con la opinión de otro
+
+00:02:51.551 --> 00:02:51.922
+modelo.
+
+00:02:53.222 --> 00:02:54.223
+Paso 4.
+
+00:02:54.523 --> 00:02:55.930
+Capa tres: criterio.
+
+00:02:56.480 --> 00:03:00.625
+Capa 3, criterio: usá una rúbrica evaluada por otro modelo para lo que no se puede
+
+00:03:00.625 --> 00:03:02.648
+expresar con reglas (tono, completitud).
+
+00:03:03.198 --> 00:03:06.901
+Queda lo que no se puede expresar con reglas: si el tono es el adecuado, si la
+
+00:03:06.901 --> 00:03:10.747
+explicación está completa, si la respuesta realmente contesta lo que se preguntó.
+
+00:03:11.047 --> 00:03:15.356
+Para eso se usa una rúbrica que evalúa otro modelo, con criterios observables y
+
+00:03:15.356 --> 00:03:16.611
+resultado pasa o falla.
+
+00:03:16.911 --> 00:03:20.710
+Es la capa más cara y la menos confiable, así que conviene mantenerla chica.
+
+00:03:21.010 --> 00:03:25.222
+El día dieciséis muestra cómo calibrar ese juez contra tu propio criterio antes de
+
+00:03:25.222 --> 00:03:25.633
+creerle.
+
+00:03:26.933 --> 00:03:27.934
+Paso 5.
+
+00:03:28.234 --> 00:03:29.421
+Corridas y umbral.
+
+00:03:29.971 --> 00:03:34.246
+Corré N veces y fijá un umbral: por ejemplo, pasa si 9 de 10 corridas cumplen las
+
+00:03:34.246 --> 00:03:34.827
+tres capas.
+
+00:03:35.377 --> 00:03:39.526
+Corré cada caso varias veces: tres para trabajo diario, cinco o diez cuando vas a
+
+00:03:39.526 --> 00:03:40.499
+tomar una decisión.
+
+00:03:40.799 --> 00:03:42.451
+El umbral depende del riesgo.
+
+00:03:42.751 --> 00:03:47.144
+Para una capa de formato conviene exigir cien por ciento, porque un JSON roto rompe
+
+00:03:47.144 --> 00:03:47.885
+la aplicación.
+
+00:03:48.185 --> 00:03:51.136
+Para criterio, un noventa por ciento puede ser razonable.
+
+00:03:51.436 --> 00:03:55.332
+Lo importante es fijar el número antes de mirar los resultados y escribir por qué,
+
+00:03:55.332 --> 00:03:57.232
+para no acomodarlo después a lo que dio.
+
+00:03:58.532 --> 00:03:59.499
+Paso 6.
+
+00:03:59.799 --> 00:04:01.218
+El lugar en la pirámide.
+
+00:04:01.768 --> 00:04:05.832
+Ubicalo en tu pirámide: unit y contract siguen siendo deterministas; los evals son
+
+00:04:05.832 --> 00:04:08.063
+una capa más para todo lo que toca un modelo.
+
+00:04:08.613 --> 00:04:11.239
+Los evals no reemplazan nada de lo que ya tenés.
+
+00:04:11.539 --> 00:04:15.437
+Los tests unitarios y de contrato siguen siendo deterministas y siguen corriendo en
+
+00:04:15.437 --> 00:04:16.000
+cada commit.
+
+00:04:16.300 --> 00:04:20.044
+Los evals son una capa adicional que cubre solo lo que toca un modelo, y suelen
+
+00:04:20.044 --> 00:04:22.224
+correr con otra frecuencia porque cuestan más.
+
+00:04:22.524 --> 00:04:26.715
+Un error común es intentar cubrir con evals lógica que no depende del modelo: eso se
+
+00:04:26.715 --> 00:04:29.609
+prueba mejor, más rápido y más barato con un test clásico.
+
+00:04:30.909 --> 00:04:31.829
+Un ejemplo.
+
+00:04:32.379 --> 00:04:36.189
+Un equipo tiene un test que compara el resumen de un pedido contra un texto fijo y
+
+00:04:36.189 --> 00:04:37.675
+falla una de cada tres corridas.
+
+00:04:37.975 --> 00:04:39.290
+Lo reescriben así.
+
+00:04:39.590 --> 00:04:44.450
+Capa uno: la salida es JSON con los campos resumen y estado, y el resumen no supera
+
+00:04:44.450 --> 00:04:45.328
+las 280 letras.
+
+00:04:45.628 --> 00:04:49.067
+Capa dos: el resumen contiene el número de pedido y el monto total.
+
+00:04:49.367 --> 00:04:53.271
+Capa tres: una rúbrica verifica que no agregue pasos que el pedido no tiene.
+
+00:04:53.571 --> 00:04:55.059
+Lo corren diez veces.
+
+00:04:55.359 --> 00:04:59.147
+La capa uno pasa diez de diez, la dos también, la tres nueve de diez.
+
+00:04:59.447 --> 00:05:03.365
+Con umbral de noventa por ciento, pasa, y la corrida fallida queda guardada para
+
+00:05:03.365 --> 00:05:03.757
+revisar.
+
+00:05:05.057 --> 00:05:06.580
+Los errores más comunes.
+
+00:05:07.130 --> 00:05:10.709
+Tapar un assert exacto con reintentos en lugar de cambiar lo que se mide.
+
+00:05:11.259 --> 00:05:14.710
+Usar un modelo juez para validar datos duros como montos o fechas.
+
+00:05:15.260 --> 00:05:17.584
+Fijar el umbral después de ver los resultados.
+
+00:05:18.134 --> 00:05:20.378
+Sacar conclusiones de una sola corrida.
+
+00:05:21.678 --> 00:05:23.944
+Para saber que quedó bien, revisá esto.
+
+00:05:24.494 --> 00:05:27.399
+El test original quedó reescrito en tres capas separadas.
+
+00:05:27.949 --> 00:05:30.901
+Formato y contenido se validan sin llamar a un modelo.
+
+00:05:31.451 --> 00:05:33.950
+Hay un umbral escrito con su justificación.
+
+00:05:34.500 --> 00:05:37.196
+Guardaste y revisaste al menos una corrida fallida.
+
+00:05:38.496 --> 00:05:40.066
+Y lo que la IA no hizo bien.
+
+00:05:40.616 --> 00:05:43.567
+El modelo juez aprobó una respuesta con un dato incorrecto.
+
+00:05:43.867 --> 00:05:46.668
+Los hechos se validan con reglas, no con otro modelo.
+
+00:05:47.968 --> 00:05:49.306
+Eso fue el día 3.
+
+00:05:49.606 --> 00:05:54.238
+En la guía escrita, en gastongenaud.com, tenés el código para copiar y las preguntas
+
+00:05:54.238 --> 00:05:54.845
+frecuentes.
+
+00:05:55.395 --> 00:06:00.157
+Seguí con el día 4: Tu laboratorio de QA con IA: setup completo en 30 minutos.

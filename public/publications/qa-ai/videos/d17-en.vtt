@@ -1,0 +1,379 @@
+WEBVTT
+
+00:00:00.500 --> 00:00:04.311
+Day 17 of the 31 days of QA + AI series.
+
+00:00:04.861 --> 00:00:08.335
+Golden datasets: how to label, balance and version.
+
+00:00:08.885 --> 00:00:13.786
+A small but reliable golden dataset: with a labeling guide, three splits and Git
+
+00:00:13.786 --> 00:00:14.460
+versioning.
+
+00:00:15.760 --> 00:00:20.275
+Everything we measured over the last few days depends on a piece that usually gets
+
+00:00:20.275 --> 00:00:23.634
+little attention: the set of cases with their correct answer.
+
+00:00:23.934 --> 00:00:28.543
+If the labels are wrong, the best harness in the world measures the wrong thing
+
+00:00:28.543 --> 00:00:29.127
+precisely.
+
+00:00:29.427 --> 00:00:33.133
+If the set has only easy cases, any model looks excellent.
+
+00:00:33.433 --> 00:00:37.580
+And if cases leak into the prompt, the number stops meaning anything.
+
+00:00:38.880 --> 00:00:43.480
+A golden dataset is that set treated with the care a measuring instrument deserves.
+
+00:00:43.780 --> 00:00:48.430
+This guide covers how to gather the cases, how to label them with shared criteria,
+
+00:00:48.430 --> 00:00:53.194
+how to balance them, how to split them so you don't fool yourself and how to version
+
+00:00:53.194 --> 00:00:53.477
+them.
+
+00:00:53.777 --> 00:00:58.378
+It's craft work, and it's what most improves the quality of every later decision.
+
+00:00:59.678 --> 00:01:01.375
+To follow this guide you need:
+
+00:01:01.925 --> 00:01:04.645
+The qa-ai-lab repo, data/ folder.
+
+00:01:05.195 --> 00:01:08.854
+50 to 100 anonymized real or synthetic cases.
+
+00:01:09.404 --> 00:01:12.263
+Ideally, a second person to label a sample.
+
+00:01:13.563 --> 00:01:14.843
+This is the setup.
+
+00:01:15.143 --> 00:01:19.360
+Pause the video if you want to copy it: the full version is in the written guide.
+
+00:01:20.660 --> 00:01:22.927
+And this is the next setup file.
+
+00:01:24.227 --> 00:01:25.262
+Step 1.
+
+00:01:25.562 --> 00:01:27.353
+Three sources of cases.
+
+00:01:27.903 --> 00:01:33.515
+Collect cases from three sources: anonymized real usage, edge cases and adverse
+
+00:01:33.515 --> 00:01:36.427
+cases (filler, duplicates, empty inputs).
+
+00:01:36.977 --> 00:01:42.061
+The first source is real usage, anonymized: it shows what inputs are really like,
+
+00:01:42.061 --> 00:01:44.132
+with their typos and ambiguities.
+
+00:01:44.432 --> 00:01:49.268
+The second is the edge cases you know exist even though they rarely show up:
+
+00:01:49.268 --> 00:01:52.260
+boundary values, odd formats, very long inputs.
+
+00:01:52.560 --> 00:01:57.545
+The third is adverse cases, designed to cause trouble: filler text, duplicates,
+
+00:01:57.545 --> 00:02:00.132
+empty inputs or ones in another language.
+
+00:02:00.432 --> 00:02:05.315
+A dataset built only from the first source describes the average and says nothing
+
+00:02:05.315 --> 00:02:06.460
+about the failures.
+
+00:02:07.760 --> 00:02:08.959
+Step 2.
+
+00:02:09.259 --> 00:02:10.678
+The labeling guide.
+
+00:02:11.228 --> 00:02:15.954
+Write the labeling guide: definition of each label, two examples per label and what
+
+00:02:15.954 --> 00:02:17.093
+to do when in doubt.
+
+00:02:17.643 --> 00:02:22.274
+Before labeling in volume, write a short guide: the definition of each label, two
+
+00:02:22.274 --> 00:02:25.018
+examples per label and what to do when in doubt.
+
+00:02:25.318 --> 00:02:28.293
+That last part is the one most often forgotten.
+
+00:02:28.593 --> 00:02:33.461
+Without a rule for doubtful cases, each person resolves them differently and the
+
+00:02:33.461 --> 00:02:35.469
+dataset piles up inconsistencies.
+
+00:02:35.769 --> 00:02:39.312
+The guide also forces business decisions that were implicit.
+
+00:02:39.612 --> 00:02:44.211
+If writing a label's definition proves hard, the system probably can't apply it
+
+00:02:44.211 --> 00:02:44.619
+either.
+
+00:02:45.919 --> 00:02:47.001
+Step 3.
+
+00:02:47.301 --> 00:02:49.382
+Two people, twenty cases.
+
+00:02:49.932 --> 00:02:53.023
+Two people independently label a sample of 20.
+
+00:02:53.323 --> 00:02:56.542
+Where they disagree, the guide is incomplete: fix it.
+
+00:02:57.092 --> 00:03:01.374
+Take a sample of twenty cases and have two people label it separately, without
+
+00:03:01.374 --> 00:03:02.911
+seeing each other's answers.
+
+00:03:03.211 --> 00:03:04.363
+Then compare.
+
+00:03:04.663 --> 00:03:08.358
+Disagreements aren't the people's errors: they're gaps in the guide.
+
+00:03:08.658 --> 00:03:13.397
+Discuss each one, decide and update the guide with the new rule or an example.
+
+00:03:13.697 --> 00:03:16.173
+Repeat until disagreements are few.
+
+00:03:16.473 --> 00:03:18.728
+Only then is it worth labeling the rest.
+
+00:03:19.028 --> 00:03:23.372
+That agreement between people also marks the reasonable ceiling for any model.
+
+00:03:24.672 --> 00:03:25.685
+Step 4.
+
+00:03:25.985 --> 00:03:26.940
+Balance.
+
+00:03:27.490 --> 00:03:31.684
+Balance: every class and every hard type must be represented.
+
+00:03:31.984 --> 00:03:35.028
+If 90% is easy, your accuracy lies.
+
+00:03:35.578 --> 00:03:39.075
+Count how many cases there are per class and per difficulty type.
+
+00:03:39.375 --> 00:03:44.157
+If ninety percent is easy, a system that solves only the easy part scores ninety and
+
+00:03:44.157 --> 00:03:45.694
+looks ready for production.
+
+00:03:45.994 --> 00:03:50.798
+Each class and each hard type needs enough representation for its hit rate to mean
+
+00:03:50.798 --> 00:03:51.383
+something.
+
+00:03:51.683 --> 00:03:54.902
+That implies over-representing rare cases on purpose.
+
+00:03:55.202 --> 00:04:00.472
+That's fine: an evaluation dataset doesn't aim to mirror production proportions, but
+
+00:04:00.472 --> 00:04:02.542
+to expose where the system fails.
+
+00:04:03.842 --> 00:04:04.971
+Step 5.
+
+00:04:05.271 --> 00:04:06.376
+Three splits.
+
+00:04:06.926 --> 00:04:11.521
+Split in three: dev to iterate, test never used for tuning nor quoted in prompt
+
+00:04:11.521 --> 00:04:14.894
+examples, and regression with everything that ever failed.
+
+00:04:15.444 --> 00:04:16.921
+Split the set in three.
+
+00:04:17.221 --> 00:04:22.031
+Dev is for iterating: there you try prompts and look at failures as often as you
+
+00:04:22.031 --> 00:04:22.332
+like.
+
+00:04:22.632 --> 00:04:27.281
+Test isn't used for tuning anything nor quoted in prompt examples, and is consulted
+
+00:04:27.281 --> 00:04:28.625
+only to make a decision.
+
+00:04:28.925 --> 00:04:33.575
+Regression collects everything that ever failed and got fixed, so it doesn't come
+
+00:04:33.575 --> 00:04:33.862
+back.
+
+00:04:34.162 --> 00:04:36.730
+Discipline with test is the hard part.
+
+00:04:37.030 --> 00:04:41.730
+Every time you adjust something while looking at those results, it stops measuring
+
+00:04:41.730 --> 00:04:44.022
+how the system will behave on new cases.
+
+00:04:45.322 --> 00:04:46.509
+Step 6.
+
+00:04:46.809 --> 00:04:47.636
+Versioning.
+
+00:04:48.186 --> 00:04:50.604
+Version as JSONL with a CHANGELOG.
+
+00:04:50.904 --> 00:04:55.446
+Fixing a label is a commit, and after a fix you recompute earlier metrics.
+
+00:04:55.996 --> 00:05:01.217
+Store each split as JSONL, one case per line with a stable identifier, and keep a
+
+00:05:01.217 --> 00:05:01.861
+CHANGELOG.
+
+00:05:02.161 --> 00:05:06.135
+Fixing a label is a commit with its reason, just like a code change.
+
+00:05:06.435 --> 00:05:11.348
+After a fix, earlier metrics must be recomputed, because the instrument changed and
+
+00:05:11.348 --> 00:05:13.775
+the old numbers are no longer comparable.
+
+00:05:14.075 --> 00:05:16.782
+Note the dataset version on each run card.
+
+00:05:17.082 --> 00:05:21.531
+Without that fact, a two-point improvement may be nothing more than a corrected
+
+00:05:21.531 --> 00:05:21.868
+label.
+
+00:05:23.168 --> 00:05:24.274
+An example.
+
+00:05:24.824 --> 00:05:29.488
+A team builds a dataset for a system that decides whether a new supplier already
+
+00:05:29.488 --> 00:05:30.771
+exists in the catalog.
+
+00:05:31.071 --> 00:05:35.783
+They gather one hundred and twenty cases: sixty from anonymized real usage, forty
+
+00:05:35.783 --> 00:05:37.529
+edge cases and twenty adverse.
+
+00:05:37.829 --> 00:05:40.595
+Two people label twenty and disagree on six.
+
+00:05:40.895 --> 00:05:45.514
+The origin is a single unanswered question: whether a branch counts as the same
+
+00:05:45.514 --> 00:05:46.040
+supplier.
+
+00:05:46.340 --> 00:05:50.267
+They decide it, add it to the guide and disagree on one in the second round.
+
+00:05:50.567 --> 00:05:54.879
+Counting, they discover only eight cases are of the "nearly identical name,
+
+00:05:54.879 --> 00:05:57.466
+different company" type, the costliest error.
+
+00:05:57.766 --> 00:05:59.278
+They add twelve more.
+
+00:05:59.578 --> 00:06:03.342
+They split into sixty dev, forty test and twenty regression.
+
+00:06:04.642 --> 00:06:06.305
+The most common mistakes.
+
+00:06:06.855 --> 00:06:10.236
+Letting the model generate the labels it's evaluated against.
+
+00:06:10.786 --> 00:06:14.179
+Labeling everything with a single person and no written guide.
+
+00:06:14.729 --> 00:06:17.785
+Tuning the prompt while looking at test set results.
+
+00:06:18.335 --> 00:06:22.471
+Fixing labels with no record and comparing old metrics with new ones.
+
+00:06:23.771 --> 00:06:26.014
+To know it is done, check this.
+
+00:06:26.564 --> 00:06:29.934
+The dataset has real, edge and adverse cases.
+
+00:06:30.484 --> 00:06:33.668
+There is a labeling guide with a rule for doubtful cases.
+
+00:06:34.218 --> 00:06:37.541
+Two people labeled a sample and resolved their disagreements.
+
+00:06:38.091 --> 00:06:42.076
+Dev, test and regression exist as JSONL with a CHANGELOG.
+
+00:06:43.376 --> 00:06:45.271
+And where AI fell short.
+
+00:06:45.821 --> 00:06:49.388
+A model graded against labels it generated always looks good.
+
+00:06:49.688 --> 00:06:51.734
+Test labels come from a person.
+
+00:06:53.034 --> 00:06:54.720
+That was day 17.
+
+00:06:55.020 --> 00:06:59.994
+The written guide, at gastongenaud.com, has the code to copy and the frequently
+
+00:06:59.994 --> 00:07:01.001
+asked questions.
+
+00:07:01.552 --> 00:07:07.034
+Continue with day 18: How to test a model: accuracy, N runs and ranges.

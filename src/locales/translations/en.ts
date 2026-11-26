@@ -289,6 +289,7 @@ export const en = {
   [tokens.publicationsSectionType.result]: 'guide found',
   [tokens.publicationsSectionType.results]: 'guides found',
   [tokens.publicationsSectionType.noResults]: 'No guides match that search.',
+  [tokens.publicationsSectionType.video]: 'Video guide · narrated with a synthetic voice',
 
   [tokens.newsletterSectionType.title]: 'Newsletter',
   [tokens.newsletterSectionType.subtitle]: 'Useful updates, sorted by category.',
