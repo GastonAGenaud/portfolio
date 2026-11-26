@@ -80,6 +80,15 @@ export const useProjectsSection = (): ProjectsSectionType => {
         year: 2026,
         tags: ['React', 'Vite', 'Ably', 'Real-time'],
       },
+      {
+        id: getId(),
+        name: t(tokens.projectsSectionType.projects[7].name),
+        url: 'https://github.com/GastonAGenaud/qa-harness/blob/main/docs/user-manual.md',
+        repo: 'https://github.com/GastonAGenaud/qa-harness',
+        img: '/projects/10.png',
+        year: 2026,
+        tags: ['Claude Code', 'AI Agents', 'Guardrails', 'Node.js'],
+      },
     ],
   };
 
