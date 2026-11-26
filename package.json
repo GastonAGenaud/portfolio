@@ -12,7 +12,8 @@
     "prepare": "husky install",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "videos:guides": "node scripts/guide-videos/build.mjs"
+    "videos:guides": "node scripts/guide-videos/build.mjs",
+    "videos:narration": "node scripts/guide-videos/narration.mjs"
   },
   "dependencies": {
     "@lottiefiles/react-lottie-player": "^3.5.0",
