@@ -14,6 +14,23 @@ export const useProjectsSection = (): ProjectsSectionType => {
     projects: [
       {
         id: getId(),
+        name: t(tokens.projectsSectionType.projects[7].name),
+        url: 'https://github.com/GastonAGenaud/qa-harness/blob/main/docs/user-manual.md',
+        repo: 'https://github.com/GastonAGenaud/qa-harness',
+        img: '/projects/10.png',
+        year: 2026,
+        tags: ['Claude Code', 'AI Agents', 'Guardrails', 'Node.js'],
+      },
+      {
+        id: getId(),
+        name: t(tokens.projectsSectionType.projects[6].name),
+        url: 'https://poker-planning-ashen.vercel.app/',
+        img: '/projects/09.png',
+        year: 2026,
+        tags: ['React', 'Vite', 'Ably', 'Real-time'],
+      },
+      {
+        id: getId(),
         name: t(tokens.projectsSectionType.projects[0].name),
         url: 'https://gastongenaud.com/',
         repo: 'https://github.com/GastonAGenaud/portfolio',
@@ -71,23 +88,6 @@ export const useProjectsSection = (): ProjectsSectionType => {
         img: '/projects/06.png',
         year: 2024,
         tags: ['Turborepo', 'TypeScript', 'Monorepo', 'Full Stack'],
-      },
-      {
-        id: getId(),
-        name: t(tokens.projectsSectionType.projects[6].name),
-        url: 'https://poker-planning-ashen.vercel.app/',
-        img: '/projects/09.png',
-        year: 2026,
-        tags: ['React', 'Vite', 'Ably', 'Real-time'],
-      },
-      {
-        id: getId(),
-        name: t(tokens.projectsSectionType.projects[7].name),
-        url: 'https://github.com/GastonAGenaud/qa-harness/blob/main/docs/user-manual.md',
-        repo: 'https://github.com/GastonAGenaud/qa-harness',
-        img: '/projects/10.png',
-        year: 2026,
-        tags: ['Claude Code', 'AI Agents', 'Guardrails', 'Node.js'],
       },
     ],
   };
