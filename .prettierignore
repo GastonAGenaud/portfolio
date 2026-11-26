@@ -4,3 +4,4 @@ node_modules/
 documents/test-results/
 playwright-report/
 vendor/
+tools/narration-recorder/app/narration-data.js

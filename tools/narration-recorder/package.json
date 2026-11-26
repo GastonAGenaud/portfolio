@@ -1,0 +1,17 @@
+{
+  "name": "narration-recorder",
+  "productName": "Narration Recorder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Teleprompter and recorder for the voice-over of the QA + AI guide videos.",
+  "author": "Gaston Genaud",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package:win": "electron-packager . \"Narration Recorder\" --platform=win32 --arch=x64 --out=dist --overwrite --asar --ignore=^/dist --ignore=^/test --ignore=README.md"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "electron": "45.5.0"
+  }
+}
