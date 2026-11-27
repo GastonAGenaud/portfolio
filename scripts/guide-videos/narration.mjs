@@ -4,33 +4,17 @@
 //   node scripts/guide-videos/narration.mjs
 //
 // Timing comes from the sentence audio cached by build.mjs, so run that first.
-// The pauses below mirror build.mjs: keep both in sync.
-import { existsSync } from 'node:fs';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { homedir } from 'node:os';
+import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createHash } from 'node:crypto';
 
 import { planVideo } from './plan.mjs';
-import { splitSentences, toDisplay, toSpoken } from './speech.mjs';
+import { timeline } from './timing.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../..');
 const outDir = path.join(here, 'narration');
 const contentDir = path.join(root, 'src/lib/content/publications/qa-ai-series');
-const cacheDir =
-  process.env.GUIDE_VIDEOS_CACHE ?? path.join(homedir(), '.cache/guide-videos');
-const voices = { es: 'es_AR-daniela-high', en: 'en_US-lessac-high' };
-
-const BYTES_PER_SECOND = 22050 * 2;
-const PAUSE = {
-  sentence: 0.3,
-  paragraph: 0.55,
-  slideStart: 0.5,
-  slideEnd: 0.8,
-};
-const TAIL = PAUSE.slideEnd + 0.7;
 
 const text = {
   es: {
@@ -53,51 +37,10 @@ const text = {
   },
 };
 
-const hash = (value) => createHash('sha1').update(value).digest('hex');
 const pad = (n) => String(n).padStart(2, '0');
 const clock = (seconds) => {
   const whole = Math.round(seconds);
   return `${Math.floor(whole / 60)}:${pad(whole % 60)}`;
-};
-
-const wavSeconds = async (file) => {
-  const buffer = await readFile(file);
-  const data = buffer.indexOf('data', 12, 'ascii');
-  return buffer.readUInt32LE(data + 4) / BYTES_PER_SECOND;
-};
-
-const timeline = async (slides, lang) => {
-  let time = 0;
-  let speech = 0;
-  const timed = [];
-  for (const [index, slide] of slides.entries()) {
-    if (index > 0) time += PAUSE.slideEnd;
-    const start = time;
-    time += PAUSE.slideStart;
-    const paragraphs = [];
-    for (const [p, paragraph] of slide.say.entries()) {
-      const sentences = splitSentences(paragraph);
-      for (const [s, sentence] of sentences.entries()) {
-        if (s > 0) time += PAUSE.sentence;
-        else if (p > 0) time += PAUSE.paragraph;
-        const wav = path.join(
-          cacheDir,
-          'speech',
-          voices[lang],
-          `${hash(toSpoken(sentence, lang))}.wav`
-        );
-        if (!existsSync(wav)) {
-          throw new Error(`Missing cached audio, run build.mjs first: ${wav}`);
-        }
-        const seconds = await wavSeconds(wav);
-        time += seconds;
-        speech += seconds;
-      }
-      paragraphs.push(sentences.map(toDisplay).join(' '));
-    }
-    timed.push({ slide, start, end: time, paragraphs });
-  }
-  return { slides: timed, total: time + TAIL, speech };
 };
 
 const toMarkdown = (guide, lang, result) => {
@@ -123,7 +66,10 @@ const toMarkdown = (guide, lang, result) => {
         slide.section
       }`,
       '',
-      ...paragraphs.flatMap((paragraph) => [paragraph, ''])
+      ...paragraphs.flatMap((sentences) => [
+        sentences.map(({ text }) => text).join(' '),
+        '',
+      ])
     );
   }
   return lines.join('\n');
