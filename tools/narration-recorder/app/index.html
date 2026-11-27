@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; media-src 'self' blob: https://gastongenaud.com; img-src 'self' data: https://gastongenaud.com"
+    />
+    <title>Narration Recorder</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">Narration Recorder</div>
+      <div class="lang" role="tablist">
+        <button data-lang="es" class="on">Español</button>
+        <button data-lang="en">English</button>
+      </div>
+      <ol id="videos" class="videos"></ol>
+      <div class="sidebar-foot">
+        <button id="open-folder" class="ghost">
+          Abrir carpeta de grabaciones
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="top">
+        <div>
+          <div id="video-label" class="eyebrow"></div>
+          <h1 id="video-title"></h1>
+        </div>
+        <div class="top-actions">
+          <button
+            id="preview-all"
+            class="ghost"
+            title="Reproduce el video con tus tomas elegidas"
+          >
+            ▶ Preview completo
+          </button>
+          <button
+            id="export"
+            class="primary"
+            title="Exporta las tomas elegidas, ya recortadas"
+          >
+            Exportar video
+          </button>
+        </div>
+      </header>
+
+      <nav id="slides" class="slides"></nav>
+
+      <section class="stage">
+        <div class="prompter-wrap">
+          <div class="prompter-head">
+            <span id="slide-label" class="eyebrow"></span>
+            <span id="slot" class="slot"></span>
+          </div>
+          <div id="prompter" class="prompter"></div>
+          <div id="next-up" class="next-up"></div>
+        </div>
+
+        <div class="side">
+          <video id="video" preload="metadata" muted playsinline></video>
+          <div id="sync" class="sync"></div>
+          <div class="takes-head">
+            <h2>Tomas de esta slide</h2>
+            <button
+              id="auto-trim"
+              class="ghost small"
+              title="Recorta los silencios del principio y del final"
+            >
+              Recortar silencios
+            </button>
+          </div>
+          <canvas id="wave" class="wave" height="120"></canvas>
+          <div class="wave-actions">
+            <button id="play-take" class="ghost small">
+              ▶ Escuchar (Enter)
+            </button>
+            <button id="preview-slide" class="ghost small">
+              ▶ Con video (V)
+            </button>
+            <button id="delete-take" class="danger small">
+              Eliminar (Supr)
+            </button>
+          </div>
+          <ul id="takes" class="takes"></ul>
+        </div>
+      </section>
+
+      <footer class="transport">
+        <button id="prev" title="Slide anterior (←)">◀ Anterior</button>
+        <button id="record" class="record" title="Grabar / detener (R)">
+          ● Grabar
+        </button>
+        <button id="pause" title="Pausar / seguir (Espacio)" disabled>
+          ❚❚ Pausa
+        </button>
+        <button
+          id="next"
+          title="Siguiente slide; si estás grabando, sigue grabando (→)"
+        >
+          Siguiente ▶
+        </button>
+        <div class="meter"><div id="level"></div></div>
+        <span id="clock" class="clock">0:00</span>
+        <label class="field">
+          Ritmo
+          <input
+            id="pace"
+            type="range"
+            min="0.7"
+            max="1.4"
+            step="0.05"
+            value="1"
+          />
+          <span id="pace-value">1,00×</span>
+        </label>
+        <label class="field check">
+          <input id="show-say" type="checkbox" checked /> Pronunciación
+        </label>
+        <select id="mic" title="Micrófono"></select>
+      </footer>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <script src="narration-data.js"></script>
+    <script src="wav.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
